@@ -11,7 +11,7 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
 import profileClaimTeaserImage from '@documenso/assets/images/profile-claim-teaser.png';
-import { NEXT_PUBLIC_WEBAPP_URL } from '@documenso/lib/constants/app';
+import { WEBAPP_BASE_URL } from '@documenso/lib/constants/app';
 import { AppError, AppErrorCode } from '@documenso/lib/errors/app-error';
 import type { User } from '@documenso/prisma/client';
 import { trpc } from '@documenso/trpc/react';
@@ -68,7 +68,7 @@ export const ClaimPublicProfileDialogForm = ({
 
   const [claimed, setClaimed] = useState(false);
 
-  const baseUrl = new URL(NEXT_PUBLIC_WEBAPP_URL() ?? 'http://localhost:3000');
+  const baseUrl = new URL(WEBAPP_BASE_URL);
 
   const form = useForm<TClaimPublicProfileFormSchema>({
     values: {

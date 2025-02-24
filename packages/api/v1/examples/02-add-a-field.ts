@@ -1,10 +1,11 @@
 import { initClient } from '@ts-rest/core';
 
 import { ApiContractV1 } from '../contract';
+import { NEXT_PUBLIC_API_URL } from '@documenso/lib/constants/app';
 
 const main = async () => {
   const client = initClient(ApiContractV1, {
-    baseUrl: 'http://localhost:3000/api/v1',
+    baseUrl: NEXT_PUBLIC_API_URL(),
     baseHeaders: {
       authorization: 'Bearer <my-token>',
     },

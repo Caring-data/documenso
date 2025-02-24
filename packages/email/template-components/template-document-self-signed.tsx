@@ -1,6 +1,8 @@
 import { Trans } from '@lingui/macro';
 import { env } from 'next-runtime-env';
 
+import { WEBAPP_BASE_URL } from '@documenso/lib/constants/app';
+
 import { Button, Column, Img, Link, Section, Text } from '../components';
 import { TemplateDocumentImage } from './template-document-image';
 
@@ -13,9 +15,7 @@ export const TemplateDocumentSelfSigned = ({
   documentName,
   assetBaseUrl,
 }: TemplateDocumentSelfSignedProps) => {
-  const NEXT_PUBLIC_WEBAPP_URL = env('NEXT_PUBLIC_WEBAPP_URL');
-
-  const signUpUrl = `${NEXT_PUBLIC_WEBAPP_URL ?? 'http://localhost:3000'}/signup`;
+  const signUpUrl = `${WEBAPP_BASE_URL}/signup`;
 
   const getAssetUrl = (path: string) => {
     return new URL(path, assetBaseUrl).toString();

@@ -8,7 +8,7 @@ import { PublicEnvScript } from 'next-runtime-env';
 import { FeatureFlagProvider } from '@documenso/lib/client-only/providers/feature-flag';
 import { I18nClientProvider } from '@documenso/lib/client-only/providers/i18n.client';
 import { setupI18nSSR } from '@documenso/lib/client-only/providers/i18n.server';
-import { IS_APP_WEB_I18N_ENABLED, NEXT_PUBLIC_WEBAPP_URL } from '@documenso/lib/constants/app';
+import { IS_APP_WEB_I18N_ENABLED, WEBAPP_BASE_URL } from '@documenso/lib/constants/app';
 import { getServerComponentAllFlags } from '@documenso/lib/server-only/feature-flags/get-server-component-feature-flag';
 import { TrpcProvider } from '@documenso/trpc/react';
 import { cn } from '@documenso/ui/lib/utils';
@@ -35,7 +35,7 @@ export function generateMetadata() {
       'Documenso, open source, DocuSign alternative, document signing, open signing infrastructure, open-source community, fast signing, beautiful signing, smart templates',
     authors: { name: 'Documenso, Inc.' },
     robots: 'index, follow',
-    metadataBase: new URL(NEXT_PUBLIC_WEBAPP_URL() ?? 'http://localhost:3000'),
+    metadataBase: new URL(WEBAPP_BASE_URL),
     openGraph: {
       title: 'Documenso - The Open Source DocuSign Alternative',
       description:

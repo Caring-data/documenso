@@ -32,7 +32,7 @@ Want to create a production ready docker image? Follow these steps:
 - Publish the image to your docker registry of choice (or) If you prefer running the image from local, run the below command
 
 ```
-docker run -d --restart=unless-stopped -p 3000:3000 -v documenso:/app/data --name documenso documenso:latest
+docker run -d --restart=unless-stopped -p 3002:3002 -v documenso:/app/data --name documenso documenso:latest
 ```
 
 Command Breakdown:

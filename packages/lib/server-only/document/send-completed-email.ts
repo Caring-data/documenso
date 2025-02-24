@@ -8,7 +8,7 @@ import { prisma } from '@documenso/prisma';
 import { DocumentSource } from '@documenso/prisma/client';
 
 import { getI18nInstance } from '../../client-only/providers/i18n.server';
-import { NEXT_PUBLIC_WEBAPP_URL } from '../../constants/app';
+import { NEXT_PUBLIC_WEBAPP_URL, WEBAPP_BASE_URL } from '../../constants/app';
 import { DOCUMENT_AUDIT_LOG_TYPE } from '../../types/document-audit-logs';
 import { extractDerivedDocumentEmailSettings } from '../../types/document-email';
 import type { RequestMetadata } from '../../universal/extract-request-metadata';
@@ -58,7 +58,7 @@ export const sendCompletedEmail = async ({ documentId, requestMetadata }: SendDo
 
   const completedDocument = await getFile(document.documentData);
 
-  const assetBaseUrl = NEXT_PUBLIC_WEBAPP_URL() || 'http://localhost:3000';
+  const assetBaseUrl = WEBAPP_BASE_URL;
 
   let documentOwnerDownloadLink = `${NEXT_PUBLIC_WEBAPP_URL()}${formatDocumentsPath(
     document.team?.url,

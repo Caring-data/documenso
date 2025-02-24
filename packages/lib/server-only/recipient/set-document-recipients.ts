@@ -24,7 +24,7 @@ import { RecipientRole } from '@documenso/prisma/client';
 import { SendStatus, SigningStatus } from '@documenso/prisma/client';
 
 import { getI18nInstance } from '../../client-only/providers/i18n.server';
-import { NEXT_PUBLIC_WEBAPP_URL } from '../../constants/app';
+import { WEBAPP_BASE_URL } from '../../constants/app';
 import { FROM_ADDRESS, FROM_NAME } from '../../constants/email';
 import { AppError, AppErrorCode } from '../../errors/app-error';
 import { extractDerivedDocumentEmailSettings } from '../../types/document-email';
@@ -295,7 +295,7 @@ export const setDocumentRecipients = async ({
           return;
         }
 
-        const assetBaseUrl = NEXT_PUBLIC_WEBAPP_URL() || 'http://localhost:3000';
+        const assetBaseUrl = WEBAPP_BASE_URL;
 
         const template = createElement(RecipientRemovedFromDocumentTemplate, {
           documentName: document.title,

@@ -7,7 +7,7 @@ import { ForgotPasswordTemplate } from '@documenso/email/templates/forgot-passwo
 import { prisma } from '@documenso/prisma';
 
 import { getI18nInstance } from '../../client-only/providers/i18n.server';
-import { NEXT_PUBLIC_WEBAPP_URL } from '../../constants/app';
+import { NEXT_PUBLIC_WEBAPP_URL, WEBAPP_BASE_URL } from '../../constants/app';
 import { renderEmailWithI18N } from '../../utils/render-email-with-i18n';
 
 export interface SendForgotPasswordOptions {
@@ -34,7 +34,7 @@ export const sendForgotPassword = async ({ userId }: SendForgotPasswordOptions) 
   }
 
   const token = user.passwordResetTokens[0].token;
-  const assetBaseUrl = NEXT_PUBLIC_WEBAPP_URL() || 'http://localhost:3000';
+  const assetBaseUrl = WEBAPP_BASE_URL;
   const resetPasswordLink = `${NEXT_PUBLIC_WEBAPP_URL()}/reset-password/${token}`;
 
   const template = createElement(ForgotPasswordTemplate, {

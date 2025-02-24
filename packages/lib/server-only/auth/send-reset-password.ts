@@ -4,7 +4,7 @@ import { mailer } from '@documenso/email/mailer';
 import { ResetPasswordTemplate } from '@documenso/email/templates/reset-password';
 import { prisma } from '@documenso/prisma';
 
-import { NEXT_PUBLIC_WEBAPP_URL } from '../../constants/app';
+import { WEBAPP_BASE_URL } from '../../constants/app';
 import { renderEmailWithI18N } from '../../utils/render-email-with-i18n';
 
 export interface SendResetPasswordOptions {
@@ -18,7 +18,7 @@ export const sendResetPassword = async ({ userId }: SendResetPasswordOptions) =>
     },
   });
 
-  const assetBaseUrl = NEXT_PUBLIC_WEBAPP_URL() || 'http://localhost:3000';
+  const assetBaseUrl = WEBAPP_BASE_URL;
 
   const template = createElement(ResetPasswordTemplate, {
     assetBaseUrl,

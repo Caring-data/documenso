@@ -24,7 +24,7 @@ import {
 import type { TSignFieldWithTokenMutationSchema } from '@documenso/trpc/server/field-router/schema';
 
 import { getI18nInstance } from '../../client-only/providers/i18n.server';
-import { NEXT_PUBLIC_WEBAPP_URL } from '../../constants/app';
+import { NEXT_PUBLIC_WEBAPP_URL, WEBAPP_BASE_URL } from '../../constants/app';
 import { DEFAULT_DOCUMENT_DATE_FORMAT } from '../../constants/date-formats';
 import { DEFAULT_DOCUMENT_TIME_ZONE } from '../../constants/time-zones';
 import { AppError, AppErrorCode } from '../../errors/app-error';
@@ -560,7 +560,7 @@ export const createDocumentFromDirectTemplate = async ({
         document.id
       }`,
       documentName: document.title,
-      assetBaseUrl: NEXT_PUBLIC_WEBAPP_URL() || 'http://localhost:3000',
+      assetBaseUrl: WEBAPP_BASE_URL,
     });
 
     const branding = template.team?.teamGlobalSettings

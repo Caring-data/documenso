@@ -7,7 +7,7 @@ import { getToken } from 'next-auth/jwt';
 import { LOCAL_FEATURE_FLAGS, extractPostHogConfig } from '@documenso/lib/constants/feature-flags';
 import PostHogServerClient from '@documenso/lib/server-only/feature-flags/get-post-hog-server-client';
 
-import { NEXT_PUBLIC_MARKETING_URL, NEXT_PUBLIC_WEBAPP_URL, NEXT_PRIVATE_INTERNAL_WEBAPP_URL } from '../../constants/app';
+import { NEXT_PUBLIC_MARKETING_URL, NEXT_PRIVATE_INTERNAL_WEBAPP_URL, WEBAPP_BASE_URL } from '../../constants/app';
 
 /**
  * Evaluate a single feature flag based on the current user if possible.
@@ -60,7 +60,7 @@ export default async function handleFeatureFlagGet(req: Request) {
   const origin = req.headers.get('Origin');
 
   if (origin) {
-    if (origin.startsWith(NEXT_PUBLIC_WEBAPP_URL() ?? 'http://localhost:3000')) {
+    if (origin.startsWith(WEBAPP_BASE_URL)) {
       res.headers.set('Access-Control-Allow-Origin', origin);
     }
 
@@ -68,7 +68,7 @@ export default async function handleFeatureFlagGet(req: Request) {
       res.headers.set('Access-Control-Allow-Origin', origin);
     }
     
-    if (origin.startsWith(NEXT_PRIVATE_INTERNAL_WEBAPP_URL ?? 'http://localhost:3000')) {
+    if (origin.startsWith(NEXT_PRIVATE_INTERNAL_WEBAPP_URL)) {
       res.headers.set('Access-Control-Allow-Origin', origin);
     }
   }
