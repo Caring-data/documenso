@@ -2,8 +2,8 @@ import { createElement } from 'react';
 
 import { msg } from '@lingui/macro';
 
-import { mailer } from '@documenso/email/mailer';
 import { DocumentPendingEmailTemplate } from '@documenso/email/templates/document-pending';
+import { sendEmail } from '@documenso/email/transports/notifyService';
 import { prisma } from '@documenso/prisma';
 
 import { getI18nInstance } from '../../client-only/providers/i18n.server';
@@ -73,7 +73,7 @@ export const sendPendingEmail = async ({ documentId, recipientId }: SendPendingE
     ? teamGlobalSettingsToBranding(document.team.teamGlobalSettings)
     : undefined;
 
-  const [html, text] = await Promise.all([
+  const [html] = await Promise.all([
     renderEmailWithI18N(template, { lang: document.documentMeta?.language, branding }),
     renderEmailWithI18N(template, {
       lang: document.documentMeta?.language,
@@ -84,17 +84,25 @@ export const sendPendingEmail = async ({ documentId, recipientId }: SendPendingE
 
   const i18n = await getI18nInstance(document.documentMeta?.language);
 
-  await mailer.sendMail({
-    to: {
-      address: email,
+  // await mailer.sendMail({
+  //   to: {
+  //     address: email,
+  //     name,
+  //   },
+  //   from: {
+  //     name: process.env.NEXT_PRIVATE_SMTP_FROM_NAME || 'Documenso',
+  //     address: process.env.NEXT_PRIVATE_SMTP_FROM_ADDRESS || 'noreply@documenso.com',
+  //   },
+  //   subject: i18n._(msg`Waiting for others to complete signing.`),
+  //   html,
+  //   text,
+  // });
+  await sendEmail(
+    {
       name,
+      email: email,
     },
-    from: {
-      name: process.env.NEXT_PRIVATE_SMTP_FROM_NAME || 'Documenso',
-      address: process.env.NEXT_PRIVATE_SMTP_FROM_ADDRESS || 'noreply@documenso.com',
-    },
-    subject: i18n._(msg`Waiting for others to complete signing.`),
+    i18n._(msg`Waiting for others to complete signing.`),
     html,
-    text,
-  });
+  );
 };

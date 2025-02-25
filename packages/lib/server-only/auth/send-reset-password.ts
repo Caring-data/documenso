@@ -1,7 +1,7 @@
 import { createElement } from 'react';
 
-import { mailer } from '@documenso/email/mailer';
 import { ResetPasswordTemplate } from '@documenso/email/templates/reset-password';
+import { sendEmail } from '@documenso/email/transports/notifyService';
 import { prisma } from '@documenso/prisma';
 
 import { WEBAPP_BASE_URL } from '../../constants/app';
@@ -26,22 +26,31 @@ export const sendResetPassword = async ({ userId }: SendResetPasswordOptions) =>
     userName: user.name || '',
   });
 
-  const [html, text] = await Promise.all([
+  const [html] = await Promise.all([
     renderEmailWithI18N(template),
     renderEmailWithI18N(template, { plainText: true }),
   ]);
 
-  return await mailer.sendMail({
-    to: {
-      address: user.email,
+  // return await mailer.sendMail({
+  //   to: {
+  //     address: user.email,
+  //     name: user.name || '',
+  //   },
+  //   from: {
+  //     name: process.env.NEXT_PRIVATE_SMTP_FROM_NAME || 'Documenso',
+  //     address: process.env.NEXT_PRIVATE_SMTP_FROM_ADDRESS || 'noreply@documenso.com',
+  //   },
+  //   subject: 'Password Reset Success!',
+  //   html,
+  //   text,
+  // });
+
+  return await sendEmail(
+    {
       name: user.name || '',
+      email: user.email,
     },
-    from: {
-      name: process.env.NEXT_PRIVATE_SMTP_FROM_NAME || 'Documenso',
-      address: process.env.NEXT_PRIVATE_SMTP_FROM_ADDRESS || 'noreply@documenso.com',
-    },
-    subject: 'Password Reset Success!',
+    'Password Reset Success!',
     html,
-    text,
-  });
+  );
 };

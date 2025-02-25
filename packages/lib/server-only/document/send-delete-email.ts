@@ -2,8 +2,8 @@ import { createElement } from 'react';
 
 import { msg } from '@lingui/macro';
 
-import { mailer } from '@documenso/email/mailer';
 import { DocumentSuperDeleteEmailTemplate } from '@documenso/email/templates/document-super-delete';
+import { sendEmail } from '@documenso/email/transports/notifyService';
 import { prisma } from '@documenso/prisma';
 
 import { getI18nInstance } from '../../client-only/providers/i18n.server';
@@ -62,7 +62,7 @@ export const sendDeleteEmail = async ({ documentId, reason }: SendDeleteEmailOpt
     ? teamGlobalSettingsToBranding(document.team.teamGlobalSettings)
     : undefined;
 
-  const [html, text] = await Promise.all([
+  const [html] = await Promise.all([
     renderEmailWithI18N(template, { lang: document.documentMeta?.language, branding }),
     renderEmailWithI18N(template, {
       lang: document.documentMeta?.language,
@@ -73,17 +73,25 @@ export const sendDeleteEmail = async ({ documentId, reason }: SendDeleteEmailOpt
 
   const i18n = await getI18nInstance();
 
-  await mailer.sendMail({
-    to: {
-      address: email,
+  // await mailer.sendMail({
+  //   to: {
+  //     address: email,
+  //     name: name || '',
+  //   },
+  //   from: {
+  //     name: process.env.NEXT_PRIVATE_SMTP_FROM_NAME || 'Documenso',
+  //     address: process.env.NEXT_PRIVATE_SMTP_FROM_ADDRESS || 'noreply@documenso.com',
+  //   },
+  //   subject: i18n._(msg`Document Deleted!`),
+  //   html,
+  //   text,
+  // });
+  await sendEmail(
+    {
       name: name || '',
+      email: email,
     },
-    from: {
-      name: process.env.NEXT_PRIVATE_SMTP_FROM_NAME || 'Documenso',
-      address: process.env.NEXT_PRIVATE_SMTP_FROM_ADDRESS || 'noreply@documenso.com',
-    },
-    subject: i18n._(msg`Document Deleted!`),
+    i18n._(msg`Document Deleted!`),
     html,
-    text,
-  });
+  );
 };

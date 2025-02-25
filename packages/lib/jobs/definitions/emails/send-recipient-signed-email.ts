@@ -3,13 +3,12 @@ import { createElement } from 'react';
 import { msg } from '@lingui/macro';
 import { z } from 'zod';
 
-import { mailer } from '@documenso/email/mailer';
 import { DocumentRecipientSignedEmailTemplate } from '@documenso/email/templates/document-recipient-signed';
+import { sendEmail } from '@documenso/email/transports/notifyService';
 import { prisma } from '@documenso/prisma';
 
 import { getI18nInstance } from '../../../client-only/providers/i18n.server';
 import { WEBAPP_BASE_URL } from '../../../constants/app';
-import { FROM_ADDRESS, FROM_NAME } from '../../../constants/email';
 import { extractDerivedDocumentEmailSettings } from '../../../types/document-email';
 import { renderEmailWithI18N } from '../../../utils/render-email-with-i18n';
 import { teamGlobalSettingsToBranding } from '../../../utils/team-global-settings-to-branding';
@@ -100,7 +99,7 @@ export const SEND_RECIPIENT_SIGNED_EMAIL_JOB_DEFINITION = {
         ? teamGlobalSettingsToBranding(document.team.teamGlobalSettings)
         : undefined;
 
-      const [html, text] = await Promise.all([
+      const [html] = await Promise.all([
         renderEmailWithI18N(template, { lang: document.documentMeta?.language, branding }),
         renderEmailWithI18N(template, {
           lang: document.documentMeta?.language,
@@ -109,19 +108,27 @@ export const SEND_RECIPIENT_SIGNED_EMAIL_JOB_DEFINITION = {
         }),
       ]);
 
-      await mailer.sendMail({
-        to: {
+      // await mailer.sendMail({
+      //   to: {
+      //     name: owner.name ?? '',
+      //     address: owner.email,
+      //   },
+      //   from: {
+      //     name: FROM_NAME,
+      //     address: FROM_ADDRESS,
+      //   },
+      //   subject: i18n._(msg`${recipientReference} has signed "${document.title}"`),
+      //   html,
+      //   text,
+      // });
+      await sendEmail(
+        {
           name: owner.name ?? '',
-          address: owner.email,
+          email: owner.email,
         },
-        from: {
-          name: FROM_NAME,
-          address: FROM_ADDRESS,
-        },
-        subject: i18n._(msg`${recipientReference} has signed "${document.title}"`),
+        i18n._(msg`${recipientReference} has signed "${document.title}"`),
         html,
-        text,
-      });
+      );
     });
   },
 } as const satisfies JobDefinition<

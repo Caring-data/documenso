@@ -2,10 +2,9 @@ import { createElement } from 'react';
 
 import { msg } from '@lingui/macro';
 
-import { mailer } from '@documenso/email/mailer';
 import { TeamEmailRemovedTemplate } from '@documenso/email/templates/team-email-removed';
+import { sendEmail } from '@documenso/email/transports/notifyService';
 import { WEBAPP_BASE_URL } from '@documenso/lib/constants/app';
-import { FROM_ADDRESS, FROM_NAME } from '@documenso/lib/constants/email';
 import { TEAM_MEMBER_ROLE_PERMISSIONS_MAP } from '@documenso/lib/constants/teams';
 import { prisma } from '@documenso/prisma';
 
@@ -85,26 +84,34 @@ export const deleteTeamEmail = async ({ userId, userEmail, teamId }: DeleteTeamE
 
     const lang = team.teamGlobalSettings?.documentLanguage;
 
-    const [html, text] = await Promise.all([
+    const [html] = await Promise.all([
       renderEmailWithI18N(template, { lang, branding }),
       renderEmailWithI18N(template, { lang, branding, plainText: true }),
     ]);
 
     const i18n = await getI18nInstance(lang);
 
-    await mailer.sendMail({
-      to: {
-        address: team.owner.email,
+    // await mailer.sendMail({
+    //   to: {
+    //     address: team.owner.email,
+    //     name: team.owner.name ?? '',
+    //   },
+    //   from: {
+    //     name: FROM_NAME,
+    //     address: FROM_ADDRESS,
+    //   },
+    //   subject: i18n._(msg`Team email has been revoked for ${team.name}`),
+    //   html,
+    //   text,
+    // });
+    await sendEmail(
+      {
         name: team.owner.name ?? '',
+        email: team.owner.email,
       },
-      from: {
-        name: FROM_NAME,
-        address: FROM_ADDRESS,
-      },
-      subject: i18n._(msg`Team email has been revoked for ${team.name}`),
+      i18n._(msg`Team email has been revoked for ${team.name}`),
       html,
-      text,
-    });
+    );
   } catch (e) {
     // Todo: Teams - Alert us.
     // We don't want to prevent a user from revoking access because an email could not be sent.

@@ -3,10 +3,9 @@ import { createElement } from 'react';
 import { msg } from '@lingui/macro';
 import { z } from 'zod';
 
-import { mailer } from '@documenso/email/mailer';
 import { ConfirmTeamEmailTemplate } from '@documenso/email/templates/confirm-team-email';
+import { sendEmail } from '@documenso/email/transports/notifyService';
 import { WEBAPP_BASE_URL } from '@documenso/lib/constants/app';
-import { FROM_ADDRESS, FROM_NAME } from '@documenso/lib/constants/email';
 import { TEAM_MEMBER_ROLE_PERMISSIONS_MAP } from '@documenso/lib/constants/teams';
 import { AppError, AppErrorCode } from '@documenso/lib/errors/app-error';
 import { createTokenVerification } from '@documenso/lib/utils/token-verification';
@@ -138,7 +137,7 @@ export const sendTeamEmailVerificationEmail = async (
 
   const lang = team.teamGlobalSettings?.documentLanguage;
 
-  const [html, text] = await Promise.all([
+  const [html] = await Promise.all([
     renderEmailWithI18N(template, { lang, branding }),
     renderEmailWithI18N(template, {
       lang,
@@ -149,16 +148,24 @@ export const sendTeamEmailVerificationEmail = async (
 
   const i18n = await getI18nInstance(lang);
 
-  await mailer.sendMail({
-    to: email,
-    from: {
-      name: FROM_NAME,
-      address: FROM_ADDRESS,
+  // await mailer.sendMail({
+  //   to: email,
+  //   from: {
+  //     name: FROM_NAME,
+  //     address: FROM_ADDRESS,
+  //   },
+  //   subject: i18n._(
+  //     msg`A request to use your email has been initiated by ${team.name} on Documenso`,
+  //   ),
+  //   html,
+  //   text,
+  // });
+  await sendEmail(
+    {
+      name: '',
+      email,
     },
-    subject: i18n._(
-      msg`A request to use your email has been initiated by ${team.name} on Documenso`,
-    ),
+    i18n._(msg`A request to use your email has been initiated by ${team.name} on Documenso`),
     html,
-    text,
-  });
+  );
 };

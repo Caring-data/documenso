@@ -4,8 +4,8 @@ import { msg } from '@lingui/macro';
 import { parse } from 'csv-parse/sync';
 import { z } from 'zod';
 
-import { mailer } from '@documenso/email/mailer';
 import { BulkSendCompleteEmail } from '@documenso/email/templates/bulk-send-complete';
+import { sendEmail } from '@documenso/email/transports/notifyService';
 import { sendDocument } from '@documenso/lib/server-only/document/send-document';
 import { createDocumentFromTemplate } from '@documenso/lib/server-only/template/create-document-from-template';
 import { getTemplateById } from '@documenso/lib/server-only/template/get-template-by-id';
@@ -14,7 +14,6 @@ import type { TeamGlobalSettings } from '@documenso/prisma/client';
 
 import { getI18nInstance } from '../../../client-only/providers/i18n.server';
 import { NEXT_PUBLIC_WEBAPP_URL } from '../../../constants/app';
-import { FROM_ADDRESS, FROM_NAME } from '../../../constants/email';
 import { AppError } from '../../../errors/app-error';
 import { renderEmailWithI18N } from '../../../utils/render-email-with-i18n';
 import { teamGlobalSettingsToBranding } from '../../../utils/team-global-settings-to-branding';
@@ -179,7 +178,7 @@ export const run = async ({
 
     const i18n = await getI18nInstance(teamGlobalSettings?.documentLanguage);
 
-    const [html, text] = await Promise.all([
+    const [html] = await Promise.all([
       renderEmailWithI18N(completionTemplate, {
         lang: teamGlobalSettings?.documentLanguage,
         branding,
@@ -191,18 +190,26 @@ export const run = async ({
       }),
     ]);
 
-    await mailer.sendMail({
-      to: {
+    // await mailer.sendMail({
+    //   to: {
+    //     name: user.name || '',
+    //     address: user.email,
+    //   },
+    //   from: {
+    //     name: FROM_NAME,
+    //     address: FROM_ADDRESS,
+    //   },
+    //   subject: i18n._(msg`Bulk Send Complete: ${template.title}`),
+    //   html,
+    //   text,
+    // });
+    await sendEmail(
+      {
         name: user.name || '',
-        address: user.email,
+        email: user.email,
       },
-      from: {
-        name: FROM_NAME,
-        address: FROM_ADDRESS,
-      },
-      subject: i18n._(msg`Bulk Send Complete: ${template.title}`),
+      i18n._(msg`Bulk Send Complete: ${template.title}`),
       html,
-      text,
-    });
+    );
   });
 };

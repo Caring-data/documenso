@@ -62,6 +62,14 @@ services:
       - key: NEXT_PRIVATE_SMTP_FROM_ADDRESS
         sync: false
 
+      # Notify
+      - key: NEXT_PRIVATE_NOTIFY_EMAIL
+        sync: false
+      - key: NEXT_PRIVATE_NOTIFY_PASSWORD
+        sync: false
+      - key: NEXT_PRIVATE_NOTIFY_ENDPOINT
+        sync: false
+
       # Stripe
       - key: NEXT_PRIVATE_STRIPE_API_KEY
         sync: false

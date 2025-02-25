@@ -2,10 +2,9 @@ import { createElement } from 'react';
 
 import { msg } from '@lingui/macro';
 
-import { mailer } from '@documenso/email/mailer';
 import { TeamDeleteEmailTemplate } from '@documenso/email/templates/team-delete';
+import { sendEmail } from '@documenso/email/transports/notifyService';
 import { WEBAPP_BASE_URL } from '@documenso/lib/constants/app';
-import { FROM_ADDRESS, FROM_NAME } from '@documenso/lib/constants/email';
 import { AppError } from '@documenso/lib/errors/app-error';
 import { stripe } from '@documenso/lib/server-only/stripe';
 import { prisma } from '@documenso/prisma';
@@ -108,21 +107,29 @@ export const sendTeamDeleteEmail = async ({ email, isOwner, team }: SendTeamDele
 
   const lang = team.teamGlobalSettings?.documentLanguage;
 
-  const [html, text] = await Promise.all([
+  const [html] = await Promise.all([
     renderEmailWithI18N(template, { lang, branding }),
     renderEmailWithI18N(template, { lang, branding, plainText: true }),
   ]);
 
   const i18n = await getI18nInstance(lang);
 
-  await mailer.sendMail({
-    to: email,
-    from: {
-      name: FROM_NAME,
-      address: FROM_ADDRESS,
+  // await mailer.sendMail({
+  //   to: email,
+  //   from: {
+  //     name: FROM_NAME,
+  //     address: FROM_ADDRESS,
+  //   },
+  //   subject: i18n._(msg`Team "${team.name}" has been deleted on Documenso`),
+  //   html,
+  //   text,
+  // });
+  await sendEmail(
+    {
+      name: '',
+      email: email,
     },
-    subject: i18n._(msg`Team "${team.name}" has been deleted on Documenso`),
+    i18n._(msg`Team "${team.name}" has been deleted on Documenso`),
     html,
-    text,
-  });
+  );
 };

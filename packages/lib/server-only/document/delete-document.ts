@@ -4,8 +4,8 @@ import { createElement } from 'react';
 
 import { msg } from '@lingui/macro';
 
-import { mailer } from '@documenso/email/mailer';
 import DocumentCancelTemplate from '@documenso/email/templates/document-cancel';
+import { sendEmail } from '@documenso/email/transports/notifyService';
 import { prisma } from '@documenso/prisma';
 import type {
   Document,
@@ -18,8 +18,7 @@ import type {
 import { DocumentStatus, SendStatus, WebhookTriggerEvents } from '@documenso/prisma/client';
 
 import { getI18nInstance } from '../../client-only/providers/i18n.server';
-import { NEXT_PUBLIC_WEBAPP_URL, WEBAPP_BASE_URL } from '../../constants/app';
-import { FROM_ADDRESS, FROM_NAME } from '../../constants/email';
+import { WEBAPP_BASE_URL } from '../../constants/app';
 import { AppError, AppErrorCode } from '../../errors/app-error';
 import { DOCUMENT_AUDIT_LOG_TYPE } from '../../types/document-audit-logs';
 import { extractDerivedDocumentEmailSettings } from '../../types/document-email';
@@ -240,7 +239,7 @@ const handleDocumentOwnerDelete = async ({
         ? teamGlobalSettingsToBranding(team.teamGlobalSettings)
         : undefined;
 
-      const [html, text] = await Promise.all([
+      const [html] = await Promise.all([
         renderEmailWithI18N(template, { lang: document.documentMeta?.language, branding }),
         renderEmailWithI18N(template, {
           lang: document.documentMeta?.language,
@@ -251,19 +250,27 @@ const handleDocumentOwnerDelete = async ({
 
       const i18n = await getI18nInstance(document.documentMeta?.language);
 
-      await mailer.sendMail({
-        to: {
-          address: recipient.email,
+      // await mailer.sendMail({
+      //   to: {
+      //     address: recipient.email,
+      //     name: recipient.name,
+      //   },
+      //   from: {
+      //     name: FROM_NAME,
+      //     address: FROM_ADDRESS,
+      //   },
+      //   subject: i18n._(msg`Document Cancelled`),
+      //   html,
+      //   text,
+      // });
+      await sendEmail(
+        {
           name: recipient.name,
+          email: recipient.email,
         },
-        from: {
-          name: FROM_NAME,
-          address: FROM_ADDRESS,
-        },
-        subject: i18n._(msg`Document Cancelled`),
+        i18n._(msg`Document Cancelled`),
         html,
-        text,
-      });
+      );
     }),
   );
 

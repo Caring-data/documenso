@@ -2,12 +2,20 @@
   "$schema": "https://turbo.build/schema.json",
   "pipeline": {
     "build": {
-      "dependsOn": ["prebuild", "^build"],
-      "outputs": [".next/**", "!.next/cache/**"]
+      "dependsOn": [
+        "prebuild",
+        "^build"
+      ],
+      "outputs": [
+        ".next/**",
+        "!.next/cache/**"
+      ]
     },
     "prebuild": {
       "cache": false,
-      "dependsOn": ["^prebuild"]
+      "dependsOn": [
+        "^prebuild"
+      ]
     },
     "lint": {
       "cache": false
@@ -23,7 +31,9 @@
       "persistent": true
     },
     "start": {
-      "dependsOn": ["^build"],
+      "dependsOn": [
+        "^build"
+      ],
       "cache": false,
       "persistent": true
     },
@@ -31,11 +41,15 @@
       "cache": false
     },
     "test:e2e": {
-      "dependsOn": ["^build"],
+      "dependsOn": [
+        "^build"
+      ],
       "cache": false
     }
   },
-  "globalDependencies": ["**/.env.*local"],
+  "globalDependencies": [
+    "**/.env.*local"
+  ],
   "globalEnv": [
     "APP_VERSION",
     "NEXT_PRIVATE_ENCRYPTION_KEY",
@@ -103,6 +117,9 @@
     "NEXT_PRIVATE_SMTP_FROM_NAME",
     "NEXT_PRIVATE_SMTP_FROM_ADDRESS",
     "NEXT_PRIVATE_SMTP_SERVICE",
+    "NEXT_PRIVATE_NOTIFY_EMAIL",
+    "NEXT_PRIVATE_NOTIFY_PASSWORD",
+    "NEXT_PRIVATE_NOTIFY_ENDPOINT",
     "NEXT_PRIVATE_STRIPE_API_KEY",
     "NEXT_PRIVATE_STRIPE_WEBHOOK_SECRET",
     "NEXT_PRIVATE_GITHUB_TOKEN",

@@ -69,6 +69,10 @@ declare namespace NodeJS {
 
     NEXT_PUBLIC_DISABLE_SIGNUP?: string;
 
+    NEXT_PRIVATE_NOTIFY_EMAIL?: string;
+    NEXT_PRIVATE_NOTIFY_PASSWORD?: string;
+    NEXT_PRIVATE_NOTIFY_ENDPOINT?: string;
+
     //
     NEXT_PRIVATE_BROWSERLESS_URL?: string;
 
