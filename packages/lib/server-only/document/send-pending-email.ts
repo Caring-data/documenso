@@ -7,7 +7,7 @@ import { DocumentPendingEmailTemplate } from '@documenso/email/templates/documen
 import { prisma } from '@documenso/prisma';
 
 import { getI18nInstance } from '../../client-only/providers/i18n.server';
-import { NEXT_PUBLIC_WEBAPP_URL } from '../../constants/app';
+import { WEBAPP_BASE_URL } from '../../constants/app';
 import { extractDerivedDocumentEmailSettings } from '../../types/document-email';
 import { renderEmailWithI18N } from '../../utils/render-email-with-i18n';
 import { teamGlobalSettingsToBranding } from '../../utils/team-global-settings-to-branding';
@@ -62,7 +62,7 @@ export const sendPendingEmail = async ({ documentId, recipientId }: SendPendingE
 
   const { email, name } = recipient;
 
-  const assetBaseUrl = NEXT_PUBLIC_WEBAPP_URL() || 'http://localhost:3000';
+  const assetBaseUrl = WEBAPP_BASE_URL;
 
   const template = createElement(DocumentPendingEmailTemplate, {
     documentName: document.title,

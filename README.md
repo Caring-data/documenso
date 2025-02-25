@@ -1,7 +1,3 @@
-> 🚨 We are live on Product Hunt 🎉  Check out our latest launch: <a href="documen.so/sign-everywhere">The Platform Plan</a>!
-
-<a href="https://www.producthunt.com/posts/documenso-platform-plan?embed=true&utm_source=badge-featured&utm_medium=badge&utm_souce=badge-documenso&#0045;platform&#0045;plan" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=670576&theme=light" alt="Documenso&#0032;Platform&#0032;Plan - Whitelabeled&#0032;signing&#0032;flows&#0032;in&#0032;your&#0032;product | Product Hunt" style="width: 250px; height: 54px;" width="250" height="54" /></a>
-
 <img src="https://github.com/documenso/documenso/assets/13398220/a643571f-0239-46a6-a73e-6bef38d1228b" alt="Documenso Logo">
 
 <p align="center" style="margin-top: 20px">
@@ -10,28 +6,6 @@
   <br>
     <a href="https://documenso.com"><strong>Learn more »</strong></a>
     <br />
-    <br />
-    <a href="https://documen.so/discord">Discord</a>
-    ·
-    <a href="https://documenso.com">Website</a>
-    ·
-    <a href="https://github.com/documenso/documenso/issues">Issues</a>
-    ·
-    <a href="https://documen.so/live">Upcoming Releases</a>
-    ·
-    <a href="https://documen.so/roadmap">Roadmap</a>
-  </p>
-</p>
-
-<p align="center">
-   <a href="https://documen.so/discord"><img src="https://img.shields.io/badge/Discord-documen.so/discord-%235865F2" alt="Join Documenso on Discord"></a>
-   <a href="https://github.com/documenso/documenso/stargazers"><img src="https://img.shields.io/github/stars/documenso/documenso" alt="Github Stars"></a>
-   <a href="https://github.com/documenso/documenso/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-AGPLv3-purple" alt="License"></a>
-   <a href="https://github.com/documenso/documenso/pulse"><img src="https://img.shields.io/github/commit-activity/m/documenso/documenso" alt="Commits-per-month"></a>
-   <a href="https://vscode.dev/redirect?url=vscode://ms-vscode-remote.remote-containers/cloneInVolume?url=https://github.com/documenso/documenso">
-   <img alt="open in devcontainer" src="https://img.shields.io/static/v1?label=Dev%20Containers&message=Enabled&color=blue&logo=visualstudiocode" />
-   </a>
-   <a href="CODE_OF_CONDUCT.md"><img src="https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg" alt="Contributor Covenant"></a>
 </p>
 
 <div align="center">
@@ -44,35 +18,8 @@ Signing documents digitally should be fast and easy and should be the best pract
 
 Join us in creating the next generation of open trust infrastructure.
 
-## Recognition
-
-<p align="center">
-  <a href="https://www.producthunt.com/posts/documenso?utm_source=badge-top-post-badge&utm_medium=badge&utm_souce=badge-documenso" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/top-post-badge.svg?post_id=395047&theme=light&period=daily" alt="Documenso - The&#0032;open&#0032;source&#0032;DocuSign&#0032;alternative | Product Hunt" style="width: 250px; height: 54px;" width="250" height="54" /></a>
-  <a href="https://www.producthunt.com/posts/documenso?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-documenso" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=395047&theme=light" alt="Documenso - The&#0032;Open&#0032;Source&#0032;DocuSign&#0032;Alternative&#0046; | Product Hunt" style="width: 250px; height: 54px;" width="250" height="54" /></a>
-</p>
-
-## Community and Next Steps 🎯
-
-We're currently working on a redesign of the application, including a revamp of the codebase, so Documenso can be more intuitive to use and robust to develop upon.
-
-- Check out the first source code release in this repository and test it.
-- Tell us what you think in the [Discussions](https://github.com/documenso/documenso/discussions).
-- Join the [Discord server](https://documen.so/discord) for any questions and getting to know to other community members.
-- ⭐ the repository to help us raise awareness.
-- Spread the word on Twitter that Documenso is working towards a more open signing tool.
-- Fix or create [issues](https://github.com/documenso/documenso/issues), that are needed for the first production release.
-
-## Contributing
-
-- To contribute, please see our [contribution guide](https://github.com/documenso/documenso/blob/main/CONTRIBUTING.md).
-
-## Contact us
-
-Contact us if you are interested in our Enterprise plan for large organizations that need extra flexibility and control.
-
-<a href="https://cal.com/timurercan/enterprise-customers?utm_source=banner&utm_campaign=oss"><img alt="Book us with Cal.com" src="https://cal.com/book-with-cal-dark.svg" /></a>
-
 ## Tech Stack
+
 <p align="left">
   <a href="https://www.typescriptlang.org"><img src="https://shields.io/badge/TypeScript-3178C6?logo=TypeScript&logoColor=FFF&style=flat-square" alt="TypeScript"></a>
   <a href="https://nextjs.org/"><img src="https://img.shields.io/badge/next.js-000000?style=flat-square&logo=nextdotjs&logoColor=white" alt="NextJS"></a>
@@ -85,10 +32,9 @@ Contact us if you are interested in our Enterprise plan for large organizations 
   <a href=""><img src="" alt=""></a>
 </p>
 
-
 - [Typescript](https://www.typescriptlang.org/) - Language
 - [Next.js](https://nextjs.org/) - Framework
-- [Prisma](https://www.prisma.io/)  - ORM
+- [Prisma](https://www.prisma.io/) - ORM
 - [Tailwind](https://tailwindcss.com/) - CSS
 - [shadcn/ui](https://ui.shadcn.com/) - Component Library
 - [NextAuth.js](https://next-auth.js.org/) - Authentication
@@ -142,7 +88,7 @@ npm run d
 
 #### Access Points for Your Application
 
-1. **App** - http://localhost:3000
+1. **App** - http://localhost:3002
 2. **Incoming Mail Access** - http://localhost:9000
 3. **Database Connection Details**
 
@@ -184,7 +130,7 @@ git clone https://github.com/<your-username>/documenso
 
 6. Run `npm run dev` in the root directory to start
 
-7. Register a new user at http://localhost:3000/signup
+7. Register a new user at http://localhost:3002/signup
 
 ---
 
@@ -269,13 +215,13 @@ cd apps/web
 npm run start
 ```
 
-This will start the server on `localhost:3000`. For now, any reverse proxy can then do the frontend and SSL termination.
+This will start the server on `localhost:3002`. For now, any reverse proxy can then do the frontend and SSL termination.
 
-> If you want to run with another port than 3000, you can start the application with `next -p <ANY PORT>` from the `apps/web` folder.
+> If you want to run with another port than 3002, you can start the application with `next -p <ANY PORT>` from the `apps/web` folder.
 
 ### Run as a service
 
-You can use a systemd service file to run the app. Here is a simple example of the service running on port 3500 (using 3000 by default):
+You can use a systemd service file to run the app. Here is a simple example of the service running on port 3500 (using 3002 by default):
 
 ```bash
 [Unit]
@@ -361,7 +307,3 @@ npm run with:env -- npx myscript
 ```
 
 This will load environment variables from your `.env` and `.env.local` files.
-
-## Repo Activity
-
-![Repository Activity](https://repobeats.axiom.co/api/embed/622a2e9aa709696f7226304b5b7178a5741b3868.svg)

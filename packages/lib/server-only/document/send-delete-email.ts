@@ -7,7 +7,7 @@ import { DocumentSuperDeleteEmailTemplate } from '@documenso/email/templates/doc
 import { prisma } from '@documenso/prisma';
 
 import { getI18nInstance } from '../../client-only/providers/i18n.server';
-import { NEXT_PUBLIC_WEBAPP_URL } from '../../constants/app';
+import { WEBAPP_BASE_URL } from '../../constants/app';
 import { AppError, AppErrorCode } from '../../errors/app-error';
 import { extractDerivedDocumentEmailSettings } from '../../types/document-email';
 import { renderEmailWithI18N } from '../../utils/render-email-with-i18n';
@@ -50,7 +50,7 @@ export const sendDeleteEmail = async ({ documentId, reason }: SendDeleteEmailOpt
 
   const { email, name } = document.user;
 
-  const assetBaseUrl = NEXT_PUBLIC_WEBAPP_URL() || 'http://localhost:3000';
+  const assetBaseUrl = WEBAPP_BASE_URL;
 
   const template = createElement(DocumentSuperDeleteEmailTemplate, {
     documentName: document.title,

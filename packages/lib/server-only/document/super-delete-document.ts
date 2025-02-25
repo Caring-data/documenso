@@ -10,7 +10,7 @@ import { prisma } from '@documenso/prisma';
 import { DocumentStatus, SendStatus } from '@documenso/prisma/client';
 
 import { getI18nInstance } from '../../client-only/providers/i18n.server';
-import { NEXT_PUBLIC_WEBAPP_URL } from '../../constants/app';
+import { WEBAPP_BASE_URL } from '../../constants/app';
 import { FROM_ADDRESS, FROM_NAME } from '../../constants/email';
 import { AppError, AppErrorCode } from '../../errors/app-error';
 import { DOCUMENT_AUDIT_LOG_TYPE } from '../../types/document-audit-logs';
@@ -66,7 +66,7 @@ export const superDeleteDocument = async ({ id, requestMetadata }: SuperDeleteDo
           return;
         }
 
-        const assetBaseUrl = NEXT_PUBLIC_WEBAPP_URL() || 'http://localhost:3000';
+        const assetBaseUrl = WEBAPP_BASE_URL;
         const template = createElement(DocumentCancelTemplate, {
           documentName: document.title,
           inviterName: user.name || undefined,

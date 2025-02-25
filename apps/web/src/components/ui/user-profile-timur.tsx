@@ -6,7 +6,7 @@ import { Trans } from '@lingui/macro';
 import { File } from 'lucide-react';
 
 import timurImage from '@documenso/assets/images/timur.png';
-import { NEXT_PUBLIC_WEBAPP_URL } from '@documenso/lib/constants/app';
+import { WEBAPP_BASE_URL } from '@documenso/lib/constants/app';
 import { VerifiedIcon } from '@documenso/ui/icons/verified';
 import { cn } from '@documenso/ui/lib/utils';
 import { Button } from '@documenso/ui/primitives/button';
@@ -17,7 +17,7 @@ export type UserProfileTimurProps = {
 };
 
 export const UserProfileTimur = ({ className, rows = 2 }: UserProfileTimurProps) => {
-  const baseUrl = new URL(NEXT_PUBLIC_WEBAPP_URL() ?? 'http://localhost:3000');
+  const baseUrl = new URL(WEBAPP_BASE_URL);
 
   return (
     <div

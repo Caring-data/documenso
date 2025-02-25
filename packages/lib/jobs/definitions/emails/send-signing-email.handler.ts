@@ -13,7 +13,7 @@ import {
 } from '@documenso/prisma/client';
 
 import { getI18nInstance } from '../../../client-only/providers/i18n.server';
-import { NEXT_PUBLIC_WEBAPP_URL } from '../../../constants/app';
+import { NEXT_PUBLIC_WEBAPP_URL, WEBAPP_BASE_URL } from '../../../constants/app';
 import { FROM_ADDRESS, FROM_NAME } from '../../../constants/email';
 import {
   RECIPIENT_ROLES_DESCRIPTION,
@@ -133,7 +133,7 @@ export const run = async ({
     'document.name': document.title,
   };
 
-  const assetBaseUrl = NEXT_PUBLIC_WEBAPP_URL() || 'http://localhost:3000';
+  const assetBaseUrl = WEBAPP_BASE_URL;
   const signDocumentLink = `${NEXT_PUBLIC_WEBAPP_URL()}/sign/${recipient.token}`;
 
   const template = createElement(DocumentInviteEmailTemplate, {

@@ -3,7 +3,7 @@
 import { Trans } from '@lingui/macro';
 import { File, User2 } from 'lucide-react';
 
-import { NEXT_PUBLIC_WEBAPP_URL } from '@documenso/lib/constants/app';
+import { WEBAPP_BASE_URL } from '@documenso/lib/constants/app';
 import type { User } from '@documenso/prisma/client';
 import { VerifiedIcon } from '@documenso/ui/icons/verified';
 import { cn } from '@documenso/ui/lib/utils';
@@ -16,7 +16,7 @@ export type UserProfileSkeletonProps = {
 };
 
 export const UserProfileSkeleton = ({ className, user, rows = 2 }: UserProfileSkeletonProps) => {
-  const baseUrl = new URL(NEXT_PUBLIC_WEBAPP_URL() ?? 'http://localhost:3000');
+  const baseUrl = new URL(WEBAPP_BASE_URL);
 
   return (
     <div

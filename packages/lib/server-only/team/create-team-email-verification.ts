@@ -122,7 +122,7 @@ export const sendTeamEmailVerificationEmail = async (
     teamGlobalSettings?: TeamGlobalSettings | null;
   },
 ) => {
-  const assetBaseUrl = process.env.NEXT_PUBLIC_WEBAPP_URL || 'http://localhost:3000';
+  const assetBaseUrl = WEBAPP_BASE_URL;
 
   const template = createElement(ConfirmTeamEmailTemplate, {
     assetBaseUrl,

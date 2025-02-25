@@ -21,7 +21,7 @@ services:
       database:
         condition: service_healthy
     environment:
-      - PORT=${PORT:-3000}
+      - PORT=${PORT:-3002}
       - NEXTAUTH_URL=${NEXTAUTH_URL:-${NEXT_PUBLIC_WEBAPP_URL}}
       - NEXTAUTH_SECRET=${NEXTAUTH_SECRET:?err}
       - NEXT_PRIVATE_ENCRYPTION_KEY=${NEXT_PRIVATE_ENCRYPTION_KEY:?err}
@@ -63,7 +63,7 @@ services:
       - NEXT_PRIVATE_SIGNING_LOCAL_FILE_PATH=${NEXT_PRIVATE_SIGNING_LOCAL_FILE_PATH:-/opt/documenso/cert.p12}
       - NEXT_PRIVATE_SIGNING_PASSPHRASE=${NEXT_PRIVATE_SIGNING_PASSPHRASE}
     ports:
-      - ${PORT:-3000}:${PORT:-3000}
+      - ${PORT:-3002}:${PORT:-3002}
     volumes:
       - /opt/documenso/cert.p12:/opt/documenso/cert.p12
 

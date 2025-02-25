@@ -24,7 +24,7 @@ export const LOCAL_FEATURE_FLAGS: Record<string, boolean> = {
   app_allow_encrypted_documents: false,
   app_billing: NEXT_PUBLIC_FEATURE_BILLING_ENABLED() === 'true',
   app_document_page_view_history_sheet: false,
-  app_passkey: WEBAPP_BASE_URL === 'http://localhost:3000', // Temp feature flag.
+  app_passkey: WEBAPP_BASE_URL === 'http://localhost:3002', // Temp feature flag.
   app_public_profile: true,
   marketing_header_single_player_mode: false,
   marketing_profiles_announcement_bar: true,

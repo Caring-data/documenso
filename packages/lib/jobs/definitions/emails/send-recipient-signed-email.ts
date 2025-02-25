@@ -8,7 +8,7 @@ import { DocumentRecipientSignedEmailTemplate } from '@documenso/email/templates
 import { prisma } from '@documenso/prisma';
 
 import { getI18nInstance } from '../../../client-only/providers/i18n.server';
-import { NEXT_PUBLIC_WEBAPP_URL } from '../../../constants/app';
+import { WEBAPP_BASE_URL } from '../../../constants/app';
 import { FROM_ADDRESS, FROM_NAME } from '../../../constants/email';
 import { extractDerivedDocumentEmailSettings } from '../../../types/document-email';
 import { renderEmailWithI18N } from '../../../utils/render-email-with-i18n';
@@ -85,7 +85,7 @@ export const SEND_RECIPIENT_SIGNED_EMAIL_JOB_DEFINITION = {
       return;
     }
 
-    const assetBaseUrl = NEXT_PUBLIC_WEBAPP_URL() || 'http://localhost:3000';
+    const assetBaseUrl = WEBAPP_BASE_URL;
     const i18n = await getI18nInstance(document.documentMeta?.language);
 
     const template = createElement(DocumentRecipientSignedEmailTemplate, {

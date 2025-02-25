@@ -19,7 +19,7 @@ import { z } from 'zod';
 
 import communityCardsImage from '@documenso/assets/images/community-cards.png';
 import { useAnalytics } from '@documenso/lib/client-only/hooks/use-analytics';
-import { NEXT_PUBLIC_WEBAPP_URL } from '@documenso/lib/constants/app';
+import { WEBAPP_BASE_URL } from '@documenso/lib/constants/app';
 import { AppError, AppErrorCode } from '@documenso/lib/errors/app-error';
 import { trpc } from '@documenso/trpc/react';
 import { ZPasswordSchema } from '@documenso/trpc/server/auth-router/schema';
@@ -108,7 +108,7 @@ export const SignUpFormV2 = ({
 
   const utmSrc = searchParams?.get('utm_source') ?? null;
 
-  const baseUrl = new URL(NEXT_PUBLIC_WEBAPP_URL() ?? 'http://localhost:3000');
+  const baseUrl = new URL(WEBAPP_BASE_URL);
 
   const form = useForm<TSignUpFormV2Schema>({
     values: {
