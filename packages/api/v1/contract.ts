@@ -8,6 +8,8 @@ import {
   ZCreateDocumentMutationSchema,
   ZCreateFieldMutationSchema,
   ZCreateRecipientMutationSchema,
+  ZCreateTemplateMutationSchema,
+  ZCreateTemplateResponseSchema,
   ZDeleteDocumentMutationSchema,
   ZDeleteFieldMutationSchema,
   ZDeleteRecipientMutationSchema,
@@ -124,6 +126,20 @@ export const ApiContractV1 = c.router(
         404: ZUnsuccessfulResponseSchema,
       },
       summary: 'Get all templates',
+    },
+
+    createTemplate: {
+      method: 'POST',
+      path: '/api/v1/templates',
+      body: ZCreateTemplateMutationSchema,
+      responses: {
+        200: ZCreateTemplateResponseSchema,
+        401: ZUnsuccessfulResponseSchema,
+        404: ZUnsuccessfulResponseSchema,
+      },
+      summary: 'Create a new document from an existing template',
+      deprecated: true,
+      description: `This has been deprecated in favour of "/api/v1/templates/:templateId/generate-document". You may face unpredictable behavior using this endpoint as it is no longer maintained.`,
     },
 
     createDocumentFromTemplate: {

@@ -24,6 +24,7 @@ import {
   TeamMemberRole,
   TemplateType,
 } from '@documenso/prisma/client';
+import { TemplateSchema } from '@documenso/prisma/generated/zod';
 
 extendZodWithOpenApi(z);
 
@@ -177,6 +178,12 @@ export const ZCreateDocumentMutationSchema = z.object({
 
 export type TCreateDocumentMutationSchema = z.infer<typeof ZCreateDocumentMutationSchema>;
 
+export const ZCreateTemplateMutationSchema = z.object({
+  title: z.string().min(1).trim(),
+  type: z.nativeEnum(DocumentDataType),
+  data: z.string().min(1),
+});
+
 export const ZCreateDocumentMutationResponseSchema = z.object({
   uploadUrl: z.string().min(1),
   documentId: z.number(),
@@ -234,6 +241,8 @@ export const ZCreateDocumentFromTemplateMutationSchema = z.object({
 export type TCreateDocumentFromTemplateMutationSchema = z.infer<
   typeof ZCreateDocumentFromTemplateMutationSchema
 >;
+
+export const ZCreateTemplateResponseSchema = TemplateSchema;
 
 export const ZCreateDocumentFromTemplateMutationResponseSchema = z.object({
   documentId: z.number(),
