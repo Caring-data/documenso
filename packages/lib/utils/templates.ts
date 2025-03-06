@@ -19,7 +19,7 @@ export const formatDirectTemplatePath = (token: string) => {
 export const generateRecipientPlaceholder = (index: number) => {
   return {
     name: `Recipient ${index}`,
-    email: `recipient.${index}@documenso.com`,
+    email: `recipient.${index}@caringdata.com`,
   };
 };
 

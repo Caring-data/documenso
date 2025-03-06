@@ -1,7 +1,6 @@
 import { createNextRoute } from '@ts-rest/next';
 import { match } from 'ts-pattern';
 
-import { getServerLimits } from '@documenso/ee/server-only/limits/server';
 import { NEXT_PUBLIC_WEBAPP_URL } from '@documenso/lib/constants/app';
 import { DATE_FORMATS, DEFAULT_DOCUMENT_DATE_FORMAT } from '@documenso/lib/constants/date-formats';
 import '@documenso/lib/constants/time-zones';
@@ -30,6 +29,7 @@ import { createTeamMemberInvites } from '@documenso/lib/server-only/team/create-
 import { deleteTeamMembers } from '@documenso/lib/server-only/team/delete-team-members';
 import { createDocumentFromTemplate } from '@documenso/lib/server-only/template/create-document-from-template';
 import { createDocumentFromTemplateLegacy } from '@documenso/lib/server-only/template/create-document-from-template-legacy';
+import { createTemplate } from '@documenso/lib/server-only/template/create-template';
 import { deleteTemplate } from '@documenso/lib/server-only/template/delete-template';
 import { findTemplates } from '@documenso/lib/server-only/template/find-templates';
 import { getTemplateById } from '@documenso/lib/server-only/template/get-template-by-id';
@@ -260,17 +260,6 @@ export const ApiContractV1Implementation = createNextRoute(ApiContractV1, {
         };
       }
 
-      const { remaining } = await getServerLimits({ email: user.email, teamId: team?.id });
-
-      if (remaining.documents <= 0) {
-        return {
-          status: 400,
-          body: {
-            message: 'You have reached the maximum number of documents allowed for this month',
-          },
-        };
-      }
-
       const dateFormat = body.meta.dateFormat
         ? DATE_FORMATS.find((format) => format.value === body.meta.dateFormat)
         : DATE_FORMATS.find((format) => format.value === DEFAULT_DOCUMENT_DATE_FORMAT);
@@ -463,19 +452,39 @@ export const ApiContractV1Implementation = createNextRoute(ApiContractV1, {
     }
   }),
 
-  createDocumentFromTemplate: authenticatedMiddleware(async (args, user, team, { metadata }) => {
-    const { body, params } = args;
+  createTemplate: authenticatedMiddleware(async (args, user, team) => {
+    const { body } = args;
+    try {
+      const fileName = body.title.endsWith('.pdf') ? body.title : `${body.title}.pdf`;
 
-    const { remaining } = await getServerLimits({ email: user.email, teamId: team?.id });
+      const { id: templateDocumentDataId } = await createDocumentData({
+        type: body.type,
+        data: body.data,
+      });
 
-    if (remaining.documents <= 0) {
+      const createdTemplate = await createTemplate({
+        userId: user.id,
+        teamId: team?.id,
+        title: fileName,
+        templateDocumentDataId,
+      });
+
       return {
-        status: 400,
+        status: 200,
+        body: createdTemplate,
+      };
+    } catch (err) {
+      return {
+        status: 404,
         body: {
-          message: 'You have reached the maximum number of documents allowed for this month',
+          message: 'Template not found',
         },
       };
     }
+  }),
+
+  createDocumentFromTemplate: authenticatedMiddleware(async (args, user, team, { metadata }) => {
+    const { body, params } = args;
 
     const templateId = Number(params.templateId);
 
@@ -563,17 +572,6 @@ export const ApiContractV1Implementation = createNextRoute(ApiContractV1, {
 
   generateDocumentFromTemplate: authenticatedMiddleware(async (args, user, team, { metadata }) => {
     const { body, params } = args;
-
-    const { remaining } = await getServerLimits({ email: user.email, teamId: team?.id });
-
-    if (remaining.documents <= 0) {
-      return {
-        status: 400,
-        body: {
-          message: 'You have reached the maximum number of documents allowed for this month',
-        },
-      };
-    }
 
     const templateId = Number(params.templateId);
 

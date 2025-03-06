@@ -1,7 +1,8 @@
 import { initClient } from '@ts-rest/core';
 
-import { ApiContractV1 } from '../contract';
 import { NEXT_PUBLIC_API_URL } from '@documenso/lib/constants/app';
+
+import { ApiContractV1 } from '../contract';
 
 const main = async () => {
   const client = initClient(ApiContractV1, {
