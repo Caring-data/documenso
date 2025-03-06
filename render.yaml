@@ -164,6 +164,12 @@ services:
       - key: NEXT_PUBLIC_DISABLE_SIGNUP
         sync: false
 
+      # User Configuration for Seeding
+      - key: USER_EMAIL
+        sync: false
+      - key: USER_PASSWORD
+        sync: false
+
 databases:
   - name: documenso-db
     plan: free
