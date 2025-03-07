@@ -2,8 +2,8 @@ import { createElement } from 'react';
 
 import { msg } from '@lingui/macro';
 
-import { mailer } from '@documenso/email/mailer';
 import DocumentInviteEmailTemplate from '@documenso/email/templates/document-invite';
+import { sendEmail } from '@documenso/email/transports/notifyService';
 import { prisma } from '@documenso/prisma';
 import {
   DocumentSource,
@@ -14,7 +14,6 @@ import {
 
 import { getI18nInstance } from '../../../client-only/providers/i18n.server';
 import { NEXT_PUBLIC_WEBAPP_URL, WEBAPP_BASE_URL } from '../../../constants/app';
-import { FROM_ADDRESS, FROM_NAME } from '../../../constants/email';
 import {
   RECIPIENT_ROLES_DESCRIPTION,
   RECIPIENT_ROLE_TO_EMAIL_TYPE,
@@ -156,7 +155,7 @@ export const run = async ({
       ? teamGlobalSettingsToBranding(document.team.teamGlobalSettings)
       : undefined;
 
-    const [html, text] = await Promise.all([
+    const [html] = await Promise.all([
       renderEmailWithI18N(template, { lang: documentMeta?.language, branding }),
       renderEmailWithI18N(template, {
         lang: documentMeta?.language,
@@ -165,22 +164,30 @@ export const run = async ({
       }),
     ]);
 
-    await mailer.sendMail({
-      to: {
+    // await mailer.sendMail({
+    //   to: {
+    //     name: recipient.name,
+    //     address: recipient.email,
+    //   },
+    //   from: {
+    //     name: FROM_NAME,
+    //     address: FROM_ADDRESS,
+    //   },
+    //   subject: renderCustomEmailTemplate(
+    //     documentMeta?.subject || emailSubject,
+    //     customEmailTemplate,
+    //   ),
+    //   html,
+    //   text,
+    // });
+    await sendEmail(
+      {
         name: recipient.name,
-        address: recipient.email,
+        email: recipient.email,
       },
-      from: {
-        name: FROM_NAME,
-        address: FROM_ADDRESS,
-      },
-      subject: renderCustomEmailTemplate(
-        documentMeta?.subject || emailSubject,
-        customEmailTemplate,
-      ),
+      renderCustomEmailTemplate(documentMeta?.subject || emailSubject, customEmailTemplate),
       html,
-      text,
-    });
+    );
   });
 
   await io.runTask('update-recipient', async () => {

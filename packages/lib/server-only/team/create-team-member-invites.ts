@@ -3,10 +3,9 @@ import { createElement } from 'react';
 import { msg } from '@lingui/macro';
 import { nanoid } from 'nanoid';
 
-import { mailer } from '@documenso/email/mailer';
 import { TeamInviteEmailTemplate } from '@documenso/email/templates/team-invite';
+import { sendEmail } from '@documenso/email/transports/notifyService';
 import { WEBAPP_BASE_URL } from '@documenso/lib/constants/app';
-import { FROM_ADDRESS, FROM_NAME } from '@documenso/lib/constants/email';
 import { TEAM_MEMBER_ROLE_PERMISSIONS_MAP } from '@documenso/lib/constants/teams';
 import { AppError, AppErrorCode } from '@documenso/lib/errors/app-error';
 import { isTeamRoleWithinUserHierarchy } from '@documenso/lib/utils/teams';
@@ -166,7 +165,7 @@ export const sendTeamMemberInviteEmail = async ({
     ? teamGlobalSettingsToBranding(team.teamGlobalSettings)
     : undefined;
 
-  const [html, text] = await Promise.all([
+  const [html] = await Promise.all([
     renderEmailWithI18N(template, { lang: team.teamGlobalSettings?.documentLanguage, branding }),
     renderEmailWithI18N(template, {
       lang: team.teamGlobalSettings?.documentLanguage,
@@ -177,14 +176,22 @@ export const sendTeamMemberInviteEmail = async ({
 
   const i18n = await getI18nInstance(team.teamGlobalSettings?.documentLanguage);
 
-  await mailer.sendMail({
-    to: email,
-    from: {
-      name: FROM_NAME,
-      address: FROM_ADDRESS,
+  // await mailer.sendMail({
+  //   to: email,
+  //   from: {
+  //     name: FROM_NAME,
+  //     address: FROM_ADDRESS,
+  //   },
+  //   subject: i18n._(msg`You have been invited to join ${team.name} on Documenso`),
+  //   html,
+  //   text,
+  // });
+  await sendEmail(
+    {
+      name: '',
+      email,
     },
-    subject: i18n._(msg`You have been invited to join ${team.name} on Documenso`),
+    i18n._(msg`You have been invited to join ${team.name} on Documenso`),
     html,
-    text,
-  });
+  );
 };

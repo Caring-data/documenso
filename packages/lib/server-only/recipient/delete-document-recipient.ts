@@ -2,8 +2,8 @@ import { createElement } from 'react';
 
 import { msg } from '@lingui/macro';
 
-import { mailer } from '@documenso/email/mailer';
 import RecipientRemovedFromDocumentTemplate from '@documenso/email/templates/recipient-removed-from-document';
+import { sendEmail } from '@documenso/email/transports/notifyService';
 import { DOCUMENT_AUDIT_LOG_TYPE } from '@documenso/lib/types/document-audit-logs';
 import type { ApiRequestMetadata } from '@documenso/lib/universal/extract-request-metadata';
 import { prisma } from '@documenso/prisma';
@@ -11,7 +11,6 @@ import { SendStatus } from '@documenso/prisma/client';
 
 import { getI18nInstance } from '../../client-only/providers/i18n.server';
 import { WEBAPP_BASE_URL } from '../../constants/app';
-import { FROM_ADDRESS, FROM_NAME } from '../../constants/email';
 import { AppError, AppErrorCode } from '../../errors/app-error';
 import { extractDerivedDocumentEmailSettings } from '../../types/document-email';
 import { createDocumentAuditLogData } from '../../utils/document-audit-logs';
@@ -137,25 +136,33 @@ export const deleteDocumentRecipient = async ({
       assetBaseUrl,
     });
 
-    const [html, text] = await Promise.all([
+    const [html] = await Promise.all([
       renderEmailWithI18N(template, { lang: document.documentMeta?.language }),
       renderEmailWithI18N(template, { lang: document.documentMeta?.language, plainText: true }),
     ]);
 
     const i18n = await getI18nInstance(document.documentMeta?.language);
 
-    await mailer.sendMail({
-      to: {
-        address: recipientToDelete.email,
+    // await mailer.sendMail({
+    //   to: {
+    //     address: recipientToDelete.email,
+    //     name: recipientToDelete.name,
+    //   },
+    //   from: {
+    //     name: FROM_NAME,
+    //     address: FROM_ADDRESS,
+    //   },
+    //   subject: i18n._(msg`You have been removed from a document`),
+    //   html,
+    //   text,
+    // });
+    await sendEmail(
+      {
         name: recipientToDelete.name,
+        email: recipientToDelete.email,
       },
-      from: {
-        name: FROM_NAME,
-        address: FROM_ADDRESS,
-      },
-      subject: i18n._(msg`You have been removed from a document`),
+      i18n._(msg`You have been removed from a document`),
       html,
-      text,
-    });
+    );
   }
 };

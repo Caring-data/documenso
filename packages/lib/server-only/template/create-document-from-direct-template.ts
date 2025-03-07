@@ -5,8 +5,8 @@ import { DateTime } from 'luxon';
 import { match } from 'ts-pattern';
 import { z } from 'zod';
 
-import { mailer } from '@documenso/email/mailer';
 import { DocumentCreatedFromDirectTemplateEmailTemplate } from '@documenso/email/templates/document-created-from-direct-template';
+import { sendEmail } from '@documenso/email/transports/notifyService';
 import { nanoid } from '@documenso/lib/universal/id';
 import { prisma } from '@documenso/prisma';
 import type { Field, Signature } from '@documenso/prisma/client';
@@ -567,28 +567,36 @@ export const createDocumentFromDirectTemplate = async ({
       ? teamGlobalSettingsToBranding(template.team.teamGlobalSettings)
       : undefined;
 
-    const [html, text] = await Promise.all([
+    const [html] = await Promise.all([
       renderEmailWithI18N(emailTemplate, { lang: metaLanguage, branding }),
       renderEmailWithI18N(emailTemplate, { lang: metaLanguage, branding, plainText: true }),
     ]);
 
     const i18n = await getI18nInstance(metaLanguage);
 
-    await mailer.sendMail({
-      to: [
-        {
-          name: templateOwner.name || '',
-          address: templateOwner.email,
-        },
-      ],
-      from: {
-        name: process.env.NEXT_PRIVATE_SMTP_FROM_NAME || 'Documenso',
-        address: process.env.NEXT_PRIVATE_SMTP_FROM_ADDRESS || 'noreply@documenso.com',
+    // await mailer.sendMail({
+    //   to: [
+    //     {
+    //       name: templateOwner.name || '',
+    //       address: templateOwner.email,
+    //     },
+    //   ],
+    //   from: {
+    //     name: process.env.NEXT_PRIVATE_SMTP_FROM_NAME || 'Documenso',
+    //     address: process.env.NEXT_PRIVATE_SMTP_FROM_ADDRESS || 'noreply@documenso.com',
+    //   },
+    //   subject: i18n._(msg`Document created from direct template`),
+    //   html,
+    //   text,
+    // });
+    await sendEmail(
+      {
+        name: templateOwner.name || '',
+        email: templateOwner.email,
       },
-      subject: i18n._(msg`Document created from direct template`),
+      i18n._(msg`Document created from direct template`),
       html,
-      text,
-    });
+    );
 
     return {
       token: createdDirectRecipient.token,

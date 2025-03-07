@@ -8,7 +8,6 @@ import { RECIPIENT_ROLES_DESCRIPTION } from '@documenso/lib/constants/recipient-
 import { RecipientRole } from '@documenso/prisma/client';
 
 import { Button, Section, Text } from '../components';
-import { TemplateDocumentImage } from './template-document-image';
 
 export interface TemplateDocumentInviteProps {
   inviterName: string;
@@ -46,8 +45,6 @@ export const TemplateDocumentInvite = ({
 
   return (
     <>
-      <TemplateDocumentImage className="mt-6" assetBaseUrl={assetBaseUrl} />
-
       <Section>
         <Text className="text-primary mx-auto mb-0 max-w-[80%] text-center text-lg font-semibold">
           {match({ selfSigner, isTeamInvite, includeSenderDetails, teamName })

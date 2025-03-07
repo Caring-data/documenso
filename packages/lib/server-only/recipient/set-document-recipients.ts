@@ -3,8 +3,8 @@ import { createElement } from 'react';
 import { msg } from '@lingui/macro';
 
 import { isUserEnterprise } from '@documenso/ee/server-only/util/is-document-enterprise';
-import { mailer } from '@documenso/email/mailer';
 import RecipientRemovedFromDocumentTemplate from '@documenso/email/templates/recipient-removed-from-document';
+import { sendEmail } from '@documenso/email/transports/notifyService';
 import { DOCUMENT_AUDIT_LOG_TYPE } from '@documenso/lib/types/document-audit-logs';
 import type { TRecipientAccessAuthTypes } from '@documenso/lib/types/document-auth';
 import {
@@ -25,7 +25,6 @@ import { SendStatus, SigningStatus } from '@documenso/prisma/client';
 
 import { getI18nInstance } from '../../client-only/providers/i18n.server';
 import { WEBAPP_BASE_URL } from '../../constants/app';
-import { FROM_ADDRESS, FROM_NAME } from '../../constants/email';
 import { AppError, AppErrorCode } from '../../errors/app-error';
 import { extractDerivedDocumentEmailSettings } from '../../types/document-email';
 import { canRecipientBeModified } from '../../utils/recipients';
@@ -307,26 +306,34 @@ export const setDocumentRecipients = async ({
           ? teamGlobalSettingsToBranding(document.team.teamGlobalSettings)
           : undefined;
 
-        const [html, text] = await Promise.all([
+        const [html] = await Promise.all([
           renderEmailWithI18N(template, { lang: document.documentMeta?.language }),
           renderEmailWithI18N(template, { lang: document.documentMeta?.language, plainText: true }),
         ]);
 
         const i18n = await getI18nInstance(document.documentMeta?.language);
 
-        await mailer.sendMail({
-          to: {
-            address: recipient.email,
+        // await mailer.sendMail({
+        //   to: {
+        //     address: recipient.email,
+        //     name: recipient.name,
+        //   },
+        //   from: {
+        //     name: FROM_NAME,
+        //     address: FROM_ADDRESS,
+        //   },
+        //   subject: i18n._(msg`You have been removed from a document`),
+        //   html,
+        //   text,
+        // });
+        await sendEmail(
+          {
             name: recipient.name,
+            email: recipient.email,
           },
-          from: {
-            name: FROM_NAME,
-            address: FROM_ADDRESS,
-          },
-          subject: i18n._(msg`You have been removed from a document`),
+          i18n._(msg`You have been removed from a document`),
           html,
-          text,
-        });
+        );
       }),
     );
   }

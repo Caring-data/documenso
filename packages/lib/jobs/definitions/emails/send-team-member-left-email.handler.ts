@@ -2,14 +2,13 @@ import { createElement } from 'react';
 
 import { msg } from '@lingui/macro';
 
-import { mailer } from '@documenso/email/mailer';
 import TeamJoinEmailTemplate from '@documenso/email/templates/team-join';
+import { sendEmail } from '@documenso/email/transports/notifyService';
 import { prisma } from '@documenso/prisma';
 import { TeamMemberRole } from '@documenso/prisma/client';
 
 import { getI18nInstance } from '../../../client-only/providers/i18n.server';
 import { WEBAPP_BASE_URL } from '../../../constants/app';
-import { FROM_ADDRESS, FROM_NAME } from '../../../constants/email';
 import { renderEmailWithI18N } from '../../../utils/render-email-with-i18n';
 import { teamGlobalSettingsToBranding } from '../../../utils/team-global-settings-to-branding';
 import type { JobRunIO } from '../../client/_internal/job';
@@ -64,7 +63,7 @@ export const run = async ({
 
       const lang = team.teamGlobalSettings?.documentLanguage;
 
-      const [html, text] = await Promise.all([
+      const [html] = await Promise.all([
         renderEmailWithI18N(emailContent, {
           lang,
           branding,
@@ -78,16 +77,24 @@ export const run = async ({
 
       const i18n = await getI18nInstance(lang);
 
-      await mailer.sendMail({
-        to: member.user.email,
-        from: {
-          name: FROM_NAME,
-          address: FROM_ADDRESS,
+      // await mailer.sendMail({
+      //   to: member.user.email,
+      //   from: {
+      //     name: FROM_NAME,
+      //     address: FROM_ADDRESS,
+      //   },
+      //   subject: i18n._(msg`A team member has left ${team.name}`),
+      //   html,
+      //   text,
+      // });
+      await sendEmail(
+        {
+          name: '',
+          email: member.user.email,
         },
-        subject: i18n._(msg`A team member has left ${team.name}`),
+        i18n._(msg`A team member has left ${team.name}`),
         html,
-        text,
-      });
+      );
     });
   }
 };

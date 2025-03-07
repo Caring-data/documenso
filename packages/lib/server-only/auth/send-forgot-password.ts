@@ -2,8 +2,8 @@ import { createElement } from 'react';
 
 import { msg } from '@lingui/macro';
 
-import { mailer } from '@documenso/email/mailer';
 import { ForgotPasswordTemplate } from '@documenso/email/templates/forgot-password';
+import { sendEmail } from '@documenso/email/transports/notifyService';
 import { prisma } from '@documenso/prisma';
 
 import { getI18nInstance } from '../../client-only/providers/i18n.server';
@@ -42,24 +42,33 @@ export const sendForgotPassword = async ({ userId }: SendForgotPasswordOptions) 
     resetPasswordLink,
   });
 
-  const [html, text] = await Promise.all([
+  const [html] = await Promise.all([
     renderEmailWithI18N(template),
     renderEmailWithI18N(template, { plainText: true }),
   ]);
 
   const i18n = await getI18nInstance();
 
-  return await mailer.sendMail({
-    to: {
-      address: user.email,
+  // return await mailer.sendMail({
+  //   to: {
+  //     address: user.email,
+  //     name: user.name || '',
+  //   },
+  //   from: {
+  //     name: process.env.NEXT_PRIVATE_SMTP_FROM_NAME || 'Documenso',
+  //     address: process.env.NEXT_PRIVATE_SMTP_FROM_ADDRESS || 'noreply@documenso.com',
+  //   },
+  //   subject: i18n._(msg`Forgot Password?`),
+  //   html,
+  //   text,
+  // });
+
+  return await sendEmail(
+    {
       name: user.name || '',
+      email: user.email,
     },
-    from: {
-      name: process.env.NEXT_PRIVATE_SMTP_FROM_NAME || 'Documenso',
-      address: process.env.NEXT_PRIVATE_SMTP_FROM_ADDRESS || 'noreply@documenso.com',
-    },
-    subject: i18n._(msg`Forgot Password?`),
+    i18n._(msg`Forgot Password?`),
     html,
-    text,
-  });
+  );
 };

@@ -104,6 +104,8 @@ export const ZDocumentManySchema = DocumentSchema.pick({
   deletedAt: true,
   teamId: true,
   templateId: true,
+  formKey: true,
+  residentId: true,
 }).extend({
   user: UserSchema.pick({
     id: true,

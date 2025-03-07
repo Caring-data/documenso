@@ -2,10 +2,9 @@ import { createElement } from 'react';
 
 import { msg } from '@lingui/macro';
 
-import { mailer } from '@documenso/email/mailer';
 import { TeamTransferRequestTemplate } from '@documenso/email/templates/team-transfer-request';
+import { sendEmail } from '@documenso/email/transports/notifyService';
 import { WEBAPP_BASE_URL } from '@documenso/lib/constants/app';
-import { FROM_ADDRESS, FROM_NAME } from '@documenso/lib/constants/email';
 import { createTokenVerification } from '@documenso/lib/utils/token-verification';
 import { prisma } from '@documenso/prisma';
 
@@ -97,25 +96,33 @@ export const requestTeamOwnershipTransfer = async ({
         token,
       });
 
-      const [html, text] = await Promise.all([
+      const [html] = await Promise.all([
         renderEmailWithI18N(template),
         renderEmailWithI18N(template, { plainText: true }),
       ]);
 
       const i18n = await getI18nInstance();
 
-      await mailer.sendMail({
-        to: newOwnerUser.email,
-        from: {
-          name: FROM_NAME,
-          address: FROM_ADDRESS,
+      // await mailer.sendMail({
+      //   to: newOwnerUser.email,
+      //   from: {
+      //     name: FROM_NAME,
+      //     address: FROM_ADDRESS,
+      //   },
+      //   subject: i18n._(
+      //     msg`You have been requested to take ownership of team ${team.name} on Documenso`,
+      //   ),
+      //   html,
+      //   text,
+      // });
+      await sendEmail(
+        {
+          name: '',
+          email: newOwnerUser.email,
         },
-        subject: i18n._(
-          msg`You have been requested to take ownership of team ${team.name} on Documenso`,
-        ),
+        i18n._(msg`You have been requested to take ownership of team ${team.name} on Documenso`),
         html,
-        text,
-      });
+      );
     },
     { timeout: 30_000 },
   );

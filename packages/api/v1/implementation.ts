@@ -466,6 +466,7 @@ export const ApiContractV1Implementation = createNextRoute(ApiContractV1, {
         userId: user.id,
         teamId: team?.id,
         title: fileName,
+        formKey: body.title,
         templateDocumentDataId,
       });
 
@@ -572,7 +573,6 @@ export const ApiContractV1Implementation = createNextRoute(ApiContractV1, {
 
   generateDocumentFromTemplate: authenticatedMiddleware(async (args, user, team, { metadata }) => {
     const { body, params } = args;
-
     const templateId = Number(params.templateId);
 
     let document: Awaited<ReturnType<typeof createDocumentFromTemplate>> | null = null;
@@ -633,6 +633,26 @@ export const ApiContractV1Implementation = createNextRoute(ApiContractV1, {
         data: body.authOptions,
         requestMetadata: metadata,
       });
+    }
+
+    if (body.distributeDocument) {
+      try {
+        await sendDocument({
+          documentId: document.id,
+          userId: user.id,
+          teamId: team?.id,
+          requestMetadata: metadata,
+        });
+      } catch (err) {
+        console.error('Error sending document:', err);
+        return {
+          status: 500,
+          body: {
+            error: 'DOCUMENT_SEND_FAILED',
+            message: 'Document was created but failed to be sent.',
+          },
+        };
+      }
     }
 
     return {

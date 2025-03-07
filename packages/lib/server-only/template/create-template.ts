@@ -7,6 +7,7 @@ import type { TCreateTemplateMutationSchema } from '@documenso/trpc/server/templ
 export type CreateTemplateOptions = TCreateTemplateMutationSchema & {
   userId: number;
   teamId?: number;
+  formKey?: string;
 };
 
 export const ZCreateTemplateResponseSchema = TemplateSchema;
@@ -18,6 +19,7 @@ export const createTemplate = async ({
   userId,
   teamId,
   templateDocumentDataId,
+  formKey = '',
 }: CreateTemplateOptions) => {
   if (teamId) {
     await prisma.team.findFirstOrThrow({
@@ -38,6 +40,7 @@ export const createTemplate = async ({
       userId,
       templateDocumentDataId,
       teamId,
+      formKey,
     },
   });
 };
