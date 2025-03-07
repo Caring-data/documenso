@@ -336,8 +336,8 @@ model Document {
   template       Template?           @relation(fields: [templateId], references: [id], onDelete: SetNull)
   source         DocumentSource
 
-  residentId String @db.Uuid
-  formKey    String @db.VarChar(255)
+  residentId String? @db.Uuid
+  formKey    String? @db.VarChar(255)
 
   auditLogs DocumentAuditLog[]
 
@@ -699,8 +699,7 @@ model Template {
   publicTitle            String             @default("")
   publicDescription      String             @default("")
 
-  formKey   String         @db.VarChar(255)
-  status    TemplateStatus @default(ACTIVE)
+  formKey   String?   @db.VarChar(255)
   deletedAt DateTime?
 
   team                 Team?               @relation(fields: [teamId], references: [id], onDelete: Cascade)

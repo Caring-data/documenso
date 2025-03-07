@@ -1,7 +1,6 @@
 import { TRPCError } from '@trpc/server';
 
-import { getServerLimits } from '@documenso/ee/server-only/limits/server';
-import { AppError, AppErrorCode } from '@documenso/lib/errors/app-error';
+import { AppError } from '@documenso/lib/errors/app-error';
 import { jobs } from '@documenso/lib/jobs/client';
 import { getDocumentWithDetailsById } from '@documenso/lib/server-only/document/get-document-with-details-by-id';
 import { sendDocument } from '@documenso/lib/server-only/document/send-document';
@@ -229,12 +228,6 @@ export const templateRouter = router({
       const { teamId } = ctx;
       const { templateId, recipients, distributeDocument, customDocumentDataId } = input;
 
-      const limits = await getServerLimits({ email: ctx.user.email, teamId });
-
-      if (limits.remaining.documents === 0) {
-        throw new Error('You have reached your document limit.');
-      }
-
       const document: Document = await createDocumentFromTemplate({
         templateId,
         teamId,
@@ -329,16 +322,6 @@ export const templateRouter = router({
       const { templateId, directRecipientId } = input;
 
       const userId = ctx.user.id;
-
-      const template = await getTemplateById({ id: templateId, teamId, userId: ctx.user.id });
-
-      const limits = await getServerLimits({ email: ctx.user.email, teamId: template.teamId });
-
-      if (limits.remaining.directTemplates === 0) {
-        throw new AppError(AppErrorCode.LIMIT_EXCEEDED, {
-          message: 'You have reached your direct templates limit.',
-        });
-      }
 
       return await createTemplateDirectLink({ userId, teamId, templateId, directRecipientId });
     }),

@@ -1,10 +1,10 @@
-import { Trans, msg } from '@lingui/macro';
+import { msg } from '@lingui/macro';
 import { useLingui } from '@lingui/react';
 
 import { RECIPIENT_ROLES_DESCRIPTION } from '@documenso/lib/constants/recipient-roles';
 import type { RecipientRole } from '@documenso/prisma/client';
 
-import { Body, Container, Head, Hr, Html, Img, Link, Preview, Section, Text } from '../components';
+import { Body, Container, Head, Html, Img, Preview, Section } from '../components';
 import { useBranding } from '../providers/branding';
 import type { TemplateDocumentInviteProps } from '../template-components/template-document-invite';
 import { TemplateDocumentInvite } from '../template-components/template-document-invite';
@@ -59,19 +59,28 @@ export const DocumentInviteEmailTemplate = ({
       <Head />
       <Preview>{_(previewText)}</Preview>
 
-      <Body className="mx-auto my-auto bg-white font-sans">
+      <Body className="mx-auto my-auto flex w-11/12 flex-col items-center justify-center gap-6 rounded-lg bg-zinc-50 p-6">
         <Section>
-          <Container className="mx-auto mb-2 mt-8 max-w-xl rounded-lg border border-solid border-slate-200 p-4 backdrop-blur-sm">
+          <Container className="mb-4 flex w-full flex-col items-center justify-center gap-2 self-stretch rounded-lg border border-zinc-50 bg-white px-6 py-4">
             <Section>
               {branding.brandingEnabled && branding.brandingLogo ? (
                 <Img src={branding.brandingLogo} alt="Branding Logo" className="mb-4 h-6" />
               ) : (
-                <Img
-                  src={getAssetUrl('/static/logo.png')}
-                  alt="Documenso Logo"
-                  className="mb-4 h-6"
-                />
+                <div className="w-11/12 items-center justify-center gap-2 rounded-md bg-[#06C] p-4">
+                  <Img
+                    src={getAssetUrl('/static/file-pen-line.png')}
+                    alt="icon image - file pen line"
+                    className="mb-4 h-8"
+                  />
+                  <p className="text-center text-lg font-medium text-white">
+                    You are invited to sign a document
+                  </p>
+                </div>
               )}
+
+              {/* {customBody} */}
+
+              {customBody && <div dangerouslySetInnerHTML={{ __html: customBody }} />}
 
               <TemplateDocumentInvite
                 inviterName={inviterName}
@@ -88,7 +97,7 @@ export const DocumentInviteEmailTemplate = ({
             </Section>
           </Container>
 
-          <Container className="mx-auto mt-12 max-w-xl">
+          {/* <Container className="mx-auto mt-12 max-w-xl">
             <Section>
               {!isTeamInvite && (
                 <Text className="my-4 text-base font-semibold">
@@ -111,11 +120,9 @@ export const DocumentInviteEmailTemplate = ({
                 )}
               </Text>
             </Section>
-          </Container>
+          </Container> */}
 
-          <Hr className="mx-auto mt-12 max-w-xl" />
-
-          <Container className="mx-auto max-w-xl">
+          <Container className="flex w-full flex-col items-center justify-center gap-2 self-stretch rounded-lg border border-zinc-50 bg-white px-6 py-4">
             <TemplateFooter />
           </Container>
         </Section>

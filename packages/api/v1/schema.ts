@@ -308,6 +308,7 @@ export const ZGenerateDocumentFromTemplateMutationSchema = z.object({
     })
     .optional(),
   formValues: z.record(z.string(), z.union([z.string(), z.boolean(), z.number()])).optional(),
+  distributeDocument: z.boolean(),
 });
 
 export type TGenerateDocumentFromTemplateMutationSchema = z.infer<

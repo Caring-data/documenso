@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-import Link from 'next/link';
 
 import { Trans } from '@lingui/macro';
 import { env } from 'next-runtime-env';
@@ -40,7 +39,7 @@ export default async function SignInPage() {
           oidcProviderLabel={OIDC_PROVIDER_LABEL}
         />
 
-        {NEXT_PUBLIC_DISABLE_SIGNUP !== 'true' && (
+        {/* {NEXT_PUBLIC_DISABLE_SIGNUP !== 'true' && (
           <p className="text-muted-foreground mt-6 text-center text-sm">
             <Trans>
               Don't have an account?{' '}
@@ -49,7 +48,7 @@ export default async function SignInPage() {
               </Link>
             </Trans>
           </p>
-        )}
+        )} */}
       </div>
     </div>
   );

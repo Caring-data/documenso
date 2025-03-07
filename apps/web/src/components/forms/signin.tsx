@@ -2,18 +2,14 @@
 
 import { useEffect, useMemo, useState } from 'react';
 
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Trans, msg } from '@lingui/macro';
 import { useLingui } from '@lingui/react';
 import { browserSupportsWebAuthn, startAuthentication } from '@simplewebauthn/browser';
-import { KeyRoundIcon } from 'lucide-react';
 import { signIn } from 'next-auth/react';
 import { useForm } from 'react-hook-form';
-import { FaIdCardClip } from 'react-icons/fa6';
-import { FcGoogle } from 'react-icons/fc';
 import { match } from 'ts-pattern';
 import { z } from 'zod';
 
@@ -363,14 +359,14 @@ export const SignInForm = ({
 
                 <FormMessage />
 
-                <p className="mt-2 text-right">
+                {/* <p className="mt-2 text-right">
                   <Link
                     href="/forgot-password"
                     className="text-muted-foreground text-sm duration-200 hover:opacity-70"
                   >
                     <Trans>Forgot your password?</Trans>
                   </Link>
-                </p>
+                </p> */}
               </FormItem>
             )}
           />
@@ -384,7 +380,7 @@ export const SignInForm = ({
             {isSubmitting ? <Trans>Signing in...</Trans> : <Trans>Sign In</Trans>}
           </Button>
 
-          {(isGoogleSSOEnabled || isPasskeyEnabled || isOIDCSSOEnabled) && (
+          {/* {(isGoogleSSOEnabled || isPasskeyEnabled || isOIDCSSOEnabled) && (
             <div className="relative flex items-center justify-center gap-x-4 py-2 text-xs uppercase">
               <div className="bg-border h-px flex-1" />
               <span className="text-muted-foreground bg-transparent">
@@ -392,9 +388,9 @@ export const SignInForm = ({
               </span>
               <div className="bg-border h-px flex-1" />
             </div>
-          )}
+          )} */}
 
-          {isGoogleSSOEnabled && (
+          {/* {isGoogleSSOEnabled && (
             <Button
               type="button"
               size="lg"
@@ -435,7 +431,7 @@ export const SignInForm = ({
               {!isPasskeyLoading && <KeyRoundIcon className="-ml-1 mr-1 h-5 w-5" />}
               <Trans>Passkey</Trans>
             </Button>
-          )}
+          )} */}
         </fieldset>
       </form>
 

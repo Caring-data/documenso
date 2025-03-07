@@ -92,11 +92,11 @@ msgstr "{0}"
 msgid "{0} direct signing templates"
 msgstr "{0} direct signing templates"
 
-#: packages/lib/jobs/definitions/emails/send-signing-email.handler.ts:125
+#: packages/lib/jobs/definitions/emails/send-signing-email.handler.ts:124
 msgid "{0} has invited you to {recipientActionVerb} the document \"{1}\"."
 msgstr "{0} has invited you to {recipientActionVerb} the document \"{1}\"."
 
-#: packages/lib/jobs/definitions/emails/send-signing-email.handler.ts:118
+#: packages/lib/jobs/definitions/emails/send-signing-email.handler.ts:117
 msgid "{0} invited you to {recipientActionVerb} a document"
 msgstr "{0} invited you to {recipientActionVerb} a document"
 
@@ -116,8 +116,8 @@ msgstr "{0} of {1} documents remaining this month."
 msgid "{0} of {1} row(s) selected."
 msgstr "{0} of {1} row(s) selected."
 
-#: packages/lib/jobs/definitions/emails/send-signing-email.handler.ts:124
-#: packages/lib/server-only/document/resend-document.tsx:137
+#: packages/lib/jobs/definitions/emails/send-signing-email.handler.ts:123
+#: packages/lib/server-only/document/resend-document.tsx:136
 msgid "{0} on behalf of \"{1}\" has invited you to {recipientActionVerb} the document \"{2}\"."
 msgstr "{0} on behalf of \"{1}\" has invited you to {recipientActionVerb} the document \"{2}\"."
 
@@ -128,10 +128,6 @@ msgstr "{0} Recipient(s)"
 #: apps/web/src/app/(signing)/sign/[token]/text-field.tsx:317
 msgid "{charactersRemaining, plural, one {1 character remaining} other {{charactersRemaining} characters remaining}}"
 msgstr "{charactersRemaining, plural, one {1 character remaining} other {{charactersRemaining} characters remaining}}"
-
-#: packages/email/templates/document-invite.tsx:95
-msgid "{inviterName} <0>({inviterEmail})</0>"
-msgstr "{inviterName} <0>({inviterEmail})</0>"
 
 #: packages/email/templates/document-cancel.tsx:21
 msgid "{inviterName} has cancelled the document {documentName}, you don't need to sign it anymore."
@@ -148,10 +144,6 @@ msgstr "{inviterName} has invited you to {0}<0/>\"{documentName}\""
 #: packages/email/templates/document-invite.tsx:41
 msgid "{inviterName} has invited you to {action} {documentName}"
 msgstr "{inviterName} has invited you to {action} {documentName}"
-
-#: packages/email/templates/document-invite.tsx:108
-msgid "{inviterName} has invited you to {action} the document \"{documentName}\"."
-msgstr "{inviterName} has invited you to {action} the document \"{documentName}\"."
 
 #: packages/email/templates/recipient-removed-from-document.tsx:20
 msgid "{inviterName} has removed you from the document {documentName}."
@@ -289,7 +281,7 @@ msgstr "{recipientName} has rejected the document '{documentName}'"
 msgid "{recipientReference} has completed signing the document."
 msgstr "{recipientReference} has completed signing the document."
 
-#: packages/lib/jobs/definitions/emails/send-recipient-signed-email.ts:121
+#: packages/lib/jobs/definitions/emails/send-recipient-signed-email.ts:129
 msgid "{recipientReference} has signed \"{0}\""
 msgstr "{recipientReference} has signed \"{0}\""
 
@@ -468,7 +460,7 @@ msgstr "A confirmation email has been sent, and it should arrive in your inbox s
 msgid "A device capable of accessing, opening, and reading documents"
 msgstr "A device capable of accessing, opening, and reading documents"
 
-#: packages/lib/jobs/definitions/emails/send-signing-email.handler.ts:110
+#: packages/lib/jobs/definitions/emails/send-signing-email.handler.ts:109
 msgid "A document was created by your direct template that requires you to {recipientActionVerb} it."
 msgstr "A document was created by your direct template that requires you to {recipientActionVerb} it."
 
@@ -492,7 +484,7 @@ msgstr "A field was updated"
 msgid "A means to print or download documents for your records"
 msgstr "A means to print or download documents for your records"
 
-#: packages/lib/jobs/definitions/emails/send-team-member-joined-email.handler.ts:98
+#: packages/lib/jobs/definitions/emails/send-team-member-joined-email.handler.ts:106
 msgid "A new member has joined your team"
 msgstr "A new member has joined your team"
 
@@ -521,7 +513,7 @@ msgstr "A recipient was updated"
 msgid "A request to transfer the ownership of this team has been sent to <0>{0} ({1})</0>"
 msgstr "A request to transfer the ownership of this team has been sent to <0>{0} ({1})</0>"
 
-#: packages/lib/server-only/team/create-team-email-verification.ts:159
+#: packages/lib/server-only/team/create-team-email-verification.ts:168
 msgid "A request to use your email has been initiated by {0} on Documenso"
 msgstr "A request to use your email has been initiated by {0} on Documenso"
 
@@ -542,7 +534,7 @@ msgstr "A stable internet connection"
 msgid "A team member has joined a team on Documenso"
 msgstr "A team member has joined a team on Documenso"
 
-#: packages/lib/jobs/definitions/emails/send-team-member-left-email.handler.ts:87
+#: packages/lib/jobs/definitions/emails/send-team-member-left-email.handler.ts:95
 msgid "A team member has left {0}"
 msgstr "A team member has left {0}"
 
@@ -1284,7 +1276,7 @@ msgstr "Bulk Copy"
 msgid "Bulk Import"
 msgstr "Bulk Import"
 
-#: packages/lib/jobs/definitions/internal/bulk-send-template.handler.ts:203
+#: packages/lib/jobs/definitions/internal/bulk-send-template.handler.ts:211
 msgid "Bulk Send Complete: {0}"
 msgstr "Bulk Send Complete: {0}"
 
@@ -2127,11 +2119,11 @@ msgstr "Documenso will delete <0>all of your documents</0>, along with all of yo
 msgid "Document"
 msgstr "Document"
 
-#: packages/lib/jobs/definitions/emails/send-rejection-emails.handler.ts:140
+#: packages/lib/jobs/definitions/emails/send-rejection-emails.handler.ts:157
 msgid "Document \"{0}\" - Rejected by {1}"
 msgstr "Document \"{0}\" - Rejected by {1}"
 
-#: packages/lib/jobs/definitions/emails/send-rejection-emails.handler.ts:100
+#: packages/lib/jobs/definitions/emails/send-rejection-emails.handler.ts:109
 msgid "Document \"{0}\" - Rejection Confirmed"
 msgstr "Document \"{0}\" - Rejection Confirmed"
 
@@ -2154,8 +2146,8 @@ msgid "Document Approved"
 msgstr "Document Approved"
 
 #: apps/web/src/app/(signing)/sign/[token]/no-longer-available.tsx:40
-#: packages/lib/server-only/document/delete-document.ts:263
-#: packages/lib/server-only/document/super-delete-document.ts:101
+#: packages/lib/server-only/document/delete-document.ts:271
+#: packages/lib/server-only/document/super-delete-document.ts:109
 msgid "Document Cancelled"
 msgstr "Document Cancelled"
 
@@ -2184,7 +2176,7 @@ msgid "Document created by <0>{0}</0>"
 msgstr "Document created by <0>{0}</0>"
 
 #: packages/email/templates/document-created-from-direct-template.tsx:32
-#: packages/lib/server-only/template/create-document-from-direct-template.ts:588
+#: packages/lib/server-only/template/create-document-from-direct-template.ts:597
 msgid "Document created from direct template"
 msgstr "Document created from direct template"
 
@@ -2207,7 +2199,7 @@ msgstr "Document deleted"
 msgid "Document deleted email"
 msgstr "Document deleted email"
 
-#: packages/lib/server-only/document/send-delete-email.ts:85
+#: packages/lib/server-only/document/send-delete-email.ts:94
 msgid "Document Deleted!"
 msgstr "Document Deleted!"
 
@@ -2799,7 +2791,7 @@ msgstr "For any questions regarding this disclosure, electronic signatures, or a
 msgid "For each recipient, provide their email (required) and name (optional) in separate columns. Download the template CSV below for the correct format."
 msgstr "For each recipient, provide their email (required) and name (optional) in separate columns. Download the template CSV below for the correct format."
 
-#: packages/lib/server-only/auth/send-forgot-password.ts:61
+#: packages/lib/server-only/auth/send-forgot-password.ts:71
 msgid "Forgot Password?"
 msgstr "Forgot Password?"
 
@@ -3850,15 +3842,15 @@ msgstr "Please {0} your document<0/>\"{documentName}\""
 msgid "Please {action} your document {documentName}"
 msgstr "Please {action} your document {documentName}"
 
-#: packages/lib/jobs/definitions/emails/send-signing-email.handler.ts:99
+#: packages/lib/jobs/definitions/emails/send-signing-email.handler.ts:98
 msgid "Please {recipientActionVerb} this document"
 msgstr "Please {recipientActionVerb} this document"
 
-#: packages/lib/jobs/definitions/emails/send-signing-email.handler.ts:113
+#: packages/lib/jobs/definitions/emails/send-signing-email.handler.ts:112
 msgid "Please {recipientActionVerb} this document created by your direct template"
 msgstr "Please {recipientActionVerb} this document created by your direct template"
 
-#: packages/lib/jobs/definitions/emails/send-signing-email.handler.ts:105
+#: packages/lib/jobs/definitions/emails/send-signing-email.handler.ts:104
 msgid "Please {recipientActionVerb} your document"
 msgstr "Please {recipientActionVerb} your document"
 
@@ -3878,7 +3870,7 @@ msgstr "Please check your email for updates."
 msgid "Please choose your new password"
 msgstr "Please choose your new password"
 
-#: packages/lib/server-only/auth/send-confirmation-email.ts:67
+#: packages/lib/server-only/auth/send-confirmation-email.ts:76
 msgid "Please confirm your email"
 msgstr "Please confirm your email"
 
@@ -4201,19 +4193,19 @@ msgstr "Rejection reason: {reason}"
 msgid "Remembered your password? <0>Sign In</0>"
 msgstr "Remembered your password? <0>Sign In</0>"
 
-#: packages/lib/server-only/document/resend-document.tsx:192
+#: packages/lib/server-only/document/resend-document.tsx:206
 msgid "Reminder: {0}"
 msgstr "Reminder: {0}"
 
-#: packages/lib/server-only/document/resend-document.tsx:132
+#: packages/lib/server-only/document/resend-document.tsx:131
 msgid "Reminder: {0} invited you to {recipientActionVerb} a document"
 msgstr "Reminder: {0} invited you to {recipientActionVerb} a document"
 
-#: packages/lib/server-only/document/resend-document.tsx:121
+#: packages/lib/server-only/document/resend-document.tsx:120
 msgid "Reminder: Please {recipientActionVerb} this document"
 msgstr "Reminder: Please {recipientActionVerb} this document"
 
-#: packages/lib/server-only/document/resend-document.tsx:127
+#: packages/lib/server-only/document/resend-document.tsx:126
 msgid "Reminder: Please {recipientActionVerb} your document"
 msgstr "Reminder: Please {recipientActionVerb} your document"
 
@@ -5006,7 +4998,7 @@ msgstr "System Theme"
 msgid "Team"
 msgstr "Team"
 
-#: packages/lib/server-only/team/delete-team.ts:124
+#: packages/lib/server-only/team/delete-team.ts:132
 msgid "Team \"{0}\" has been deleted on Documenso"
 msgstr "Team \"{0}\" has been deleted on Documenso"
 
@@ -5031,7 +5023,7 @@ msgstr "Team email already verified!"
 msgid "Team email has been removed"
 msgstr "Team email has been removed"
 
-#: packages/lib/server-only/team/delete-team-email.ts:104
+#: packages/lib/server-only/team/delete-team-email.ts:112
 msgid "Team email has been revoked for {0}"
 msgstr "Team email has been revoked for {0}"
 
@@ -5530,10 +5522,6 @@ msgstr "This document was created by you or a team member using the template abo
 #: apps/web/src/app/(dashboard)/templates/[id]/template-page-view-documents-table.tsx:158
 msgid "This document was created using a direct link."
 msgstr "This document was created using a direct link."
-
-#: packages/email/template-components/template-footer.tsx:17
-msgid "This document was sent using <0>Documenso.</0>"
-msgstr "This document was sent using <0>Documenso.</0>"
 
 #: packages/email/template-components/template-document-rejection-confirmed.tsx:26
 msgid "This email confirms that you have rejected the document <0>\"{documentName}\"</0> sent by {documentOwnerName}."
@@ -6135,6 +6123,10 @@ msgstr "Username can only container alphanumeric characters and dashes."
 msgid "Users"
 msgstr "Users"
 
+#: packages/email/template-components/template-footer.tsx:24
+msgid "uses <0>Caring Data</0> to manage communication and documentation in their facility. Caring Data respects your privacy. To learn more, read our <1>Privacy Statement</1>"
+msgstr "uses <0>Caring Data</0> to manage communication and documentation in their facility. Caring Data respects your privacy. To learn more, read our <1>Privacy Statement</1>"
+
 #: packages/ui/primitives/document-flow/field-items-advanced-settings/checkbox-field.tsx:132
 #: packages/ui/primitives/document-flow/field-items-advanced-settings/number-field.tsx:188
 msgid "Validation"
@@ -6283,7 +6275,7 @@ msgstr "Waiting"
 msgid "Waiting for others"
 msgstr "Waiting for others"
 
-#: packages/lib/server-only/document/send-pending-email.ts:96
+#: packages/lib/server-only/document/send-pending-email.ts:105
 msgid "Waiting for others to complete signing."
 msgstr "Waiting for others to complete signing."
 
@@ -6788,7 +6780,7 @@ msgstr "You have already verified your email address for <0>{0}</0>."
 msgid "You have been invited by <0>{0}</0> to join their team."
 msgstr "You have been invited by <0>{0}</0> to join their team."
 
-#: packages/lib/server-only/team/create-team-member-invites.ts:186
+#: packages/lib/server-only/team/create-team-member-invites.ts:194
 msgid "You have been invited to join {0} on Documenso"
 msgstr "You have been invited to join {0} on Documenso"
 
@@ -6796,12 +6788,12 @@ msgstr "You have been invited to join {0} on Documenso"
 msgid "You have been invited to join the following team"
 msgstr "You have been invited to join the following team"
 
-#: packages/lib/server-only/recipient/delete-document-recipient.ts:156
-#: packages/lib/server-only/recipient/set-document-recipients.ts:326
+#: packages/lib/server-only/recipient/delete-document-recipient.ts:164
+#: packages/lib/server-only/recipient/set-document-recipients.ts:334
 msgid "You have been removed from a document"
 msgstr "You have been removed from a document"
 
-#: packages/lib/server-only/team/request-team-ownership-transfer.ts:114
+#: packages/lib/server-only/team/request-team-ownership-transfer.ts:123
 msgid "You have been requested to take ownership of team {0} on Documenso"
 msgstr "You have been requested to take ownership of team {0} on Documenso"
 
@@ -6809,8 +6801,8 @@ msgstr "You have been requested to take ownership of team {0} on Documenso"
 msgid "You have declined the invitation from <0>{0}</0> to join their team."
 msgstr "You have declined the invitation from <0>{0}</0> to join their team."
 
-#: packages/lib/jobs/definitions/emails/send-signing-email.handler.ts:103
-#: packages/lib/server-only/document/resend-document.tsx:125
+#: packages/lib/jobs/definitions/emails/send-signing-email.handler.ts:102
+#: packages/lib/server-only/document/resend-document.tsx:124
 msgid "You have initiated the document {0} that requires you to {recipientActionVerb} it."
 msgstr "You have initiated the document {0} that requires you to {recipientActionVerb} it."
 
