@@ -2,7 +2,8 @@
 CREATE TYPE "TemplateStatus" AS ENUM ('ACTIVE', 'INACTIVE');
 
 -- AlterTable
-ALTER TABLE "Document" ADD COLUMN     "formKey" VARCHAR(255),
+ALTER TABLE "Document" ADD COLUMN     "documentDetails" JSONB,
+ADD COLUMN     "formKey" VARCHAR(255),
 ADD COLUMN     "residentId" UUID;
 
 -- AlterTable
