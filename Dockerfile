@@ -68,35 +68,30 @@ FROM base AS runner
 
 WORKDIR /app
 
-# COPY package.json package-lock.json ./
-
-# # Agregar Turbo al PATH
-# ENV PATH="/app/node_modules/.bin:$PATH"
-
 # Definir usuario sin privilegios
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
+# Copiar node_modules desde la etapa installer
+COPY --from=installer --chown=nextjs:nodejs /app/node_modules ./node_modules
+
+# Cambiar permisos de los directorios necesarios
+RUN chown -R nextjs:nodejs /app
+
 USER nextjs
 
-COPY --from=installer /app/apps/web/next.config.js .
-COPY --from=installer /app/apps/web/package.json .
-
 # Copiar solo lo necesario para el frontend
-COPY --from=installer /app/apps/web/.next ./apps/web/.next
-COPY --from=installer /app/apps/web/public ./apps/web/public
-COPY --from=installer /app/apps/web/package.json ./apps/web/package.json
-
-# Copiar node_modules desde la etapa installer
-COPY --from=installer /app/node_modules ./node_modules
+COPY --from=installer --chown=nextjs:nodejs /app/apps/web/.next ./apps/web/.next
+COPY --from=installer --chown=nextjs:nodejs /app/apps/web/public ./apps/web/public
+COPY --from=installer --chown=nextjs:nodejs /app/apps/web/package.json ./apps/web/package.json
 
 # Copiar Prisma solo si lo necesitas en producción
-COPY --from=installer /app/packages/prisma/schema.prisma ./packages/prisma/schema.prisma
-COPY --from=installer /app/packages/prisma/migrations ./packages/prisma/migrations
+COPY --from=installer --chown=nextjs:nodejs /app/packages/prisma/schema.prisma ./packages/prisma/schema.prisma
+COPY --from=installer --chown=nextjs:nodejs /app/packages/prisma/migrations ./packages/prisma/migrations
 
 # Copiar Prisma Client generado
-COPY --from=installer /app/node_modules/.prisma/ ./node_modules/.prisma/
-COPY --from=installer /app/node_modules/@prisma/ ./node_modules/@prisma/
+COPY --from=installer --chown=nextjs:nodejs /app/node_modules/.prisma/ ./node_modules/.prisma/
+COPY --from=installer --chown=nextjs:nodejs /app/node_modules/@prisma/ ./node_modules/@prisma/
 
 # Configurar la variable de entorno para producción
 ENV NODE_ENV=production
@@ -105,5 +100,4 @@ ENV NODE_ENV=production
 EXPOSE 3002
 
 # Comando para ejecutar la aplicación
-# CMD ["npm", "run", "start"]
 CMD ["npx", "turbo", "run", "start", "--filter=@documenso/web"]

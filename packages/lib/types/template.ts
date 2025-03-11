@@ -103,6 +103,7 @@ export const ZTemplateManySchema = TemplateSchema.pick({
   publicDescription: true,
   formKey: true,
   deletedAt: true,
+  status: true,
 }).extend({
   team: TeamSchema.pick({
     id: true,

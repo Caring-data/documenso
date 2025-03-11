@@ -2151,7 +2151,7 @@ msgid "Document Approved"
 msgstr "Documento Approvato"
 
 #: apps/web/src/app/(signing)/sign/[token]/no-longer-available.tsx:40
-#: packages/lib/server-only/document/delete-document.ts:271
+#: packages/lib/server-only/document/delete-document.ts:244
 #: packages/lib/server-only/document/super-delete-document.ts:109
 msgid "Document Cancelled"
 msgstr "Documento Annullato"

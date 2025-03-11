@@ -73,6 +73,7 @@ export const findTemplates = async ({
   }
 
   whereFilter.push({ deletedAt: null });
+  whereFilter.push({ status: 'ACTIVE' });
 
   const [data, count] = await Promise.all([
     prisma.template.findMany({

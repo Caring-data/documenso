@@ -8,7 +8,7 @@
     "dev:web": "turbo run dev --filter=@documenso/web",
     "dev:docs": "turbo run dev --filter=@documenso/documentation",
     "dev:openpage-api": "turbo run dev --filter=@documenso/openpage-api",
-    "start": "turbo run start --filter=@documenso/web",
+    "start": "turbo run start --filter=@documenso/web --filter=@documenso/documentation --filter=@documenso/openpage-api",
     "lint": "turbo run lint",
     "lint:fix": "turbo run lint:fix",
     "format": "prettier --write \"**/*.{js,jsx,cjs,mjs,ts,tsx,cts,mts,mdx}\"",
