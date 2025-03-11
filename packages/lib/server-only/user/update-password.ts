@@ -1,4 +1,4 @@
-import { compare, hash } from '@node-rs/bcrypt';
+import bcrypt from 'bcryptjs';
 
 import { SALT_ROUNDS } from '@documenso/lib/constants/auth';
 import type { RequestMetadata } from '@documenso/lib/universal/extract-request-metadata';
@@ -31,18 +31,18 @@ export const updatePassword = async ({
     throw new AppError('NO_PASSWORD');
   }
 
-  const isCurrentPasswordValid = await compare(currentPassword, user.password);
+  const isCurrentPasswordValid = await bcrypt.compareSync(currentPassword, user.password);
   if (!isCurrentPasswordValid) {
     throw new AppError('INCORRECT_PASSWORD');
   }
 
   // Compare the new password with the old password
-  const isSamePassword = await compare(password, user.password);
+  const isSamePassword = await bcrypt.compareSync(password, user.password);
   if (isSamePassword) {
     throw new AppError('SAME_PASSWORD');
   }
 
-  const hashedNewPassword = await hash(password, SALT_ROUNDS);
+  const hashedNewPassword = await bcrypt.hashSync(password, SALT_ROUNDS);
 
   return await prisma.$transaction(async (tx) => {
     await tx.userSecurityAuditLog.create({

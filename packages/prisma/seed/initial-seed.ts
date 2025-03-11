@@ -1,4 +1,4 @@
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 import { env } from 'next-runtime-env';
 
 import { prisma } from '..';

@@ -1,4 +1,4 @@
-import { compare, hash } from '@node-rs/bcrypt';
+import bcrypt from 'bcryptjs';
 
 import { prisma } from '@documenso/prisma';
 import { UserSecurityAuditLogType } from '@documenso/prisma/client';
@@ -38,13 +38,13 @@ export const resetPassword = async ({ token, password, requestMetadata }: ResetP
     throw new AppError(AppErrorCode.EXPIRED_CODE);
   }
 
-  const isSamePassword = await compare(password, foundToken.user.password || '');
+  const isSamePassword = await bcrypt.compareSync(password, foundToken.user.password || '');
 
   if (isSamePassword) {
     throw new AppError('SAME_PASSWORD');
   }
 
-  const hashedPassword = await hash(password, SALT_ROUNDS);
+  const hashedPassword = await bcrypt.hashSync(password, SALT_ROUNDS);
 
   await prisma.$transaction([
     prisma.user.update({

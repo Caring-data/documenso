@@ -1,4 +1,4 @@
-import { hash } from '@node-rs/bcrypt';
+import bcrypt from 'bcryptjs';
 
 import { getStripeCustomerByUser } from '@documenso/ee/server-only/stripe/get-customer';
 import { updateSubscriptionItemQuantity } from '@documenso/ee/server-only/stripe/update-subscription-item-quantity';
@@ -19,7 +19,7 @@ export interface CreateUserOptions {
 }
 
 export const createUser = async ({ name, email, password, signature, url }: CreateUserOptions) => {
-  const hashedPassword = await hash(password, SALT_ROUNDS);
+  const hashedPassword = await bcrypt.hashSync(password, SALT_ROUNDS);
 
   const userExists = await prisma.user.findFirst({
     where: {
