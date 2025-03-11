@@ -72,6 +72,8 @@ export const findTemplates = async ({
     );
   }
 
+  whereFilter.push({ deletedAt: null });
+
   const [data, count] = await Promise.all([
     prisma.template.findMany({
       where: {

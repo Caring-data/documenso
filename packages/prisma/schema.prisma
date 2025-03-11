@@ -701,6 +701,7 @@ model Template {
 
   formKey   String?   @db.VarChar(255)
   deletedAt DateTime?
+  // status    TemplateStatus @default(ACTIVE)
 
   team                 Team?               @relation(fields: [teamId], references: [id], onDelete: Cascade)
   templateDocumentData DocumentData        @relation(fields: [templateDocumentDataId], references: [id], onDelete: Cascade)
