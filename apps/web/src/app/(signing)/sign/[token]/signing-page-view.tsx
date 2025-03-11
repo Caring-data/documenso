@@ -1,8 +1,10 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
-import { Trans } from '@lingui/macro';
+import { useSearchParams } from 'next/navigation';
+import { usePathname } from 'next/navigation';
+
 import { match } from 'ts-pattern';
 
 import { DEFAULT_DOCUMENT_DATE_FORMAT } from '@documenso/lib/constants/date-formats';
@@ -49,6 +51,7 @@ export type SigningPageViewProps = {
   completedFields: CompletedField[];
   isRecipientsTurn: boolean;
   allRecipients?: RecipientWithFields[];
+  token?: string;
 };
 
 export const SigningPageView = ({
@@ -58,79 +61,36 @@ export const SigningPageView = ({
   completedFields,
   isRecipientsTurn,
   allRecipients = [],
+  token,
 }: SigningPageViewProps) => {
-  const { documentData, documentMeta } = document;
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
 
+  const extractedToken = token || (pathname ? pathname.split('/')[2] : '');
+  const hasVisitedPreSignPage = searchParams ? searchParams.get('consent') === 'true' : false;
+
+  const { documentData, documentMeta } = document;
   const [selectedSignerId, setSelectedSignerId] = useState<number | null>(allRecipients?.[0]?.id);
 
-  const shouldUseTeamDetails =
-    document.teamId && document.team?.teamGlobalSettings?.includeSenderDetails === false;
-
-  let senderName = document.user.name ?? '';
-  let senderEmail = `(${document.user.email})`;
-
-  if (shouldUseTeamDetails) {
-    senderName = document.team?.name ?? '';
-    senderEmail = document.team?.teamEmail?.email ? `(${document.team.teamEmail.email})` : '';
-  }
+  useEffect(() => {
+    if (!hasVisitedPreSignPage && extractedToken) {
+      window.location.href = `/sign/${extractedToken}/pre-signing`;
+    }
+  }, [hasVisitedPreSignPage, extractedToken]);
 
   const selectedSigner = allRecipients?.find((r) => r.id === selectedSignerId);
 
   return (
     <RecipientProvider recipient={recipient} targetSigner={selectedSigner ?? null}>
       <div className="mx-auto w-full max-w-screen-xl">
-        <h1
-          className="mt-4 block max-w-[20rem] truncate text-2xl font-semibold md:max-w-[30rem] md:text-3xl"
-          title={document.title}
-        >
-          {document.title}
-        </h1>
-
         <div className="mt-2.5 flex flex-wrap items-center justify-between gap-x-6">
           <div className="max-w-[50ch]">
-            <span className="text-muted-foreground truncate" title={senderName}>
-              {senderName} {senderEmail}
-            </span>{' '}
-            <span className="text-muted-foreground">
-              {match(recipient.role)
-                .with(RecipientRole.VIEWER, () =>
-                  document.teamId && !shouldUseTeamDetails ? (
-                    <Trans>
-                      on behalf of "{document.team?.name}" has invited you to view this document
-                    </Trans>
-                  ) : (
-                    <Trans>has invited you to view this document</Trans>
-                  ),
-                )
-                .with(RecipientRole.SIGNER, () =>
-                  document.teamId && !shouldUseTeamDetails ? (
-                    <Trans>
-                      on behalf of "{document.team?.name}" has invited you to sign this document
-                    </Trans>
-                  ) : (
-                    <Trans>has invited you to sign this document</Trans>
-                  ),
-                )
-                .with(RecipientRole.APPROVER, () =>
-                  document.teamId && !shouldUseTeamDetails ? (
-                    <Trans>
-                      on behalf of "{document.team?.name}" has invited you to approve this document
-                    </Trans>
-                  ) : (
-                    <Trans>has invited you to approve this document</Trans>
-                  ),
-                )
-                .with(RecipientRole.ASSISTANT, () =>
-                  document.teamId && !shouldUseTeamDetails ? (
-                    <Trans>
-                      on behalf of "{document.team?.name}" has invited you to assist this document
-                    </Trans>
-                  ) : (
-                    <Trans>has invited you to assist this document</Trans>
-                  ),
-                )
-                .otherwise(() => null)}
-            </span>
+            <h1
+              className="mt-4 block max-w-[20rem] truncate text-lg font-semibold md:max-w-[30rem] md:text-3xl"
+              title={document.documentDetails?.documentName}
+            >
+              {document.documentDetails?.documentName}
+            </h1>
           </div>
 
           <RejectDocumentDialog document={document} token={recipient.token} />

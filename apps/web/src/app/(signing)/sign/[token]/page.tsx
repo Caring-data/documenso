@@ -169,6 +169,7 @@ export default async function SigningPage({ params: { token } }: SigningPageProp
           completedFields={completedFields}
           isRecipientsTurn={isRecipientsTurn}
           allRecipients={allRecipients}
+          token={token}
         />
       </DocumentAuthProvider>
     </SigningProvider>

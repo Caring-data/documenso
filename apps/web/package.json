@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "next dev -p 3002",
     "build": "npm run translate --prefix ../../ && next build",
-    "start": "next start",
+    "start": "next start -p 3002",
     "lint": "next lint",
     "e2e:prepare": "next build && next start",
     "lint:fix": "next lint --fix",

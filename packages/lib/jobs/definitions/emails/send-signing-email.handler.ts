@@ -1,6 +1,7 @@
 import { createElement } from 'react';
 
 import { msg } from '@lingui/macro';
+import { undefined } from 'zod';
 
 import DocumentInviteEmailTemplate from '@documenso/email/templates/document-invite';
 import { sendEmail } from '@documenso/email/transports/notifyService';
@@ -149,8 +150,8 @@ export const run = async ({
     teamEmail: team?.teamEmail?.email,
     includeSenderDetails: team?.teamGlobalSettings?.includeSenderDetails,
     recipientName: recipient.name,
-    documentDetails: document.documentDetails,
-    tokenExpiration: recipient.expired,
+    documentDetails: document.documentDetails || {},
+    tokenExpiration: recipient.expired ? recipient.expired.toISOString() : undefined,
   });
 
   await io.runTask('send-signing-email', async () => {

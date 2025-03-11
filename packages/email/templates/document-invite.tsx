@@ -25,7 +25,7 @@ export type DocumentInviteEmailTemplateProps = Partial<TemplateDocumentInvitePro
     documentName?: string;
     residentName?: string;
   };
-  tokenExpiration?: string;
+  tokenExpiration?: Date | string | undefined;
 };
 
 export const DocumentInviteEmailTemplate = ({

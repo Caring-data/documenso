@@ -1,7 +1,5 @@
 import type { HTMLAttributes } from 'react';
 
-import Link from 'next/link';
-
 import { Trans } from '@lingui/macro';
 
 import { cn } from '@documenso/ui/lib/utils';
@@ -17,19 +15,6 @@ export const SigningDisclosure = ({ className, ...props }: SigningDisclosureProp
         signature. By completing the electronic signing process, you affirm your understanding and
         acceptance of these conditions.
       </Trans>
-      <span className="mt-2 block">
-        <Trans>
-          Read the full{' '}
-          <Link
-            className="text-documenso-700 underline"
-            href="/articles/signature-disclosure"
-            target="_blank"
-          >
-            signature disclosure
-          </Link>
-          .
-        </Trans>
-      </span>
     </p>
   );
 };
