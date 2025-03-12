@@ -15,7 +15,7 @@ import type {
   TeamGlobalSettings,
   User,
 } from '@documenso/prisma/client';
-import { DocumentStatus, SendStatus, WebhookTriggerEvents } from '@documenso/prisma/client';
+import { SendStatus, WebhookTriggerEvents } from '@documenso/prisma/client';
 
 import { getI18nInstance } from '../../client-only/providers/i18n.server';
 import { WEBAPP_BASE_URL } from '../../constants/app';
@@ -162,51 +162,24 @@ const handleDocumentOwnerDelete = async ({
   }
 
   // Soft delete completed documents.
-  if (document.status === DocumentStatus.COMPLETED) {
-    return await prisma.$transaction(async (tx) => {
-      await tx.documentAuditLog.create({
-        data: createDocumentAuditLogData({
-          documentId: document.id,
-          type: DOCUMENT_AUDIT_LOG_TYPE.DOCUMENT_DELETED,
-          metadata: requestMetadata,
-          data: {
-            type: 'SOFT',
-          },
-        }),
-      });
-
-      return await tx.document.update({
-        where: {
-          id: document.id,
-        },
-        data: {
-          deletedAt: new Date().toISOString(),
-        },
-      });
-    });
-  }
-
-  // Hard delete draft and pending documents.
-  const deletedDocument = await prisma.$transaction(async (tx) => {
-    // Currently redundant since deleting a document will delete the audit logs.
-    // However may be useful if we disassociate audit logs and documents if required.
+  const softDeletedDocument = await prisma.$transaction(async (tx) => {
     await tx.documentAuditLog.create({
       data: createDocumentAuditLogData({
         documentId: document.id,
         type: DOCUMENT_AUDIT_LOG_TYPE.DOCUMENT_DELETED,
         metadata: requestMetadata,
         data: {
-          type: 'HARD',
+          type: 'SOFT',
         },
       }),
     });
 
-    return await tx.document.delete({
+    return await tx.document.update({
       where: {
         id: document.id,
-        status: {
-          not: DocumentStatus.COMPLETED,
-        },
+      },
+      data: {
+        deletedAt: new Date().toISOString(),
       },
     });
   });
@@ -216,7 +189,7 @@ const handleDocumentOwnerDelete = async ({
   ).documentDeleted;
 
   if (!isDocumentDeleteEmailEnabled) {
-    return deletedDocument;
+    return softDeletedDocument;
   }
 
   // Send cancellation emails to recipients.
@@ -274,5 +247,5 @@ const handleDocumentOwnerDelete = async ({
     }),
   );
 
-  return deletedDocument;
+  return softDeletedDocument;
 };

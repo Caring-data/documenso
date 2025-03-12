@@ -55,7 +55,7 @@
     "playwright": "1.43.0",
     "prettier": "^3.3.3",
     "rimraf": "^5.0.1",
-    "turbo": "^1.9.3"
+    "turbo": "^1.13.4"
   },
   "name": "@documenso/root",
   "workspaces": [
@@ -67,6 +67,7 @@
     "@documenso/prisma": "^0.0.0",
     "@lingui/core": "^4.11.3",
     "bcrypt": "^5.1.1",
+    "bcryptjs": "^3.0.2",
     "inngest-cli": "^0.29.1",
     "lucide-react": "^0.479.0",
     "luxon": "^3.5.0",

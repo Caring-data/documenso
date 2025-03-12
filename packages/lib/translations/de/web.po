@@ -142,7 +142,7 @@ msgstr "{inviterName} hat das Dokument {documentName} storniert, du musst es nic
 msgid "{inviterName} has cancelled the document<0/>\"{documentName}\""
 msgstr "{inviterName} hat das Dokument<0/>\"{documentName}\" storniert"
 
-#: packages/email/template-components/template-document-invite.tsx:74
+#: packages/email/template-components/template-document-invite.tsx:71
 msgid "{inviterName} has invited you to {0}<0/>\"{documentName}\""
 msgstr "{inviterName} hat dich eingeladen, {0}<0/>\"{documentName}\""
 
@@ -158,7 +158,7 @@ msgstr "{inviterName} hat dich aus dem Dokument {documentName} entfernt."
 msgid "{inviterName} has removed you from the document<0/>\"{documentName}\""
 msgstr "{inviterName} hat dich aus dem Dokument<0/>\"{documentName}\" entfernt"
 
-#: packages/email/template-components/template-document-invite.tsx:61
+#: packages/email/template-components/template-document-invite.tsx:58
 msgid "{inviterName} on behalf of \"{teamName}\" has invited you to {0}<0/>\"{documentName}\""
 msgstr "{inviterName} im Namen von \"{teamName}\" hat dich eingeladen, {0}<0/>\"{documentName}\""
 
@@ -307,7 +307,7 @@ msgstr "{remaningLength, plural, one {# Zeichen verbleibend} other {# Zeichen ve
 msgid "{signerName} has rejected the document \"{documentName}\"."
 msgstr "{signerName} hat das Dokument \"{documentName}\" abgelehnt."
 
-#: packages/email/template-components/template-document-invite.tsx:68
+#: packages/email/template-components/template-document-invite.tsx:65
 msgid "{teamName} has invited you to {0}<0/>\"{documentName}\""
 msgstr "{teamName} hat dich eingeladen, {0}<0/>\"{documentName}\""
 
@@ -1045,11 +1045,11 @@ msgstr "Ein Fehler ist aufgetreten, während dein Dokument hochgeladen wurde."
 #: apps/web/src/components/forms/profile.tsx:79
 #: apps/web/src/components/forms/public-profile-claim-dialog.tsx:113
 #: apps/web/src/components/forms/public-profile-form.tsx:104
-#: apps/web/src/components/forms/signin.tsx:249
-#: apps/web/src/components/forms/signin.tsx:257
-#: apps/web/src/components/forms/signin.tsx:271
-#: apps/web/src/components/forms/signin.tsx:286
-#: apps/web/src/components/forms/signin.tsx:302
+#: apps/web/src/components/forms/signin.tsx:245
+#: apps/web/src/components/forms/signin.tsx:253
+#: apps/web/src/components/forms/signin.tsx:267
+#: apps/web/src/components/forms/signin.tsx:282
+#: apps/web/src/components/forms/signin.tsx:298
 #: apps/web/src/components/forms/signup.tsx:124
 #: apps/web/src/components/forms/signup.tsx:138
 #: apps/web/src/components/forms/v2/signup.tsx:187
@@ -1094,7 +1094,7 @@ msgid "Approve"
 msgstr "Genehmigen"
 
 #: apps/web/src/app/(signing)/sign/[token]/form.tsx:183
-#: packages/email/template-components/template-document-invite.tsx:108
+#: packages/email/template-components/template-document-invite.tsx:105
 msgid "Approve Document"
 msgstr "Dokument genehmigen"
 
@@ -1150,7 +1150,7 @@ msgid "Assist"
 msgstr ""
 
 #: apps/web/src/app/(signing)/sign/[token]/form.tsx:184
-#: packages/email/template-components/template-document-invite.tsx:110
+#: packages/email/template-components/template-document-invite.tsx:107
 msgid "Assist Document"
 msgstr ""
 
@@ -1223,7 +1223,7 @@ msgid "Background Color"
 msgstr "Hintergrundfarbe"
 
 #: apps/web/src/components/forms/2fa/disable-authenticator-app-dialog.tsx:167
-#: apps/web/src/components/forms/signin.tsx:486
+#: apps/web/src/components/forms/signin.tsx:482
 msgid "Backup Code"
 msgstr "Backup-Code"
 
@@ -1639,11 +1639,11 @@ msgstr "Inhalt"
 msgid "Continue"
 msgstr "Fortsetzen"
 
-#: packages/email/template-components/template-document-invite.tsx:85
+#: packages/email/template-components/template-document-invite.tsx:82
 msgid "Continue by approving the document."
 msgstr "Fahre fort, indem du das Dokument genehmigst."
 
-#: packages/email/template-components/template-document-invite.tsx:88
+#: packages/email/template-components/template-document-invite.tsx:85
 msgid "Continue by assisting with the document."
 msgstr ""
 
@@ -1651,11 +1651,11 @@ msgstr ""
 msgid "Continue by downloading the document."
 msgstr "Fahre fort, indem du das Dokument herunterlädst."
 
-#: packages/email/template-components/template-document-invite.tsx:83
+#: packages/email/template-components/template-document-invite.tsx:80
 msgid "Continue by signing the document."
 msgstr "Fahre fort, indem du das Dokument signierst."
 
-#: packages/email/template-components/template-document-invite.tsx:84
+#: packages/email/template-components/template-document-invite.tsx:81
 msgid "Continue by viewing the document."
 msgstr "Fahre fort, indem du das Dokument ansiehst."
 
@@ -2151,7 +2151,7 @@ msgid "Document Approved"
 msgstr "Dokument genehmigt"
 
 #: apps/web/src/app/(signing)/sign/[token]/no-longer-available.tsx:40
-#: packages/lib/server-only/document/delete-document.ts:271
+#: packages/lib/server-only/document/delete-document.ts:244
 #: packages/lib/server-only/document/super-delete-document.ts:109
 msgid "Document Cancelled"
 msgstr "Dokument storniert"
@@ -2371,7 +2371,6 @@ msgid "Documents Viewed"
 msgstr "Dokumente angesehen"
 
 #: apps/web/src/app/(unauthenticated)/reset-password/[token]/page.tsx:40
-#: apps/web/src/app/(unauthenticated)/signin/page.tsx:45
 msgid "Don't have an account? <0>Sign up</0>"
 msgstr "Haben Sie kein Konto? <0>Registrieren</0>"
 
@@ -2483,7 +2482,7 @@ msgstr "Offenlegung der elektronischen Unterschrift"
 #: apps/web/src/components/(teams)/dialogs/update-team-email-dialog.tsx:153
 #: apps/web/src/components/forms/forgot-password.tsx:81
 #: apps/web/src/components/forms/profile.tsx:113
-#: apps/web/src/components/forms/signin.tsx:339
+#: apps/web/src/components/forms/signin.tsx:335
 #: apps/web/src/components/forms/signup.tsx:176
 #: packages/lib/constants/document.ts:28
 #: packages/ui/primitives/document-flow/add-fields.tsx:899
@@ -2801,7 +2800,6 @@ msgid "Forgot Password?"
 msgstr "Passwort vergessen?"
 
 #: apps/web/src/app/(unauthenticated)/forgot-password/page.tsx:21
-#: apps/web/src/components/forms/signin.tsx:371
 #: packages/email/template-components/template-forgot-password.tsx:21
 msgid "Forgot your password?"
 msgstr "Hast du dein Passwort vergessen?"
@@ -3561,7 +3559,7 @@ msgstr "Keine Sorge, das passiert! Geben Sie Ihre E-Mail ein, und wir senden Ihn
 msgid "None"
 msgstr "Keine"
 
-#: apps/web/src/components/forms/signin.tsx:161
+#: apps/web/src/components/forms/signin.tsx:157
 msgid "Not supported"
 msgstr "Nicht unterstützt"
 
@@ -3666,10 +3664,6 @@ msgstr "Geöffnet"
 msgid "Or"
 msgstr "Oder"
 
-#: apps/web/src/components/forms/signin.tsx:391
-msgid "Or continue with"
-msgstr "Oder fahren Sie fort mit"
-
 #: apps/web/src/app/(dashboard)/templates/use-template-dialog.tsx:351
 msgid "Otherwise, the document will be created as a draft."
 msgstr "Andernfalls wird das Dokument als Entwurf erstellt."
@@ -3693,10 +3687,6 @@ msgstr "Seite {0} von {numPages}"
 #: apps/web/src/components/(teams)/tables/team-billing-invoices-data-table.tsx:79
 msgid "Paid"
 msgstr "Bezahlt"
-
-#: apps/web/src/components/forms/signin.tsx:436
-msgid "Passkey"
-msgstr "Passkey"
 
 #: apps/web/src/app/(dashboard)/settings/security/passkeys/create-passkey-dialog.tsx:229
 msgid "Passkey already exists for the provided authenticator"
@@ -3731,14 +3721,14 @@ msgstr "Passkeys"
 msgid "Passkeys allow you to sign in and authenticate using biometrics, password managers, etc."
 msgstr "Passkeys ermöglichen das Anmelden und die Authentifizierung mit biometrischen Daten, Passwortmanagern usw."
 
-#: apps/web/src/components/forms/signin.tsx:162
+#: apps/web/src/components/forms/signin.tsx:158
 msgid "Passkeys are not supported on this browser"
 msgstr "Passkeys werden von diesem Browser nicht unterstützt"
 
 #: apps/web/src/components/(dashboard)/common/command-menu.tsx:70
 #: apps/web/src/components/forms/password.tsx:128
 #: apps/web/src/components/forms/reset-password.tsx:115
-#: apps/web/src/components/forms/signin.tsx:357
+#: apps/web/src/components/forms/signin.tsx:353
 #: apps/web/src/components/forms/signup.tsx:192
 #: apps/web/src/components/forms/v2/signup.tsx:348
 msgid "Password"
@@ -3839,7 +3829,7 @@ msgstr "Wählen Sie eine der folgenden Vereinbarungen aus und beginnen Sie das S
 msgid "Placeholder"
 msgstr "Platzhalter"
 
-#: packages/email/template-components/template-document-invite.tsx:55
+#: packages/email/template-components/template-document-invite.tsx:52
 msgid "Please {0} your document<0/>\"{documentName}\""
 msgstr "Bitte {0} dein Dokument<0/>\"{documentName}\""
 
@@ -3952,7 +3942,7 @@ msgstr "Bitte wählen Sie eine PDF-Datei aus"
 msgid "Please try again and make sure you enter the correct email address."
 msgstr "Bitte versuchen Sie es erneut und stellen Sie sicher, dass Sie die korrekte E-Mail-Adresse eingeben."
 
-#: apps/web/src/components/forms/signin.tsx:204
+#: apps/web/src/components/forms/signin.tsx:200
 msgid "Please try again later or login using your normal details"
 msgstr "Bitte versuchen Sie es später erneut oder melden Sie sich mit Ihren normalen Daten an"
 
@@ -4177,7 +4167,7 @@ msgstr "Registrierung erfolgreich"
 #: apps/web/src/app/(signing)/sign/[token]/reject-document-dialog.tsx:114
 #: apps/web/src/app/(signing)/sign/[token]/reject-document-dialog.tsx:121
 #: apps/web/src/app/(signing)/sign/[token]/reject-document-dialog.tsx:167
-#: packages/email/template-components/template-document-invite.tsx:98
+#: packages/email/template-components/template-document-invite.tsx:95
 msgid "Reject Document"
 msgstr "Dokument Ablehnen"
 
@@ -4625,7 +4615,7 @@ msgid "Sign document"
 msgstr "Dokument unterschreiben"
 
 #: apps/web/src/app/(signing)/sign/[token]/form.tsx:182
-#: packages/email/template-components/template-document-invite.tsx:106
+#: packages/email/template-components/template-document-invite.tsx:103
 msgid "Sign Document"
 msgstr "Dokument signieren"
 
@@ -4639,13 +4629,13 @@ msgid "Sign Here"
 msgstr "Hier unterzeichnen"
 
 #: apps/web/src/app/not-found.tsx:29
-#: apps/web/src/components/forms/signin.tsx:384
-#: apps/web/src/components/forms/signin.tsx:511
+#: apps/web/src/components/forms/signin.tsx:380
+#: apps/web/src/components/forms/signin.tsx:507
 #: packages/email/template-components/template-reset-password.tsx:34
 msgid "Sign In"
 msgstr "Anmelden"
 
-#: apps/web/src/app/(unauthenticated)/signin/page.tsx:29
+#: apps/web/src/app/(unauthenticated)/signin/page.tsx:28
 msgid "Sign in to your account"
 msgstr "Melden Sie sich bei Ihrem Konto an"
 
@@ -4756,8 +4746,8 @@ msgstr "Unterzeichnung abgeschlossen!"
 msgid "Signing for"
 msgstr ""
 
-#: apps/web/src/components/forms/signin.tsx:384
-#: apps/web/src/components/forms/signin.tsx:511
+#: apps/web/src/components/forms/signin.tsx:380
+#: apps/web/src/components/forms/signin.tsx:507
 msgid "Signing in..."
 msgstr "Anmeldung..."
 
@@ -5572,7 +5562,7 @@ msgstr "Dieser Link ist ungültig oder abgelaufen. Bitte kontaktieren Sie Ihr Te
 msgid "This passkey has already been registered."
 msgstr "Dieser Zugangsschlüssel wurde bereits registriert."
 
-#: apps/web/src/components/forms/signin.tsx:201
+#: apps/web/src/components/forms/signin.tsx:197
 msgid "This passkey is not configured for this application. Please login and add one in the user settings."
 msgstr "Dieser Passkey ist für diese Anwendung nicht konfiguriert. Bitte melden Sie sich an und fügen Sie einen in den Benutzereinstellungen hinzu."
 
@@ -5584,7 +5574,7 @@ msgstr "Dieser Preis beinhaltet mindestens 5 Plätze."
 msgid "This recipient can no longer be modified as they have signed a field, or completed the document."
 msgstr "Dieser Empfänger kann nicht mehr bearbeitet werden, da er ein Feld unterschrieben oder das Dokument abgeschlossen hat."
 
-#: apps/web/src/components/forms/signin.tsx:203
+#: apps/web/src/components/forms/signin.tsx:199
 msgid "This session has expired. Please try again."
 msgstr "Diese Sitzung ist abgelaufen. Bitte versuchen Sie es erneut."
 
@@ -5800,7 +5790,7 @@ msgstr "Zwei-Faktor-Authentifizierung"
 msgid "Two factor authentication recovery codes are used to access your account in the event that you lose access to your authenticator app."
 msgstr "Wiederherstellungscodes für die Zwei-Faktor-Authentifizierung werden verwendet, um auf Ihr Konto zuzugreifen, falls Sie den Zugang zu Ihrer Authentifizierungs-App verlieren."
 
-#: apps/web/src/components/forms/signin.tsx:449
+#: apps/web/src/components/forms/signin.tsx:445
 msgid "Two-Factor Authentication"
 msgstr "Zwei-Faktor-Authentifizierung"
 
@@ -5911,8 +5901,8 @@ msgstr "Passwort kann nicht zurückgesetzt werden"
 msgid "Unable to setup two-factor authentication"
 msgstr "Zwei-Faktor-Authentifizierung kann nicht eingerichtet werden"
 
-#: apps/web/src/components/forms/signin.tsx:248
-#: apps/web/src/components/forms/signin.tsx:256
+#: apps/web/src/components/forms/signin.tsx:244
+#: apps/web/src/components/forms/signin.tsx:252
 msgid "Unable to sign in"
 msgstr "Anmeldung nicht möglich"
 
@@ -6076,12 +6066,12 @@ msgid "Use"
 msgstr "Verwenden"
 
 #: apps/web/src/components/forms/2fa/disable-authenticator-app-dialog.tsx:187
-#: apps/web/src/components/forms/signin.tsx:506
+#: apps/web/src/components/forms/signin.tsx:502
 msgid "Use Authenticator"
 msgstr "Authenticator verwenden"
 
 #: apps/web/src/components/forms/2fa/disable-authenticator-app-dialog.tsx:185
-#: apps/web/src/components/forms/signin.tsx:504
+#: apps/web/src/components/forms/signin.tsx:500
 msgid "Use Backup Code"
 msgstr "Backup-Code verwenden"
 
@@ -6218,7 +6208,7 @@ msgid "View document"
 msgstr "Dokument anzeigen"
 
 #: apps/web/src/app/(signing)/sign/[token]/form.tsx:181
-#: packages/email/template-components/template-document-invite.tsx:107
+#: packages/email/template-components/template-document-invite.tsx:104
 #: packages/email/template-components/template-document-rejected.tsx:44
 #: packages/ui/primitives/document-flow/add-subject.tsx:90
 #: packages/ui/primitives/document-flow/add-subject.tsx:91
@@ -6397,9 +6387,9 @@ msgstr "Wir sind auf einen unbekannten Fehler gestoßen, während wir versucht h
 msgid "We encountered an unknown error while attempting to save your details. Please try again later."
 msgstr "Wir sind auf einen unbekannten Fehler gestoßen, während wir versucht haben, Ihre Daten zu speichern. Bitte versuchen Sie es später erneut."
 
-#: apps/web/src/components/forms/signin.tsx:273
-#: apps/web/src/components/forms/signin.tsx:288
-#: apps/web/src/components/forms/signin.tsx:304
+#: apps/web/src/components/forms/signin.tsx:269
+#: apps/web/src/components/forms/signin.tsx:284
+#: apps/web/src/components/forms/signin.tsx:300
 msgid "We encountered an unknown error while attempting to sign you In. Please try again later."
 msgstr "Wir sind auf einen unbekannten Fehler gestoßen, während wir versucht haben, Sie anzumelden. Bitte versuchen Sie es später erneut."
 
@@ -6576,7 +6566,7 @@ msgstr "Wöchentlich"
 msgid "Welcome"
 msgstr "Willkommen"
 
-#: apps/web/src/app/(unauthenticated)/signin/page.tsx:33
+#: apps/web/src/app/(unauthenticated)/signin/page.tsx:32
 msgid "Welcome back, we are lucky to have you."
 msgstr "Willkommen zurück, wir freuen uns, Sie zu haben."
 

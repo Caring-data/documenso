@@ -1,6 +1,6 @@
 /// <reference types="../types/next-auth.d.ts" />
 import { PrismaAdapter } from '@next-auth/prisma-adapter';
-import { compare } from '@node-rs/bcrypt';
+import bcrypt from 'bcryptjs';
 import { Prisma } from '@prisma/client';
 import { verifyAuthenticationResponse } from '@simplewebauthn/server';
 import { DateTime } from 'luxon';
@@ -92,7 +92,7 @@ export const NEXT_AUTH_OPTIONS: AuthOptions = {
           throw new Error(ErrorCode.USER_MISSING_PASSWORD);
         }
 
-        const isPasswordsSame = await compare(password, user.password);
+        const isPasswordsSame = await bcrypt.compareSync(password, user.password);
         const requestMetadata = extractNextAuthRequestMetadata(req);
 
         if (!isPasswordsSame) {
