@@ -1,0 +1,67 @@
+pipeline {
+    agent { label 'cd_development' }
+
+    environment {
+        PROJECT_NAME = "documenso"
+        REPO_URL = "https://github.com/Caring-data/documenso"
+        CONTAINER_NAME = "documenso_container"
+    }
+
+    stages {
+        stage('Prepare Workspace') {
+            steps {
+                script {
+                    sh 'whoami'
+                }
+            }
+        }
+        stage('Checkout') {
+            steps {
+                checkout([$class: 'GitSCM',
+                          branches: [[name: '*/staging']],
+                          userRemoteConfigs: [[
+                              url: "${REPO_URL}",
+                              credentialsId: 'git_credentials'
+                ]]])
+            }
+        }
+        stage('Copy .env.production') {
+            steps {
+                script {
+                    // Eliminar archivo .env.production si existe
+                    sh """
+                        if [ -f "${JENKINS_HOME}/workspace/documenso_development/.env" ]; then
+                            sudo rm -f ${JENKINS_HOME}/workspace/documenso_development/.env
+                        fi
+                    """
+                    // Copiar el nuevo archivo .env.production
+                    sh 'sudo cp /home/caringdata/development/documenso/.env.production ${JENKINS_HOME}/workspace/documenso_development/.env.production'
+                }
+            }
+        }
+        stage('Build and Start Docker Container') {
+            steps {
+                script {
+                    sh 'cd ${JENKINS_HOME}/workspace/documenso_development'
+
+                    // Crear una imagen de Next.js
+                    sh "docker build -t ${PROJECT_NAME}:latest ."
+
+                    // Verificar si ya hay un contenedor corriendo
+                    def containerExists = sh(script: "docker ps -a --filter 'name=${CONTAINER_NAME}' --format '{{.Names}}'", returnStdout: true).trim()
+
+                    if (containerExists) {
+                        // Si ya existe, detenerlo y eliminarlo antes de lanzar uno nuevo
+                        sh "docker stop ${CONTAINER_NAME} || true"
+                        sh "docker rm ${CONTAINER_NAME} || true"
+                    }
+
+                    // Iniciar un único contenedor de Next.js
+                    sh """
+                    docker run -d --name ${CONTAINER_NAME} -p 3002:3002 --env-file .env.production ${PROJECT_NAME}:latest
+                    """
+                }
+            }
+        }
+    }
+}
