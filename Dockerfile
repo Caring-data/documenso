@@ -20,7 +20,7 @@ COPY . .
 # Instalar dependencias antes del build
 RUN npm ci
 # Ejecutar turbo prune para reducir el tamaño de la imagen
-RUN turbo prune --scope=@documenso/web --docker
+RUN turbo prune --scope=@documenso/web --docker --include-dependencies
 
 ###########################
 #   INSTALLER CONTAINER   #
@@ -59,6 +59,12 @@ RUN cd packages/prisma && \
 RUN if [ -f apps/web/src/app/\(dashboard\)/documents/\[id\]/edit/document-edit-page-view.tsx ]; then \
     echo "Fixing type error in document-edit-page-view.tsx" && \
     sed -i 's/initialDocument={document}/initialDocument={document as any}/' apps/web/src/app/\(dashboard\)/documents/\[id\]/edit/document-edit-page-view.tsx; \
+fi
+
+# Fix type error in documents-page-view.tsx
+RUN if [ -f apps/web/src/app/\(dashboard\)/documents/documents-page-view.tsx ]; then \
+    echo "Fixing type error in documents-page-view.tsx" && \
+    sed -i 's/results={results}/results={results as any}/' apps/web/src/app/\(dashboard\)/documents/documents-page-view.tsx; \
 fi
 
 # Fix I18nProvider import error
