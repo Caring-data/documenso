@@ -56,7 +56,7 @@ pipeline {
 
                     // Iniciar un único contenedor de Next.js
                     sh """
-                    docker run -d --name ${CONTAINER_NAME} -p 3002:3002 --env-file .env.production ${PROJECT_NAME}:latest
+                    docker run -d --name ${CONTAINER_NAME} -p 3002:3002 --env-file .env ${PROJECT_NAME}:latest
                     """
                 }
             }
