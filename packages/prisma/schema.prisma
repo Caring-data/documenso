@@ -336,8 +336,9 @@ model Document {
   template       Template?           @relation(fields: [templateId], references: [id], onDelete: SetNull)
   source         DocumentSource
 
-  residentId String? @db.Uuid
-  formKey    String? @db.VarChar(255)
+  residentId      String? @db.Uuid
+  formKey         String? @db.VarChar(255)
+  documentDetails Json?
 
   auditLogs DocumentAuditLog[]
 

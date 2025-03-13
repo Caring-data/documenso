@@ -589,6 +589,9 @@ export const ApiContractV1Implementation = createNextRoute(ApiContractV1, {
           ...body.meta,
         },
         requestMetadata: metadata,
+        formKey: body.formKey,
+        residentId: body.residentId,
+        documentDetails: body.documentDetails,
       });
     } catch (err) {
       return AppError.toRestAPIError(err);

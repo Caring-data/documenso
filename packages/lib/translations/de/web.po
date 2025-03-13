@@ -90,6 +90,7 @@ msgid "{0, plural, zero {Select values} other {# selected...}}"
 msgstr "{0, plural, zero {Werte auswählen} other {# ausgewählt...}}"
 
 #: apps/web/src/app/(signing)/sign/[token]/auto-sign.tsx:193
+#: packages/email/template-components/template-document-invite.tsx:68
 msgid "{0}"
 msgstr "{0}"
 
@@ -142,11 +143,7 @@ msgstr "{inviterName} hat das Dokument {documentName} storniert, du musst es nic
 msgid "{inviterName} has cancelled the document<0/>\"{documentName}\""
 msgstr "{inviterName} hat das Dokument<0/>\"{documentName}\" storniert"
 
-#: packages/email/template-components/template-document-invite.tsx:71
-msgid "{inviterName} has invited you to {0}<0/>\"{documentName}\""
-msgstr "{inviterName} hat dich eingeladen, {0}<0/>\"{documentName}\""
-
-#: packages/email/templates/document-invite.tsx:41
+#: packages/email/templates/document-invite.tsx:52
 msgid "{inviterName} has invited you to {action} {documentName}"
 msgstr "{inviterName} hat dich eingeladen, {action} {documentName}"
 
@@ -158,11 +155,7 @@ msgstr "{inviterName} hat dich aus dem Dokument {documentName} entfernt."
 msgid "{inviterName} has removed you from the document<0/>\"{documentName}\""
 msgstr "{inviterName} hat dich aus dem Dokument<0/>\"{documentName}\" entfernt"
 
-#: packages/email/template-components/template-document-invite.tsx:58
-msgid "{inviterName} on behalf of \"{teamName}\" has invited you to {0}<0/>\"{documentName}\""
-msgstr "{inviterName} im Namen von \"{teamName}\" hat dich eingeladen, {0}<0/>\"{documentName}\""
-
-#: packages/email/templates/document-invite.tsx:45
+#: packages/email/templates/document-invite.tsx:56
 msgid "{inviterName} on behalf of \"{teamName}\" has invited you to {action} {documentName}"
 msgstr "{inviterName} im Namen von \"{teamName}\" hat Sie eingeladen, das Dokument {documentName} {action}"
 
@@ -307,11 +300,7 @@ msgstr "{remaningLength, plural, one {# Zeichen verbleibend} other {# Zeichen ve
 msgid "{signerName} has rejected the document \"{documentName}\"."
 msgstr "{signerName} hat das Dokument \"{documentName}\" abgelehnt."
 
-#: packages/email/template-components/template-document-invite.tsx:65
-msgid "{teamName} has invited you to {0}<0/>\"{documentName}\""
-msgstr "{teamName} hat dich eingeladen, {0}<0/>\"{documentName}\""
-
-#: packages/email/templates/document-invite.tsx:46
+#: packages/email/templates/document-invite.tsx:57
 msgid "{teamName} has invited you to {action} {documentName}"
 msgstr "{teamName} hat Sie eingeladen, {action} {documentName}"
 
@@ -350,6 +339,14 @@ msgstr "{visibleRows, plural, one {Eine # Ergebnis wird angezeigt.} other {# Erg
 #: apps/web/src/app/(signing)/sign/[token]/no-longer-available.tsx:45
 msgid "<0>\"{0}\"</0>is no longer available to sign"
 msgstr "<0>\"{0}\"</0> steht nicht mehr zur Unterschrift zur Verfügung"
+
+#: packages/email/template-components/template-document-invite.tsx:54
+msgid "<0>{0}</0> from <1>{1}</1> has requested your electronic signature on the following document:"
+msgstr ""
+
+#: packages/email/template-components/template-footer.tsx:25
+msgid "<0>{companyName}</0> uses <1>Caring Data</1> to manage communication and documentation in their facility. Caring Data respects your privacy. To learn more, read our <2>Privacy Statement</2>"
+msgstr ""
 
 #: packages/email/templates/team-transfer-request.tsx:59
 msgid "<0>{senderName}</0> has requested that you take ownership of the following team"
@@ -575,6 +572,10 @@ msgstr "Akzeptieren"
 #: packages/email/templates/team-invite.tsx:42
 msgid "Accept invitation to join a team on Documenso"
 msgstr "Einladung annehmen, um einem Team auf Documenso beizutreten"
+
+#: packages/email/template-components/template-document-invite.tsx:115
+msgid "Accept Invite and Sign"
+msgstr ""
 
 #: packages/email/templates/confirm-team-email.tsx:41
 msgid "Accept team email request for {teamName} on Documenso"
@@ -1094,7 +1095,7 @@ msgid "Approve"
 msgstr "Genehmigen"
 
 #: apps/web/src/app/(signing)/sign/[token]/form.tsx:183
-#: packages/email/template-components/template-document-invite.tsx:105
+#: packages/email/template-components/template-document-invite.tsx:117
 msgid "Approve Document"
 msgstr "Dokument genehmigen"
 
@@ -1150,7 +1151,7 @@ msgid "Assist"
 msgstr ""
 
 #: apps/web/src/app/(signing)/sign/[token]/form.tsx:184
-#: packages/email/template-components/template-document-invite.tsx:107
+#: packages/email/template-components/template-document-invite.tsx:119
 msgid "Assist Document"
 msgstr ""
 
@@ -1322,7 +1323,7 @@ msgstr "Durch die Aktivierung von 2FA müssen Sie jedes Mal, wenn Sie sich anmel
 msgid "By proceeding to use the electronic signature service provided by Documenso, you affirm that you have read and understood this disclosure. You agree to all terms and conditions related to the use of electronic signatures and electronic transactions as outlined herein."
 msgstr "Indem Sie den elektronischen Unterzeichnungsdienst von Documenso verwenden, bestätigen Sie, dass Sie diese Offenlegung gelesen und verstanden haben. Sie stimmen allen Bedingungen und Konditionen zu, die mit der Verwendung elektronischer Unterschriften und elektronischer Transaktionen verbunden sind, wie hierin dargelegt."
 
-#: apps/web/src/components/general/signing-disclosure.tsx:14
+#: apps/web/src/components/general/signing-disclosure.tsx:12
 msgid "By proceeding with your electronic signature, you acknowledge and consent that it will be used to sign the given document and holds the same legal validity as a handwritten signature. By completing the electronic signing process, you affirm your understanding and acceptance of these conditions."
 msgstr "Indem Sie fortfahren, Ihre elektronische Unterschrift zu leisten, erkennen Sie an und stimmen zu, dass sie verwendet wird, um das gegebene Dokument zu unterzeichnen, und die gleiche rechtliche Gültigkeit wie eine handschriftliche Unterschrift hat. Durch den Abschluss des elektronischen Unterzeichnungsprozesses bestätigen Sie Ihr Verständnis und Ihre Akzeptanz dieser Bedingungen."
 
@@ -1639,11 +1640,11 @@ msgstr "Inhalt"
 msgid "Continue"
 msgstr "Fortsetzen"
 
-#: packages/email/template-components/template-document-invite.tsx:82
+#: packages/email/template-components/template-document-invite.tsx:101
 msgid "Continue by approving the document."
 msgstr "Fahre fort, indem du das Dokument genehmigst."
 
-#: packages/email/template-components/template-document-invite.tsx:85
+#: packages/email/template-components/template-document-invite.tsx:104
 msgid "Continue by assisting with the document."
 msgstr ""
 
@@ -1651,11 +1652,7 @@ msgstr ""
 msgid "Continue by downloading the document."
 msgstr "Fahre fort, indem du das Dokument herunterlädst."
 
-#: packages/email/template-components/template-document-invite.tsx:80
-msgid "Continue by signing the document."
-msgstr "Fahre fort, indem du das Dokument signierst."
-
-#: packages/email/template-components/template-document-invite.tsx:81
+#: packages/email/template-components/template-document-invite.tsx:100
 msgid "Continue by viewing the document."
 msgstr "Fahre fort, indem du das Dokument ansiehst."
 
@@ -1813,10 +1810,6 @@ msgstr "Webhook erstellen"
 msgid "Create Webhook"
 msgstr "Webhook erstellen"
 
-#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:213
-msgid "Create your account and start using state-of-the-art document signing."
-msgstr "Erstellen Sie Ihr Konto und beginnen Sie mit dem modernen Dokumentensignieren."
-
 #: apps/web/src/components/forms/v2/signup.tsx:272
 msgid "Create your account and start using state-of-the-art document signing. Open and beautiful signing is within your grasp."
 msgstr "Erstellen Sie Ihr Konto und beginnen Sie mit dem modernen Dokumentensignieren. Offenes und schönes Signieren liegt in Ihrer Reichweite."
@@ -1894,6 +1887,10 @@ msgstr "Erstellungsdatum"
 #: packages/ui/primitives/template-flow/add-template-settings.tsx:454
 msgid "Date Format"
 msgstr "Datumsformat"
+
+#: packages/email/template-components/template-document-invite.tsx:51
+msgid "Dear"
+msgstr ""
 
 #: apps/web/src/app/(dashboard)/settings/teams/decline-team-invitation-button.tsx:47
 #: packages/email/templates/team-invite.tsx:100
@@ -2146,7 +2143,7 @@ msgstr "Die Authentifizierung für den Dokumentenzugriff wurde aktualisiert"
 msgid "Document All"
 msgstr "Dokument Alle"
 
-#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:132
+#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:126
 msgid "Document Approved"
 msgstr "Dokument genehmigt"
 
@@ -2255,7 +2252,7 @@ msgstr "Dokument verschoben"
 msgid "Document moved to team"
 msgstr "Dokument ins Team verschoben"
 
-#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:156
+#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:150
 msgid "Document no longer available to sign"
 msgstr "Dokument steht nicht mehr zur Unterschrift zur Verfügung"
 
@@ -2294,7 +2291,7 @@ msgstr "Dokument wieder versiegelt"
 msgid "Document sent"
 msgstr "Dokument gesendet"
 
-#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:130
+#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:124
 msgid "Document Signed"
 msgstr "Dokument signiert"
 
@@ -2330,7 +2327,7 @@ msgstr "Dokumenten-Upload deaktiviert aufgrund unbezahlter Rechnungen"
 msgid "Document uploaded"
 msgstr "Dokument hochgeladen"
 
-#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:131
+#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:125
 msgid "Document Viewed"
 msgstr "Dokument angesehen"
 
@@ -2682,11 +2679,11 @@ msgstr "Fehler"
 msgid "Everyone can access and view the document"
 msgstr "Jeder kann auf das Dokument zugreifen und es anzeigen"
 
-#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:140
+#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:134
 msgid "Everyone has signed"
 msgstr "Alle haben unterschrieben"
 
-#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:164
+#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:158
 msgid "Everyone has signed! You will receive an Email copy of the signed document."
 msgstr "Alle haben unterschrieben! Sie werden eine E-Mail-Kopie des unterzeichneten Dokuments erhalten."
 
@@ -2850,7 +2847,6 @@ msgstr "Zurück"
 msgid "Go back home"
 msgstr "Zurück nach Hause"
 
-#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:224
 #: apps/web/src/app/(signing)/sign/[token]/no-longer-available.tsx:57
 msgid "Go Back Home"
 msgstr "Zurück nach Hause"
@@ -2866,22 +2862,6 @@ msgstr "Gehen Sie zu Ihren <0>öffentlichen Profileinstellungen</0>, um Dokument
 #: packages/ui/primitives/signature-pad/signature-pad.tsx:565
 msgid "Green"
 msgstr "Grün"
-
-#: apps/web/src/app/(signing)/sign/[token]/signing-page-view.tsx:120
-msgid "has invited you to approve this document"
-msgstr "hat Sie eingeladen, dieses Dokument zu genehmigen"
-
-#: apps/web/src/app/(signing)/sign/[token]/signing-page-view.tsx:129
-msgid "has invited you to assist this document"
-msgstr ""
-
-#: apps/web/src/app/(signing)/sign/[token]/signing-page-view.tsx:111
-msgid "has invited you to sign this document"
-msgstr "hat Sie eingeladen, dieses Dokument zu unterzeichnen"
-
-#: apps/web/src/app/(signing)/sign/[token]/signing-page-view.tsx:102
-msgid "has invited you to view this document"
-msgstr "hat Sie eingeladen, dieses Dokument anzusehen"
 
 #: packages/ui/primitives/document-flow/add-signers.tsx:262
 #: packages/ui/primitives/document-flow/add-signers.tsx:300
@@ -2982,6 +2962,10 @@ msgstr "Wenn Sie den Bestätigungslink nicht in Ihrem Posteingang finden, könne
 #: apps/web/src/components/forms/2fa/enable-authenticator-app-dialog.tsx:213
 msgid "If your authenticator app does not support QR codes, you can use the following code instead:"
 msgstr "Wenn Ihre Authenticator-App keine QR-Codes unterstützt, können Sie stattdessen den folgenden Code verwenden:"
+
+#: packages/email/template-components/template-document-invite.tsx:80
+msgid "In regards to: {0}"
+msgstr ""
 
 #: apps/web/src/components/formatter/document-status.tsx:40
 msgid "Inbox"
@@ -3428,10 +3412,6 @@ msgstr "Meine Vorlagen"
 msgid "Name"
 msgstr "Name"
 
-#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:209
-msgid "Need to sign documents?"
-msgstr "Müssen Dokumente signieren?"
-
 #: packages/ui/components/recipient/recipient-role-select.tsx:55
 msgid "Needs to approve"
 msgstr "Muss genehmigen"
@@ -3578,22 +3558,6 @@ msgstr "Nummer"
 #: packages/ui/primitives/document-flow/field-items-advanced-settings/number-field.tsx:103
 msgid "Number format"
 msgstr "Zahlenformat"
-
-#: apps/web/src/app/(signing)/sign/[token]/signing-page-view.tsx:116
-msgid "on behalf of \"{0}\" has invited you to approve this document"
-msgstr "im Auftrag von \"{0}\" hat Sie eingeladen, dieses Dokument zu genehmigen"
-
-#: apps/web/src/app/(signing)/sign/[token]/signing-page-view.tsx:125
-msgid "on behalf of \"{0}\" has invited you to assist this document"
-msgstr ""
-
-#: apps/web/src/app/(signing)/sign/[token]/signing-page-view.tsx:107
-msgid "on behalf of \"{0}\" has invited you to sign this document"
-msgstr "im Auftrag von \"{0}\" hat Sie eingeladen, dieses Dokument zu unterzeichnen"
-
-#: apps/web/src/app/(signing)/sign/[token]/signing-page-view.tsx:98
-msgid "on behalf of \"{0}\" has invited you to view this document"
-msgstr "im Auftrag von \"{0}\" hat Sie eingeladen, dieses Dokument anzusehen"
 
 #: apps/web/src/components/(dashboard)/settings/webhooks/create-webhook-dialog.tsx:128
 msgid "On this page, you can create a new webhook."
@@ -3829,11 +3793,7 @@ msgstr "Wählen Sie eine der folgenden Vereinbarungen aus und beginnen Sie das S
 msgid "Placeholder"
 msgstr "Platzhalter"
 
-#: packages/email/template-components/template-document-invite.tsx:52
-msgid "Please {0} your document<0/>\"{documentName}\""
-msgstr "Bitte {0} dein Dokument<0/>\"{documentName}\""
-
-#: packages/email/templates/document-invite.tsx:50
+#: packages/email/templates/document-invite.tsx:61
 msgid "Please {action} your document {documentName}"
 msgstr "Bitte {action} dein Dokument {documentName}"
 
@@ -4055,13 +4015,13 @@ msgstr "Nur lesen"
 msgid "Read only field"
 msgstr "Nur-Lese-Feld"
 
-#: apps/web/src/components/general/signing-disclosure.tsx:21
-msgid "Read the full <0>signature disclosure</0>."
-msgstr "Lesen Sie die vollständige <0>Offenlegung der Unterschrift</0>."
-
 #: apps/web/src/app/(dashboard)/documents/[id]/document-page-view-recipients.tsx:107
 msgid "Ready"
 msgstr "Bereit"
+
+#: packages/email/template-components/template-document-invite.tsx:85
+msgid "Ready to get started?<0/>Click the button and log into your Caring Data account to accept the invite and sign the document."
+msgstr ""
 
 #: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:291
 msgid "Reason"
@@ -4167,7 +4127,6 @@ msgstr "Registrierung erfolgreich"
 #: apps/web/src/app/(signing)/sign/[token]/reject-document-dialog.tsx:114
 #: apps/web/src/app/(signing)/sign/[token]/reject-document-dialog.tsx:121
 #: apps/web/src/app/(signing)/sign/[token]/reject-document-dialog.tsx:167
-#: packages/email/template-components/template-document-invite.tsx:95
 msgid "Reject Document"
 msgstr "Dokument Ablehnen"
 
@@ -4615,7 +4574,6 @@ msgid "Sign document"
 msgstr "Dokument unterschreiben"
 
 #: apps/web/src/app/(signing)/sign/[token]/form.tsx:182
-#: packages/email/template-components/template-document-invite.tsx:103
 msgid "Sign Document"
 msgstr "Dokument signieren"
 
@@ -4698,7 +4656,7 @@ msgstr "Die Unterschrift ist zu klein. Bitte geben Sie eine vollständigere Unte
 msgid "Signatures Collected"
 msgstr "Gesammelte Unterschriften"
 
-#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:198
+#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:190
 msgid "Signatures will appear once the document has been completed"
 msgstr "Unterschriften erscheinen, sobald das Dokument abgeschlossen ist"
 
@@ -5490,7 +5448,7 @@ msgstr "Dieses Dokument konnte zu diesem Zeitpunkt nicht erneut gesendet werden.
 msgid "This document has already been sent to this recipient. You can no longer edit this recipient."
 msgstr "Dieses Dokument wurde bereits an diesen Empfänger gesendet. Sie können diesen Empfänger nicht mehr bearbeiten."
 
-#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:178
+#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:172
 msgid "This document has been cancelled by the owner and is no longer available for others to sign."
 msgstr "Dieses Dokument wurde vom Eigentümer storniert und steht anderen nicht mehr zur Unterzeichnung zur Verfügung."
 
@@ -5557,6 +5515,10 @@ msgstr "Dieser Link ist ungültig oder abgelaufen. Bitte kontaktieren Sie Ihr Te
 #: apps/web/src/app/(unauthenticated)/team/verify/email/[token]/page.tsx:37
 msgid "This link is invalid or has expired. Please contact your team to resend a verification."
 msgstr "Dieser Link ist ungültig oder abgelaufen. Bitte kontaktieren Sie Ihr Team, um eine neue Bestätigungsanfrage zu senden."
+
+#: packages/email/template-components/template-document-invite.tsx:124
+msgid "This link is valid until {0}"
+msgstr ""
 
 #: apps/web/src/app/(dashboard)/settings/security/passkeys/create-passkey-dialog.tsx:208
 msgid "This passkey has already been registered."
@@ -6118,10 +6080,6 @@ msgstr "Der Benutzername darf nur alphanumerische Zeichen und Bindestriche entha
 msgid "Users"
 msgstr "Benutzer"
 
-#: packages/email/template-components/template-footer.tsx:24
-msgid "uses <0>Caring Data</0> to manage communication and documentation in their facility. Caring Data respects your privacy. To learn more, read our <1>Privacy Statement</1>"
-msgstr ""
-
 #: packages/ui/primitives/document-flow/field-items-advanced-settings/checkbox-field.tsx:132
 #: packages/ui/primitives/document-flow/field-items-advanced-settings/number-field.tsx:188
 msgid "Validation"
@@ -6208,7 +6166,7 @@ msgid "View document"
 msgstr "Dokument anzeigen"
 
 #: apps/web/src/app/(signing)/sign/[token]/form.tsx:181
-#: packages/email/template-components/template-document-invite.tsx:104
+#: packages/email/template-components/template-document-invite.tsx:116
 #: packages/email/template-components/template-document-rejected.tsx:44
 #: packages/ui/primitives/document-flow/add-subject.tsx:90
 #: packages/ui/primitives/document-flow/add-subject.tsx:91
@@ -6274,7 +6232,7 @@ msgstr "Warten auf andere"
 msgid "Waiting for others to complete signing."
 msgstr "Warten auf andere, um die Unterzeichnung abzuschließen."
 
-#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:148
+#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:142
 msgid "Waiting for others to sign"
 msgstr "Warten auf andere, um zu unterschreiben"
 
@@ -6912,7 +6870,7 @@ msgstr "Sie werden benachrichtigt und können Ihr Documenso öffentliches Profil
 msgid "You will now be required to enter a code from your authenticator app when signing in."
 msgstr "Sie müssen bei der Anmeldung jetzt einen Code von Ihrer Authenticator-App eingeben."
 
-#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:171
+#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:165
 msgid "You will receive an Email copy of the signed document once everyone has signed."
 msgstr "Sie erhalten eine E-Mail-Kopie des unterzeichneten Dokuments, sobald alle unterschrieben haben."
 

@@ -33,7 +33,7 @@ import { triggerWebhook } from '../webhooks/trigger/trigger-webhook';
 
 type FinalRecipient = Pick<
   Recipient,
-  'name' | 'email' | 'role' | 'authOptions' | 'signingOrder'
+  'name' | 'email' | 'role' | 'authOptions' | 'signingOrder' | 'expired'
 > & {
   templateRecipientId: number;
   fields: Field[];
@@ -49,6 +49,7 @@ export type CreateDocumentFromTemplateOptions = {
     name?: string;
     email: string;
     signingOrder?: number | null;
+    expired?: Date | null;
   }[];
   customDocumentDataId?: string;
 
@@ -70,6 +71,14 @@ export type CreateDocumentFromTemplateOptions = {
     emailSettings?: TDocumentEmailSettings;
   };
   requestMetadata: ApiRequestMetadata;
+  formKey?: string;
+  residentId?: string;
+  documentDetails?: {
+    companyName?: string;
+    facilityAdministrator?: string;
+    documentName?: string;
+    residentName?: string;
+  };
 };
 
 export const createDocumentFromTemplate = async ({
@@ -81,6 +90,9 @@ export const createDocumentFromTemplate = async ({
   customDocumentDataId,
   override,
   requestMetadata,
+  formKey,
+  residentId,
+  documentDetails,
 }: CreateDocumentFromTemplateOptions) => {
   const template = await prisma.template.findUnique({
     where: {
@@ -151,6 +163,7 @@ export const createDocumentFromTemplate = async ({
       role: templateRecipient.role,
       signingOrder: foundRecipient?.signingOrder ?? templateRecipient.signingOrder,
       authOptions: templateRecipient.authOptions,
+      expired: foundRecipient?.expired ?? templateRecipient?.expired ?? null,
     };
   });
 
@@ -194,6 +207,9 @@ export const createDocumentFromTemplate = async ({
           globalAccessAuth: templateAuthOptions.globalAccessAuth,
           globalActionAuth: templateAuthOptions.globalActionAuth,
         }),
+        formKey,
+        residentId,
+        documentDetails,
         visibility: template.visibility || template.team?.teamGlobalSettings?.documentVisibility,
         documentMeta: {
           create: {
@@ -222,27 +238,30 @@ export const createDocumentFromTemplate = async ({
         },
         recipients: {
           createMany: {
-            data: finalRecipients.map((recipient) => {
-              const authOptions = ZRecipientAuthOptionsSchema.parse(recipient?.authOptions);
+            data: finalRecipients
+              .filter((templateRecipient) => !templateRecipient.email.includes('recipient'))
+              .map((recipient) => {
+                const authOptions = ZRecipientAuthOptionsSchema.parse(recipient?.authOptions);
 
-              return {
-                email: recipient.email,
-                name: recipient.name,
-                role: recipient.role,
-                authOptions: createRecipientAuthOptions({
-                  accessAuth: authOptions.accessAuth,
-                  actionAuth: authOptions.actionAuth,
-                }),
-                sendStatus:
-                  recipient.role === RecipientRole.CC ? SendStatus.SENT : SendStatus.NOT_SENT,
-                signingStatus:
-                  recipient.role === RecipientRole.CC
-                    ? SigningStatus.SIGNED
-                    : SigningStatus.NOT_SIGNED,
-                signingOrder: recipient.signingOrder,
-                token: nanoid(),
-              };
-            }),
+                return {
+                  email: recipient.email,
+                  name: recipient.name,
+                  role: recipient.role,
+                  authOptions: createRecipientAuthOptions({
+                    accessAuth: authOptions.accessAuth,
+                    actionAuth: authOptions.actionAuth,
+                  }),
+                  sendStatus:
+                    recipient.role === RecipientRole.CC ? SendStatus.SENT : SendStatus.NOT_SENT,
+                  signingStatus:
+                    recipient.role === RecipientRole.CC
+                      ? SigningStatus.SIGNED
+                      : SigningStatus.NOT_SIGNED,
+                  signingOrder: recipient.signingOrder,
+                  token: nanoid(),
+                  expired: recipient.expired,
+                };
+              }),
           },
         },
       },

@@ -275,6 +275,7 @@ export const ZGenerateDocumentFromTemplateMutationSchema = z.object({
         email: z.string().email(),
         name: z.string().optional(),
         signingOrder: z.number().optional(),
+        expired: z.union([z.date(), z.string().transform((val) => new Date(val))]).nullable(),
       }),
     )
     .refine(
@@ -298,6 +299,7 @@ export const ZGenerateDocumentFromTemplateMutationSchema = z.object({
       distributionMethod: z.nativeEnum(DocumentDistributionMethod),
       typedSignatureEnabled: z.boolean(),
       emailSettings: ZDocumentEmailSettingsSchema,
+      expired: z.union([z.date(), z.string().transform((val) => new Date(val))]).nullable(),
     })
     .partial()
     .optional(),
@@ -309,6 +311,16 @@ export const ZGenerateDocumentFromTemplateMutationSchema = z.object({
     .optional(),
   formValues: z.record(z.string(), z.union([z.string(), z.boolean(), z.number()])).optional(),
   distributeDocument: z.boolean(),
+  formKey: z.string().optional(),
+  residentId: z.string().uuid().optional(),
+  documentDetails: z
+    .object({
+      companyName: z.string().optional(),
+      facilityAdministrator: z.string().optional(),
+      documentName: z.string().optional(),
+      residentName: z.string().optional(),
+    })
+    .optional(),
 });
 
 export type TGenerateDocumentFromTemplateMutationSchema = z.infer<
@@ -374,8 +386,7 @@ export const ZSuccessfulRecipientResponseSchema = z.object({
   role: z.nativeEnum(RecipientRole),
   signingOrder: z.number().nullish(),
   token: z.string(),
-  // !: Not used for now
-  // expired: z.string(),
+  expired: z.date().nullable(),
   signedAt: z.date().nullable(),
   readStatus: z.nativeEnum(ReadStatus),
   signingStatus: z.nativeEnum(SigningStatus),

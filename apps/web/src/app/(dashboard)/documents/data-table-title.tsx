@@ -15,6 +15,12 @@ export type DataTableTitleProps = {
     recipients: Recipient[];
     residentId?: string | null;
     formKey?: string | null;
+    documentDetails?: {
+      companyName?: string;
+      facilityAdministrator?: string;
+      documentName?: string;
+      residentName?: string;
+    } | null;
   };
   teamUrl?: string;
 };
