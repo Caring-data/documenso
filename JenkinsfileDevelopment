@@ -25,17 +25,15 @@ pipeline {
                 ]]])
             }
         }
-        stage('Copy .env.production') {
+        stage('Copy .env') {
             steps {
                 script {
-                    // Eliminar archivo .env.production si existe
                     sh """
                         if [ -f "${JENKINS_HOME}/workspace/documenso_development/.env" ]; then
                             sudo rm -f ${JENKINS_HOME}/workspace/documenso_development/.env
                         fi
                     """
-                    // Copiar el nuevo archivo .env.production
-                    sh 'sudo cp /home/caringdata/development/documenso/.env.production ${JENKINS_HOME}/workspace/documenso_development/.env.production'
+                    sh 'sudo cp /home/caringdata/development/documenso/.env ${JENKINS_HOME}/workspace/documenso_development/.env'
                 }
             }
         }
