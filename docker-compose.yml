@@ -15,7 +15,7 @@ services:
       - /app/node_modules
     restart: always
 
-  nginx_next:
+  nginx_documento_next:
     image: nginx:alpine
     container_name: nginx_next
     ports:
