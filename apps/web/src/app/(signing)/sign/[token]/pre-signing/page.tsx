@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo } from 'react';
+import { useEffect, useState } from 'react';
 
 import { usePathname } from 'next/navigation';
 import { useSearchParams } from 'next/navigation';
@@ -9,6 +9,9 @@ import { Button } from '@react-email/button';
 import { Img } from '@react-email/img';
 
 import { NEXT_PUBLIC_WEBAPP_URL, WEBAPP_BASE_URL } from '@documenso/lib/constants/app';
+import { getDocumentAndSenderByToken } from '@documenso/lib/server-only/document/get-document-by-token';
+
+export type DocumentAndSender = Awaited<ReturnType<typeof getDocumentAndSenderByToken>>;
 
 export default function PreSigningPage() {
   const searchParams = useSearchParams();
@@ -17,23 +20,69 @@ export default function PreSigningPage() {
   const token = searchParams?.get('token') || pathname?.split('/')[2] || '';
   const assetBaseUrl = WEBAPP_BASE_URL;
 
-  const signDocumentUrl = useMemo(() => {
-    const url = new URL(`${NEXT_PUBLIC_WEBAPP_URL()}/sign/${token}`);
-    url.searchParams.set('accessed', 'true');
-    return url;
+  const [document, setDocument] = useState<DocumentAndSender | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    async function fetchDocument() {
+      if (!token) return;
+
+      try {
+        setLoading(true);
+        const fetchedDocument = await getDocumentAndSenderByToken({
+          token,
+          userId: undefined,
+          requireAccessAuth: false,
+        });
+
+        setDocument(fetchedDocument);
+      } catch (err) {
+        setError('Failed to fetch document');
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    void fetchDocument();
   }, [token]);
 
-  const signDocumentLink = signDocumentUrl.toString();
+  const signDocumentUrl = new URL(`${NEXT_PUBLIC_WEBAPP_URL()}/sign/${token}`);
+  signDocumentUrl.searchParams.set('accessed', 'true');
 
-  const getAssetUrl = (path: string) => {
-    return new URL(path, assetBaseUrl).toString();
-  };
+  const rejectDocumentUrl = new URL(signDocumentUrl);
+  rejectDocumentUrl.searchParams.set('reject', 'true');
 
-  const rejectDocumentLink = useMemo(() => {
-    const rejectUrl = new URL(signDocumentUrl);
-    rejectUrl.searchParams.set('reject', 'true');
-    return rejectUrl.toString();
-  }, [signDocumentUrl]);
+  // const signDocumentUrl = useMemo(() => {
+  //   const url = new URL(`${NEXT_PUBLIC_WEBAPP_URL()}/sign/${token}`);
+  //   url.searchParams.set('accessed', 'true');
+  //   return url;
+  // }, [token]);
+
+  // const signDocumentLink = signDocumentUrl.toString();
+
+  // const rejectDocumentLink = useMemo(() => {
+  //   const rejectUrl = new URL(signDocumentUrl);
+  //   rejectUrl.searchParams.set('reject', 'true');
+  //   return rejectUrl.toString();
+  // }, [signDocumentUrl]);
+
+  const getAssetUrl = (path: string) => new URL(path, assetBaseUrl).toString();
+
+  if (loading) {
+    return (
+      <div className="flex h-screen items-center justify-center text-gray-700">Loading...</div>
+    );
+  }
+
+  if (error || !document) {
+    return (
+      <div className="flex h-screen items-center justify-center text-red-500">
+        Error loading document
+      </div>
+    );
+  }
+  console.log('document', document);
 
   return (
     <div className="fixed left-0 top-0 flex h-screen w-screen items-center justify-center overflow-hidden pb-11 text-white">

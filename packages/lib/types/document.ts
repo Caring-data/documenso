@@ -1,4 +1,4 @@
-import type { z } from 'zod';
+import { z } from 'zod';
 
 import {
   DocumentDataSchema,
@@ -107,6 +107,15 @@ export const ZDocumentManySchema = DocumentSchema.pick({
   formKey: true,
   residentId: true,
 }).extend({
+  documentDetails: z
+    .object({
+      companyName: z.string().optional(),
+      facilityAdministrator: z.string().optional(),
+      documentName: z.string().optional(),
+      residentName: z.string().optional(),
+    })
+    .nullable()
+    .optional(),
   user: UserSchema.pick({
     id: true,
     name: true,

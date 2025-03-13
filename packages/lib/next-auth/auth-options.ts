@@ -1,8 +1,8 @@
 /// <reference types="../types/next-auth.d.ts" />
 import { PrismaAdapter } from '@next-auth/prisma-adapter';
-import bcrypt from 'bcryptjs';
 import { Prisma } from '@prisma/client';
 import { verifyAuthenticationResponse } from '@simplewebauthn/server';
+import bcrypt from 'bcryptjs';
 import { DateTime } from 'luxon';
 import type { AuthOptions, Session, User } from 'next-auth';
 import type { JWT } from 'next-auth/jwt';

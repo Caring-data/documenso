@@ -71,7 +71,7 @@ export const DocumentsPageView = async ({ searchParams = {}, team }: DocumentsPa
 
   const stats = await getStats(getStatOptions);
 
-  const results = await findDocuments({
+  const rawResults = await findDocuments({
     userId: user.id,
     teamId: team?.id,
     status,
@@ -85,6 +85,32 @@ export const DocumentsPageView = async ({ searchParams = {}, team }: DocumentsPa
     senderIds,
     query: search,
   });
+
+  const results = {
+    perPage: rawResults.perPage,
+    count: rawResults.count,
+    currentPage: rawResults.currentPage,
+    totalPages: rawResults.totalPages,
+    data: rawResults.data.map((doc) => ({
+      id: doc.id,
+      source: doc.source,
+      createdAt: doc.createdAt,
+      user: doc.user
+        ? {
+            id: doc.user.id,
+            name: doc.user.name,
+            email: doc.user.email,
+          }
+        : null,
+      team: doc.team
+        ? {
+            id: doc.team.id,
+            url: doc.team.url,
+          }
+        : null,
+      documentDetails: doc.documentDetails ?? undefined,
+    })),
+  };
 
   const getTabHref = (value: typeof status) => {
     const params = new URLSearchParams(searchParams);
