@@ -56,48 +56,4 @@ COPY --from=builder /app/out/full/ .
 COPY turbo.json turbo.json
 
 # Instalar Turbo de forma global
-RUN npm install -g "turbo@^1.9.3"
-
-# Construir la aplicación
-RUN turbo run build --filter=@documenso/web...
-
-###########################
-#     RUNNER CONTAINER    #
-###########################
-FROM base AS runner
-
-WORKDIR /app
-
-# Definir usuario sin privilegios
-RUN addgroup --system --gid 1001 nodejs
-RUN adduser --system --uid 1001 nextjs
-
-# Copiar node_modules desde la etapa installer
-COPY --from=installer --chown=nextjs:nodejs /app/node_modules ./node_modules
-
-# Cambiar permisos de los directorios necesarios
-RUN chown -R nextjs:nodejs /app
-
-USER nextjs
-
-# Copiar solo lo necesario para el frontend
-COPY --from=installer --chown=nextjs:nodejs /app/apps/web/.next ./apps/web/.next
-COPY --from=installer --chown=nextjs:nodejs /app/apps/web/public ./apps/web/public
-COPY --from=installer --chown=nextjs:nodejs /app/apps/web/package.json ./apps/web/package.json
-
-# Copiar Prisma solo si lo necesitas en producción
-COPY --from=installer --chown=nextjs:nodejs /app/packages/prisma/schema.prisma ./packages/prisma/schema.prisma
-COPY --from=installer --chown=nextjs:nodejs /app/packages/prisma/migrations ./packages/prisma/migrations
-
-# Copiar Prisma Client generado
-COPY --from=installer --chown=nextjs:nodejs /app/node_modules/.prisma/ ./node_modules/.prisma/
-COPY --from=installer --chown=nextjs:nodejs /app/node_modules/@prisma/ ./node_modules/@prisma/
-
-# Configurar la variable de entorno para producción
-ENV NODE_ENV=production
-
-# Exponer el puerto en el que se ejecutará Next.js
-EXPOSE 3002
-
-# Comando para ejecutar la aplicación
-CMD ["npx", "turbo", "run", "start", "--filter=@documenso/web"]
+RUN npm install -g "turbo@^1.
