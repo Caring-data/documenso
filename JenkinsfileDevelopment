@@ -45,12 +45,12 @@ pipeline {
 
                     // Stop and remove any existing containers (if they exist)
                     sh """
-                        docker-compose down || true
+                        docker compose down || true
                     """
 
                     // Build and start both services using docker-compose
                     sh """
-                        docker-compose up -d --build
+                        docker compose up -d --build
                     """
                 }
             }
