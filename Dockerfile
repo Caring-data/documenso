@@ -43,16 +43,17 @@ COPY --from=builder /app/out/full/ .
 # Copiar el archivo turbo.json
 COPY turbo.json turbo.json
 
-# Modificar el schema.prisma para deshabilitar temporalmente el generador JSON
+# Modificar el schema.prisma para deshabilitar completamente el generador JSON
+# ESTA ES LA PARTE CORREGIDA:
 RUN cd packages/prisma && \
     # Crear una copia de respaldo
     cp schema.prisma schema.prisma.bak && \
-    # Comentar el generador JSON
-    sed -i 's/generator json {/\/\/ generator json {/' schema.prisma && \
-    sed -i 's/  provider = "prisma-json-types-generator"/\/\/   provider = "prisma-json-types-generator"/' schema.prisma && \
-    cat schema.prisma | grep -A 3 "generator json"
+    # Eliminar completamente el bloque del generador JSON
+    sed -i '/generator json {/,/}/d' schema.prisma && \
+    # Verificar que se haya eliminado correctamente
+    cat schema.prisma | grep -A 3 "generator"
 
-# Instalar Turbo de forma global (fixed)
+# Instalar Turbo de forma global
 RUN npm install -g "turbo@^1.9.3"
 # Construir la aplicación
 RUN turbo run build --filter=@documenso/web...
