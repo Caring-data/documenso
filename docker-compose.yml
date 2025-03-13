@@ -17,7 +17,7 @@ services:
 
   nginx_documento_next:
     image: nginx:alpine
-    container_name: nginx_next
+    container_name: nginx_documento_next
     ports:
       - '9000:80'
       - '4443:4443'
