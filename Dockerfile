@@ -36,8 +36,8 @@ COPY --from=builder /app/out/package-lock.json ./package-lock.json
 COPY --from=builder /app/lingui.config.ts ./lingui.config.ts
 # Instalar dependencias
 RUN npm ci
-# Instalar el generador de Prisma que falta
-RUN npm install -g prisma-json-types-generator
+# Instalar los generadores de Prisma que faltan
+RUN npm install -g prisma-json-types-generator zod-prisma-types
 # Copiar el resto del código fuente
 COPY --from=builder /app/out/full/ .
 # Copiar el archivo turbo.json
@@ -57,8 +57,8 @@ RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 # Copiar node_modules desde la etapa installer
 COPY --from=installer --chown=nextjs:nodejs /app/node_modules ./node_modules
-# Instalar el generador de Prisma en el runner también
-RUN npm install -g prisma-json-types-generator
+# Instalar los generadores de Prisma en el runner también
+RUN npm install -g prisma-json-types-generator zod-prisma-types
 # Cambiar permisos de los directorios necesarios
 RUN chown -R nextjs:nodejs /app
 USER nextjs
