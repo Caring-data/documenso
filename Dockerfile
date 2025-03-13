@@ -1,60 +1,53 @@
 ###########################
-#         BASE            #
+#   BASE CONTAINER       #
 ###########################
 FROM node:18-alpine AS base
 
 # Instalar herramientas esenciales
 RUN apk add --no-cache libc6-compat jq make cmake g++ openssl
 
+# Crear directorio de trabajo
 WORKDIR /app
 
-###########################
-#   BUILDER CONTAINER    #
-###########################
+##########################
+#   BUILDER STAGE        #
+##########################
 FROM base AS builder
 
-WORKDIR /app
-
-# Copiar el resto del código fuente
+# Copiar archivos de dependencias y hacer instalación
 COPY package.json package-lock.json ./
 RUN npm ci
 
 # Instalar Turbo Repo de forma global
 RUN npm install -g turbo
 
-# Copiar todo el código fuente
+# Copiar el código fuente y construir
 COPY . .
-
-# Construir la aplicación con Turbo
 RUN npm run build
 
 ###########################
-#   RUNNER CONTAINER    #
-###########################
+#   RUNNER STAGE         #
+##########################
 FROM base AS runner
 
+# Crear un usuario sin privilegios correctamente en Alpine Linux
+RUN addgroup -S nodejs && adduser -S -u 1001 -G nodejs nextjs
+
+# Establecer la carpeta de trabajo
 WORKDIR /app
 
-# Definir usuario sin privilegios
-RUN addgroup --system --gid 1001 nodejs
-RUN adduser --system --uid 1001 --gid 1001 nodejs
-
-# Copiar archivos desde el builder
-COPY --from=builder /app/package.json ./package.json
+# Copiar archivos necesarios desde el builder
+COPY --from=builder /app/package.json ./
 COPY --from=builder /app/node_modules/ ./node_modules
 COPY --from=builder /app/apps/web/.next ./apps/web/.next
+COPY --from=builder /app/apps/web/package.json ./apps/web/package.json
 COPY --from=builder /app/apps/web/public ./apps/web/public
-COPY --from=builder /app/lingui.config.ts ./lingui.config.ts
 
-COPY --from=builder /app/node_modules/.prisma/ ./node_modules/.prisma/
-COPY --from=builder /app/packages/prisma/schema.prisma ./packages/prisma/schema.prisma
-COPY --from=builder /app/packages/prisma/migrations ./packages/prisma/migrations
-
-# Establecer usuario no root
+# Configurar el usuario sin privilegios
 USER nextjs
 
 # Configurar la variable de entorno para producción
 ENV NODE_ENV=production
 
 # Comando de inicio
-CMD ["turbo", "run", "start", "--filter=@documenso/web"]
+CMD ["npx", "turbo", "run", "start", "--filter=@documenso/web"]
