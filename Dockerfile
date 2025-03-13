@@ -36,12 +36,22 @@ COPY --from=builder /app/out/package-lock.json ./package-lock.json
 COPY --from=builder /app/lingui.config.ts ./lingui.config.ts
 # Instalar dependencias
 RUN npm ci
-# Instalar los generadores de Prisma que faltan
-RUN npm install -g prisma-json-types-generator zod-prisma-types
+# Instalar los generadores de Prisma que faltan con versión específica
+RUN npm install -g prisma-json-types-generator@3.2.2 zod-prisma-types
 # Copiar el resto del código fuente
 COPY --from=builder /app/out/full/ .
 # Copiar el archivo turbo.json
 COPY turbo.json turbo.json
+
+# Modificar el schema.prisma para deshabilitar temporalmente el generador JSON
+RUN cd packages/prisma && \
+    # Crear una copia de respaldo
+    cp schema.prisma schema.prisma.bak && \
+    # Comentar el generador JSON
+    sed -i 's/generator json {/\/\/ generator json {/' schema.prisma && \
+    sed -i 's/  provider = "prisma-json-types-generator"/\/\/   provider = "prisma-json-types-generator"/' schema.prisma && \
+    cat schema.prisma | grep -A 3 "generator json"
+
 # Instalar Turbo de forma global (fixed)
 RUN npm install -g "turbo@^1.9.3"
 # Construir la aplicación
@@ -57,8 +67,8 @@ RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 # Copiar node_modules desde la etapa installer
 COPY --from=installer --chown=nextjs:nodejs /app/node_modules ./node_modules
-# Instalar los generadores de Prisma en el runner también
-RUN npm install -g prisma-json-types-generator zod-prisma-types
+# Instalar los generadores de Prisma en el runner también con versión específica
+RUN npm install -g prisma-json-types-generator@3.2.2 zod-prisma-types
 # Cambiar permisos de los directorios necesarios
 RUN chown -R nextjs:nodejs /app
 USER nextjs
@@ -66,9 +76,10 @@ USER nextjs
 COPY --from=installer --chown=nextjs:nodejs /app/apps/web/.next ./apps/web/.next
 COPY --from=installer --chown=nextjs:nodejs /app/apps/web/public ./apps/web/public
 COPY --from=installer --chown=nextjs:nodejs /app/apps/web/package.json ./apps/web/package.json
-# Copiar Prisma solo si lo necesitas en producción
-COPY --from=installer --chown=nextjs:nodejs /app/packages/prisma/schema.prisma ./packages/prisma/schema.prisma
-COPY --from=installer --chown=nextjs:nodejs /app/packages/prisma/migrations ./packages/prisma/migrations
+# Copiar directorio completo de Prisma
+COPY --from=installer --chown=nextjs:nodejs /app/packages/prisma/ ./packages/prisma/
+# Copiar el resto de paquetes necesarios
+COPY --from=installer --chown=nextjs:nodejs /app/packages ./packages
 # Copiar Prisma Client generado
 COPY --from=installer --chown=nextjs:nodejs /app/node_modules/.prisma/ ./node_modules/.prisma/
 COPY --from=installer --chown=nextjs:nodejs /app/node_modules/@prisma/ ./node_modules/@prisma/
