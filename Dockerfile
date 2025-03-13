@@ -6,6 +6,9 @@ FROM node:18-alpine AS base
 RUN apk add --no-cache libc6-compat jq make cmake g++ openssl
 WORKDIR /app
 
+# Enable Corepack for proper package manager version support
+RUN corepack enable
+
 ###########################
 #         BUILDER         #
 ###########################
@@ -44,7 +47,6 @@ COPY --from=builder /app/out/full/ .
 COPY turbo.json turbo.json
 
 # Modificar el schema.prisma para deshabilitar completamente el generador JSON
-# ESTA ES LA PARTE CORREGIDA:
 RUN cd packages/prisma && \
     # Crear una copia de respaldo
     cp schema.prisma schema.prisma.bak && \
@@ -52,6 +54,23 @@ RUN cd packages/prisma && \
     sed -i '/generator json {/,/}/d' schema.prisma && \
     # Verificar que se haya eliminado correctamente
     cat schema.prisma | grep -A 3 "generator"
+
+# Fix type error in document-edit-page-view.tsx
+RUN if [ -f apps/web/src/app/\(dashboard\)/documents/\[id\]/edit/document-edit-page-view.tsx ]; then \
+    echo "Fixing type error in document-edit-page-view.tsx" && \
+    sed -i 's/initialDocument={document}/initialDocument={document as any}/' apps/web/src/app/\(dashboard\)/documents/\[id\]/edit/document-edit-page-view.tsx; \
+fi
+
+# Fix I18nProvider import error
+RUN if grep -q "I18nProvider" packages/lib/utils/render-email-with-i18n.tsx; then \
+    echo "Fixing I18nProvider import in render-email-with-i18n.tsx" && \
+    sed -i "s/import { I18nProvider } from '@lingui\/react'/import { I18nProvider as LinguiI18nProvider } from '@lingui\/react'/" packages/lib/utils/render-email-with-i18n.tsx && \
+    sed -i "s/<I18nProvider/<LinguiI18nProvider/g" packages/lib/utils/render-email-with-i18n.tsx && \
+    sed -i "s/<\/I18nProvider>/<\/LinguiI18nProvider>/g" packages/lib/utils/render-email-with-i18n.tsx; \
+fi
+
+# Update browserslist database to fix warnings
+RUN npx update-browserslist-db@latest
 
 # Instalar Turbo de forma global
 RUN npm install -g "turbo@^1.9.3"
