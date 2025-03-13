@@ -23,7 +23,7 @@ RUN npm install -g turbo
 
 # Copiar el código fuente y construir
 COPY . .
-RUN npm run build
+RUN npm run build || (cat /app/apps/documentation/npm-debug.log && exit 1)
 
 ###########################
 #   RUNNER STAGE         #
