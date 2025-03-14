@@ -627,8 +627,8 @@ msgstr "Bestätigung"
 msgid "Action"
 msgstr "Aktion"
 
-#: apps/web/src/app/(dashboard)/documents/data-table.tsx:79
-#: apps/web/src/app/(dashboard)/templates/[id]/template-page-view-documents-table.tsx:175
+#: apps/web/src/app/(dashboard)/documents/data-table.tsx:90
+#: apps/web/src/app/(dashboard)/templates/[id]/template-page-view-documents-table.tsx:186
 #: apps/web/src/app/(dashboard)/templates/data-table-templates.tsx:140
 #: apps/web/src/components/(teams)/tables/team-member-invites-data-table.tsx:130
 #: apps/web/src/components/(teams)/tables/team-member-invites-data-table.tsx:139
@@ -1064,11 +1064,11 @@ msgstr "Es ist ein unbekannter Fehler aufgetreten"
 msgid "Any payment methods attached to this team will remain attached to this team. Please contact us if you need to update this information."
 msgstr "Alle Zahlungsmethoden, die mit diesem Team verbunden sind, bleiben diesem Team zugeordnet. Bitte kontaktiere uns, wenn du diese Informationen aktualisieren möchtest."
 
-#: apps/web/src/app/(dashboard)/templates/[id]/template-page-view-documents-table.tsx:219
+#: apps/web/src/app/(dashboard)/templates/[id]/template-page-view-documents-table.tsx:240
 msgid "Any Source"
 msgstr "Jede Quelle"
 
-#: apps/web/src/app/(dashboard)/templates/[id]/template-page-view-documents-table.tsx:199
+#: apps/web/src/app/(dashboard)/templates/[id]/template-page-view-documents-table.tsx:220
 msgid "Any Status"
 msgstr "Jeder Status"
 
@@ -1541,7 +1541,7 @@ msgstr ""
 msgid "Complete Viewing"
 msgstr "Betrachten abschließen"
 
-#: apps/web/src/app/(dashboard)/templates/[id]/template-page-view-documents-table.tsx:202
+#: apps/web/src/app/(dashboard)/templates/[id]/template-page-view-documents-table.tsx:223
 #: apps/web/src/components/(dashboard)/avatar/stack-avatars-with-tooltip.tsx:77
 #: apps/web/src/components/formatter/document-status.tsx:28
 #: packages/email/template-components/template-document-completed.tsx:35
@@ -2023,8 +2023,8 @@ msgstr "Direkter Link"
 msgid "Direct link"
 msgstr "Direkter Link"
 
-#: apps/web/src/app/(dashboard)/templates/[id]/template-page-view-documents-table.tsx:154
-#: apps/web/src/app/(dashboard)/templates/[id]/template-page-view-documents-table.tsx:225
+#: apps/web/src/app/(dashboard)/templates/[id]/template-page-view-documents-table.tsx:165
+#: apps/web/src/app/(dashboard)/templates/[id]/template-page-view-documents-table.tsx:246
 msgid "Direct Link"
 msgstr "Direkter Link"
 
@@ -2148,7 +2148,7 @@ msgid "Document Approved"
 msgstr "Dokument genehmigt"
 
 #: apps/web/src/app/(signing)/sign/[token]/no-longer-available.tsx:40
-#: packages/lib/server-only/document/delete-document.ts:244
+#: packages/lib/server-only/document/delete-document.ts:245
 #: packages/lib/server-only/document/super-delete-document.ts:109
 msgid "Document Cancelled"
 msgstr "Dokument storniert"
@@ -2345,7 +2345,7 @@ msgstr "Dokument wird dauerhaft gelöscht"
 #: apps/web/src/app/(dashboard)/documents/[id]/edit/document-edit-page-view.tsx:109
 #: apps/web/src/app/(dashboard)/documents/[id]/loading.tsx:16
 #: apps/web/src/app/(dashboard)/documents/[id]/sent/page.tsx:15
-#: apps/web/src/app/(dashboard)/documents/documents-page-view.tsx:119
+#: apps/web/src/app/(dashboard)/documents/documents-page-view.tsx:131
 #: apps/web/src/app/(profile)/p/[url]/page.tsx:166
 #: apps/web/src/app/not-found.tsx:21
 #: apps/web/src/components/(dashboard)/common/command-menu.tsx:205
@@ -2395,7 +2395,7 @@ msgstr "Zertifikat herunterladen"
 msgid "Download Template CSV"
 msgstr "Vorlage CSV herunterladen"
 
-#: apps/web/src/app/(dashboard)/templates/[id]/template-page-view-documents-table.tsx:208
+#: apps/web/src/app/(dashboard)/templates/[id]/template-page-view-documents-table.tsx:229
 #: apps/web/src/components/formatter/document-status.tsx:34
 #: packages/lib/constants/document.ts:13
 msgid "Draft"
@@ -3738,7 +3738,7 @@ msgid "Payment overdue"
 msgstr "Zahlung überfällig"
 
 #: apps/web/src/app/(dashboard)/documents/[id]/document-page-view-recipients.tsx:138
-#: apps/web/src/app/(dashboard)/templates/[id]/template-page-view-documents-table.tsx:205
+#: apps/web/src/app/(dashboard)/templates/[id]/template-page-view-documents-table.tsx:226
 #: apps/web/src/components/(teams)/tables/teams-member-page-data-table.tsx:82
 #: apps/web/src/components/(teams)/tables/user-settings-teams-page-data-table.tsx:77
 #: apps/web/src/components/document/document-read-only-fields.tsx:89
@@ -4056,8 +4056,8 @@ msgstr "Aktuelle Aktivitäten"
 msgid "Recent documents"
 msgstr "Neueste Dokumente"
 
-#: apps/web/src/app/(dashboard)/documents/data-table.tsx:63
-#: apps/web/src/app/(dashboard)/templates/[id]/template-page-view-documents-table.tsx:114
+#: apps/web/src/app/(dashboard)/documents/data-table.tsx:74
+#: apps/web/src/app/(dashboard)/templates/[id]/template-page-view-documents-table.tsx:125
 #: apps/web/src/app/(dashboard)/templates/template-direct-link-dialog.tsx:279
 #: packages/lib/utils/document-audit-logs.ts:358
 #: packages/lib/utils/document-audit-logs.ts:373
@@ -4470,7 +4470,7 @@ msgstr "E-Mail über Unterzeichnungsanfrage des Empfängers senden"
 msgid "Send reminder"
 msgstr "Erinnerung senden"
 
-#: apps/web/src/app/(dashboard)/documents/data-table.tsx:59
+#: apps/web/src/app/(dashboard)/documents/data-table.tsx:70
 msgid "Sender"
 msgstr "Absender"
 
@@ -4847,7 +4847,7 @@ msgstr "Entschuldigung, wir konnten die Prüfprotokolle nicht herunterladen. Bit
 msgid "Sorry, we were unable to download the certificate. Please try again later."
 msgstr "Entschuldigung, wir konnten das Zertifikat nicht herunterladen. Bitte versuchen Sie es später erneut."
 
-#: apps/web/src/app/(dashboard)/templates/[id]/template-page-view-documents-table.tsx:132
+#: apps/web/src/app/(dashboard)/templates/[id]/template-page-view-documents-table.tsx:143
 msgid "Source"
 msgstr "Quelle"
 
@@ -4857,8 +4857,8 @@ msgstr "Statistiken"
 
 #: apps/web/src/app/(dashboard)/admin/documents/document-results.tsx:81
 #: apps/web/src/app/(dashboard)/admin/subscriptions/page.tsx:32
-#: apps/web/src/app/(dashboard)/documents/data-table.tsx:73
-#: apps/web/src/app/(dashboard)/templates/[id]/template-page-view-documents-table.tsx:124
+#: apps/web/src/app/(dashboard)/documents/data-table.tsx:84
+#: apps/web/src/app/(dashboard)/templates/[id]/template-page-view-documents-table.tsx:135
 #: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/audit-log/page.tsx:94
 #: apps/web/src/components/(teams)/tables/team-billing-invoices-data-table.tsx:73
 msgid "Status"
@@ -5086,8 +5086,8 @@ msgstr "Teams beschränkt"
 
 #: apps/web/src/app/(dashboard)/templates/[id]/edit/template-edit-page-view.tsx:64
 #: apps/web/src/app/(dashboard)/templates/[id]/template-page-view-documents-table.tsx:39
-#: apps/web/src/app/(dashboard)/templates/[id]/template-page-view-documents-table.tsx:142
-#: apps/web/src/app/(dashboard)/templates/[id]/template-page-view-documents-table.tsx:222
+#: apps/web/src/app/(dashboard)/templates/[id]/template-page-view-documents-table.tsx:153
+#: apps/web/src/app/(dashboard)/templates/[id]/template-page-view-documents-table.tsx:243
 #: apps/web/src/app/(dashboard)/templates/[id]/template-page-view.tsx:151
 #: apps/web/src/components/(teams)/dialogs/invite-team-member-dialog.tsx:408
 #: apps/web/src/components/templates/manage-public-template-dialog.tsx:269
@@ -5468,11 +5468,11 @@ msgstr "Dieses Dokument ist momentan ein Entwurf und wurde nicht gesendet"
 msgid "This document is password protected. Please enter the password to view the document."
 msgstr "Dieses Dokument ist durch ein Passwort geschützt. Bitte geben Sie das Passwort ein, um das Dokument anzusehen."
 
-#: apps/web/src/app/(dashboard)/templates/[id]/template-page-view-documents-table.tsx:146
+#: apps/web/src/app/(dashboard)/templates/[id]/template-page-view-documents-table.tsx:157
 msgid "This document was created by you or a team member using the template above."
 msgstr "Dieses Dokument wurde von Ihnen oder einem Teammitglied unter Verwendung der oben genannten Vorlage erstellt."
 
-#: apps/web/src/app/(dashboard)/templates/[id]/template-page-view-documents-table.tsx:158
+#: apps/web/src/app/(dashboard)/templates/[id]/template-page-view-documents-table.tsx:169
 msgid "This document was created using a direct link."
 msgstr "Dieses Dokument wurde mit einem direkten Link erstellt."
 

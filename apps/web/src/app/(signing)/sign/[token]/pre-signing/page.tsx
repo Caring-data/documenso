@@ -145,13 +145,13 @@ export default function PreSigningPage() {
           <div className="flex w-full flex-col gap-4 md:flex-row">
             <Button
               className="!flex h-9 w-full cursor-pointer items-center justify-center gap-2 rounded-md border border-zinc-300 bg-zinc-100 px-4 py-2 text-zinc-700 hover:bg-zinc-200"
-              onClick={() => (window.location.href = rejectDocumentLink)}
+              onClick={() => (window.location.href = rejectDocumentUrl.toString())}
             >
               I Decline
             </Button>
             <Button
               className="bg-brand !flex h-9 w-full cursor-pointer items-center justify-center gap-2 rounded-md px-20 py-8 text-white hover:bg-blue-700"
-              onClick={() => (window.location.href = signDocumentLink)}
+              onClick={() => (window.location.href = signDocumentUrl.toString())}
             >
               I Accept
             </Button>

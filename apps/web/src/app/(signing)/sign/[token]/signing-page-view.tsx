@@ -55,6 +55,12 @@ export type SigningPageViewProps = {
   token?: string;
 };
 
+interface DocumentDetails {
+  documentName?: string;
+  facilityAdministrator?: string;
+  residentName?: string;
+}
+
 export const SigningPageView = ({
   document,
   recipient,
@@ -89,6 +95,17 @@ export const SigningPageView = ({
     );
   }
 
+  const isValidDocumentDetails = (details: unknown): details is DocumentDetails => {
+    return typeof details === 'object' && details !== null && 'documentName' in details;
+  };
+
+  const normalizedDocument = {
+    ...document,
+    documentDetails: isValidDocumentDetails(document.documentDetails)
+      ? document.documentDetails
+      : {},
+  };
+
   return (
     <RecipientProvider recipient={recipient} targetSigner={selectedSigner ?? null}>
       <div className="mx-auto w-full max-w-screen-xl">
@@ -96,9 +113,9 @@ export const SigningPageView = ({
           <div className="max-w-[50ch]">
             <h1
               className="mt-4 block max-w-[20rem] truncate text-lg font-semibold md:max-w-[30rem] md:text-3xl"
-              title={document.documentDetails?.documentName}
+              title={normalizedDocument.documentDetails.documentName ?? 'Untitled Document'}
             >
-              {document.documentDetails?.documentName}
+              {normalizedDocument.documentDetails.documentName ?? 'Untitled Document'}
             </h1>
           </div>
 

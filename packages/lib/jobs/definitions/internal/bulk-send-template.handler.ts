@@ -101,25 +101,25 @@ export const run = async ({
       }
 
       const document = await io.runTask(`create-document-${rowIndex}`, async () => {
-        return await createDocumentFromTemplate({
+        const createdDocument = await createDocumentFromTemplate({
           templateId: template.id,
           userId,
           teamId,
-          recipients: recipients.map((recipient, index) => {
-            return {
-              id: recipient.id,
-              email: row[`recipient_${index + 1}_email`] || recipient.email,
-              name: row[`recipient_${index + 1}_name`] || recipient.name,
-              role: recipient.role,
-              signingOrder: recipient.signingOrder,
-            };
-          }),
+          recipients: recipients.map((recipient, index) => ({
+            id: recipient.id,
+            email: row[`recipient_${index + 1}_email`] || recipient.email,
+            name: row[`recipient_${index + 1}_name`] || recipient.name,
+            role: recipient.role,
+            signingOrder: recipient.signingOrder,
+          })),
           requestMetadata: {
             source: 'app',
             auth: 'session',
             requestMetadata: requestMetadata || {},
           },
         });
+
+        return JSON.parse(JSON.stringify(createdDocument));
       });
 
       if (sendImmediately) {

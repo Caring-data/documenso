@@ -1,4 +1,5 @@
 import { prisma } from '@documenso/prisma';
+import { EntityStatus } from '@documenso/prisma/client';
 import type { DocumentWithRecipient } from '@documenso/prisma/types/document-with-recipient';
 
 import { AppError, AppErrorCode } from '../../errors/app-error';
@@ -46,6 +47,8 @@ export const getDocumentByToken = async ({ token }: GetDocumentByTokenOptions) =
           token,
         },
       },
+      activityStatus: EntityStatus.ACTIVE,
+      deletedAt: null,
     },
   });
 
@@ -71,6 +74,8 @@ export const getDocumentAndSenderByToken = async ({
           token,
         },
       },
+      activityStatus: EntityStatus.ACTIVE,
+      deletedAt: null,
     },
     include: {
       user: true,
@@ -149,6 +154,8 @@ export const getDocumentAndRecipientByToken = async ({
           token,
         },
       },
+      activityStatus: EntityStatus.ACTIVE,
+      deletedAt: null,
     },
     include: {
       recipients: {

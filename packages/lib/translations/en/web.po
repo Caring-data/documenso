@@ -622,8 +622,8 @@ msgstr "Acknowledgment"
 msgid "Action"
 msgstr "Action"
 
-#: apps/web/src/app/(dashboard)/documents/data-table.tsx:79
-#: apps/web/src/app/(dashboard)/templates/[id]/template-page-view-documents-table.tsx:175
+#: apps/web/src/app/(dashboard)/documents/data-table.tsx:90
+#: apps/web/src/app/(dashboard)/templates/[id]/template-page-view-documents-table.tsx:186
 #: apps/web/src/app/(dashboard)/templates/data-table-templates.tsx:140
 #: apps/web/src/components/(teams)/tables/team-member-invites-data-table.tsx:130
 #: apps/web/src/components/(teams)/tables/team-member-invites-data-table.tsx:139
@@ -1059,11 +1059,11 @@ msgstr "An unknown error occurred"
 msgid "Any payment methods attached to this team will remain attached to this team. Please contact us if you need to update this information."
 msgstr "Any payment methods attached to this team will remain attached to this team. Please contact us if you need to update this information."
 
-#: apps/web/src/app/(dashboard)/templates/[id]/template-page-view-documents-table.tsx:219
+#: apps/web/src/app/(dashboard)/templates/[id]/template-page-view-documents-table.tsx:240
 msgid "Any Source"
 msgstr "Any Source"
 
-#: apps/web/src/app/(dashboard)/templates/[id]/template-page-view-documents-table.tsx:199
+#: apps/web/src/app/(dashboard)/templates/[id]/template-page-view-documents-table.tsx:220
 msgid "Any Status"
 msgstr "Any Status"
 
@@ -1536,7 +1536,7 @@ msgstr "Complete the fields for the following signers. Once reviewed, they will 
 msgid "Complete Viewing"
 msgstr "Complete Viewing"
 
-#: apps/web/src/app/(dashboard)/templates/[id]/template-page-view-documents-table.tsx:202
+#: apps/web/src/app/(dashboard)/templates/[id]/template-page-view-documents-table.tsx:223
 #: apps/web/src/components/(dashboard)/avatar/stack-avatars-with-tooltip.tsx:77
 #: apps/web/src/components/formatter/document-status.tsx:28
 #: packages/email/template-components/template-document-completed.tsx:35
@@ -2018,8 +2018,8 @@ msgstr "direct link"
 msgid "Direct link"
 msgstr "Direct link"
 
-#: apps/web/src/app/(dashboard)/templates/[id]/template-page-view-documents-table.tsx:154
-#: apps/web/src/app/(dashboard)/templates/[id]/template-page-view-documents-table.tsx:225
+#: apps/web/src/app/(dashboard)/templates/[id]/template-page-view-documents-table.tsx:165
+#: apps/web/src/app/(dashboard)/templates/[id]/template-page-view-documents-table.tsx:246
 msgid "Direct Link"
 msgstr "Direct Link"
 
@@ -2143,7 +2143,7 @@ msgid "Document Approved"
 msgstr "Document Approved"
 
 #: apps/web/src/app/(signing)/sign/[token]/no-longer-available.tsx:40
-#: packages/lib/server-only/document/delete-document.ts:244
+#: packages/lib/server-only/document/delete-document.ts:245
 #: packages/lib/server-only/document/super-delete-document.ts:109
 msgid "Document Cancelled"
 msgstr "Document Cancelled"
@@ -2340,7 +2340,7 @@ msgstr "Document will be permanently deleted"
 #: apps/web/src/app/(dashboard)/documents/[id]/edit/document-edit-page-view.tsx:109
 #: apps/web/src/app/(dashboard)/documents/[id]/loading.tsx:16
 #: apps/web/src/app/(dashboard)/documents/[id]/sent/page.tsx:15
-#: apps/web/src/app/(dashboard)/documents/documents-page-view.tsx:119
+#: apps/web/src/app/(dashboard)/documents/documents-page-view.tsx:131
 #: apps/web/src/app/(profile)/p/[url]/page.tsx:166
 #: apps/web/src/app/not-found.tsx:21
 #: apps/web/src/components/(dashboard)/common/command-menu.tsx:205
@@ -2390,7 +2390,7 @@ msgstr "Download Certificate"
 msgid "Download Template CSV"
 msgstr "Download Template CSV"
 
-#: apps/web/src/app/(dashboard)/templates/[id]/template-page-view-documents-table.tsx:208
+#: apps/web/src/app/(dashboard)/templates/[id]/template-page-view-documents-table.tsx:229
 #: apps/web/src/components/formatter/document-status.tsx:34
 #: packages/lib/constants/document.ts:13
 msgid "Draft"
@@ -3733,7 +3733,7 @@ msgid "Payment overdue"
 msgstr "Payment overdue"
 
 #: apps/web/src/app/(dashboard)/documents/[id]/document-page-view-recipients.tsx:138
-#: apps/web/src/app/(dashboard)/templates/[id]/template-page-view-documents-table.tsx:205
+#: apps/web/src/app/(dashboard)/templates/[id]/template-page-view-documents-table.tsx:226
 #: apps/web/src/components/(teams)/tables/teams-member-page-data-table.tsx:82
 #: apps/web/src/components/(teams)/tables/user-settings-teams-page-data-table.tsx:77
 #: apps/web/src/components/document/document-read-only-fields.tsx:89
@@ -4051,8 +4051,8 @@ msgstr "Recent activity"
 msgid "Recent documents"
 msgstr "Recent documents"
 
-#: apps/web/src/app/(dashboard)/documents/data-table.tsx:63
-#: apps/web/src/app/(dashboard)/templates/[id]/template-page-view-documents-table.tsx:114
+#: apps/web/src/app/(dashboard)/documents/data-table.tsx:74
+#: apps/web/src/app/(dashboard)/templates/[id]/template-page-view-documents-table.tsx:125
 #: apps/web/src/app/(dashboard)/templates/template-direct-link-dialog.tsx:279
 #: packages/lib/utils/document-audit-logs.ts:358
 #: packages/lib/utils/document-audit-logs.ts:373
@@ -4465,7 +4465,7 @@ msgstr "Send recipient signing request email"
 msgid "Send reminder"
 msgstr "Send reminder"
 
-#: apps/web/src/app/(dashboard)/documents/data-table.tsx:59
+#: apps/web/src/app/(dashboard)/documents/data-table.tsx:70
 msgid "Sender"
 msgstr "Sender"
 
@@ -4842,7 +4842,7 @@ msgstr "Sorry, we were unable to download the audit logs. Please try again later
 msgid "Sorry, we were unable to download the certificate. Please try again later."
 msgstr "Sorry, we were unable to download the certificate. Please try again later."
 
-#: apps/web/src/app/(dashboard)/templates/[id]/template-page-view-documents-table.tsx:132
+#: apps/web/src/app/(dashboard)/templates/[id]/template-page-view-documents-table.tsx:143
 msgid "Source"
 msgstr "Source"
 
@@ -4852,8 +4852,8 @@ msgstr "Stats"
 
 #: apps/web/src/app/(dashboard)/admin/documents/document-results.tsx:81
 #: apps/web/src/app/(dashboard)/admin/subscriptions/page.tsx:32
-#: apps/web/src/app/(dashboard)/documents/data-table.tsx:73
-#: apps/web/src/app/(dashboard)/templates/[id]/template-page-view-documents-table.tsx:124
+#: apps/web/src/app/(dashboard)/documents/data-table.tsx:84
+#: apps/web/src/app/(dashboard)/templates/[id]/template-page-view-documents-table.tsx:135
 #: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/audit-log/page.tsx:94
 #: apps/web/src/components/(teams)/tables/team-billing-invoices-data-table.tsx:73
 msgid "Status"
@@ -5081,8 +5081,8 @@ msgstr "Teams restricted"
 
 #: apps/web/src/app/(dashboard)/templates/[id]/edit/template-edit-page-view.tsx:64
 #: apps/web/src/app/(dashboard)/templates/[id]/template-page-view-documents-table.tsx:39
-#: apps/web/src/app/(dashboard)/templates/[id]/template-page-view-documents-table.tsx:142
-#: apps/web/src/app/(dashboard)/templates/[id]/template-page-view-documents-table.tsx:222
+#: apps/web/src/app/(dashboard)/templates/[id]/template-page-view-documents-table.tsx:153
+#: apps/web/src/app/(dashboard)/templates/[id]/template-page-view-documents-table.tsx:243
 #: apps/web/src/app/(dashboard)/templates/[id]/template-page-view.tsx:151
 #: apps/web/src/components/(teams)/dialogs/invite-team-member-dialog.tsx:408
 #: apps/web/src/components/templates/manage-public-template-dialog.tsx:269
@@ -5463,11 +5463,11 @@ msgstr "This document is currently a draft and has not been sent"
 msgid "This document is password protected. Please enter the password to view the document."
 msgstr "This document is password protected. Please enter the password to view the document."
 
-#: apps/web/src/app/(dashboard)/templates/[id]/template-page-view-documents-table.tsx:146
+#: apps/web/src/app/(dashboard)/templates/[id]/template-page-view-documents-table.tsx:157
 msgid "This document was created by you or a team member using the template above."
 msgstr "This document was created by you or a team member using the template above."
 
-#: apps/web/src/app/(dashboard)/templates/[id]/template-page-view-documents-table.tsx:158
+#: apps/web/src/app/(dashboard)/templates/[id]/template-page-view-documents-table.tsx:169
 msgid "This document was created using a direct link."
 msgstr "This document was created using a direct link."
 
