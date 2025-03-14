@@ -9,7 +9,7 @@ import { Button } from '@react-email/button';
 import { Img } from '@react-email/img';
 
 import { NEXT_PUBLIC_WEBAPP_URL, WEBAPP_BASE_URL } from '@documenso/lib/constants/app';
-import { getDocumentAndSenderByToken } from '@documenso/lib/server-only/document/get-document-by-token';
+import type { getDocumentAndSenderByToken } from '@documenso/lib/server-only/document/get-document-by-token';
 
 export type DocumentAndSender = Awaited<ReturnType<typeof getDocumentAndSenderByToken>>;
 
@@ -20,52 +20,33 @@ export default function PreSigningPage() {
   const token = searchParams?.get('token') || pathname?.split('/')[2] || '';
   const assetBaseUrl = WEBAPP_BASE_URL;
 
-  const [document, setDocument] = useState<DocumentAndSender | null>(null);
+  const [documentDetails, setDocumentDetails] = useState<Record<string, string> | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    async function fetchDocument() {
-      if (!token) return;
+    try {
+      const storedData = sessionStorage.getItem('preSigningData');
 
-      try {
-        setLoading(true);
-        const fetchedDocument = await getDocumentAndSenderByToken({
-          token,
-          userId: undefined,
-          requireAccessAuth: false,
-        });
-
-        setDocument(fetchedDocument);
-      } catch (err) {
-        setError('Failed to fetch document');
-      } finally {
+      if (storedData) {
+        const parsedData = JSON.parse(storedData);
+        setDocumentDetails(parsedData);
         setLoading(false);
+      } else {
+        throw new Error('No document details found in sessionStorage');
       }
+    } catch (err) {
+      console.error('Error parsing document details:', err);
+      setError('Failed to fetch document details');
+      setLoading(false);
     }
-
-    void fetchDocument();
-  }, [token]);
+  }, []);
 
   const signDocumentUrl = new URL(`${NEXT_PUBLIC_WEBAPP_URL()}/sign/${token}`);
   signDocumentUrl.searchParams.set('accessed', 'true');
 
   const rejectDocumentUrl = new URL(signDocumentUrl);
   rejectDocumentUrl.searchParams.set('reject', 'true');
-
-  // const signDocumentUrl = useMemo(() => {
-  //   const url = new URL(`${NEXT_PUBLIC_WEBAPP_URL()}/sign/${token}`);
-  //   url.searchParams.set('accessed', 'true');
-  //   return url;
-  // }, [token]);
-
-  // const signDocumentLink = signDocumentUrl.toString();
-
-  // const rejectDocumentLink = useMemo(() => {
-  //   const rejectUrl = new URL(signDocumentUrl);
-  //   rejectUrl.searchParams.set('reject', 'true');
-  //   return rejectUrl.toString();
-  // }, [signDocumentUrl]);
 
   const getAssetUrl = (path: string) => new URL(path, assetBaseUrl).toString();
 
@@ -82,7 +63,6 @@ export default function PreSigningPage() {
       </div>
     );
   }
-  console.log('document', document);
 
   return (
     <div className="fixed left-0 top-0 flex h-screen w-screen items-center justify-center overflow-hidden pb-11 text-white">
@@ -114,14 +94,15 @@ export default function PreSigningPage() {
             </div>
 
             <p className="w-full text-center text-xl font-semibold leading-6 text-zinc-600">
-              You have been requested by: <span className="text-brand-accent">Ivonne Meader</span>{' '}
-              from <span className="text-brand-accent">Caring Homes</span> to eSign documents
+              You have been requested by:{' '}
+              <span className="text-brand-accent">{documentDetails?.facilityAdministrator}</span>{' '}
+              from <span className="text-brand-accent">{documentDetails?.companyName}</span> to sign
+              documents electronically
             </p>
           </div>
 
           <div className="max-w-l flex h-auto w-full items-center justify-center gap-2 rounded-lg bg-zinc-100 px-4 py-3">
             <span className="text-brand-accent text-sm font-medium">
-              The website,{' '}
               <a
                 href="https://caringdata.com/"
                 target="_blank"
@@ -130,15 +111,17 @@ export default function PreSigningPage() {
               >
                 caringdata.com
               </a>{' '}
-              would like to use your current location.
+              would like to use your current location to ensure secure and accurate document
+              processing.
             </span>
           </div>
-
+          <hr className="w-full border-t border-gray-300 bg-gray-300" />
           <div>
             <p className="text-xs font-normal leading-4 text-zinc-600">
-              By clicking the <strong>"I ACCEPT"</strong> button, you are accepting the invitation
-              to review the documents. By signing electronically, you agree that your electronic
-              signature has the same legal validity and effect as your handwritten signature.
+              By clicking the <strong>"I ACCEPT"</strong> button, you agree to review the documents
+              and provide your electronic signature. You acknowledge that your electronic signature
+              will have the same legal validity and effect as a handwritten signature, ensuring the
+              document is complete and legally binding.
             </p>
           </div>
 

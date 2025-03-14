@@ -81,9 +81,11 @@ export const SigningPageView = ({
 
   useEffect(() => {
     if (!hasVisitedPreSignPage && extractedToken) {
+      sessionStorage.setItem('preSigningData', JSON.stringify(document?.documentDetails ?? {}));
+
       window.location.href = `/sign/${extractedToken}/pre-signing`;
     }
-  }, [hasVisitedPreSignPage, extractedToken]);
+  }, [hasVisitedPreSignPage, extractedToken, document]);
 
   const selectedSigner = allRecipients?.find((r) => r.id === selectedSignerId);
 
