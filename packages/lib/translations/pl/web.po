@@ -406,13 +406,13 @@ msgstr "<0>Wymagana passkey</0> - Odbiorca musi mieć konto i skonfigurowaną pa
 msgid "<0>Sender:</0> All"
 msgstr "<0>Rządzący:</0> Wszyscy"
 
-#: apps/web/src/app/(signing)/sign/[token]/sign-dialog.tsx:105
+#: apps/web/src/app/(signing)/sign/[token]/sign-dialog.tsx:106
 msgid "<0>You are about to complete approving <1>\"{documentTitle}\"</1>.</0><2/> Are you sure?"
 msgstr "<0>Jesteś na drodze do zatwierdzenia <1>\"{documentTitle}\"</1>.</0><2/> Czy jesteś pewien?"
 
 #: apps/web/src/app/(signing)/sign/[token]/sign-dialog.tsx:91
-msgid "<0>You are about to complete signing \"<1>{documentTitle}</1>\".</0><2/> Are you sure?"
-msgstr "<0>Jesteś na drodze do ukończenia podpisywania \"<1>{documentTitle}</1>\".</0><2/> Czy jesteś pewien?"
+msgid "<0>You are about to complete signing \"<1>{documentTitle}</1>\".</0><2/><3>Are you sure?</3>"
+msgstr ""
 
 #: apps/web/src/app/(signing)/sign/[token]/sign-dialog.tsx:77
 msgid "<0>You are about to complete viewing \"<1>{documentTitle}</1>\".</0><2/> Are you sure?"
@@ -1089,7 +1089,7 @@ msgstr "Wersja aplikacji"
 #: apps/web/src/app/(dashboard)/documents/[id]/document-page-view-button.tsx:95
 #: apps/web/src/app/(dashboard)/documents/data-table-action-button.tsx:121
 #: apps/web/src/app/(dashboard)/documents/data-table-action-dropdown.tsx:140
-#: apps/web/src/app/(signing)/sign/[token]/sign-dialog.tsx:143
+#: apps/web/src/app/(signing)/sign/[token]/sign-dialog.tsx:146
 #: packages/lib/constants/recipient-roles.ts:8
 msgid "Approve"
 msgstr "Zatwierdź"
@@ -1311,6 +1311,10 @@ msgstr "Akceptując tę prośbę, przyznasz <0>{teamName}</0> dostęp do:"
 msgid "By accepting this request, you will take responsibility for any billing items associated with this team."
 msgstr "Akceptując tę prośbę, przejmiesz odpowiedzialność za wszelkie pozycje dotyczące rozliczeń związane z tym zespołem."
 
+#: apps/web/src/components/general/signing-disclosure.tsx:12
+msgid "By clicking the <0>\"I ACCEPT\"</0> button, you agree to review the documents and provide your electronic signature. You acknowledge that your electronic signature will have the same legal validity and effect as a handwritten signature, ensuring the document is complete and legally binding."
+msgstr ""
+
 #: apps/web/src/app/(dashboard)/documents/delete-document-dialog.tsx:157
 msgid "By deleting this document, the following will occur:"
 msgstr "Usunięcie tego dokumentu spowoduje następujące:"
@@ -1322,10 +1326,6 @@ msgstr "Włączając 2FA, będziesz musiał wprowadzić kod z aplikacji uwierzyt
 #: apps/web/src/app/(unauthenticated)/articles/signature-disclosure/page.tsx:142
 msgid "By proceeding to use the electronic signature service provided by Documenso, you affirm that you have read and understood this disclosure. You agree to all terms and conditions related to the use of electronic signatures and electronic transactions as outlined herein."
 msgstr "Kontynuując korzystanie z usługi podpisu elektronicznego oferowanej przez Documenso, potwierdzasz, że przeczytałeś i zrozumiałeś to ujawnienie. Zgadzasz się na wszystkie warunki i zasady związane z korzystaniem z podpisów elektronicznych i transakcji elektronicznych, jak opisano w tym dokumencie."
-
-#: apps/web/src/components/general/signing-disclosure.tsx:12
-msgid "By proceeding with your electronic signature, you acknowledge and consent that it will be used to sign the given document and holds the same legal validity as a handwritten signature. By completing the electronic signing process, you affirm your understanding and acceptance of these conditions."
-msgstr "Kontynuując z Twoim podpisem elektronicznym, przyjmujesz i zgadzasz się, że będzie on użyty do podpisania danego dokumentu i ma tę samą ważność prawną jak odręczny podpis. Dokonując procesu podpisu elektronicznego, potwierdzasz swoje zrozumienie i akceptację tych warunków."
 
 #: apps/web/src/app/(unauthenticated)/articles/signature-disclosure/page.tsx:92
 msgid "By using the electronic signature feature, you are consenting to conduct transactions and receive disclosures electronically. You acknowledge that your electronic signature on documents is binding and that you accept the terms outlined in the documents you are signing."
@@ -1357,7 +1357,7 @@ msgstr ""
 #: apps/web/src/app/(signing)/sign/[token]/name-field.tsx:234
 #: apps/web/src/app/(signing)/sign/[token]/number-field.tsx:347
 #: apps/web/src/app/(signing)/sign/[token]/reject-document-dialog.tsx:158
-#: apps/web/src/app/(signing)/sign/[token]/sign-dialog.tsx:131
+#: apps/web/src/app/(signing)/sign/[token]/sign-dialog.tsx:134
 #: apps/web/src/app/(signing)/sign/[token]/signature-field.tsx:318
 #: apps/web/src/app/(signing)/sign/[token]/text-field.tsx:358
 #: apps/web/src/app/(teams)/t/[teamUrl]/settings/team-transfer-status.tsx:121
@@ -2661,6 +2661,7 @@ msgstr "Wprowadź swój tekst tutaj"
 #: apps/web/src/app/(signing)/sign/[token]/name-field.tsx:154
 #: apps/web/src/app/(signing)/sign/[token]/number-field.tsx:150
 #: apps/web/src/app/(signing)/sign/[token]/number-field.tsx:201
+#: apps/web/src/app/(signing)/sign/[token]/pre-signing/page.tsx:46
 #: apps/web/src/app/(signing)/sign/[token]/radio-field.tsx:101
 #: apps/web/src/app/(signing)/sign/[token]/radio-field.tsx:130
 #: apps/web/src/app/(signing)/sign/[token]/signature-field.tsx:131
@@ -2704,6 +2705,10 @@ msgstr "Wygasa {0}"
 #: packages/ui/primitives/template-flow/add-template-settings.tsx:424
 msgid "External ID"
 msgstr "Zewnętrzny ID"
+
+#: apps/web/src/app/(signing)/sign/[token]/pre-signing/page.tsx:47
+msgid "Failed to fetch document details"
+msgstr ""
 
 #: apps/web/src/app/(dashboard)/admin/documents/[id]/admin-actions.tsx:42
 msgid "Failed to reseal document"
@@ -3300,7 +3305,7 @@ msgstr "Zarządzaj ustawieniami swojej witryny tutaj"
 msgid "Manager"
 msgstr "Menedżer"
 
-#: apps/web/src/app/(signing)/sign/[token]/sign-dialog.tsx:141
+#: apps/web/src/app/(signing)/sign/[token]/sign-dialog.tsx:144
 msgid "Mark as Viewed"
 msgstr "Oznacz jako wyświetlone"
 
@@ -4552,7 +4557,7 @@ msgstr "Pokaż szablony w profilu publicznym zespołu, aby szybko podpisać doku
 #: apps/web/src/app/(signing)/sign/[token]/auto-sign.tsx:229
 #: apps/web/src/app/(signing)/sign/[token]/document-action-auth-2fa.tsx:182
 #: apps/web/src/app/(signing)/sign/[token]/name-field.tsx:243
-#: apps/web/src/app/(signing)/sign/[token]/sign-dialog.tsx:142
+#: apps/web/src/app/(signing)/sign/[token]/sign-dialog.tsx:145
 #: apps/web/src/app/(signing)/sign/[token]/signature-field.tsx:326
 #: apps/web/src/components/ui/user-profile-skeleton.tsx:75
 #: apps/web/src/components/ui/user-profile-timur.tsx:81

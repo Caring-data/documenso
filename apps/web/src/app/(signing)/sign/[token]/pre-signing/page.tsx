@@ -5,15 +5,21 @@ import { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import { useSearchParams } from 'next/navigation';
 
+import { msg } from '@lingui/macro';
+import { useLingui } from '@lingui/react';
 import { Button } from '@react-email/button';
 import { Img } from '@react-email/img';
+import { Loader } from 'lucide-react';
 
 import { NEXT_PUBLIC_WEBAPP_URL, WEBAPP_BASE_URL } from '@documenso/lib/constants/app';
 import type { getDocumentAndSenderByToken } from '@documenso/lib/server-only/document/get-document-by-token';
+import { useToast } from '@documenso/ui/primitives/use-toast';
 
 export type DocumentAndSender = Awaited<ReturnType<typeof getDocumentAndSenderByToken>>;
 
 export default function PreSigningPage() {
+  const { _ } = useLingui();
+  const { toast } = useToast();
   const searchParams = useSearchParams();
   const pathname = usePathname();
 
@@ -22,7 +28,6 @@ export default function PreSigningPage() {
 
   const [documentDetails, setDocumentDetails] = useState<Record<string, string> | null>(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     try {
@@ -37,7 +42,11 @@ export default function PreSigningPage() {
       }
     } catch (err) {
       console.error('Error parsing document details:', err);
-      setError('Failed to fetch document details');
+      toast({
+        title: _(msg`Error`),
+        description: _(msg`Failed to fetch document details`),
+        variant: 'destructive',
+      });
       setLoading(false);
     }
   }, []);
@@ -52,14 +61,8 @@ export default function PreSigningPage() {
 
   if (loading) {
     return (
-      <div className="flex h-screen items-center justify-center text-gray-700">Loading...</div>
-    );
-  }
-
-  if (error || !document) {
-    return (
-      <div className="flex h-screen items-center justify-center text-red-500">
-        Error loading document
+      <div className="flex h-screen items-center justify-center text-gray-700">
+        <Loader className="h-8 w-8 animate-spin text-gray-500" />
       </div>
     );
   }
@@ -109,7 +112,7 @@ export default function PreSigningPage() {
                 rel="noopener noreferrer"
                 className="text-brand-accent text-sm font-semibold underline hover:text-blue-900"
               >
-                caringdata.com
+                www.caringdata.com
               </a>{' '}
               would like to use your current location to ensure secure and accurate document
               processing.

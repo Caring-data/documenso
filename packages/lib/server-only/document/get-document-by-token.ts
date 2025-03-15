@@ -6,6 +6,13 @@ import { AppError, AppErrorCode } from '../../errors/app-error';
 import type { TDocumentAuthMethods } from '../../types/document-auth';
 import { isRecipientAuthorized } from './is-recipient-authorized';
 
+interface DocumentDetails {
+  companyName?: string;
+  facilityAdministrator?: string;
+  documentName?: string;
+  residentName?: string;
+}
+
 export interface GetDocumentAndSenderByTokenOptions {
   token: string;
   userId?: number;
@@ -131,6 +138,7 @@ export const getDocumentAndSenderByToken = async ({
   return {
     ...result,
     user,
+    documentDetails: (result.documentDetails as DocumentDetails) ?? null,
   };
 };
 

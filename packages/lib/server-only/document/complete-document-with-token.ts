@@ -19,6 +19,7 @@ import {
   ZWebhookDocumentSchema,
   mapDocumentToWebhookDocumentPayload,
 } from '../../types/webhook-payload';
+import { getFile } from '../../universal/upload/get-file';
 import { getIsRecipientsTurnToSign } from '../recipient/get-is-recipient-turn';
 import { triggerWebhook } from '../webhooks/trigger/trigger-webhook';
 import { sendPendingEmail } from './send-pending-email';
@@ -42,6 +43,7 @@ const getDocument = async ({ token, documentId }: CompleteDocumentWithTokenOptio
       },
     },
     include: {
+      documentData: true,
       documentMeta: true,
       recipients: {
         where: {
@@ -68,6 +70,52 @@ export const completeDocumentWithToken = async ({
   }
 
   const [recipient] = document.recipients;
+
+  const completedDocument = await getFile(document.documentData);
+
+  if (!completedDocument) {
+    console.error('No se pudo obtener el documento firmado.');
+    return;
+  }
+
+  console.log('/-/-/-/-/-/-/-', completedDocument);
+  try {
+    const formData = new FormData();
+    const file = new Blob([completedDocument], { type: 'application/pdf' });
+
+    formData.append('file', file, `document_${documentId}.pdf`);
+    formData.append('documenso_id', String(documentId));
+    formData.append('document_key', document.formKey || '');
+    formData.append('resident_id', document.residentId ? String(document.residentId) : '');
+
+    const apiUrl = process.env.NEXT_PRIVATE_LARAVEL_API_URL;
+    const authKey = process.env.NEXT_PRIVATE_LARAVEL_ENCRYPTION_KEY;
+
+    if (!apiUrl || !authKey) {
+      throw new Error('Las variables de entorno para la API de Laravel no están definidas.');
+    }
+
+    const response = await fetch(`${apiUrl}/residents/electronic-signature/store-signed-document`, {
+      method: 'POST',
+      body: formData,
+      headers: {
+        Authorization: `Bearer ${authKey}`,
+      },
+    });
+
+    console.log('Respuesta de Laravel:', response);
+    if (!response.ok) {
+      const errorData = await response.text();
+      throw new Error(
+        `Error en la solicitud: ${response.status} - ${response.statusText}. Respuesta: ${errorData}`,
+      );
+    }
+
+    const data = await response.json().catch(() => null);
+    console.log('Documento firmado almacenado en Laravel:', data);
+  } catch (error: unknow) {
+    console.error('Error enviando documento firmado a Laravel:', error.message);
+  }
 
   if (recipient.signingStatus === SigningStatus.SIGNED) {
     throw new Error(`Recipient ${recipient.id} has already signed`);
@@ -150,7 +198,7 @@ export const completeDocumentWithToken = async ({
       }),
     });
   });
-
+  console.log('1111111111111 --------- complete-document');
   await jobs.triggerJob({
     name: 'send.recipient.signed.email',
     payload: {

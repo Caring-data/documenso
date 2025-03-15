@@ -15,11 +15,7 @@ const LimitsContext = createContext<LimitsContextValue | null>(null);
 export const useLimits = () => {
   const limits = useContext(LimitsContext);
 
-  if (!limits) {
-    throw new Error('useLimits must be used within a LimitsProvider');
-  }
-
-  return limits;
+  return limits ?? {};
 };
 
 export type LimitsProviderProps = {
