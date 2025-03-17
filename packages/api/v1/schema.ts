@@ -271,21 +271,22 @@ export const ZGenerateDocumentFromTemplateMutationSchema = z.object({
   recipients: z
     .array(
       z.object({
-        id: z.number(),
+        id: z.number().describe('The ID of the recipient in the template.'),
         email: z.string().email(),
         name: z.string().optional(),
         signingOrder: z.number().optional(),
+        expired: z
+          .union([z.date(), z.string().transform((val) => new Date(val))])
+          .nullable()
+          .optional(),
       }),
     )
-    .refine(
-      (schema) => {
-        const emails = schema.map((signer) => signer.email.toLowerCase());
-        const ids = schema.map((signer) => signer.id);
+    .describe('The information of the recipients to create the document with.')
+    .refine((recipients) => {
+      const emails = recipients.map((signer) => signer.email);
 
-        return new Set(emails).size === emails.length && new Set(ids).size === ids.length;
-      },
-      { message: 'Recipient IDs and emails must be unique' },
-    ),
+      return new Set(emails).size === emails.length;
+    }, 'Recipients must have unique emails'),
   meta: z
     .object({
       subject: z.string(),
@@ -298,6 +299,7 @@ export const ZGenerateDocumentFromTemplateMutationSchema = z.object({
       distributionMethod: z.nativeEnum(DocumentDistributionMethod),
       typedSignatureEnabled: z.boolean(),
       emailSettings: ZDocumentEmailSettingsSchema,
+      expired: z.union([z.date(), z.string().transform((val) => new Date(val))]).nullable(),
     })
     .partial()
     .optional(),
@@ -308,7 +310,20 @@ export const ZGenerateDocumentFromTemplateMutationSchema = z.object({
     })
     .optional(),
   formValues: z.record(z.string(), z.union([z.string(), z.boolean(), z.number()])).optional(),
-  distributeDocument: z.boolean(),
+  distributeDocument: z
+    .boolean()
+    .describe('Whether to create the document as pending and distribute it to recipients.')
+    .optional(),
+  formKey: z.string().optional(),
+  residentId: z.string().uuid().optional(),
+  documentDetails: z
+    .object({
+      companyName: z.string().optional(),
+      facilityAdministrator: z.string().optional(),
+      documentName: z.string().optional(),
+      residentName: z.string().optional(),
+    })
+    .optional(),
 });
 
 export type TGenerateDocumentFromTemplateMutationSchema = z.infer<
@@ -374,8 +389,7 @@ export const ZSuccessfulRecipientResponseSchema = z.object({
   role: z.nativeEnum(RecipientRole),
   signingOrder: z.number().nullish(),
   token: z.string(),
-  // !: Not used for now
-  // expired: z.string(),
+  expired: z.date().nullable(),
   signedAt: z.date().nullable(),
   readStatus: z.nativeEnum(ReadStatus),
   signingStatus: z.nativeEnum(SigningStatus),

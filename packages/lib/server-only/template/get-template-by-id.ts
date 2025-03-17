@@ -1,4 +1,5 @@
 import { prisma } from '@documenso/prisma';
+import { EntityStatus } from '@documenso/prisma/client';
 
 import { AppError, AppErrorCode } from '../../errors/app-error';
 
@@ -12,6 +13,8 @@ export const getTemplateById = async ({ id, userId, teamId }: GetTemplateByIdOpt
   const template = await prisma.template.findFirst({
     where: {
       id,
+      activityStatus: { not: EntityStatus.INACTIVE },
+      deletedAt: null,
       ...(teamId
         ? {
             team: {

@@ -107,7 +107,18 @@ export const TemplatePageViewDocumentsTable = ({
       },
       {
         header: _(msg`Title`),
-        cell: ({ row }) => <DataTableTitle row={row.original} teamUrl={team?.url} />,
+        cell: ({ row }) => {
+          const normalizedRow = {
+            ...row.original,
+            externalId: row.original.externalId ?? null,
+            userId: row.original.user.id,
+            authOptions: row.original.authOptions ?? null,
+            formValues: row.original.formValues ?? {},
+            documentDetails: row.original.documentDetails ?? null,
+          };
+
+          return <DataTableTitle row={normalizedRow} teamUrl={team?.url} />;
+        },
       },
 
       {
@@ -173,13 +184,23 @@ export const TemplatePageViewDocumentsTable = ({
       {
         id: 'actions',
         header: _(msg`Actions`),
-        cell: ({ row }) => (
-          <div className="flex items-center space-x-2">
-            <DataTableActionButton team={team} row={row.original} />
+        cell: ({ row }) => {
+          const normalizedRow = {
+            ...row.original,
+            externalId: row.original.externalId ?? null,
+            userId: row.original.user.id,
+            authOptions: row.original.authOptions ?? null,
+            formValues: row.original.formValues ?? {},
+            documentDetails: row.original.documentDetails ?? null,
+          };
 
-            <DataTableActionDropdown team={team} row={row.original} />
-          </div>
-        ),
+          return (
+            <div className="flex items-center space-x-2">
+              <DataTableActionButton team={team} row={normalizedRow} />
+              <DataTableActionDropdown team={team} row={normalizedRow} />
+            </div>
+          );
+        },
       },
     ] satisfies DataTableColumnDef<(typeof results)['data'][number]>[];
   }, []);

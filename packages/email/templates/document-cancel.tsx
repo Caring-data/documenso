@@ -54,7 +54,7 @@ export const DocumentCancelTemplate = ({
 
           <Hr className="mx-auto mt-12 max-w-xl" />
 
-          <Container className="mx-auto max-w-xl">
+          <Container className="flex w-full flex-col items-center justify-center gap-2 self-stretch rounded-lg border border-zinc-50 bg-white px-6 py-4">
             <TemplateFooter />
           </Container>
         </Section>

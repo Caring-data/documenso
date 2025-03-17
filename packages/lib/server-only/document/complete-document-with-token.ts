@@ -14,6 +14,8 @@ import {
 
 import { AppError, AppErrorCode } from '../../errors/app-error';
 import { jobs } from '../../jobs/client';
+import { authenticateWithLaravel } from '../../laravel-auth/auth-laravel';
+import { fetchWithLaravelAuth } from '../../laravel-auth/fetch-with-laravel-auth';
 import type { TRecipientActionAuth } from '../../types/document-auth';
 import {
   ZWebhookDocumentSchema,
@@ -22,6 +24,13 @@ import {
 import { getIsRecipientsTurnToSign } from '../recipient/get-is-recipient-turn';
 import { triggerWebhook } from '../webhooks/trigger/trigger-webhook';
 import { sendPendingEmail } from './send-pending-email';
+
+interface DocumentDetails {
+  companyName?: string;
+  facilityAdministrator?: string;
+  documentName?: string;
+  residentName?: string;
+}
 
 export type CompleteDocumentWithTokenOptions = {
   token: string;
@@ -48,6 +57,7 @@ const getDocument = async ({ token, documentId }: CompleteDocumentWithTokenOptio
           token,
         },
       },
+      documentData: true,
     },
   });
 };
@@ -58,6 +68,7 @@ export const completeDocumentWithToken = async ({
   requestMetadata,
 }: CompleteDocumentWithTokenOptions) => {
   const document = await getDocument({ token, documentId });
+  const documentDetails = document?.documentDetails as DocumentDetails;
 
   if (document.status !== DocumentStatus.PENDING) {
     throw new Error(`Document ${document.id} must be pending`);
@@ -222,6 +233,45 @@ export const completeDocumentWithToken = async ({
         requestMetadata,
       },
     });
+
+    try {
+      let authToken = localStorage.getItem('laravel_jwt');
+
+      if (!authToken) {
+        authToken = await authenticateWithLaravel();
+        localStorage.setItem('laravel_jwt', authToken);
+      }
+
+      const base64File = Buffer.isBuffer(document.documentData.data)
+        ? document.documentData.data.toString('base64')
+        : document.documentData.data;
+
+      const formData = {
+        client_name: String(documentDetails?.companyName || ''),
+        documenso_id: String(documentId),
+        document_key: String(document.formKey || ''),
+        resident_id: String(document.residentId || ''),
+        base64_file: base64File,
+      };
+
+      const apiUrl = process.env.NEXT_PRIVATE_LARAVEL_API_URL;
+      const url = `${apiUrl}/residents/electronic-signature/store-signed-document`;
+
+      if (!apiUrl) {
+        throw new Error('Environment variables for the Laravel API are not defined.');
+      }
+
+      return await fetchWithLaravelAuth(
+        url,
+        {
+          method: 'POST',
+          body: JSON.stringify(formData),
+        },
+        authToken,
+      );
+    } catch (error) {
+      throw new Error('Could not store the signed document.');
+    }
   }
 
   const updatedDocument = await prisma.document.findFirstOrThrow({

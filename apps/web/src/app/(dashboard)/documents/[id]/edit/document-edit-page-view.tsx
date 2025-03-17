@@ -138,7 +138,10 @@ export const DocumentEditPageView = async ({ params, team }: DocumentEditPageVie
 
       <EditDocumentForm
         className="mt-6"
-        initialDocument={document}
+        initialDocument={{
+          ...document,
+          documentDetails: document.documentDetails ?? null,
+        }}
         documentRootPath={documentRootPath}
         isDocumentEnterprise={isDocumentEnterprise}
       />

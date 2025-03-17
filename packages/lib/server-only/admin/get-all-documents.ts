@@ -1,5 +1,5 @@
 import { prisma } from '@documenso/prisma';
-import type { Prisma } from '@documenso/prisma/client';
+import { EntityStatus, type Prisma } from '@documenso/prisma/client';
 
 import type { FindResultResponse } from '../../types/search-params';
 
@@ -19,11 +19,15 @@ export const findDocuments = async ({ query, page = 1, perPage = 10 }: FindDocum
         },
       };
 
+  const baseFilters: Prisma.DocumentWhereInput = {
+    activityStatus: EntityStatus.ACTIVE,
+    deletedAt: null,
+    ...termFilters,
+  };
+
   const [data, count] = await Promise.all([
     prisma.document.findMany({
-      where: {
-        ...termFilters,
-      },
+      where: baseFilters,
       skip: Math.max(page - 1, 0) * perPage,
       take: perPage,
       orderBy: {
@@ -41,9 +45,7 @@ export const findDocuments = async ({ query, page = 1, perPage = 10 }: FindDocum
       },
     }),
     prisma.document.count({
-      where: {
-        ...termFilters,
-      },
+      where: baseFilters,
     }),
   ]);
 

@@ -129,6 +129,16 @@ export const upsertDocumentMeta = async ({
       });
     }
 
-    return upsertedDocumentMeta;
+    const updatedDocument = await tx.document.findFirst({
+      where: { id: documentId },
+      select: {
+        documentDetails: true,
+      },
+    });
+
+    return {
+      ...upsertedDocumentMeta,
+      documentDetails: updatedDocument?.documentDetails ?? null,
+    };
   });
 };

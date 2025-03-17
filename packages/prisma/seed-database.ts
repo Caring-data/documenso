@@ -1,27 +1,27 @@
-import fs from 'node:fs';
 import path from 'node:path';
 
+const seedFile = 'initial-seed.ts';
+
+const seedFilePath = path.join(__dirname, './seed', seedFile);
+
 const seedDatabase = async () => {
-  const files = fs.readdirSync(path.join(__dirname, './seed'));
+  try {
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    const mod = require(seedFilePath);
 
-  for (const file of files) {
-    const stat = fs.statSync(path.join(__dirname, './seed', file));
+    if ('seedDatabase' in mod && typeof mod.seedDatabase === 'function') {
+      console.log(`[SEEDING]: ${seedFile}`);
 
-    if (stat.isFile()) {
-      // eslint-disable-next-line @typescript-eslint/no-var-requires
-      const mod = require(path.join(__dirname, './seed', file));
-
-      if ('seedDatabase' in mod && typeof mod.seedDatabase === 'function') {
-        console.log(`[SEEDING]: ${file}`);
-
-        try {
-          await mod.seedDatabase();
-        } catch (e) {
-          console.log(`[SEEDING]: Seed failed for ${file}`);
-          console.error(e);
-        }
-      }
+      await mod.seedDatabase();
+      console.log('Database seeded successfully');
+    } else {
+      console.error(`[ERROR]: ${seedFile} does not export a valid seedDatabase function`);
     }
+  } catch (error) {
+    console.error(`[SEEDING]: Failed to seed database with ${seedFile}`);
+    console.error(error);
+  } finally {
+    process.exit(0);
   }
 };
 

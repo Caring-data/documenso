@@ -1,4 +1,4 @@
-import type { z } from 'zod';
+import { z } from 'zod';
 
 import {
   DocumentDataSchema,
@@ -10,6 +10,18 @@ import {
 
 import { ZFieldSchema } from './field';
 import { ZRecipientLiteSchema } from './recipient';
+
+export const ZDocumentDetailsSchema = z
+  .object({
+    companyName: z.string().optional(),
+    facilityAdministrator: z.string().optional(),
+    documentName: z.string().optional(),
+    residentName: z.string().optional(),
+  })
+  .nullable()
+  .optional();
+
+export type TDocumentDetails = z.infer<typeof ZDocumentDetailsSchema>;
 
 /**
  * The full document response schema.
@@ -33,6 +45,9 @@ export const ZDocumentSchema = DocumentSchema.pick({
   deletedAt: true,
   teamId: true,
   templateId: true,
+  formKey: true,
+  residentId: true,
+  activityStatus: true,
 }).extend({
   // Todo: Maybe we want to alter this a bit since this returns a lot of data.
   documentData: DocumentDataSchema.pick({
@@ -58,6 +73,7 @@ export const ZDocumentSchema = DocumentSchema.pick({
   }).nullable(),
   recipients: ZRecipientLiteSchema.array(),
   fields: ZFieldSchema.array(),
+  documentDetails: ZDocumentDetailsSchema,
 });
 
 export type TDocument = z.infer<typeof ZDocumentSchema>;
@@ -82,6 +98,11 @@ export const ZDocumentLiteSchema = DocumentSchema.pick({
   deletedAt: true,
   teamId: true,
   templateId: true,
+  formKey: true,
+  residentId: true,
+  activityStatus: true,
+}).extend({
+  documentDetails: ZDocumentDetailsSchema,
 });
 
 /**
@@ -106,6 +127,7 @@ export const ZDocumentManySchema = DocumentSchema.pick({
   templateId: true,
   formKey: true,
   residentId: true,
+  activityStatus: true,
 }).extend({
   user: UserSchema.pick({
     id: true,
@@ -117,4 +139,5 @@ export const ZDocumentManySchema = DocumentSchema.pick({
     id: true,
     url: true,
   }).nullable(),
+  documentDetails: ZDocumentDetailsSchema,
 });

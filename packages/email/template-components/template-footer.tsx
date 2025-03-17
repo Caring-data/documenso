@@ -7,9 +7,10 @@ import { useBranding } from '../providers/branding';
 
 export type TemplateFooterProps = {
   isDocument?: boolean;
+  companyName?: string;
 };
 
-export const TemplateFooter = ({ isDocument = true }: TemplateFooterProps) => {
+export const TemplateFooter = ({ isDocument = true, companyName = '' }: TemplateFooterProps) => {
   const branding = useBranding();
   const assetBaseUrl = WEBAPP_BASE_URL;
 
@@ -22,11 +23,12 @@ export const TemplateFooter = ({ isDocument = true }: TemplateFooterProps) => {
       {isDocument && !branding.brandingHidePoweredBy && (
         <Text className="my-4 text-center text-xs font-medium leading-4 text-zinc-500">
           <Trans>
-            uses <span className="font-semibold text-[#508EEB]">Caring Data</span> to manage
-            communication and documentation in their facility. Caring Data respects your privacy. To
-            learn more, read our{' '}
+            <span className="text-brand-accent font-medium">Caring Data</span> is a secure platform
+            used by <span className="text-brand-accent font-medium">{companyName}</span>
+            to manage communication and documentation. We prioritize your privacy and security. For
+            more details, please review our{' '}
             <Link
-              className="text-[#508EEB] underline decoration-solid decoration-auto underline-offset-auto"
+              className="text-brand-accent underline decoration-solid decoration-auto underline-offset-auto"
               href="https://home.caringdata.com/index.php/privacy-policy/"
             >
               Privacy Statement
@@ -54,7 +56,7 @@ export const TemplateFooter = ({ isDocument = true }: TemplateFooterProps) => {
               href="https://www.caringdata.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="font-medium text-[#508EEB]"
+              className="text-brand-accent font-medium"
             >
               www.caringdata.com
             </a>{' '}

@@ -89,14 +89,15 @@ export const SignDialog = ({
           {role === RecipientRole.SIGNER && (
             <span>
               <Trans>
-                <span className="inline-flex flex-wrap">
+                <span className="inline-flex flex-wrap font-normal leading-4 text-zinc-600">
                   You are about to complete signing "
                   <span className="inline-block max-w-[11rem] truncate align-baseline">
                     {documentTitle}
                   </span>
                   ".
                 </span>
-                <br /> Are you sure?
+                <br />
+                <span className="font-normal leading-4 text-zinc-600">Are you sure?</span>
               </Trans>
             </span>
           )}
@@ -116,7 +117,9 @@ export const SignDialog = ({
           )}
         </div>
 
-        <SigningDisclosure className="mt-4" />
+        <hr className="w-full border-t border-gray-300 bg-gray-300" />
+
+        <SigningDisclosure />
 
         <DialogFooter>
           <div className="flex w-full flex-1 flex-nowrap gap-4">

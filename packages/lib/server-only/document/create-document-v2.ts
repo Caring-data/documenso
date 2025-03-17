@@ -243,6 +243,9 @@ export const createDocumentV2 = async ({
       teamId,
     });
 
-    return createdDocument;
+    return {
+      ...createdDocument,
+      documentDetails: createdDocument.documentDetails ?? null,
+    };
   });
 };
