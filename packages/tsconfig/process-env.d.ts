@@ -112,5 +112,8 @@ declare namespace NodeJS {
 
     NEXT_PRIVATE_LARAVEL_API_URL?: string;
     NEXT_PRIVATE_LARAVEL_ENCRYPTION_KEY?: string;
+
+    NEXT_PRIVATE_LARAVEL_USERNAME?: string;
+    NEXT_PRIVATE_LARAVEL_PASSWORD?: string;
   }
 }

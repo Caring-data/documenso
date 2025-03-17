@@ -18,8 +18,8 @@ export const authenticateWithLaravel = async (): Promise<string> => {
   const loginUrl = `${apiUrl}/auth/login`;
 
   const encryptedCredentials = encryptForLaravel({
-    username: 'admin',
-    password: 'AdminCD2025',
+    username: process.env.NEXT_PRIVATE_LARAVEL_USERNAME,
+    password: process.env.NEXT_PRIVATE_LARAVEL_PASSWORD,
   });
 
   try {

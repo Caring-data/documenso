@@ -175,6 +175,10 @@ services:
         sync: true
       - key: NEXT_PRIVATE_LARAVEL_ENCRYPTION_KEY
         sync: true
+      - key: NEXT_PRIVATE_LARAVEL_USERNAME
+        sync: true
+      - key: NEXT_PRIVATE_LARAVEL_PASSWORD
+        sync: true
 
 databases:
   - name: documenso-db
