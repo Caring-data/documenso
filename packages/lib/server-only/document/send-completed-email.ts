@@ -96,7 +96,6 @@ export const sendCompletedEmail = async ({ documentId, requestMetadata }: SendDo
       !isDocumentCompletedEmailEnabled)
   ) {
     const template = createElement(DocumentCompletedEmailTemplate, {
-      documentName: document.title,
       assetBaseUrl,
       downloadLink: documentOwnerDownloadLink,
     });
@@ -169,7 +168,6 @@ export const sendCompletedEmail = async ({ documentId, requestMetadata }: SendDo
       const downloadLink = `${NEXT_PUBLIC_WEBAPP_URL()}/sign/${recipient.token}/complete`;
 
       const template = createElement(DocumentCompletedEmailTemplate, {
-        documentName: document.title,
         assetBaseUrl,
         downloadLink: recipient.email === owner.email ? documentOwnerDownloadLink : downloadLink,
         recipientName: recipient.name,
