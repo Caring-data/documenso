@@ -122,7 +122,6 @@ export const run = async ({
       }`,
       rejectionReason: recipient.rejectionReason || '',
       assetBaseUrl: NEXT_PUBLIC_WEBAPP_URL(),
-      recipientName: recipient.name,
       documentDetails: document.documentDetails || {},
     });
 

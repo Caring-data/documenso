@@ -34,10 +34,6 @@ msgstr "\"{documentName}\" został usunięty przez administratora."
 msgid "“{documentName}” has been signed"
 msgstr "„{documentName}” został podpisany"
 
-#: packages/email/template-components/template-document-completed.tsx:41
-msgid "“{documentName}” was signed by all signers"
-msgstr "„{documentName}” został podpisany przez wszystkich sygnatariuszy"
-
 #: apps/web/src/app/(dashboard)/documents/delete-document-dialog.tsx:58
 msgid "\"{documentTitle}\" has been successfully deleted"
 msgstr "\"{documentTitle}\" został pomyślnie usunięty"
@@ -266,7 +262,7 @@ msgstr "{recipientActionVerb} dokument, aby zakończyć proces."
 msgid "{recipientName} {action} a document by using one of your direct links"
 msgstr "{recipientName} {action} dokument, korzystając z jednego z Twoich bezpośrednich linków"
 
-#: packages/email/templates/document-rejected.tsx:27
+#: packages/email/templates/document-rejected.tsx:34
 msgid "{recipientName} has rejected the document '{documentName}'"
 msgstr "{recipientName} odrzucił dokument '{documentName}'"
 
@@ -291,7 +287,7 @@ msgstr "{recipientReference} podpisał {documentName}"
 msgid "{remaningLength, plural, one {# character remaining} other {# characters remaining}}"
 msgstr "{remaningLength, plural, one {Pozostał # znak} few {Pozostały # znaki} many {Pozostało # znaków} other {Pozostało # znaków}}"
 
-#: packages/email/template-components/template-document-rejected.tsx:25
+#: packages/email/template-components/template-document-rejected.tsx:21
 msgid "{signerName} has rejected the document \"{documentName}\"."
 msgstr "{signerName} odrzucił dokument \"{documentName}\"."
 
@@ -588,7 +584,7 @@ msgstr "Akceptacja i Zgoda"
 msgid "Accepted team invitation"
 msgstr "Akceptowane zaproszenie do zespołu"
 
-#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:128
+#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:125
 msgid "Account Authentication"
 msgstr "Uwierzytelnianie konta"
 
@@ -605,7 +601,7 @@ msgstr "Konto wyłączone"
 msgid "Account enabled"
 msgstr "Konto włączone"
 
-#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:119
+#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:116
 msgid "Account Re-Authentication"
 msgstr "Ponowna Autoryzacja Konta"
 
@@ -1183,10 +1179,6 @@ msgstr "Ponowne próby zapieczętowania dokumentu, przydatne po zmianie kodu w c
 msgid "Audit Log"
 msgstr "Dziennik logów"
 
-#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:200
-msgid "Authentication Level"
-msgstr "Poziom autoryzacji"
-
 #: apps/web/src/app/(recipient)/d/[token]/signing-auth-page.tsx:41
 #: apps/web/src/app/(signing)/sign/[token]/signing-auth-page.tsx:52
 msgid "Authentication required"
@@ -1539,14 +1531,13 @@ msgstr "Zakończ wyświetlanie"
 #: apps/web/src/app/(dashboard)/templates/[id]/template-page-view-documents-table.tsx:223
 #: apps/web/src/components/(dashboard)/avatar/stack-avatars-with-tooltip.tsx:77
 #: apps/web/src/components/formatter/document-status.tsx:28
-#: packages/email/template-components/template-document-completed.tsx:35
 #: packages/email/template-components/template-document-recipient-signed.tsx:37
 #: packages/email/template-components/template-document-self-signed.tsx:36
 #: packages/lib/constants/document.ts:10
 msgid "Completed"
 msgstr "Zakończone"
 
-#: packages/email/templates/document-completed.tsx:23
+#: packages/email/templates/document-completed.tsx:31
 #: packages/email/templates/document-self-signed.tsx:19
 msgid "Completed Document"
 msgstr "Dokument zakończony"
@@ -1642,10 +1633,6 @@ msgstr "Kontynuuj, zatwierdzając dokument."
 #: packages/email/template-components/template-document-invite.tsx:104
 msgid "Continue by assisting with the document."
 msgstr ""
-
-#: packages/email/template-components/template-document-completed.tsx:45
-msgid "Continue by downloading the document."
-msgstr "Kontynuuj, pobierając dokument."
 
 #: packages/email/template-components/template-document-invite.tsx:100
 msgid "Continue by viewing the document."
@@ -1874,7 +1861,7 @@ msgstr "Tryb ciemny"
 #: apps/web/src/app/(signing)/sign/[token]/date-field.tsx:152
 #: packages/ui/primitives/document-flow/add-fields.tsx:951
 #: packages/ui/primitives/document-flow/types.ts:53
-#: packages/ui/primitives/template-flow/add-template-fields.tsx:826
+#: packages/ui/primitives/template-flow/add-template-fields.tsx:825
 msgid "Date"
 msgstr "Data"
 
@@ -1887,6 +1874,7 @@ msgstr "Data utworzenia"
 msgid "Date Format"
 msgstr "Format daty"
 
+#: packages/email/template-components/template-document-completed.tsx:27
 #: packages/email/template-components/template-document-invite.tsx:51
 msgid "Dear"
 msgstr ""
@@ -1999,12 +1987,7 @@ msgstr "Usunięto"
 msgid "Deleting account..."
 msgstr "Usuwanie konta..."
 
-#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:180
-msgid "Details"
-msgstr "Szczegóły"
-
 #: apps/web/src/app/(dashboard)/settings/security/activity/user-security-activity-data-table.tsx:72
-#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:244
 msgid "Device"
 msgstr "Urządzenie"
 
@@ -2116,11 +2099,11 @@ msgstr "Documenso usunie <0>wszystkie twoje dokumenty</0>, wraz ze wszystkimi za
 msgid "Document"
 msgstr "Dokument"
 
-#: packages/lib/jobs/definitions/emails/send-rejection-emails.handler.ts:157
+#: packages/lib/jobs/definitions/emails/send-rejection-emails.handler.ts:159
 msgid "Document \"{0}\" - Rejected by {1}"
 msgstr "Dokument \"{0}\" - Odrzucony przez {1}"
 
-#: packages/lib/jobs/definitions/emails/send-rejection-emails.handler.ts:109
+#: packages/lib/jobs/definitions/emails/send-rejection-emails.handler.ts:110
 msgid "Document \"{0}\" - Rejection Confirmed"
 msgstr "Dokument \"{0}\" - Odrzucenie potwierdzone"
 
@@ -2154,7 +2137,7 @@ msgstr "Dokument anulowany"
 msgid "Document completed"
 msgstr "Dokument ukończony"
 
-#: packages/lib/server-only/document/send-completed-email.ts:128
+#: packages/lib/server-only/document/send-completed-email.ts:127
 #: packages/lib/server-only/document/send-completed-email.ts:208
 msgid "Document Completed - {0}"
 msgstr ""
@@ -2272,9 +2255,8 @@ msgstr "Preferencje dokumentu zaktualizowane"
 msgid "Document re-sent"
 msgstr "Dokument ponownie wysłany"
 
-#: apps/web/src/app/(signing)/sign/[token]/rejected/page.tsx:83
+#: apps/web/src/app/(signing)/sign/[token]/rejected/page.tsx:82
 #: apps/web/src/app/embed/rejected.tsx:19
-#: packages/email/template-components/template-document-rejected.tsx:21
 msgid "Document Rejected"
 msgstr "Dokument odrzucone"
 
@@ -2374,7 +2356,7 @@ msgstr "Nie masz konta? <0>Zarejestruj się</0>"
 #: apps/web/src/components/(teams)/tables/team-billing-invoices-data-table.tsx:110
 #: apps/web/src/components/forms/2fa/enable-authenticator-app-dialog.tsx:185
 #: apps/web/src/components/forms/2fa/view-recovery-codes-dialog.tsx:107
-#: packages/email/template-components/template-document-completed.tsx:57
+#: packages/email/template-components/template-document-completed.tsx:49
 #: packages/ui/components/document/document-download-button.tsx:68
 msgid "Download"
 msgstr "Pobierz"
@@ -2410,7 +2392,7 @@ msgid "Drag & drop your PDF here."
 msgstr "Przeciągnij i upuść swój PDF tutaj."
 
 #: packages/ui/primitives/document-flow/add-fields.tsx:1082
-#: packages/ui/primitives/template-flow/add-template-fields.tsx:957
+#: packages/ui/primitives/template-flow/add-template-fields.tsx:956
 msgid "Dropdown"
 msgstr "Lista rozwijana"
 
@@ -2465,8 +2447,8 @@ msgstr "Ujawnienie podpisu elektronicznego"
 #: apps/web/src/app/(dashboard)/admin/users/data-table-users.tsx:71
 #: apps/web/src/app/(dashboard)/templates/use-template-dialog.tsx:277
 #: apps/web/src/app/(dashboard)/templates/use-template-dialog.tsx:284
-#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:122
-#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:129
+#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:119
+#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:126
 #: apps/web/src/app/(recipient)/d/[token]/configure-direct-template.tsx:119
 #: apps/web/src/app/(signing)/sign/[token]/email-field.tsx:133
 #: apps/web/src/app/embed/direct/[[...url]]/client.tsx:407
@@ -2482,7 +2464,7 @@ msgstr "Ujawnienie podpisu elektronicznego"
 #: packages/ui/primitives/document-flow/add-signers.tsx:511
 #: packages/ui/primitives/document-flow/add-signers.tsx:518
 #: packages/ui/primitives/document-flow/types.ts:54
-#: packages/ui/primitives/template-flow/add-template-fields.tsx:774
+#: packages/ui/primitives/template-flow/add-template-fields.tsx:773
 #: packages/ui/primitives/template-flow/add-template-placeholder-recipients.tsx:537
 #: packages/ui/primitives/template-flow/add-template-placeholder-recipients.tsx:544
 msgid "Email"
@@ -2575,7 +2557,7 @@ msgid "Enable Typed Signature"
 msgstr "Włącz podpis pisany"
 
 #: packages/ui/primitives/document-flow/add-fields.tsx:819
-#: packages/ui/primitives/template-flow/add-template-fields.tsx:694
+#: packages/ui/primitives/template-flow/add-template-fields.tsx:693
 msgid "Enable Typed Signatures"
 msgstr "Włącz podpisy typu pisanego"
 
@@ -2940,7 +2922,7 @@ msgstr ""
 msgid "I am required to receive a copy of this document"
 msgstr "Muszę otrzymać kopię tego dokumentu"
 
-#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:43
+#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:40
 msgid "I am the owner of this document"
 msgstr "Jestem właścicielem tego dokumentu"
 
@@ -3062,8 +3044,11 @@ msgstr "Zaproś o"
 msgid "Invoice"
 msgstr "Faktura"
 
+#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:294
+msgid "IP address"
+msgstr ""
+
 #: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/audit-log/data-table.tsx:47
-#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:237
 msgid "IP Address"
 msgstr "Adres IP"
 
@@ -3404,7 +3389,7 @@ msgstr "Moje szablony"
 #: packages/ui/primitives/document-flow/add-signers.tsx:549
 #: packages/ui/primitives/document-flow/add-signers.tsx:555
 #: packages/ui/primitives/document-flow/types.ts:55
-#: packages/ui/primitives/template-flow/add-template-fields.tsx:800
+#: packages/ui/primitives/template-flow/add-template-fields.tsx:799
 #: packages/ui/primitives/template-flow/add-template-placeholder-recipients.tsx:572
 #: packages/ui/primitives/template-flow/add-template-placeholder-recipients.tsx:578
 msgid "Name"
@@ -3453,7 +3438,7 @@ msgstr "Następne pole"
 msgid "No active drafts"
 msgstr "Brak aktywnych szkiców"
 
-#: apps/web/src/app/(signing)/sign/[token]/rejected/page.tsx:99
+#: apps/web/src/app/(signing)/sign/[token]/rejected/page.tsx:98
 #: apps/web/src/app/embed/rejected.tsx:35
 msgid "No further action is required from you at this time."
 msgstr "Nie są wymagane żadne dalsze działania z Twojej strony w tym momencie."
@@ -3475,7 +3460,7 @@ msgid "No recent documents"
 msgstr "Brak ostatnich dokumentów"
 
 #: packages/ui/primitives/document-flow/add-fields.tsx:711
-#: packages/ui/primitives/template-flow/add-template-fields.tsx:614
+#: packages/ui/primitives/template-flow/add-template-fields.tsx:613
 msgid "No recipient matching this description was found."
 msgstr "Nie znaleziono odbiorcy pasującego do tego opisu."
 
@@ -3487,7 +3472,7 @@ msgid "No recipients"
 msgstr "Brak odbiorców"
 
 #: packages/ui/primitives/document-flow/add-fields.tsx:726
-#: packages/ui/primitives/template-flow/add-template-fields.tsx:629
+#: packages/ui/primitives/template-flow/add-template-fields.tsx:628
 msgid "No recipients with this role"
 msgstr "Brak odbiorców z tą rolą"
 
@@ -3549,7 +3534,7 @@ msgstr "Nic do zrobienia"
 #: apps/web/src/app/(signing)/sign/[token]/number-field.tsx:290
 #: packages/ui/primitives/document-flow/add-fields.tsx:1003
 #: packages/ui/primitives/document-flow/types.ts:56
-#: packages/ui/primitives/template-flow/add-template-fields.tsx:878
+#: packages/ui/primitives/template-flow/add-template-fields.tsx:877
 msgid "Number"
 msgstr "Numer"
 
@@ -3670,7 +3655,7 @@ msgstr "Klucz dostępu został zaktualizowany"
 msgid "Passkey name"
 msgstr "Nazwa klucza dostępu"
 
-#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:121
+#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:118
 msgid "Passkey Re-Authentication"
 msgstr "Ponowna Autoryzacja Klucza Dostępu"
 
@@ -4021,15 +4006,11 @@ msgstr "Gotowy"
 msgid "Ready to get started?<0/>Click the button and log into your Caring Data account to accept the invite and sign the document."
 msgstr ""
 
-#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:291
-msgid "Reason"
-msgstr "Powód"
-
 #: apps/web/src/app/(dashboard)/documents/[id]/document-page-view-recipients.tsx:153
 msgid "Reason for rejection:"
 msgstr "Powód odrzucenia:"
 
-#: packages/email/template-components/template-document-rejected.tsx:32
+#: packages/email/template-components/template-document-rejected.tsx:28
 msgid "Reason for rejection: {rejectionReason}"
 msgstr "Powód odrzucenia: {rejectionReason}"
 
@@ -4084,6 +4065,10 @@ msgstr "E-mail z prośbą o podpisanie przez odbiorcę"
 msgid "Recipient updated"
 msgstr "Odbiorca zaktualizowany"
 
+#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:205
+msgid "Recipient Verification"
+msgstr ""
+
 #: apps/web/src/app/(dashboard)/admin/documents/[id]/page.tsx:66
 #: apps/web/src/app/(dashboard)/documents/[id]/document-page-view-recipients.tsx:50
 #: apps/web/src/app/(dashboard)/templates/[id]/template-page-view-recipients.tsx:30
@@ -4137,11 +4122,7 @@ msgstr "Odrzuć dokument"
 msgid "Rejected"
 msgstr "Odrzucony"
 
-#: packages/email/template-components/template-document-rejection-confirmed.tsx:22
-msgid "Rejection Confirmed"
-msgstr "Odmowa potwierdzona"
-
-#: packages/email/template-components/template-document-rejection-confirmed.tsx:34
+#: packages/email/template-components/template-document-rejection-confirmed.tsx:35
 msgid "Rejection reason: {reason}"
 msgstr "Powód odrzucenia: {reason}"
 
@@ -4323,12 +4304,12 @@ msgstr "Wiersze na stronę"
 msgid "Save"
 msgstr "Zapisz"
 
-#: packages/ui/primitives/template-flow/add-template-fields.tsx:990
+#: packages/ui/primitives/template-flow/add-template-fields.tsx:989
 msgid "Save Template"
 msgstr "Zapisz szablon"
 
 #: apps/web/src/app/(dashboard)/documents/data-table-sender-filter.tsx:63
-#: apps/web/src/components/(dashboard)/layout/desktop-nav.tsx:81
+#: apps/web/src/components/(dashboard)/layout/desktop-nav.tsx:85
 #: apps/web/src/components/(teams)/tables/teams-member-page-data-table.tsx:69
 #: apps/web/src/components/(teams)/tables/user-settings-teams-page-data-table.tsx:64
 msgid "Search"
@@ -4485,7 +4466,7 @@ msgid "Sending..."
 msgstr "Wysyłanie..."
 
 #: apps/web/src/app/(dashboard)/documents/[id]/document-page-view-recipients.tsx:102
-#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:258
+#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:230
 msgid "Sent"
 msgstr "Wysłano"
 
@@ -4628,7 +4609,7 @@ msgid "Sign Up with OIDC"
 msgstr "Zarejestruj się za pomocą OIDC"
 
 #: apps/web/src/app/(dashboard)/admin/documents/[id]/recipient-item.tsx:88
-#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:179
+#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:183
 #: apps/web/src/app/(recipient)/d/[token]/sign-direct-template.tsx:334
 #: apps/web/src/app/(signing)/sign/[token]/form.tsx:340
 #: apps/web/src/app/(signing)/sign/[token]/signature-field.tsx:249
@@ -4639,13 +4620,13 @@ msgstr "Zarejestruj się za pomocą OIDC"
 #: packages/ui/primitives/document-flow/add-fields.tsx:847
 #: packages/ui/primitives/document-flow/field-icon.tsx:52
 #: packages/ui/primitives/document-flow/types.ts:49
-#: packages/ui/primitives/template-flow/add-template-fields.tsx:722
+#: packages/ui/primitives/template-flow/add-template-fields.tsx:721
 msgid "Signature"
 msgstr "Podpis"
 
-#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:230
-msgid "Signature ID"
-msgstr "Identyfikator podpisu"
+#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:172
+msgid "Signature Certificate"
+msgstr ""
 
 #: apps/web/src/app/(signing)/sign/[token]/form.tsx:364
 #: apps/web/src/app/(signing)/sign/[token]/signature-field.tsx:301
@@ -4663,7 +4644,7 @@ msgid "Signatures will appear once the document has been completed"
 msgstr "Podpisy pojawią się po ukończeniu dokumentu"
 
 #: apps/web/src/app/(dashboard)/documents/[id]/document-page-view-recipients.tsx:115
-#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:280
+#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:252
 #: apps/web/src/components/document/document-read-only-fields.tsx:84
 #: packages/lib/constants/recipient-roles.ts:23
 msgid "Signed"
@@ -4673,7 +4654,7 @@ msgstr "Podpisano"
 msgid "Signer"
 msgstr "Sygnatariusz"
 
-#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:178
+#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:181
 msgid "Signer Events"
 msgstr "Wydarzenia sygnatariusza"
 
@@ -4689,11 +4670,7 @@ msgstr "Podpisujący muszą mieć unikalne emaile"
 msgid "Signing"
 msgstr "Podpisywanie"
 
-#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:170
-msgid "Signing Certificate"
-msgstr "Certyfikat podpisu"
-
-#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:313
+#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:316
 msgid "Signing certificate provided by"
 msgstr "Certyfikat podpisu dostarczony przez"
 
@@ -5143,7 +5120,7 @@ msgstr "Szablony pozwalają na szybkie generowanie dokumentów z wypełnionymi o
 #: apps/web/src/app/(signing)/sign/[token]/text-field.tsx:293
 #: packages/ui/primitives/document-flow/add-fields.tsx:977
 #: packages/ui/primitives/document-flow/types.ts:52
-#: packages/ui/primitives/template-flow/add-template-fields.tsx:852
+#: packages/ui/primitives/template-flow/add-template-fields.tsx:851
 msgid "Text"
 msgstr "Tekst"
 
@@ -5210,11 +5187,11 @@ msgstr "Dokument został pomyślnie przeniesiony do wybranego zespołu."
 msgid "The document is now completed, please follow any instructions provided within the parent application."
 msgstr "Dokument jest teraz zakończony, proszę postępować zgodnie z wszelkimi instrukcjami podanymi w aplikacji nadrzędnej."
 
-#: packages/email/template-components/template-document-rejection-confirmed.tsx:39
+#: packages/email/template-components/template-document-rejection-confirmed.tsx:40
 msgid "The document owner has been notified of this rejection. No further action is required from you at this time. The document owner may contact you with any questions regarding this rejection."
 msgstr "Właściciel dokumentu został poinformowany o tym odrzuceniu. W tej chwili nie są wymagane żadne dalsze działania z Twojej strony. Właściciel dokumentu może się z Tobą skontaktować z pytaniami dotyczącymi tego odrzucenia."
 
-#: apps/web/src/app/(signing)/sign/[token]/rejected/page.tsx:92
+#: apps/web/src/app/(signing)/sign/[token]/rejected/page.tsx:91
 #: apps/web/src/app/embed/rejected.tsx:28
 msgid "The document owner has been notified of your decision. They may contact you with further instructions if necessary."
 msgstr "Właściciel dokumentu został poinformowany o Twojej decyzji. Mogą się z Tobą skontaktować w celu podania dalszych instrukcji, jeśli to konieczne."
@@ -5474,8 +5451,8 @@ msgid "This document was created using a direct link."
 msgstr "Ten dokument został stworzony przy użyciu bezpośredniego linku."
 
 #: packages/email/template-components/template-document-rejection-confirmed.tsx:26
-msgid "This email confirms that you have rejected the document <0>\"{documentName}\"</0> sent by {documentOwnerName}."
-msgstr "Ten email potwierdza, że odrzuciłeś dokument <0>\"{documentName}\"</0> wysłany przez {documentOwnerName}."
+msgid "This email confirms that you have rejected the document <0>\"{0}\"</0> sent by {1}."
+msgstr ""
 
 #: apps/web/src/components/(teams)/dialogs/add-team-email-dialog.tsx:93
 msgid "This email is already being used by another team."
@@ -5601,6 +5578,10 @@ msgstr "Strefa czasowa"
 msgid "Time Zone"
 msgstr "Strefa czasowa"
 
+#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:182
+msgid "Timestamp"
+msgstr ""
+
 #: apps/web/src/app/(dashboard)/admin/documents/document-results.tsx:67
 #: apps/web/src/app/(dashboard)/documents/data-table.tsx:54
 #: apps/web/src/app/(dashboard)/templates/[id]/template-page-view-documents-table.tsx:109
@@ -5644,7 +5625,7 @@ msgid "To mark this document as viewed, you need to be logged in as <0>{0}</0>"
 msgstr "Aby oznaczyć ten dokument jako wyświetlony, musisz być zalogowany jako <0>{0}</0>"
 
 #: packages/ui/primitives/document-flow/add-fields.tsx:1097
-#: packages/ui/primitives/template-flow/add-template-fields.tsx:970
+#: packages/ui/primitives/template-flow/add-template-fields.tsx:969
 msgid "To proceed further, please set at least one value for the {0} field."
 msgstr "Aby kontynuować, ustaw przynajmniej jedną wartość dla pola {0}."
 
@@ -5765,7 +5746,7 @@ msgstr "Uwierzytelnianie dwuetapowe włączone"
 msgid "Two-factor authentication has been disabled for your account. You will no longer be required to enter a code from your authenticator app when signing in."
 msgstr "Uwierzytelnianie dwuetapowe zostało wyłączone dla Twojego konta. Nie będziesz już musiał wprowadzać kodu z aplikacji uwierzytelniającej podczas logowania."
 
-#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:120
+#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:117
 msgid "Two-Factor Re-Authentication"
 msgstr "Ponowna autoryzacja za pomocą dwuetapowej weryfikacji"
 
@@ -5874,10 +5855,10 @@ msgstr "Nieautoryzowany"
 msgid "Uncompleted"
 msgstr "Niezakończony"
 
-#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:239
-#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:264
-#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:275
-#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:286
+#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:236
+#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:247
+#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:260
+#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:297
 #: apps/web/src/app/(teams)/t/[teamUrl]/settings/billing/page.tsx:55
 msgid "Unknown"
 msgstr "Nieznany"
@@ -6096,6 +6077,10 @@ msgstr "Wysłano wiadomość e-mail z weryfikacją"
 msgid "Verification email sent successfully."
 msgstr "Wiadomość e-mail z weryfikacją została wysłana pomyślnie."
 
+#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:222
+msgid "Verified"
+msgstr ""
+
 #: apps/web/src/components/(dashboard)/layout/verify-email-banner.tsx:102
 msgid "Verify Now"
 msgstr "Zweryfikuj teraz"
@@ -6164,7 +6149,7 @@ msgstr "Zobacz dokument"
 
 #: apps/web/src/app/(signing)/sign/[token]/form.tsx:181
 #: packages/email/template-components/template-document-invite.tsx:116
-#: packages/email/template-components/template-document-rejected.tsx:44
+#: packages/email/template-components/template-document-rejected.tsx:40
 #: packages/ui/primitives/document-flow/add-subject.tsx:90
 #: packages/ui/primitives/document-flow/add-subject.tsx:91
 msgid "View Document"
@@ -6200,7 +6185,7 @@ msgid "View teams"
 msgstr "Wyświetl zespoły"
 
 #: apps/web/src/app/(dashboard)/documents/[id]/document-page-view-recipients.tsx:121
-#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:269
+#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:241
 #: packages/lib/constants/recipient-roles.ts:30
 msgid "Viewed"
 msgstr "Wyświetlono"
@@ -6253,6 +6238,10 @@ msgstr "Chcesz mieć profil publiczny?"
 #: packages/ui/primitives/template-flow/add-template-placeholder-recipients.tsx:329
 #: packages/ui/primitives/template-flow/add-template-placeholder-recipients.tsx:365
 msgid "Warning: Assistant as last signer"
+msgstr ""
+
+#: packages/email/template-components/template-document-completed.tsx:30
+msgid "We are pleased to inform you that all required signatures have been completed, and the document <0>{0}</0> is now ready for download."
 msgstr ""
 
 #: apps/web/src/app/(dashboard)/settings/billing/billing-portal-button.tsx:41
@@ -6636,6 +6625,10 @@ msgstr "Nie masz uprawnień, aby włączyć tego użytkownika."
 msgid "You are not authorized to view this page."
 msgstr "Nie masz uprawnień, aby wyświetlić tę stronę."
 
+#: packages/email/template-components/template-document-completed.tsx:38
+msgid "You can access the final copy of the document by clicking the button below"
+msgstr ""
+
 #: packages/email/template-components/template-confirmation-email.tsx:38
 msgid "You can also copy and paste this link into your browser: {confirmationLink} (link expires in 1 hour)"
 msgstr "Możesz także skopiować i wkleić ten link do przeglądarki: {confirmationLink} (link wygasa za 1 godzinę)"
@@ -6676,7 +6669,7 @@ msgstr "Możesz wyświetlać dokumenty powiązane z tym e-mailem i używać tej 
 msgid "You can view the created documents in your dashboard under the \"Documents created from template\" section."
 msgstr "Możesz zobaczyć utworzone dokumenty na swoim pulpicie w sekcji \"Dokumenty utworzone z szablonu\"."
 
-#: packages/email/template-components/template-document-rejected.tsx:37
+#: packages/email/template-components/template-document-rejected.tsx:33
 msgid "You can view the document and its status by clicking the button below."
 msgstr "Możesz zobaczyć dokument i jego status, klikając przycisk poniżej."
 
@@ -6777,11 +6770,11 @@ msgstr "Osiągnąłeś limit dokumentów na ten miesiąc. Proszę zaktualizować
 msgid "You have reached your document limit."
 msgstr "Osiągnięto limit dokumentów."
 
-#: packages/email/templates/document-rejection-confirmed.tsx:27
+#: packages/email/templates/document-rejection-confirmed.tsx:34
 msgid "You have rejected the document '{documentName}'"
 msgstr "Odrzuciłeś dokument '{documentName}'"
 
-#: apps/web/src/app/(signing)/sign/[token]/rejected/page.tsx:88
+#: apps/web/src/app/(signing)/sign/[token]/rejected/page.tsx:87
 #: apps/web/src/app/embed/rejected.tsx:24
 msgid "You have rejected this document"
 msgstr "Odrzuciłeś ten dokument"
