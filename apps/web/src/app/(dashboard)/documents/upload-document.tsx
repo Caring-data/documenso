@@ -4,13 +4,12 @@ import { useMemo, useState } from 'react';
 
 import { useRouter } from 'next/navigation';
 
-import { Trans, msg } from '@lingui/macro';
+import { msg } from '@lingui/macro';
 import { useLingui } from '@lingui/react';
 import { Loader } from 'lucide-react';
 import { useSession } from 'next-auth/react';
 import { match } from 'ts-pattern';
 
-import { useLimits } from '@documenso/ee/server-only/limits/provider/client';
 import { useAnalytics } from '@documenso/lib/client-only/hooks/use-analytics';
 import { APP_DOCUMENT_UPLOAD_SIZE_LIMIT } from '@documenso/lib/constants/app';
 import { DEFAULT_DOCUMENT_TIME_ZONE, TIME_ZONES } from '@documenso/lib/constants/time-zones';
@@ -43,24 +42,16 @@ export const UploadDocument = ({ className, team }: UploadDocumentProps) => {
   const { _ } = useLingui();
   const { toast } = useToast();
 
-  const { quota, remaining, refreshLimits } = useLimits();
-
   const [isLoading, setIsLoading] = useState(false);
 
   const { mutateAsync: createDocument } = trpc.document.createDocument.useMutation();
 
   const disabledMessage = useMemo(() => {
-    if (remaining.documents === 0) {
-      return team
-        ? msg`Document upload disabled due to unpaid invoices`
-        : msg`You have reached your document limit.`;
-    }
-
     if (!session?.user.emailVerified) {
       return msg`Verify your email to upload documents.`;
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [remaining.documents, session?.user.emailVerified, team]);
+  }, [session?.user.emailVerified, team]);
 
   const onFileDrop = async (file: File) => {
     try {
@@ -78,8 +69,6 @@ export const UploadDocument = ({ className, team }: UploadDocumentProps) => {
         documentDataId,
         timezone: userTimezone,
       });
-
-      void refreshLimits();
 
       toast({
         title: _(msg`Document uploaded`),
@@ -131,23 +120,11 @@ export const UploadDocument = ({ className, team }: UploadDocumentProps) => {
     <div className={cn('relative', className)}>
       <DocumentDropzone
         className="h-[min(400px,50vh)]"
-        disabled={remaining.documents === 0 || !session?.user.emailVerified}
+        disabled={!session?.user.emailVerified}
         disabledMessage={disabledMessage}
         onDrop={onFileDrop}
         onDropRejected={onFileDropRejected}
       />
-
-      <div className="absolute -bottom-6 right-0">
-        {team?.id === undefined &&
-          remaining.documents > 0 &&
-          Number.isFinite(remaining.documents) && (
-            <p className="text-muted-foreground/60 text-xs">
-              <Trans>
-                {remaining.documents} of {quota.documents} documents remaining this month.
-              </Trans>
-            </p>
-          )}
-      </div>
 
       {isLoading && (
         <div className="bg-background/50 absolute inset-0 flex items-center justify-center rounded-lg">

@@ -19,6 +19,13 @@ import { renderEmailWithI18N } from '../../utils/render-email-with-i18n';
 import { teamGlobalSettingsToBranding } from '../../utils/team-global-settings-to-branding';
 import { formatDocumentsPath } from '../../utils/teams';
 
+interface DocumentDetails {
+  companyName?: string;
+  facilityAdministrator?: string;
+  documentName?: string;
+  residentName?: string;
+}
+
 export interface SendDocumentOptions {
   documentId: number;
   requestMetadata?: RequestMetadata;
@@ -47,6 +54,8 @@ export const sendCompletedEmail = async ({ documentId, requestMetadata }: SendDo
   if (!document) {
     throw new Error('Document not found');
   }
+
+  const documentDetails = document?.documentDetails as DocumentDetails;
 
   const isDirectTemplate = document?.source === DocumentSource.TEMPLATE_DIRECT_LINK;
 
@@ -116,7 +125,7 @@ export const sendCompletedEmail = async ({ documentId, requestMetadata }: SendDo
         name: process.env.NEXT_PRIVATE_SMTP_FROM_NAME || 'Documenso',
         address: process.env.NEXT_PRIVATE_SMTP_FROM_ADDRESS || 'noreply@documenso.com',
       },
-      subject: i18n._(msg`Signing Complete!`),
+      subject: i18n._(msg`Document Completed - ${documentDetails?.documentName || ''}`),
       html,
       text,
       attachments: [
@@ -163,6 +172,8 @@ export const sendCompletedEmail = async ({ documentId, requestMetadata }: SendDo
         documentName: document.title,
         assetBaseUrl,
         downloadLink: recipient.email === owner.email ? documentOwnerDownloadLink : downloadLink,
+        recipientName: recipient.name,
+        documentDetails: document.documentDetails || {},
         customBody:
           isDirectTemplate && document.documentMeta?.message
             ? renderCustomEmailTemplate(document.documentMeta.message, customEmailTemplate)
@@ -196,7 +207,7 @@ export const sendCompletedEmail = async ({ documentId, requestMetadata }: SendDo
         subject:
           isDirectTemplate && document.documentMeta?.subject
             ? renderCustomEmailTemplate(document.documentMeta.subject, customEmailTemplate)
-            : i18n._(msg`Signing Complete!`),
+            : i18n._(msg`Document Completed - ${documentDetails?.documentName || ''}`),
         html,
         text,
         attachments: [

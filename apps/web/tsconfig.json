@@ -10,6 +10,7 @@
     ],
     "paths": {
       "~/*": ["./src/*"],
+      "@/*": ["./src/*"],
       "contentlayer/generated": ["./.contentlayer/generated"]
     },
     "types": ["@documenso/lib/types/next-auth.d.ts"],

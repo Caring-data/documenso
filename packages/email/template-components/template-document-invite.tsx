@@ -65,7 +65,7 @@ export const TemplateDocumentInvite = ({
                 />
                 <div className="flex flex-col text-sm font-medium leading-5 text-zinc-600">
                   <Text>
-                    <Trans>{documentDetails?.documentName}</Trans>
+                    <Trans>Document: {documentDetails?.documentName}</Trans>
                   </Text>
                 </div>
               </div>
@@ -77,7 +77,7 @@ export const TemplateDocumentInvite = ({
                 />
                 <div className="flex flex-col text-sm font-medium leading-5 text-zinc-600">
                   <Text>
-                    <Trans>In regards to: {documentDetails?.residentName}</Trans>
+                    <Trans>Regarding: {documentDetails?.residentName}</Trans>
                   </Text>
                 </div>
               </div>

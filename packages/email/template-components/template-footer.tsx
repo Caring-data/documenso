@@ -23,10 +23,10 @@ export const TemplateFooter = ({ isDocument = true, companyName = '' }: Template
       {isDocument && !branding.brandingHidePoweredBy && (
         <Text className="my-4 text-center text-xs font-medium leading-4 text-zinc-500">
           <Trans>
-            <span className="text- font-semibold">{companyName}</span> uses{' '}
-            <span className="text-brand-accent font-semibold">Caring Data</span> to manage
-            communication and documentation in their facility. Caring Data respects your privacy. To
-            learn more, read our{' '}
+            <span className="text-brand-accent font-medium">Caring Data</span> is a secure platform
+            used by <span className="text-brand-accent font-medium">{companyName}</span>
+            to manage communication and documentation. We prioritize your privacy and security. For
+            more details, please review our{' '}
             <Link
               className="text-brand-accent underline decoration-solid decoration-auto underline-offset-auto"
               href="https://home.caringdata.com/index.php/privacy-policy/"

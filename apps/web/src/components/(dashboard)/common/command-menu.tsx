@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { useRouter } from 'next/navigation';
 
@@ -21,6 +21,7 @@ import {
   DO_NOT_INVALIDATE_QUERY_ON_MUTATION,
   SKIP_QUERY_BATCH_META,
 } from '@documenso/lib/constants/trpc';
+import { authenticateWithLaravel } from '@documenso/lib/laravel-auth/auth-laravel';
 import { switchI18NLanguage } from '@documenso/lib/server-only/i18n/switch-i18n-language';
 import { dynamicActivate } from '@documenso/lib/utils/i18n';
 import { trpc as trpcReact } from '@documenso/trpc/react';
@@ -78,8 +79,30 @@ export type CommandMenuProps = {
 export function CommandMenu({ open, onOpenChange }: CommandMenuProps) {
   const { _ } = useLingui();
   const { setTheme } = useTheme();
+  const { toast } = useToast();
 
   const router = useRouter();
+
+  useEffect(() => {
+    const checkAndLogin = async () => {
+      const token = localStorage.getItem('laravel_jwt');
+
+      if (!token) {
+        try {
+          await authenticateWithLaravel();
+        } catch (error) {
+          console.error('❌ Authentication error with Laravel:', error);
+          toast({
+            title: _(msg`Error`),
+            description: _(msg`Could not authenticate with the system.`),
+            variant: 'destructive',
+          });
+        }
+      }
+    };
+
+    void checkAndLogin();
+  }, []);
 
   const [isOpen, setIsOpen] = useState(() => open ?? false);
   const [search, setSearch] = useState('');

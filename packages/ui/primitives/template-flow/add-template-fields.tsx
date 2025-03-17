@@ -600,7 +600,6 @@ export const AddTemplateFieldsFormPartial = ({
                           {selectedSigner?.email}
                         </span>
                       )}
-
                       <ChevronsUpDown className="ml-2 h-4 w-4" />
                     </Button>
                   </PopoverTrigger>

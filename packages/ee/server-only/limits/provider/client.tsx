@@ -15,7 +15,7 @@ const LimitsContext = createContext<LimitsContextValue | null>(null);
 export const useLimits = () => {
   const limits = useContext(LimitsContext);
 
-  return limits ?? {};
+  return limits ?? { refreshLimits: async () => {} };
 };
 
 export type LimitsProviderProps = {

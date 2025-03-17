@@ -1,6 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
 
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
 import { Trans, msg } from '@lingui/macro';
@@ -8,7 +7,6 @@ import { useLingui } from '@lingui/react';
 import { CircleDotIcon, CircleIcon, ClipboardCopyIcon, InfoIcon, LoaderIcon } from 'lucide-react';
 import { P, match } from 'ts-pattern';
 
-import { useLimits } from '@documenso/ee/server-only/limits/provider/client';
 import { useCopyToClipboard } from '@documenso/lib/client-only/hooks/use-copy-to-clipboard';
 import { DIRECT_TEMPLATE_RECIPIENT_EMAIL } from '@documenso/lib/constants/direct-templates';
 import { RECIPIENT_ROLES_DESCRIPTION } from '@documenso/lib/constants/recipient-roles';
@@ -22,7 +20,6 @@ import {
 } from '@documenso/prisma/client';
 import { trpc as trpcReact } from '@documenso/trpc/react';
 import { AnimateGenericFadeInOut } from '@documenso/ui/components/animate/animate-generic-fade-in-out';
-import { Alert, AlertDescription, AlertTitle } from '@documenso/ui/primitives/alert';
 import { Button } from '@documenso/ui/primitives/button';
 import {
   Dialog,
@@ -63,7 +60,6 @@ export const TemplateDirectLinkDialog = ({
   onOpenChange,
 }: TemplateDirectLinkDialogProps) => {
   const { toast } = useToast();
-  const { quota, remaining } = useLimits();
   const { _ } = useLingui();
 
   const [, copy] = useCopyToClipboard();
@@ -221,30 +217,7 @@ export const TemplateDirectLinkDialog = ({
                   ))}
                 </ul>
 
-                {remaining.directTemplates === 0 && (
-                  <Alert variant="warning">
-                    <AlertTitle>
-                      <Trans>
-                        Direct template link usage exceeded ({quota.directTemplates}/
-                        {quota.directTemplates})
-                      </Trans>
-                    </AlertTitle>
-                    <AlertDescription>
-                      <Trans>
-                        You have reached the maximum limit of {quota.directTemplates} direct
-                        templates.{' '}
-                        <Link
-                          className="mt-1 block underline underline-offset-4"
-                          href="/settings/billing"
-                        >
-                          Upgrade your account to continue!
-                        </Link>
-                      </Trans>
-                    </AlertDescription>
-                  </Alert>
-                )}
-
-                {remaining.directTemplates !== 0 && (
+                {true && (
                   <DialogFooter className="mx-auto mt-4">
                     <Button type="button" onClick={() => setCurrentStep('SELECT_RECIPIENT')}>
                       <Trans> Enable direct link signing</Trans>

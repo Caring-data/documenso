@@ -2,16 +2,12 @@
 
 import { useMemo, useTransition } from 'react';
 
-import Link from 'next/link';
-
 import { Trans, msg } from '@lingui/macro';
 import { useLingui } from '@lingui/react';
-import { AlertTriangle, Globe2Icon, InfoIcon, Link2Icon, Loader, LockIcon } from 'lucide-react';
+import { Globe2Icon, InfoIcon, Link2Icon, Loader, LockIcon } from 'lucide-react';
 
-import { useLimits } from '@documenso/ee/server-only/limits/provider/client';
 import { useUpdateSearchParams } from '@documenso/lib/client-only/hooks/use-update-search-params';
 import type { FindTemplateRow } from '@documenso/trpc/server/template-router/schema';
-import { Alert, AlertDescription, AlertTitle } from '@documenso/ui/primitives/alert';
 import type { DataTableColumnDef } from '@documenso/ui/primitives/data-table';
 import { DataTable } from '@documenso/ui/primitives/data-table';
 import { DataTablePagination } from '@documenso/ui/primitives/data-table-pagination';
@@ -48,7 +44,6 @@ export const TemplatesDataTable = ({
   const updateSearchParams = useUpdateSearchParams();
 
   const { _, i18n } = useLingui();
-  const { remaining } = useLimits();
 
   const columns = useMemo(() => {
     return [
@@ -173,23 +168,6 @@ export const TemplatesDataTable = ({
 
   return (
     <div className="relative">
-      {remaining.documents === 0 && (
-        <Alert variant="warning" className="mb-4">
-          <AlertTriangle className="h-4 w-4" />
-          <AlertTitle>
-            <Trans>Document Limit Exceeded!</Trans>
-          </AlertTitle>
-          <AlertDescription className="mt-2">
-            <Trans>
-              You have reached your document limit.{' '}
-              <Link className="underline underline-offset-4" href="/settings/billing">
-                Upgrade your account to continue!
-              </Link>
-            </Trans>
-          </AlertDescription>
-        </Alert>
-      )}
-
       <DataTable
         columns={columns}
         data={templates}
