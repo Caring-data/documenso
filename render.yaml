@@ -172,13 +172,13 @@ services:
 
       # Laravel Configuration
       - key: NEXT_PRIVATE_LARAVEL_API_URL
-        sync: true
+        sync: false
       - key: NEXT_PRIVATE_LARAVEL_ENCRYPTION_KEY
-        sync: true
+        sync: false
       - key: NEXT_PRIVATE_LARAVEL_USERNAME
-        sync: true
+        sync: false
       - key: NEXT_PRIVATE_LARAVEL_PASSWORD
-        sync: true
+        sync: false
 
 databases:
   - name: documenso-db

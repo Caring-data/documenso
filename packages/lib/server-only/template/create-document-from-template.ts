@@ -135,25 +135,27 @@ export const createDocumentFromTemplate = async ({
     });
   }
 
-  // Check that all the passed in recipient IDs can be associated with a template recipient.
-  recipients.forEach((recipient) => {
-    const foundRecipient = template.recipients.find(
-      (templateRecipient) => templateRecipient.id === recipient.id,
-    );
+  if (!template) {
+    throw new AppError(AppErrorCode.NOT_FOUND, {
+      message: 'Template not found',
+    });
+  }
 
-    if (!foundRecipient) {
-      throw new AppError(AppErrorCode.INVALID_BODY, {
-        message: `Recipient with ID ${recipient.id} not found in the template.`,
-      });
-    }
-  });
+  // Check that the template has IDs.
+  if (template.recipients.length === 0) {
+    throw new AppError(AppErrorCode.INVALID_BODY, {
+      message: 'The template does not contain any recipients.',
+    });
+  }
 
   const { documentAuthOption: templateAuthOptions } = extractDocumentAuthMethods({
     documentAuth: template.authOptions,
   });
 
   const finalRecipients: FinalRecipient[] = template.recipients.map((templateRecipient) => {
-    const foundRecipient = recipients.find((recipient) => recipient.id === templateRecipient.id);
+    const foundRecipient = recipients.find(
+      (recipient) => recipient.signingOrder === templateRecipient.signingOrder,
+    );
 
     return {
       templateRecipientId: templateRecipient.id,
@@ -164,6 +166,7 @@ export const createDocumentFromTemplate = async ({
       signingOrder: foundRecipient?.signingOrder ?? templateRecipient.signingOrder,
       authOptions: templateRecipient.authOptions,
       expired: foundRecipient?.expired ?? templateRecipient?.expired ?? null,
+      //id: nanoid(),
     };
   });
 
@@ -244,6 +247,7 @@ export const createDocumentFromTemplate = async ({
                 const authOptions = ZRecipientAuthOptionsSchema.parse(recipient?.authOptions);
 
                 return {
+                  //id: recipient.id,
                   email: recipient.email,
                   name: recipient.name,
                   role: recipient.role,
