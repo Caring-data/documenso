@@ -1,15 +1,15 @@
-import { authenticateWithLaravel } from './auth-laravel';
+import { authenticateWithLaravelClient } from './client-auth-laravel';
 
 export const fetchWithLaravelAuth = async (
   url: string,
   options: RequestInit = {},
   token?: string,
 ) => {
-  let authToken = token || localStorage.getItem('jwt');
+  let authToken = token || localStorage.getItem('laravel_jwt');
 
   if (!authToken) {
-    authToken = await authenticateWithLaravel();
-    localStorage.setItem('jwt', authToken);
+    authToken = await authenticateWithLaravelClient();
+    localStorage.setItem('laravel_jwt', authToken);
   }
 
   const headers = {

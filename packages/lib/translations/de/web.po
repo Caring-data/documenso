@@ -18,6 +18,10 @@ msgstr ""
 "X-Crowdin-File: web.po\n"
 "X-Crowdin-File-ID: 8\n"
 
+#: packages/email/template-components/template-document-pending.tsx:20
+msgid "“{0}” has been signed"
+msgstr ""
+
 #: apps/web/src/app/(teams)/t/[teamUrl]/settings/preferences/document-preferences.tsx:226
 msgid "\"{0}\" has invited you to sign \"example document\"."
 msgstr "\"{0}\" hat Sie eingeladen, \"Beispieldokument\" zu unterschreiben."
@@ -29,10 +33,6 @@ msgstr "\"{0}\" wird im Dokument erscheinen, da es eine Zeitzone von \"{timezone
 #: packages/email/template-components/template-document-super-delete.tsx:27
 msgid "\"{documentName}\" has been deleted by an admin."
 msgstr "\"{documentName}\" wurde von einem Administrator gelöscht."
-
-#: packages/email/template-components/template-document-pending.tsx:37
-msgid "“{documentName}” has been signed"
-msgstr "„{documentName}“ wurde unterschrieben"
 
 #: apps/web/src/app/(dashboard)/documents/delete-document-dialog.tsx:58
 msgid "\"{documentTitle}\" has been successfully deleted"
@@ -266,19 +266,16 @@ msgstr "{recipientName} {action} ein Dokument, indem Sie einen Ihrer direkten Li
 msgid "{recipientName} has rejected the document '{documentName}'"
 msgstr "{recipientName} hat das Dokument '{documentName}' abgelehnt"
 
-#: packages/email/template-components/template-document-recipient-signed.tsx:49
+#: packages/email/template-components/template-document-recipient-signed.tsx:32
 msgid "{recipientReference} has completed signing the document."
 msgstr "{recipientReference} hat das Dokument vollständig unterschrieben."
 
-#: packages/lib/jobs/definitions/emails/send-recipient-signed-email.ts:129
+#: packages/email/template-components/template-document-recipient-signed.tsx:26
+#: packages/lib/jobs/definitions/emails/send-recipient-signed-email.ts:130
 msgid "{recipientReference} has signed \"{0}\""
 msgstr "{recipientReference} hat \"{0}\" unterschrieben"
 
-#: packages/email/template-components/template-document-recipient-signed.tsx:43
-msgid "{recipientReference} has signed \"{documentName}\""
-msgstr "{recipientReference} hat \"{documentName}\" unterschrieben"
-
-#: packages/email/templates/document-recipient-signed.tsx:27
+#: packages/email/templates/document-recipient-signed.tsx:35
 msgid "{recipientReference} has signed {documentName}"
 msgstr "{recipientReference} hat {documentName} unterschrieben"
 
@@ -1531,8 +1528,8 @@ msgstr "Betrachten abschließen"
 #: apps/web/src/app/(dashboard)/templates/[id]/template-page-view-documents-table.tsx:223
 #: apps/web/src/components/(dashboard)/avatar/stack-avatars-with-tooltip.tsx:77
 #: apps/web/src/components/formatter/document-status.tsx:28
-#: packages/email/template-components/template-document-recipient-signed.tsx:37
 #: packages/email/template-components/template-document-self-signed.tsx:36
+#: packages/email/templates/document-recipient-signed.tsx:61
 #: packages/lib/constants/document.ts:10
 msgid "Completed"
 msgstr "Abgeschlossen"
@@ -2639,7 +2636,7 @@ msgstr "Geben Sie hier Ihren Text ein"
 #: apps/web/src/app/(signing)/sign/[token]/name-field.tsx:154
 #: apps/web/src/app/(signing)/sign/[token]/number-field.tsx:150
 #: apps/web/src/app/(signing)/sign/[token]/number-field.tsx:201
-#: apps/web/src/app/(signing)/sign/[token]/pre-signing/page.tsx:46
+#: apps/web/src/app/(signing)/sign/[token]/pre-signing/page.tsx:45
 #: apps/web/src/app/(signing)/sign/[token]/radio-field.tsx:101
 #: apps/web/src/app/(signing)/sign/[token]/radio-field.tsx:130
 #: apps/web/src/app/(signing)/sign/[token]/signature-field.tsx:131
@@ -2685,7 +2682,7 @@ msgstr "Läuft ab am {0}"
 msgid "External ID"
 msgstr "Externe ID"
 
-#: apps/web/src/app/(signing)/sign/[token]/pre-signing/page.tsx:47
+#: apps/web/src/app/(signing)/sign/[token]/pre-signing/page.tsx:46
 msgid "Failed to fetch document details"
 msgstr ""
 
@@ -3730,7 +3727,7 @@ msgstr "Zahlung überfällig"
 msgid "Pending"
 msgstr "Ausstehend"
 
-#: packages/email/templates/document-pending.tsx:19
+#: packages/email/templates/document-pending.tsx:20
 msgid "Pending Document"
 msgstr "Ausstehendes Dokument"
 
@@ -6206,11 +6203,11 @@ msgstr "Betrachten"
 msgid "Waiting"
 msgstr "Warten"
 
-#: packages/email/template-components/template-document-pending.tsx:31
+#: packages/email/templates/document-pending.tsx:46
 msgid "Waiting for others"
 msgstr "Warten auf andere"
 
-#: packages/lib/server-only/document/send-pending-email.ts:105
+#: packages/lib/server-only/document/send-pending-email.ts:106
 msgid "Waiting for others to complete signing."
 msgstr "Warten auf andere, um die Unterzeichnung abzuschließen."
 
@@ -6463,7 +6460,7 @@ msgstr "Wir werden nichts senden, um die Empfänger zu benachrichtigen."
 msgid "We're all empty"
 msgstr "Wir sind alle leer"
 
-#: packages/email/template-components/template-document-pending.tsx:41
+#: packages/email/template-components/template-document-pending.tsx:24
 msgid "We're still waiting for other signers to sign this document.<0/>We'll notify you as soon as it's ready."
 msgstr "Wir warten noch darauf, dass andere Unterzeichner dieses Dokument unterzeichnen.<0/>Wir benachrichtigen dich, sobald es bereit ist."
 
