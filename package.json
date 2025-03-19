@@ -73,7 +73,7 @@
     "crypto-js": "^4.2.0",
     "inngest-cli": "^0.29.1",
     "jsonwebtoken": "^9.0.2",
-    "lucide-react": "^0.482.0",
+    "lucide-react": "^0.483.0",
     "luxon": "^3.5.0",
     "mupdf": "^1.0.0",
     "next-axiom": "^1.9.1",
