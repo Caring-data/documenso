@@ -14,7 +14,7 @@ import {
 
 import { AppError, AppErrorCode } from '../../errors/app-error';
 import { jobs } from '../../jobs/client';
-import { authenticateWithLaravel } from '../../laravel-auth/auth-laravel';
+import { authenticateWithLaravelClient } from '../../laravel-auth/client-auth-laravel';
 import { fetchWithLaravelAuth } from '../../laravel-auth/fetch-with-laravel-auth';
 import type { TRecipientActionAuth } from '../../types/document-auth';
 import {
@@ -238,7 +238,7 @@ export const completeDocumentWithToken = async ({
       let authToken = localStorage.getItem('laravel_jwt');
 
       if (!authToken) {
-        authToken = await authenticateWithLaravel();
+        authToken = await authenticateWithLaravelClient();
         localStorage.setItem('laravel_jwt', authToken);
       }
 

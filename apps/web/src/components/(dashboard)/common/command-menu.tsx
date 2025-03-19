@@ -21,7 +21,7 @@ import {
   DO_NOT_INVALIDATE_QUERY_ON_MUTATION,
   SKIP_QUERY_BATCH_META,
 } from '@documenso/lib/constants/trpc';
-import { authenticateWithLaravel } from '@documenso/lib/laravel-auth/auth-laravel';
+import { authenticateWithLaravelClient } from '@documenso/lib/laravel-auth/client-auth-laravel';
 import { switchI18NLanguage } from '@documenso/lib/server-only/i18n/switch-i18n-language';
 import { dynamicActivate } from '@documenso/lib/utils/i18n';
 import { trpc as trpcReact } from '@documenso/trpc/react';
@@ -89,7 +89,7 @@ export function CommandMenu({ open, onOpenChange }: CommandMenuProps) {
 
       if (!token) {
         try {
-          await authenticateWithLaravel();
+          await authenticateWithLaravelClient();
         } catch (error) {
           console.error('❌ Authentication error with Laravel:', error);
           toast({
