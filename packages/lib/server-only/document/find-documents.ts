@@ -10,7 +10,12 @@ import type {
   TeamEmail,
   User,
 } from '@documenso/prisma/client';
-import { RecipientRole, SigningStatus, TeamMemberRole } from '@documenso/prisma/client';
+import {
+  EntityStatus,
+  RecipientRole,
+  SigningStatus,
+  TeamMemberRole,
+} from '@documenso/prisma/client';
 import { ExtendedDocumentStatus } from '@documenso/prisma/types/extended-document-status';
 
 import { DocumentVisibility } from '../../types/document-visibility';
@@ -142,62 +147,10 @@ export const findDocuments = async ({
     };
   }
 
-  let deletedFilter: Prisma.DocumentWhereInput = {
-    AND: {
-      OR: [
-        {
-          userId: user.id,
-          deletedAt: null,
-        },
-        {
-          recipients: {
-            some: {
-              email: user.email,
-              documentDeletedAt: null,
-            },
-          },
-        },
-      ],
-    },
-  };
-
-  if (team) {
-    deletedFilter = {
-      AND: {
-        OR: team.teamEmail
-          ? [
-              {
-                teamId: team.id,
-                deletedAt: null,
-              },
-              {
-                user: {
-                  email: team.teamEmail.email,
-                },
-                deletedAt: null,
-              },
-              {
-                recipients: {
-                  some: {
-                    email: team.teamEmail.email,
-                    documentDeletedAt: null,
-                  },
-                },
-              },
-            ]
-          : [
-              {
-                teamId: team.id,
-                deletedAt: null,
-              },
-            ],
-      },
-    };
-  }
-
   const whereAndClause: Prisma.DocumentWhereInput['AND'] = [
     { ...filters },
-    { ...deletedFilter },
+    { activityStatus: EntityStatus.ACTIVE },
+    { deletedAt: null },
     { ...searchFilter },
   ];
 
@@ -404,6 +357,8 @@ const findTeamDocumentsFilter = (
   return match<ExtendedDocumentStatus, Prisma.DocumentWhereInput | null>(status)
     .with(ExtendedDocumentStatus.ALL, () => {
       const filter: Prisma.DocumentWhereInput = {
+        activityStatus: EntityStatus.ACTIVE,
+        deletedAt: null,
         // Filter to display all documents that belong to the team.
         OR: [
           {

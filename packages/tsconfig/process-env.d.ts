@@ -109,5 +109,11 @@ declare namespace NodeJS {
     DATABASE_URL?: string;
     POSTGRES_PRISMA_URL?: string;
     POSTGRES_URL_NON_POOLING?: string;
+
+    NEXT_PRIVATE_LARAVEL_USERNAME?: string;
+    NEXT_PRIVATE_LARAVEL_PASSWORD?: string;
+
+    NEXT_PRIVATE_LARAVEL_API_URL?: string;
+    NEXT_PRIVATE_LARAVEL_ENCRYPTION_KEY?: string;
   }
 }

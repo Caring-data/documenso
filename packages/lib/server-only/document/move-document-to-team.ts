@@ -68,6 +68,9 @@ export const moveDocumentToTeam = async ({
       }),
     });
 
-    return updatedDocument;
+    return {
+      ...updatedDocument,
+      documentDetails: updatedDocument.documentDetails ?? null,
+    };
   });
 };

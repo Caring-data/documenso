@@ -52,7 +52,18 @@ export const DocumentsDataTable = ({
       },
       {
         header: _(msg`Title`),
-        cell: ({ row }) => <DataTableTitle row={row.original} teamUrl={team?.url} />,
+        cell: ({ row }) => {
+          const normalizedRow = {
+            ...row.original,
+            externalId: row.original.externalId ?? null,
+            userId: row.original.user.id,
+            authOptions: row.original.authOptions ?? null,
+            formValues: row.original.formValues ?? {},
+            documentDetails: row.original.documentDetails ?? null,
+          };
+
+          return <DataTableTitle row={normalizedRow} teamUrl={team?.url} />;
+        },
       },
       {
         id: 'sender',
@@ -77,13 +88,26 @@ export const DocumentsDataTable = ({
       },
       {
         header: _(msg`Actions`),
-        cell: ({ row }) =>
-          (!row.original.deletedAt || row.original.status === ExtendedDocumentStatus.COMPLETED) && (
-            <div className="flex items-center gap-x-4">
-              <DataTableActionButton team={team} row={row.original} />
-              <DataTableActionDropdown team={team} row={row.original} />
-            </div>
-          ),
+        cell: ({ row }) => {
+          const normalizedRow = {
+            ...row.original,
+            externalId: row.original.externalId ?? null,
+            userId: row.original.user.id,
+            authOptions: row.original.authOptions ?? null,
+            formValues: row.original.formValues ?? {},
+            documentDetails: row.original.documentDetails ?? null,
+          };
+
+          return (
+            (!normalizedRow.deletedAt ||
+              normalizedRow.status === ExtendedDocumentStatus.COMPLETED) && (
+              <div className="flex items-center gap-x-4">
+                <DataTableActionButton team={team} row={normalizedRow} />
+                <DataTableActionDropdown team={team} row={normalizedRow} />
+              </div>
+            )
+          );
+        },
       },
     ] satisfies DataTableColumnDef<(typeof results)['data'][number]>[];
   }, [team]);

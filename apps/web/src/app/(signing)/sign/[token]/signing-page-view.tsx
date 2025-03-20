@@ -8,6 +8,7 @@ import { usePathname } from 'next/navigation';
 import { Loader } from 'lucide-react';
 import { match } from 'ts-pattern';
 
+import { WEBAPP_BASE_URL } from '@documenso/lib/constants/app';
 import { DEFAULT_DOCUMENT_DATE_FORMAT } from '@documenso/lib/constants/date-formats';
 import { PDF_VIEWER_PAGE_SELECTOR } from '@documenso/lib/constants/pdf-viewer';
 import { DEFAULT_DOCUMENT_TIME_ZONE } from '@documenso/lib/constants/time-zones';
@@ -55,6 +56,12 @@ export type SigningPageViewProps = {
   token?: string;
 };
 
+interface DocumentDetails {
+  documentName?: string;
+  facilityAdministrator?: string;
+  residentName?: string;
+}
+
 export const SigningPageView = ({
   document,
   recipient,
@@ -66,6 +73,7 @@ export const SigningPageView = ({
 }: SigningPageViewProps) => {
   const searchParams = useSearchParams();
   const pathname = usePathname();
+  const assetBaseUrl = WEBAPP_BASE_URL;
 
   const extractedToken = token || (pathname ? pathname.split('/')[2] : '');
   const hasVisitedPreSignPage = searchParams?.get('accessed') === 'true';
@@ -75,9 +83,11 @@ export const SigningPageView = ({
 
   useEffect(() => {
     if (!hasVisitedPreSignPage && extractedToken) {
+      sessionStorage.setItem('preSigningData', JSON.stringify(document?.documentDetails ?? {}));
+
       window.location.href = `/sign/${extractedToken}/pre-signing`;
     }
-  }, [hasVisitedPreSignPage, extractedToken]);
+  }, [hasVisitedPreSignPage, extractedToken, document]);
 
   const selectedSigner = allRecipients?.find((r) => r.id === selectedSignerId);
 
@@ -89,16 +99,34 @@ export const SigningPageView = ({
     );
   }
 
+  const isValidDocumentDetails = (details: unknown): details is DocumentDetails => {
+    return typeof details === 'object' && details !== null && 'documentName' in details;
+  };
+
+  const normalizedDocument = {
+    ...document,
+    documentDetails: isValidDocumentDetails(document.documentDetails)
+      ? document.documentDetails
+      : {},
+  };
+
+  const getAssetUrl = (path: string) => {
+    return new URL(path, assetBaseUrl).toString();
+  };
+
   return (
     <RecipientProvider recipient={recipient} targetSigner={selectedSigner ?? null}>
-      <div className="mx-auto w-full max-w-screen-xl">
+      <header className="fixed left-0 top-0 z-50 flex w-full items-center bg-white px-6 py-3 shadow-md">
+        <img src={getAssetUrl('/static/logo-bg-white.png')} alt="Logo" className="h-8 w-auto" />
+      </header>
+      <div className="mx-auto mb-8 mt-20 w-full max-w-screen-xl md:mb-12">
         <div className="mt-2.5 flex flex-wrap items-center justify-between gap-x-6">
           <div className="max-w-[50ch]">
             <h1
               className="mt-4 block max-w-[20rem] truncate text-lg font-semibold md:max-w-[30rem] md:text-3xl"
-              title={document.documentDetails?.documentName}
+              title={normalizedDocument.documentDetails.documentName ?? 'Untitled Document'}
             >
-              {document.documentDetails?.documentName}
+              {normalizedDocument.documentDetails.documentName ?? 'Untitled Document'}
             </h1>
           </div>
 

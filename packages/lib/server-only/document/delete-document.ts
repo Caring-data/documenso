@@ -15,7 +15,7 @@ import type {
   TeamGlobalSettings,
   User,
 } from '@documenso/prisma/client';
-import { SendStatus, WebhookTriggerEvents } from '@documenso/prisma/client';
+import { EntityStatus, SendStatus, WebhookTriggerEvents } from '@documenso/prisma/client';
 
 import { getI18nInstance } from '../../client-only/providers/i18n.server';
 import { WEBAPP_BASE_URL } from '../../constants/app';
@@ -180,6 +180,7 @@ const handleDocumentOwnerDelete = async ({
       },
       data: {
         deletedAt: new Date().toISOString(),
+        activityStatus: EntityStatus.INACTIVE,
       },
     });
   });

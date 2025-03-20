@@ -170,6 +170,16 @@ services:
       - key: USER_PASSWORD
         sync: false
 
+      # Laravel Configuration
+      - key: NEXT_PRIVATE_LARAVEL_API_URL
+        sync: false
+      - key: NEXT_PRIVATE_LARAVEL_ENCRYPTION_KEY
+        sync: false
+      - key: NEXT_PRIVATE_LARAVEL_USERNAME
+        sync: false
+      - key: NEXT_PRIVATE_LARAVEL_PASSWORD
+        sync: false
+
 databases:
   - name: documenso-db
     plan: free

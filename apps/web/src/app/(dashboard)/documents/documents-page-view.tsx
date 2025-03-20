@@ -71,7 +71,7 @@ export const DocumentsPageView = async ({ searchParams = {}, team }: DocumentsPa
 
   const stats = await getStats(getStatOptions);
 
-  const rawResults = await findDocuments({
+  const results = await findDocuments({
     userId: user.id,
     teamId: team?.id,
     status,
@@ -86,29 +86,15 @@ export const DocumentsPageView = async ({ searchParams = {}, team }: DocumentsPa
     query: search,
   });
 
-  const results = {
-    perPage: rawResults.perPage,
-    count: rawResults.count,
-    currentPage: rawResults.currentPage,
-    totalPages: rawResults.totalPages,
-    data: rawResults.data.map((doc) => ({
-      id: doc.id,
-      source: doc.source,
-      createdAt: doc.createdAt,
-      user: doc.user
-        ? {
-            id: doc.user.id,
-            name: doc.user.name,
-            email: doc.user.email,
-          }
-        : null,
-      team: doc.team
-        ? {
-            id: doc.team.id,
-            url: doc.team.url,
-          }
-        : null,
-      documentDetails: doc.documentDetails ?? undefined,
+  const formattedResults = {
+    ...results,
+    data: results.data.map((doc) => ({
+      ...doc,
+      documentDetails: doc.documentDetails ?? null,
+      teamId: doc.teamId ?? null,
+      templateId: doc.templateId ?? null,
+      deletedAt: doc.deletedAt ?? null,
+      residentId: doc.residentId ?? null,
     })),
   };
 
@@ -188,7 +174,7 @@ export const DocumentsPageView = async ({ searchParams = {}, team }: DocumentsPa
       <div className="mt-8">
         {results.count > 0 && (
           <DocumentsDataTable
-            results={results}
+            results={formattedResults}
             showSenderColumn={team !== undefined}
             team={currentTeam}
           />

@@ -2,7 +2,7 @@ import { match } from 'ts-pattern';
 
 import { formatDocumentsPath } from '@documenso/lib/utils/teams';
 import { prisma } from '@documenso/prisma';
-import { DocumentStatus } from '@documenso/prisma/client';
+import { DocumentStatus, EntityStatus } from '@documenso/prisma/client';
 import type { Document, Recipient, User } from '@documenso/prisma/client';
 import { DocumentVisibility, TeamMemberRole } from '@documenso/prisma/client';
 
@@ -25,68 +25,76 @@ export const searchDocumentsWithKeyword = async ({
 
   const documents = await prisma.document.findMany({
     where: {
-      OR: [
+      AND: [
         {
-          title: {
-            contains: query,
-            mode: 'insensitive',
-          },
-          userId: userId,
+          activityStatus: EntityStatus.ACTIVE,
           deletedAt: null,
         },
         {
-          recipients: {
-            some: {
-              email: {
+          OR: [
+            {
+              title: {
+                contains: query,
+                mode: 'insensitive',
+              },
+              userId: userId,
+              deletedAt: null,
+            },
+            {
+              recipients: {
+                some: {
+                  email: {
+                    contains: query,
+                    mode: 'insensitive',
+                  },
+                },
+              },
+              userId: userId,
+              deletedAt: null,
+            },
+            {
+              status: DocumentStatus.COMPLETED,
+              recipients: {
+                some: {
+                  email: user.email,
+                },
+              },
+              title: {
                 contains: query,
                 mode: 'insensitive',
               },
             },
-          },
-          userId: userId,
-          deletedAt: null,
-        },
-        {
-          status: DocumentStatus.COMPLETED,
-          recipients: {
-            some: {
-              email: user.email,
-            },
-          },
-          title: {
-            contains: query,
-            mode: 'insensitive',
-          },
-        },
-        {
-          status: DocumentStatus.PENDING,
-          recipients: {
-            some: {
-              email: user.email,
-            },
-          },
-          title: {
-            contains: query,
-            mode: 'insensitive',
-          },
-          deletedAt: null,
-        },
-        {
-          title: {
-            contains: query,
-            mode: 'insensitive',
-          },
-          teamId: {
-            not: null,
-          },
-          team: {
-            members: {
-              some: {
-                userId: userId,
+            {
+              status: DocumentStatus.PENDING,
+              recipients: {
+                some: {
+                  email: user.email,
+                },
               },
+              title: {
+                contains: query,
+                mode: 'insensitive',
+              },
+              deletedAt: null,
             },
-          },
-          deletedAt: null,
+            {
+              title: {
+                contains: query,
+                mode: 'insensitive',
+              },
+              teamId: {
+                not: null,
+              },
+              team: {
+                members: {
+                  some: {
+                    userId: userId,
+                  },
+                },
+              },
+              deletedAt: null,
+            },
+          ],
         },
       ],
     },

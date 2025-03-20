@@ -8,7 +8,7 @@ import { prisma } from '@documenso/prisma';
 import { DocumentSource } from '@documenso/prisma/client';
 
 import { getI18nInstance } from '../../client-only/providers/i18n.server';
-import { NEXT_PUBLIC_WEBAPP_URL, WEBAPP_BASE_URL } from '../../constants/app';
+import { NEXT_PUBLIC_WEBAPP_URL } from '../../constants/app';
 import { DOCUMENT_AUDIT_LOG_TYPE } from '../../types/document-audit-logs';
 import { extractDerivedDocumentEmailSettings } from '../../types/document-email';
 import type { RequestMetadata } from '../../universal/extract-request-metadata';
@@ -18,6 +18,13 @@ import { renderCustomEmailTemplate } from '../../utils/render-custom-email-templ
 import { renderEmailWithI18N } from '../../utils/render-email-with-i18n';
 import { teamGlobalSettingsToBranding } from '../../utils/team-global-settings-to-branding';
 import { formatDocumentsPath } from '../../utils/teams';
+
+interface DocumentDetails {
+  companyName?: string;
+  facilityAdministrator?: string;
+  documentName?: string;
+  residentName?: string;
+}
 
 export interface SendDocumentOptions {
   documentId: number;
@@ -48,6 +55,8 @@ export const sendCompletedEmail = async ({ documentId, requestMetadata }: SendDo
     throw new Error('Document not found');
   }
 
+  const documentDetails = document?.documentDetails as DocumentDetails;
+
   const isDirectTemplate = document?.source === DocumentSource.TEMPLATE_DIRECT_LINK;
 
   if (document.recipients.length === 0) {
@@ -58,7 +67,7 @@ export const sendCompletedEmail = async ({ documentId, requestMetadata }: SendDo
 
   const completedDocument = await getFile(document.documentData);
 
-  const assetBaseUrl = WEBAPP_BASE_URL;
+  const assetBaseUrl = NEXT_PUBLIC_WEBAPP_URL() || 'http://localhost:3002';
 
   let documentOwnerDownloadLink = `${NEXT_PUBLIC_WEBAPP_URL()}${formatDocumentsPath(
     document.team?.url,
@@ -87,7 +96,6 @@ export const sendCompletedEmail = async ({ documentId, requestMetadata }: SendDo
       !isDocumentCompletedEmailEnabled)
   ) {
     const template = createElement(DocumentCompletedEmailTemplate, {
-      documentName: document.title,
       assetBaseUrl,
       downloadLink: documentOwnerDownloadLink,
     });
@@ -116,7 +124,7 @@ export const sendCompletedEmail = async ({ documentId, requestMetadata }: SendDo
         name: process.env.NEXT_PRIVATE_SMTP_FROM_NAME || 'Documenso',
         address: process.env.NEXT_PRIVATE_SMTP_FROM_ADDRESS || 'noreply@documenso.com',
       },
-      subject: i18n._(msg`Signing Complete!`),
+      subject: i18n._(msg`Document Completed - ${documentDetails?.documentName || ''}`),
       html,
       text,
       attachments: [
@@ -160,9 +168,10 @@ export const sendCompletedEmail = async ({ documentId, requestMetadata }: SendDo
       const downloadLink = `${NEXT_PUBLIC_WEBAPP_URL()}/sign/${recipient.token}/complete`;
 
       const template = createElement(DocumentCompletedEmailTemplate, {
-        documentName: document.title,
         assetBaseUrl,
         downloadLink: recipient.email === owner.email ? documentOwnerDownloadLink : downloadLink,
+        recipientName: recipient.name,
+        documentDetails: document.documentDetails || {},
         customBody:
           isDirectTemplate && document.documentMeta?.message
             ? renderCustomEmailTemplate(document.documentMeta.message, customEmailTemplate)
@@ -196,7 +205,7 @@ export const sendCompletedEmail = async ({ documentId, requestMetadata }: SendDo
         subject:
           isDirectTemplate && document.documentMeta?.subject
             ? renderCustomEmailTemplate(document.documentMeta.subject, customEmailTemplate)
-            : i18n._(msg`Signing Complete!`),
+            : i18n._(msg`Document Completed - ${documentDetails?.documentName || ''}`),
         html,
         text,
         attachments: [

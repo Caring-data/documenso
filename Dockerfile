@@ -4,6 +4,8 @@
 FROM node:18-alpine AS base
 # Instalar herramientas esenciales
 RUN apk add --no-cache libc6-compat jq make cmake g++ openssl
+# Instalar dotenv-cli globalmente para los scripts de migración
+RUN npm install -g dotenv-cli
 WORKDIR /app
 
 ###########################
@@ -12,9 +14,14 @@ WORKDIR /app
 FROM base AS builder
 # Instalar Turbo Repo de forma global
 RUN npm install -g "turbo@^1.9.3"
+# Copiar package.json y package-lock.json primero para aprovechar la caché de Docker
+COPY package.json package-lock.json ./
+COPY turbo.json ./
+COPY packages/*/package.json ./dummy-packages/
+COPY apps/*/package.json ./dummy-apps/
 # Copiar el resto del código fuente
 COPY . .
-# Instalar dependencias antes del build
+# Ejecutar npm ci para instalar todas las dependencias
 RUN npm ci
 # Ejecutar turbo prune para reducir el tamaño de la imagen
 RUN turbo prune --scope=@documenso/web --docker
@@ -34,18 +41,21 @@ COPY .gitignore .gitignore
 COPY --from=builder /app/out/json/ .
 COPY --from=builder /app/out/package-lock.json ./package-lock.json
 COPY --from=builder /app/lingui.config.ts ./lingui.config.ts
-# Instalar dependencias
-RUN npm ci
-# Instalar los generadores de Prisma que faltan
-RUN npm install -g prisma-json-types-generator zod-prisma-types
+
+COPY --from=builder /app/assets ./assets
+
+# Instalar dependencias con --legacy-peer-deps para evitar problemas de compatibilidad
+RUN npm ci --legacy-peer-deps
 # Copiar el resto del código fuente
 COPY --from=builder /app/out/full/ .
 # Copiar el archivo turbo.json
 COPY turbo.json turbo.json
-# Instalar Turbo de forma global (fixed)
-RUN npm install -g "turbo@^1.9.3"
+# Verificar la estructura del proyecto
+RUN ls -la apps/web/
 # Construir la aplicación
-RUN turbo run build --filter=@documenso/web...
+RUN npx turbo run build --filter=@documenso/web...
+# Verificar que se ha creado el directorio .next
+RUN ls -la apps/web/.next || echo "Build directory not found!"
 
 ###########################
 #     RUNNER CONTAINER    #
@@ -55,29 +65,27 @@ WORKDIR /app
 # Definir usuario sin privilegios
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
-# Copiar node_modules desde la etapa installer
+# Copiar node_modules y package.json desde la etapa installer
 COPY --from=installer --chown=nextjs:nodejs /app/node_modules ./node_modules
-# Instalar los generadores de Prisma en el runner también
-RUN npm install -g prisma-json-types-generator zod-prisma-types
+COPY --from=installer --chown=nextjs:nodejs /app/package.json ./package.json
+# Copiar todo el directorio apps/web (que incluye .next, public, etc.)
+COPY --from=installer --chown=nextjs:nodejs /app/apps/web ./apps/web
+# Copiar packages necesarios para la ejecución
+COPY --from=installer --chown=nextjs:nodejs /app/packages ./packages
+# Copiar turbo.json
+COPY --from=installer --chown=nextjs:nodejs /app/turbo.json ./turbo.json
+# Asegurar que se copien los archivos .env si existen
+COPY --from=installer --chown=nextjs:nodejs /app/.env* ./
+
+COPY --from=installer --chown=nextjs:nodejs /app/assets ./assets
+
 # Cambiar permisos de los directorios necesarios
 RUN chown -R nextjs:nodejs /app
 USER nextjs
-# Copiar solo lo necesario para el frontend
-COPY --from=installer --chown=nextjs:nodejs /app/apps/web/.next ./apps/web/.next
-COPY --from=installer --chown=nextjs:nodejs /app/apps/web/public ./apps/web/public
-COPY --from=installer --chown=nextjs:nodejs /app/apps/web/package.json ./apps/web/package.json
-# Copiar Prisma solo si lo necesitas en producción
-COPY --from=installer --chown=nextjs:nodejs /app/packages/prisma/schema.prisma ./packages/prisma/schema.prisma
-COPY --from=installer --chown=nextjs:nodejs /app/packages/prisma/migrations ./packages/prisma/migrations
-# Copiar Prisma Client generado
-COPY --from=installer --chown=nextjs:nodejs /app/node_modules/.prisma/ ./node_modules/.prisma/
-COPY --from=installer --chown=nextjs:nodejs /app/node_modules/@prisma/ ./node_modules/@prisma/
-# Copiar el package.json y turbo.json del raíz
-COPY --from=installer --chown=nextjs:nodejs /app/package.json ./package.json
-COPY --from=installer --chown=nextjs:nodejs /app/turbo.json ./turbo.json
 # Configurar la variable de entorno para producción
 ENV NODE_ENV=production
 # Exponer el puerto en el que se ejecutará Next.js
 EXPOSE 3002
-# Comando para ejecutar la aplicación
-CMD ["npx", "turbo", "run", "start", "--filter=@documenso/web"]
+# Comando para ejecutar la aplicación - modificado para evitar el uso de dotenv directamente
+CMD ["sh", "-c", "cd packages/prisma && npx prisma migrate deploy && cd ../../apps/web && npm run start"]
+# npx prisma db seed

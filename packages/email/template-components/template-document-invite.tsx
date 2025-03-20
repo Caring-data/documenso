@@ -4,7 +4,7 @@ import { match } from 'ts-pattern';
 
 import { RecipientRole } from '@documenso/prisma/client';
 
-import { Button, Section, Text } from '../components';
+import { Button, Img, Section, Text } from '../components';
 
 export interface TemplateDocumentInviteProps {
   inviterName: string;
@@ -58,26 +58,26 @@ export const TemplateDocumentInvite = ({
                 </Trans>
               </Text>
               <div className="flex items-center gap-6">
-                <img
+                <Img
                   src={getAssetUrl('/static/file-text.png')}
                   alt="Document Icon"
-                  className="h-6 w-6"
+                  className="inline h-6 w-auto"
                 />
                 <div className="flex flex-col text-sm font-medium leading-5 text-zinc-600">
                   <Text>
-                    <Trans>{documentDetails?.documentName}</Trans>
+                    <Trans>Document: {documentDetails?.documentName}</Trans>
                   </Text>
                 </div>
               </div>
               <div className="flex items-center gap-6">
-                <img
+                <Img
                   src={getAssetUrl('/static/user-round.png')}
                   alt="Document Icon"
-                  className="h-6 w-6"
+                  className="inline h-6 w-6"
                 />
                 <div className="flex flex-col text-sm font-medium leading-5 text-zinc-600">
                   <Text>
-                    <Trans>In regards to: {documentDetails?.residentName}</Trans>
+                    <Trans>Regarding: {documentDetails?.residentName}</Trans>
                   </Text>
                 </div>
               </div>

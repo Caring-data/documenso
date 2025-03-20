@@ -92,7 +92,7 @@ export default async function CompletedSigningPage({
   return (
     <div
       className={cn(
-        '-mx-4 flex flex-col items-center overflow-x-hidden px-4 pt-24 md:-mx-8 md:px-8 lg:pt-36 xl:pt-44',
+        'flex flex-col items-center overflow-x-hidden px-4 pt-24 md:px-8 lg:pt-36 xl:pt-44',
         { 'pt-0 lg:pt-0 xl:pt-0': canSignUp },
       )}
     >

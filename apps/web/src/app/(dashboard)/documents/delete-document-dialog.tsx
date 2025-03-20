@@ -6,7 +6,6 @@ import { Trans, msg } from '@lingui/macro';
 import { useLingui } from '@lingui/react';
 import { match } from 'ts-pattern';
 
-import { useLimits } from '@documenso/ee/server-only/limits/provider/client';
 import { DocumentStatus } from '@documenso/prisma/client';
 import { trpc as trpcReact } from '@documenso/trpc/react';
 import { Alert, AlertDescription } from '@documenso/ui/primitives/alert';
@@ -43,7 +42,6 @@ export const DeleteDocumentDialog = ({
   const router = useRouter();
 
   const { toast } = useToast();
-  const { refreshLimits } = useLimits();
   const { _ } = useLingui();
 
   const deleteMessage = msg`delete`;
@@ -54,7 +52,6 @@ export const DeleteDocumentDialog = ({
   const { mutateAsync: deleteDocument, isPending } = trpcReact.document.deleteDocument.useMutation({
     onSuccess: () => {
       router.refresh();
-      void refreshLimits();
 
       toast({
         title: _(msg`Document deleted`),

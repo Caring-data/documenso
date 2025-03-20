@@ -309,6 +309,11 @@ enum DocumentVisibility {
   ADMIN
 }
 
+enum EntityStatus {
+  ACTIVE
+  INACTIVE
+}
+
 /// @zod.import(["import { ZDocumentAuthOptionsSchema } from '@documenso/lib/types/document-auth';", "import { ZDocumentFormValuesSchema } from '@documenso/lib/types/document-form-values';"])
 model Document {
   id             Int                 @id @default(autoincrement())
@@ -336,9 +341,10 @@ model Document {
   template       Template?           @relation(fields: [templateId], references: [id], onDelete: SetNull)
   source         DocumentSource
 
-  residentId      String? @db.Uuid
-  formKey         String? @db.VarChar(255)
+  residentId      String?      @db.Uuid
+  formKey         String?      @db.VarChar(255)
   documentDetails Json?
+  activityStatus  EntityStatus @default(ACTIVE)
 
   auditLogs DocumentAuditLog[]
 
@@ -678,11 +684,6 @@ model TemplateMeta {
   emailSettings Json? /// [DocumentEmailSettings] @zod.custom.use(ZDocumentEmailSettingsSchema)
 }
 
-enum TemplateStatus {
-  ACTIVE
-  INACTIVE
-}
-
 /// @zod.import(["import { ZDocumentAuthOptionsSchema } from '@documenso/lib/types/document-auth';"])
 model Template {
   id                     Int                @id @default(autoincrement())
@@ -700,9 +701,9 @@ model Template {
   publicTitle            String             @default("")
   publicDescription      String             @default("")
 
-  formKey   String?        @db.VarChar(255)
-  deletedAt DateTime?
-  status    TemplateStatus @default(ACTIVE)
+  formKey        String?      @db.VarChar(255)
+  deletedAt      DateTime?
+  activityStatus EntityStatus @default(ACTIVE)
 
   team                 Team?               @relation(fields: [teamId], references: [id], onDelete: Cascade)
   templateDocumentData DocumentData        @relation(fields: [templateDocumentDataId], references: [id], onDelete: Cascade)

@@ -1,10 +1,9 @@
 import { TRPCError } from '@trpc/server';
 import { DateTime } from 'luxon';
 
-import { getServerLimits } from '@documenso/ee/server-only/limits/server';
 import { NEXT_PUBLIC_WEBAPP_URL } from '@documenso/lib/constants/app';
 import { DOCUMENSO_ENCRYPTION_KEY } from '@documenso/lib/constants/crypto';
-import { AppError, AppErrorCode } from '@documenso/lib/errors/app-error';
+import { AppError } from '@documenso/lib/errors/app-error';
 import { encryptSecondaryData } from '@documenso/lib/server-only/crypto/encrypt';
 import { createDocumentData } from '@documenso/lib/server-only/document-data/create-document-data';
 import { upsertDocumentMeta } from '@documenso/lib/server-only/document-meta/upsert-document-meta';
@@ -121,7 +120,16 @@ export const documentRouter = router({
         orderBy: orderByColumn ? { column: orderByColumn, direction: orderByDirection } : undefined,
       });
 
-      return documents;
+      return {
+        data: documents.data.map((doc) => ({
+          ...doc,
+          documentDetails: doc.documentDetails ?? null,
+        })),
+        count: documents.count,
+        currentPage: documents.currentPage,
+        perPage: documents.perPage,
+        totalPages: documents.totalPages,
+      };
     }),
 
   /**
@@ -145,11 +153,16 @@ export const documentRouter = router({
       const { teamId, user } = ctx;
       const { documentId } = input;
 
-      return await getDocumentWithDetailsById({
+      const document = await getDocumentWithDetailsById({
         userId: user.id,
         teamId,
         documentId,
       });
+
+      return {
+        ...document,
+        documentDetails: document.documentDetails ?? null,
+      };
     }),
 
   /**
@@ -183,15 +196,6 @@ export const documentRouter = router({
         recipients,
         meta,
       } = input;
-
-      const { remaining } = await getServerLimits({ email: ctx.user.email, teamId });
-
-      if (remaining.documents <= 0) {
-        throw new AppError(AppErrorCode.LIMIT_EXCEEDED, {
-          message: 'You have reached your document limit for this month. Please upgrade your plan.',
-          statusCode: 400,
-        });
-      }
 
       const fileName = title.endsWith('.pdf') ? title : `${title}.pdf`;
 
@@ -243,15 +247,6 @@ export const documentRouter = router({
     .mutation(async ({ input, ctx }) => {
       const { teamId } = ctx;
       const { title, documentDataId, timezone } = input;
-
-      const { remaining } = await getServerLimits({ email: ctx.user.email, teamId });
-
-      if (remaining.documents <= 0) {
-        throw new AppError(AppErrorCode.LIMIT_EXCEEDED, {
-          message: 'You have reached your document limit for this month. Please upgrade your plan.',
-          statusCode: 400,
-        });
-      }
 
       return await createDocument({
         userId: ctx.user.id,
@@ -305,13 +300,20 @@ export const documentRouter = router({
         });
       }
 
-      return await updateDocument({
+      const updatedDocument = await updateDocument({
         userId,
         teamId,
         documentId,
         data,
         requestMetadata: ctx.metadata,
       });
+
+      return {
+        ...updatedDocument,
+        status: updatedDocument.status as DocumentStatus,
+        source: updatedDocument.source ?? 'DOCUMENT',
+        documentDetails: updatedDocument.documentDetails ?? null,
+      };
     }),
 
   /**
@@ -459,12 +461,17 @@ export const documentRouter = router({
         });
       }
 
-      return await sendDocument({
+      const result = await sendDocument({
         userId: ctx.user.id,
         documentId,
         teamId,
         requestMetadata: ctx.metadata,
       });
+
+      return {
+        ...result,
+        documentDetails: result.documentDetails ?? null,
+      };
     }),
 
   /**

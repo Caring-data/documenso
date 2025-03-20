@@ -1,10 +1,10 @@
-import { msg } from '@lingui/macro';
+import { Trans, msg } from '@lingui/macro';
 import { useLingui } from '@lingui/react';
 
 import { RECIPIENT_ROLES_DESCRIPTION } from '@documenso/lib/constants/recipient-roles';
 import type { RecipientRole } from '@documenso/prisma/client';
 
-import { Body, Container, Head, Html, Img, Preview, Section } from '../components';
+import { Body, Container, Head, Html, Img, Preview, Section, Text } from '../components';
 import { useBranding } from '../providers/branding';
 import type { TemplateDocumentInviteProps } from '../template-components/template-document-invite';
 import { TemplateDocumentInvite } from '../template-components/template-document-invite';
@@ -77,15 +77,17 @@ export const DocumentInviteEmailTemplate = ({
                 {branding.brandingEnabled && branding.brandingLogo ? (
                   <Img src={branding.brandingLogo} alt="Branding Logo" className="mb-4 h-6" />
                 ) : (
-                  <div className="bg-brand mb-6 w-[97%] items-center justify-center gap-2 rounded-md px-2 py-4">
-                    <Img
-                      src={getAssetUrl('/static/file-pen-line.png')}
-                      alt="icon image - file pen line"
-                      className="mb-4 h-8"
-                    />
-                    <p className="text-center text-lg font-medium text-white">
-                      You are invited to sign a document
-                    </p>
+                  <div className="bg-brand mb-6 w-[97%] items-center justify-center gap-1 rounded-md px-2 py-4 text-center">
+                    <div className="text-center text-white">
+                      <Img
+                        src={getAssetUrl('/static/file-pen-line-white.png')}
+                        alt="icon image - file pen line"
+                        className="inline h-8"
+                      />
+                    </div>
+                    <Text className="text-center text-lg font-medium text-white">
+                      <Trans>You are invited to sign a document</Trans>
+                    </Text>
                   </div>
                 )}
 
