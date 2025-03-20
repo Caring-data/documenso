@@ -81,7 +81,7 @@ export default function PreSigningPage() {
         <div className="relative z-10 mt-20 flex flex-col items-center justify-center text-center sm:mt-28 lg:mt-10">
           <div className="mb-6 flex items-center justify-center">
             <Img
-              src={getAssetUrl('/static/logo-caring-data.png')}
+              src={getAssetUrl('/static/logo-cd-white.png')}
               alt="Logo - Caring Data"
               className="h-16 w-auto md:h-28"
             />

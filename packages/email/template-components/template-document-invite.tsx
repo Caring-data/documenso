@@ -61,7 +61,7 @@ export const TemplateDocumentInvite = ({
                 <Img
                   src={getAssetUrl('/static/file-text.png')}
                   alt="Document Icon"
-                  className="inline h-6 w-6"
+                  className="inline h-6 w-auto"
                 />
                 <div className="flex flex-col text-sm font-medium leading-5 text-zinc-600">
                   <Text>

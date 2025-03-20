@@ -1,4 +1,4 @@
-import { msg } from '@lingui/macro';
+import { Trans, msg } from '@lingui/macro';
 import { useLingui } from '@lingui/react';
 
 import { Body, Container, Head, Html, Img, Preview, Section } from '../components';
@@ -46,14 +46,16 @@ export const DocumentCompletedEmailTemplate = ({
                 {branding.brandingEnabled && branding.brandingLogo ? (
                   <Img src={branding.brandingLogo} alt="Branding Logo" className="mb-4 h-6" />
                 ) : (
-                  <div className="bg-brand mb-6 w-[97%] items-center justify-center gap-2 rounded-md px-2 py-4">
-                    <Img
-                      src={getAssetUrl('/static/file-check.png')}
-                      alt="icon image - file check"
-                      className="mb-4 h-8"
-                    />
+                  <div className="bg-brand mb-6 w-[97%] items-center justify-center gap-1 rounded-md px-2 py-4 text-center">
+                    <div className="text-center text-white">
+                      <Img
+                        src={getAssetUrl('/static/file-check.png')}
+                        alt="icon image - file check"
+                        className="inline h-8"
+                      />
+                    </div>
                     <p className="text-center text-lg font-medium text-white">
-                      Final Document Available for Download
+                      <Trans>Final Document Available for Download</Trans>
                     </p>
                   </div>
                 )}
