@@ -117,9 +117,9 @@ export const SigningPageView = ({
   return (
     <RecipientProvider recipient={recipient} targetSigner={selectedSigner ?? null}>
       <header className="fixed left-0 top-0 z-50 flex w-full items-center bg-white px-6 py-3 shadow-md">
-        <img src={getAssetUrl('/static/logo-caring-data.png')} alt="Logo" className="h-8 w-auto" />
+        <img src={getAssetUrl('/static/logo-bg-white.png')} alt="Logo" className="h-8 w-auto" />
       </header>
-      <div className="mx-auto mt-20 w-full max-w-screen-xl">
+      <div className="mx-auto mb-8 mt-20 w-full max-w-screen-xl md:mb-12">
         <div className="mt-2.5 flex flex-wrap items-center justify-between gap-x-6">
           <div className="max-w-[50ch]">
             <h1
