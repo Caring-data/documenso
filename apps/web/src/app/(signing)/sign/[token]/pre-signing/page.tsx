@@ -78,16 +78,16 @@ export default function PreSigningPage() {
         />
         <div className="absolute inset-0 bg-gradient-to-r from-blue-500/50 to-blue-300/50" />
 
-        <div className="relative z-10 mt-4 flex flex-col text-center sm:mt-0">
+        <div className="relative z-10 mt-20 flex flex-col items-center justify-center text-center sm:mt-28 lg:mt-10">
           <div className="mb-6 flex items-center justify-center">
             <Img
               src={getAssetUrl('/static/logo-caring-data.png')}
               alt="Logo - Caring Data"
-              className="mb-4 h-16 w-16 flex-shrink-0 sm:h-28 sm:w-28 md:h-36 md:w-44"
+              className="h-16 w-auto md:h-28"
             />
           </div>
 
-          <div className="ml-4 flex w-11/12 max-w-lg flex-col items-center justify-center gap-6 rounded-lg bg-white p-6 text-center shadow-md md:w-full md:p-8">
+          <div className="mb-10 flex w-11/12 max-w-lg flex-col items-center justify-center gap-6 rounded-lg bg-white p-6 text-center shadow-md md:w-full md:p-8">
             <div className="item-center flex w-full flex-col gap-4">
               <div className="flex w-full flex-col items-center justify-center gap-4">
                 <Img

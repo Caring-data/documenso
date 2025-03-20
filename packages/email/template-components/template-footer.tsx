@@ -69,11 +69,13 @@ export const TemplateFooter = ({ isDocument = true, companyName = '' }: Template
           {branding.brandingEnabled && branding.brandingLogo && (
             <Img src={branding.brandingLogo} alt="Logo - Caring Data" className="mb-4 h-6" />
           )}
-          <Img
-            src={getAssetUrl('/static/file-pen-line.png')}
-            alt="icon image - file pen line"
-            className="mb-4 h-8"
-          />
+          <div className="text-center text-white">
+            <Img
+              src={getAssetUrl('/static/logo-caring-data.png')}
+              alt="Logo - Caring Data"
+              className="inline h-8"
+            />
+          </div>
         </div>
       )}
     </Section>
