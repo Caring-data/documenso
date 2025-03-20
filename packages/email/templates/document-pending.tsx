@@ -36,12 +36,14 @@ export const DocumentPendingEmailTemplate = ({
                 {branding.brandingEnabled && branding.brandingLogo ? (
                   <Img src={branding.brandingLogo} alt="Branding Logo" className="mb-4 h-6" />
                 ) : (
-                  <div className="bg-brand mb-6 w-[97%] items-center justify-center gap-2 rounded-md px-2 py-4">
-                    <Img
-                      src={getAssetUrl('/static/file-pen-line.png')}
-                      alt="icon image - file pen line"
-                      className="mb-4 h-8"
-                    />
+                  <div className="bg-brand mb-6 w-[97%] items-center justify-center gap-1 rounded-md px-2 py-4 text-center">
+                    <div className="text-center text-white">
+                      <Img
+                        src={getAssetUrl('/static/file-pen-line.png')}
+                        alt="icon image - file pen line"
+                        className="inline h-8"
+                      />
+                    </div>
                     <p className="text-center text-lg font-medium text-white">
                       <Trans>Waiting for others</Trans>
                     </p>

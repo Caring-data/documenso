@@ -24,9 +24,9 @@ export const TemplateFooter = ({ isDocument = true, companyName = '' }: Template
         <Text className="my-4 text-center text-xs font-medium leading-4 text-zinc-500">
           <Trans>
             <span className="text-brand-accent font-medium">Caring Data</span> is a secure platform
-            used by <span className="text-brand-accent font-medium">{companyName}</span>
-            to manage communication and documentation. We prioritize your privacy and security. For
-            more details, please review our{' '}
+            used by <span className="text-brand-accent font-medium">{companyName}</span> to manage
+            communication and documentation. We prioritize your privacy and security. For more
+            details, please review our{' '}
             <Link
               className="text-brand-accent underline decoration-solid decoration-auto underline-offset-auto"
               href="https://home.caringdata.com/index.php/privacy-policy/"
