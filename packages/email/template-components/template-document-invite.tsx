@@ -23,6 +23,7 @@ export interface TemplateDocumentInviteProps {
     facilityAdministrator?: string;
     documentName?: string;
     residentName?: string;
+    locationName?: string;
   };
   tokenExpiration?: string;
 }
@@ -61,7 +62,7 @@ export const TemplateDocumentInvite = ({
                 <Img
                   src={getAssetUrl('/static/file-text.png')}
                   alt="Document Icon"
-                  className="inline h-6 w-auto"
+                  className="inline h-4 w-auto pr-2"
                 />
                 <div className="flex flex-col text-sm font-medium leading-5 text-zinc-600">
                   <Text>
@@ -73,7 +74,7 @@ export const TemplateDocumentInvite = ({
                 <Img
                   src={getAssetUrl('/static/user-round.png')}
                   alt="Document Icon"
-                  className="inline h-6 w-6"
+                  className="inline h-4 w-auto pr-2"
                 />
                 <div className="flex flex-col text-sm font-medium leading-5 text-zinc-600">
                   <Text>

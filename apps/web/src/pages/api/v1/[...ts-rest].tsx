@@ -15,3 +15,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   return await nextRouteHandler(req, res);
 }
+
+export const config = {
+  api: {
+    bodyParser: {
+      sizeLimit: '50mb',
+    },
+  },
+};

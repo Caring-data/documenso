@@ -24,6 +24,7 @@ export type DocumentInviteEmailTemplateProps = Partial<TemplateDocumentInvitePro
     facilityAdministrator?: string;
     documentName?: string;
     residentName?: string;
+    locationName?: string;
   };
   tokenExpiration?: Date | string | undefined;
 };

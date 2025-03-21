@@ -454,9 +454,9 @@ export const ApiContractV1Implementation = createNextRoute(ApiContractV1, {
 
   createTemplate: authenticatedMiddleware(async (args, user, team) => {
     const { body } = args;
+
     try {
       const fileName = body.title.endsWith('.pdf') ? body.title : `${body.title}.pdf`;
-
       const { id: templateDocumentDataId } = await createDocumentData({
         type: body.type,
         data: body.data,

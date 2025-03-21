@@ -60,6 +60,7 @@ interface DocumentDetails {
   documentName?: string;
   facilityAdministrator?: string;
   residentName?: string;
+  locationName?: string;
 }
 
 export const SigningPageView = ({
@@ -119,11 +120,11 @@ export const SigningPageView = ({
       <header className="fixed left-0 top-0 z-50 flex w-full items-center bg-white px-6 py-3 shadow-md">
         <img src={getAssetUrl('/static/logo-bg-white.png')} alt="Logo" className="h-8 w-auto" />
       </header>
-      <div className="mx-auto mb-8 mt-20 w-full max-w-screen-xl md:mb-12">
-        <div className="mt-2.5 flex flex-wrap items-center justify-between gap-x-6">
+      <div className="mx-auto mb-8 mt-20 w-full max-w-screen-xl px-4 md:mb-12 md:px-8">
+        <div className="mt-2.5 flex flex-wrap items-center justify-between gap-6">
           <div className="max-w-[50ch]">
             <h1
-              className="mt-4 block max-w-[20rem] truncate text-lg font-semibold md:max-w-[30rem] md:text-3xl"
+              className="mt-4 block w-full text-lg font-semibold md:max-w-[30rem] md:text-xl"
               title={normalizedDocument.documentDetails.documentName ?? 'Untitled Document'}
             >
               {normalizedDocument.documentDetails.documentName ?? 'Untitled Document'}
@@ -133,7 +134,7 @@ export const SigningPageView = ({
           <RejectDocumentDialog document={document} token={recipient.token} />
         </div>
 
-        <div className="mt-8 grid grid-cols-12 gap-y-8 lg:gap-x-8 lg:gap-y-0">
+        <div className="mt-6 grid grid-cols-12 gap-y-8 lg:gap-x-8 lg:gap-y-0">
           <Card
             className="col-span-12 rounded-xl before:rounded-xl lg:col-span-7 xl:col-span-8"
             gradient

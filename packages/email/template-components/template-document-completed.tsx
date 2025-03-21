@@ -11,6 +11,7 @@ export interface TemplateDocumentCompletedProps {
     facilityAdministrator?: string;
     documentName?: string;
     residentName?: string;
+    locationName?: string;
   };
 }
 

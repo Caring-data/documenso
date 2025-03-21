@@ -15,6 +15,7 @@ export type DocumentCompletedEmailTemplateProps = Partial<TemplateDocumentComple
     facilityAdministrator?: string;
     documentName?: string;
     residentName?: string;
+    locationName?: string;
   };
 };
 

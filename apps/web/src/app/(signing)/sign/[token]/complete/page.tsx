@@ -109,7 +109,7 @@ export default async function CompletedSigningPage({
         >
           <Badge variant="neutral" size="default" className="mb-6 rounded-xl border bg-transparent">
             <span className="block max-w-[10rem] truncate font-medium hover:underline md:max-w-[20rem]">
-              {document.title}
+              {document.documentDetails?.documentName}
             </span>
           </Badge>
 
@@ -120,8 +120,8 @@ export default async function CompletedSigningPage({
             signingCelebrationImage={signingCelebration}
           />
 
-          <h2 className="mt-6 max-w-[35ch] text-center text-2xl font-semibold leading-normal md:text-3xl lg:text-4xl">
-            {recipient.role === RecipientRole.SIGNER && <Trans>Document Signed</Trans>}
+          <h2 className="mt-6 max-w-[35ch] text-center text-2xl font-semibold leading-normal md:text-3xl lg:text-3xl">
+            {recipient.role === RecipientRole.SIGNER && <Trans>Document Successfully Signed</Trans>}
             {recipient.role === RecipientRole.VIEWER && <Trans>Document Viewed</Trans>}
             {recipient.role === RecipientRole.APPROVER && <Trans>Document Approved</Trans>}
           </h2>
@@ -131,7 +131,7 @@ export default async function CompletedSigningPage({
               <div className="text-documenso-700 mt-4 flex items-center text-center">
                 <CheckCircle2 className="mr-2 h-5 w-5" />
                 <span className="text-sm">
-                  <Trans>Everyone has signed</Trans>
+                  <Trans>All parties have signed the document.</Trans>
                 </span>
               </div>
             ))
@@ -156,7 +156,8 @@ export default async function CompletedSigningPage({
             .with({ status: DocumentStatus.COMPLETED }, () => (
               <p className="text-muted-foreground/60 mt-2.5 max-w-[60ch] text-center text-sm font-medium md:text-base">
                 <Trans>
-                  Everyone has signed! You will receive an Email copy of the signed document.
+                  A copy of the completed document will be sent to your email shortly. You may also
+                  download it below.
                 </Trans>
               </p>
             ))

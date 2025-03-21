@@ -322,6 +322,7 @@ export const ZGenerateDocumentFromTemplateMutationSchema = z.object({
       facilityAdministrator: z.string().optional(),
       documentName: z.string().optional(),
       residentName: z.string().optional(),
+      locationName: z.string().optional(),
     })
     .optional(),
 });

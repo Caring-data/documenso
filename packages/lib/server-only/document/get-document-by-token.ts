@@ -11,6 +11,7 @@ interface DocumentDetails {
   facilityAdministrator?: string;
   documentName?: string;
   residentName?: string;
+  locationName?: string;
 }
 
 export interface GetDocumentAndSenderByTokenOptions {

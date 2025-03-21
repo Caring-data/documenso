@@ -13,6 +13,7 @@ import { Img } from '@react-email/img';
 import { Section } from '@react-email/section';
 
 import { NEXT_PUBLIC_WEBAPP_URL, WEBAPP_BASE_URL } from '@documenso/lib/constants/app';
+import { authenticateWithLaravelClient } from '@documenso/lib/laravel-auth/client-auth-laravel';
 import type { getDocumentAndSenderByToken } from '@documenso/lib/server-only/document/get-document-by-token';
 import { useToast } from '@documenso/ui/primitives/use-toast';
 
@@ -31,23 +32,43 @@ export default function PreSigningPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    try {
-      const storedData = sessionStorage.getItem('preSigningData');
+    // console.log('trueeee pre-sign');
+    // try {
+    //   const storedData = sessionStorage.getItem('preSigningData');
 
-      if (storedData) {
-        const parsedData = JSON.parse(storedData);
-        setDocumentDetails(parsedData);
-        setLoading(false);
+    //   if (storedData) {
+    //     const parsedData = JSON.parse(storedData);
+    //     setDocumentDetails(parsedData);
+    //     setLoading(false);
+    //   }
+    // } catch (err) {
+    //   console.error('Error parsing document details:', err);
+    //   toast({
+    //     title: _(msg`Error`),
+    //     description: _(msg`Failed to fetch document details`),
+    //     variant: 'destructive',
+    //   });
+    //   setLoading(false);
+    // }
+
+    const checkAndLogin = async () => {
+      const token = localStorage.getItem('laravel_jwt');
+
+      if (!token) {
+        try {
+          await authenticateWithLaravelClient();
+        } catch (error) {
+          console.error('❌ Authentication error with Laravel:', error);
+          toast({
+            title: _(msg`Error`),
+            description: _(msg`Could not authenticate with the system.`),
+            variant: 'destructive',
+          });
+        }
       }
-    } catch (err) {
-      console.error('Error parsing document details:', err);
-      toast({
-        title: _(msg`Error`),
-        description: _(msg`Failed to fetch document details`),
-        variant: 'destructive',
-      });
-      setLoading(false);
-    }
+    };
+
+    void checkAndLogin();
   }, []);
 
   const signDocumentUrl = new URL(`${NEXT_PUBLIC_WEBAPP_URL()}/sign/${token}`);
@@ -100,7 +121,7 @@ export default function PreSigningPage() {
               <p className="w-full text-center text-xl font-semibold leading-6 text-zinc-600">
                 You have been requested by:{' '}
                 <span className="text-brand-accent">{documentDetails?.facilityAdministrator}</span>{' '}
-                from <span className="text-brand-accent">{documentDetails?.companyName}</span> to
+                from <span className="text-brand-accent">{documentDetails?.locationName}</span> to
                 sign documents electronically
               </p>
             </div>
@@ -108,12 +129,12 @@ export default function PreSigningPage() {
             <div className="max-w-l flex h-auto w-full items-center justify-center gap-2 rounded-lg bg-zinc-100 px-4 py-3">
               <span className="text-brand-accent text-sm font-medium">
                 <a
-                  href="https://caringdata.com/"
+                  href="https://rise.caringdata.com"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-brand-accent text-sm font-semibold underline hover:text-blue-900"
                 >
-                  www.caringdata.com
+                  www.rise.caringdata.com
                 </a>{' '}
                 would like to use your current location to ensure secure and accurate document
                 processing.

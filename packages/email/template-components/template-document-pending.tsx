@@ -10,6 +10,7 @@ export interface TemplateDocumentPendingProps {
     facilityAdministrator?: string;
     documentName?: string;
     residentName?: string;
+    locationName?: string;
   };
 }
 

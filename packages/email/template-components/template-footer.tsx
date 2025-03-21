@@ -71,7 +71,7 @@ export const TemplateFooter = ({ isDocument = true, companyName = '' }: Template
           )}
           <div className="text-center text-white">
             <Img
-              src={getAssetUrl('/static/logo-caring-data.png')}
+              src={getAssetUrl('/static/logo-bg-white.png')}
               alt="Logo - Caring Data"
               className="inline h-8"
             />
