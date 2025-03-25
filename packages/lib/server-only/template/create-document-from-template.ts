@@ -136,12 +136,6 @@ export const createDocumentFromTemplate = async ({
     });
   }
 
-  if (!template) {
-    throw new AppError(AppErrorCode.NOT_FOUND, {
-      message: 'Template not found',
-    });
-  }
-
   // Check that the template has IDs.
   if (template.recipients.length === 0) {
     throw new AppError(AppErrorCode.INVALID_BODY, {
@@ -154,9 +148,13 @@ export const createDocumentFromTemplate = async ({
   });
 
   const finalRecipients: FinalRecipient[] = template.recipients.map((templateRecipient) => {
-    const foundRecipient = recipients.find(
-      (recipient) => recipient.signingOrder === templateRecipient.signingOrder,
-    );
+    const foundRecipient = recipients.find((recipient) => {
+      if (recipient.signingOrder != null && templateRecipient.signingOrder != null) {
+        return recipient.signingOrder === templateRecipient.signingOrder;
+      }
+
+      return recipient.id === templateRecipient.id;
+    });
 
     return {
       templateRecipientId: templateRecipient.id,
@@ -242,8 +240,8 @@ export const createDocumentFromTemplate = async ({
         },
         recipients: {
           createMany: {
-            data: finalRecipients
-              .filter((templateRecipient) => !templateRecipient.email.includes('recipient'))
+            data: Object.values(finalRecipients)
+              .filter((recipient) => !recipient.email.includes('recipient'))
               .map((recipient) => {
                 const authOptions = ZRecipientAuthOptionsSchema.parse(recipient?.authOptions);
 

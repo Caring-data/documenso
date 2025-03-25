@@ -9,13 +9,11 @@ export type CreateDocumentDataOptions = {
 };
 
 export const createDocumentData = async ({ type, data }: CreateDocumentDataOptions) => {
-  const documentData = await prisma.documentData.create({
+  return await prisma.documentData.create({
     data: {
       type,
       data,
       initialData: data,
     },
   });
-
-  return JSON.parse(JSON.stringify(documentData));
 };
