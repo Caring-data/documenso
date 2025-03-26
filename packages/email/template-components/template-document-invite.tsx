@@ -62,9 +62,9 @@ export const TemplateDocumentInvite = ({
                 <Img
                   src={getAssetUrl('/static/file-text.png')}
                   alt="Document Icon"
-                  className="inline h-4 w-auto pr-2"
+                  className="my-auto h-4 w-auto pr-2 align-middle"
                 />
-                <div className="flex flex-col text-sm font-medium leading-5 text-zinc-600">
+                <div className="flex flex-col justify-center text-sm font-medium leading-5 text-zinc-600">
                   <Text>
                     <Trans>Document: {documentDetails?.documentName}</Trans>
                   </Text>
@@ -74,7 +74,7 @@ export const TemplateDocumentInvite = ({
                 <Img
                   src={getAssetUrl('/static/user-round.png')}
                   alt="Document Icon"
-                  className="inline h-4 w-auto pr-2"
+                  className="my-auto h-4 w-auto pr-2 align-middle"
                 />
                 <div className="flex flex-col text-sm font-medium leading-5 text-zinc-600">
                   <Text>

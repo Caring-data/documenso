@@ -267,6 +267,8 @@ export type TCreateDocumentFromTemplateMutationResponseSchema = z.infer<
 
 export const ZGenerateDocumentFromTemplateMutationSchema = z.object({
   title: z.string().optional(),
+  type: z.nativeEnum(DocumentDataType).optional(),
+  data: z.string().min(1).optional(),
   externalId: z.string().optional(),
   recipients: z
     .array(

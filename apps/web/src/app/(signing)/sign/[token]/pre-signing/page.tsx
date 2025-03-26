@@ -32,24 +32,23 @@ export default function PreSigningPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // console.log('trueeee pre-sign');
-    // try {
-    //   const storedData = sessionStorage.getItem('preSigningData');
+    try {
+      const storedData = sessionStorage.getItem('preSigningData');
 
-    //   if (storedData) {
-    //     const parsedData = JSON.parse(storedData);
-    //     setDocumentDetails(parsedData);
-    //     setLoading(false);
-    //   }
-    // } catch (err) {
-    //   console.error('Error parsing document details:', err);
-    //   toast({
-    //     title: _(msg`Error`),
-    //     description: _(msg`Failed to fetch document details`),
-    //     variant: 'destructive',
-    //   });
-    //   setLoading(false);
-    // }
+      if (storedData) {
+        const parsedData = JSON.parse(storedData);
+        setDocumentDetails(parsedData);
+        setLoading(false);
+      }
+    } catch (err) {
+      console.error('Error parsing document details:', err);
+      toast({
+        title: _(msg`Error`),
+        description: _(msg`Failed to fetch document details`),
+        variant: 'destructive',
+      });
+      setLoading(false);
+    }
 
     const checkAndLogin = async () => {
       const token = localStorage.getItem('laravel_jwt');
