@@ -1,15 +1,10 @@
-import { authenticateWithLaravelClient } from './client-auth-laravel';
-
 export const fetchWithLaravelAuth = async (
   url: string,
   options: RequestInit = {},
-  token?: string,
+  authToken: string,
 ) => {
-  let authToken = token || localStorage.getItem('laravel_jwt');
-
-  if (!authToken) {
-    authToken = await authenticateWithLaravelClient();
-    localStorage.setItem('laravel_jwt', authToken);
+  if (!authToken || typeof authToken !== 'string') {
+    throw new Error('Token not provided for authentication.');
   }
 
   const headers = {
@@ -21,11 +16,13 @@ export const fetchWithLaravelAuth = async (
 
   const response = await fetch(url, { ...options, headers });
 
+  const data = await response.json();
+
   if (!response.ok) {
     const errorText = await response.text();
     console.error(`❌ Request error: ${response.status} - ${response.statusText}`, errorText);
     throw new Error(`Request error: ${response.status} - ${response.statusText}`);
   }
 
-  return response.json();
+  return data;
 };

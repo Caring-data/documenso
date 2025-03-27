@@ -19,7 +19,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     }
 
     const apiUrl = process.env.NEXT_PRIVATE_LARAVEL_API_URL;
-    const loginUrl = `${apiUrl}/auth/login`;
+    const loginUrl = `${apiUrl}/auth/super-login`;
 
     const key = CryptoJS.enc.Utf8.parse(encryptionKey);
     const iv = CryptoJS.enc.Utf8.parse(encryptionKey);
@@ -47,11 +47,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     }
 
     const data = await response.json();
-    if (!data.access_token) {
-      throw new Error('Laravel did not return a token.');
-    }
+    if (!data.access_token) throw new Error('Laravel did not return a token.');
 
-    // Return only the token to the client
+    res.setHeader('Set-Cookie', [
+      `laravel_jwt=${data.access_token}; HttpOnly; Path=/; Max-Age=86400; SameSite=Lax; ${
+        process.env.NODE_ENV === 'production' ? 'Secure;' : ''
+      }`,
+    ]);
+
     res.status(200).json({ access_token: data.access_token });
   } catch (error) {
     console.error('Laravel auth API error:', error);

@@ -49,25 +49,10 @@ export default function PreSigningPage() {
       });
       setLoading(false);
     }
+  }, []);
 
-    const checkAndLogin = async () => {
-      const token = localStorage.getItem('laravel_jwt');
-
-      if (!token) {
-        try {
-          await authenticateWithLaravelClient();
-        } catch (error) {
-          console.error('❌ Authentication error with Laravel:', error);
-          toast({
-            title: _(msg`Error`),
-            description: _(msg`Could not authenticate with the system.`),
-            variant: 'destructive',
-          });
-        }
-      }
-    };
-
-    void checkAndLogin();
+  useEffect(() => {
+    void authenticateWithLaravelClient();
   }, []);
 
   const signDocumentUrl = new URL(`${NEXT_PUBLIC_WEBAPP_URL()}/sign/${token}`);

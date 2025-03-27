@@ -1,8 +1,13 @@
+import type { NextApiRequest, NextApiResponse } from 'next';
+
+import { getCookie } from 'cookies-next';
+
 import { DOCUMENT_AUDIT_LOG_TYPE } from '@documenso/lib/types/document-audit-logs';
 import type { RequestMetadata } from '@documenso/lib/universal/extract-request-metadata';
 import { fieldsContainUnsignedRequiredField } from '@documenso/lib/utils/advanced-fields-helpers';
 import { createDocumentAuditLogData } from '@documenso/lib/utils/document-audit-logs';
 import { prisma } from '@documenso/prisma';
+import type { Document, Recipient } from '@documenso/prisma/client';
 import {
   DocumentSigningOrder,
   DocumentStatus,
@@ -14,7 +19,6 @@ import {
 
 import { AppError, AppErrorCode } from '../../errors/app-error';
 import { jobs } from '../../jobs/client';
-import { authenticateWithLaravelClient } from '../../laravel-auth/client-auth-laravel';
 import { fetchWithLaravelAuth } from '../../laravel-auth/fetch-with-laravel-auth';
 import type { TRecipientActionAuth } from '../../types/document-auth';
 import {
@@ -33,15 +37,20 @@ interface DocumentDetails {
   locationName?: string;
 }
 
-export type CompleteDocumentWithTokenOptions = {
+type GetDocumentOptions = {
   token: string;
   documentId: number;
+};
+
+export type CompleteDocumentWithTokenOptions = GetDocumentOptions & {
   userId?: number;
   authOptions?: TRecipientActionAuth;
   requestMetadata?: RequestMetadata;
+  req: NextApiRequest;
+  res: NextApiResponse;
 };
 
-const getDocument = async ({ token, documentId }: CompleteDocumentWithTokenOptions) => {
+const getDocument = async ({ token, documentId }: GetDocumentOptions) => {
   return await prisma.document.findFirstOrThrow({
     where: {
       id: documentId,
@@ -67,9 +76,17 @@ export const completeDocumentWithToken = async ({
   token,
   documentId,
   requestMetadata,
+  req,
+  res,
 }: CompleteDocumentWithTokenOptions) => {
   const document = await getDocument({ token, documentId });
-  const documentDetails = document?.documentDetails as DocumentDetails;
+  const rawDetails = document?.documentDetails;
+
+  if (!rawDetails || typeof rawDetails !== 'object') {
+    throw new Error('Invalid or missing documentDetails');
+  }
+
+  const documentDetails: DocumentDetails = rawDetails;
 
   if (document.status !== DocumentStatus.PENDING) {
     throw new Error(`Document ${document.id} must be pending`);
@@ -157,11 +174,22 @@ export const completeDocumentWithToken = async ({
           recipientName: recipient.name,
           recipientId: recipient.id,
           recipientRole: recipient.role,
-          // actionAuth: derivedRecipientActionAuth || undefined,
         },
       }),
     });
   });
+
+  await storeSignedDocument(
+    {
+      ...document,
+      documentDetails,
+    },
+    documentDetails,
+    documentId,
+    recipient,
+    req,
+    res,
+  );
 
   await jobs.triggerJob({
     name: 'send.recipient.signed.email',
@@ -175,6 +203,9 @@ export const completeDocumentWithToken = async ({
     select: {
       id: true,
       signingOrder: true,
+      name: true,
+      email: true,
+      role: true,
     },
     where: {
       documentId: document.id,
@@ -226,6 +257,8 @@ export const completeDocumentWithToken = async ({
     },
   });
 
+  const allSigned = Boolean(haveAllRecipientsSigned);
+
   if (haveAllRecipientsSigned) {
     await jobs.triggerJob({
       name: 'internal.seal-document',
@@ -235,44 +268,18 @@ export const completeDocumentWithToken = async ({
       },
     });
 
-    try {
-      let authToken = localStorage.getItem('laravel_jwt');
-
-      if (!authToken) {
-        authToken = await authenticateWithLaravelClient();
-        localStorage.setItem('laravel_jwt', authToken);
-      }
-
-      const base64File = Buffer.isBuffer(document.documentData.data)
-        ? document.documentData.data.toString('base64')
-        : document.documentData.data;
-
-      const formData = {
-        client_name: String(documentDetails?.companyName || ''),
-        documenso_id: String(documentId),
-        document_key: String(document.formKey || ''),
-        resident_id: String(document.residentId || ''),
-        base64_file: base64File,
-      };
-
-      const apiUrl = process.env.NEXT_PRIVATE_LARAVEL_API_URL;
-      const url = `${apiUrl}/residents/electronic-signature/store-signed-document`;
-
-      if (!apiUrl) {
-        throw new Error('Environment variables for the Laravel API are not defined.');
-      }
-
-      return await fetchWithLaravelAuth(
-        url,
-        {
-          method: 'POST',
-          body: JSON.stringify(formData),
-        },
-        authToken,
-      );
-    } catch (error) {
-      throw new Error('Could not store the signed document.');
-    }
+    await storeSignedDocument(
+      {
+        ...document,
+        documentDetails,
+      },
+      documentDetails,
+      documentId,
+      recipient,
+      req,
+      res,
+      allSigned,
+    );
   }
 
   const updatedDocument = await prisma.document.findFirstOrThrow({
@@ -291,4 +298,59 @@ export const completeDocumentWithToken = async ({
     userId: updatedDocument.userId,
     teamId: updatedDocument.teamId ?? undefined,
   });
+};
+
+const storeSignedDocument = async (
+  document: Document & {
+    documentData: { data: Buffer | string };
+    documentDetails?: DocumentDetails | null;
+  },
+  documentDetails: DocumentDetails | undefined,
+  documentId: number,
+  recipient: Recipient,
+  req: NextApiRequest,
+  res: NextApiResponse,
+  allSigned: boolean = false,
+) => {
+  try {
+    const authToken = await getCookie('laravel_jwt', { req, res });
+
+    if (typeof authToken !== 'string' || !authToken) {
+      throw new Error('Token not found or invalid in cookies.');
+    }
+
+    if (!authToken) throw new Error('Token not found in cookies');
+
+    const base64File = Buffer.isBuffer(document.documentData.data)
+      ? document.documentData.data.toString('base64')
+      : document.documentData.data;
+
+    const formData = {
+      clientName: String(documentDetails?.companyName || ''),
+      documensoId: String(documentId),
+      documentKey: String(document.formKey || ''),
+      residentId: String(document.residentId || ''),
+      base64File: base64File,
+      recipient: allSigned ? 'AllRecipientsSigned' : recipient?.email,
+    };
+
+    const apiUrl = process.env.NEXT_PRIVATE_LARAVEL_API_URL;
+    const url = `${apiUrl}/residents/electronic-signature/store-signed-document`;
+
+    if (!apiUrl) {
+      throw new Error('Environment variables for the Laravel API are not defined.');
+    }
+
+    return await fetchWithLaravelAuth(
+      url,
+      {
+        method: 'POST',
+        body: JSON.stringify(formData),
+      },
+      authToken,
+    );
+  } catch (error) {
+    console.error('Error storing signed document:', error);
+    throw new Error('Could not store the signed document.');
+  }
 };

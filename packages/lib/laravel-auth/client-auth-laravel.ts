@@ -1,4 +1,4 @@
-export const authenticateWithLaravelClient = async (): Promise<string> => {
+export const authenticateWithLaravelClient = async (): Promise<void> => {
   try {
     const response = await fetch('/api/auth/laravel', {
       method: 'POST',
@@ -10,15 +10,8 @@ export const authenticateWithLaravelClient = async (): Promise<string> => {
     if (!response.ok) {
       throw new Error('Error during Laravel authentication');
     }
-
-    const data = await response.json();
-    if (!data.access_token) {
-      throw new Error('Laravel did not return a token.');
-    }
-
-    localStorage.setItem('laravel_jwt', data.access_token);
-    return data.access_token;
   } catch (error) {
-    throw new Error('Authentication with Laravel failed.');
+    console.error(error);
+    throw error;
   }
 };

@@ -79,29 +79,11 @@ export type CommandMenuProps = {
 export function CommandMenu({ open, onOpenChange }: CommandMenuProps) {
   const { _ } = useLingui();
   const { setTheme } = useTheme();
-  const { toast } = useToast();
 
   const router = useRouter();
 
   useEffect(() => {
-    const checkAndLogin = async () => {
-      const token = localStorage.getItem('laravel_jwt');
-
-      if (!token) {
-        try {
-          await authenticateWithLaravelClient();
-        } catch (error) {
-          console.error('❌ Authentication error with Laravel:', error);
-          toast({
-            title: _(msg`Error`),
-            description: _(msg`Could not authenticate with the system.`),
-            variant: 'destructive',
-          });
-        }
-      }
-    };
-
-    void checkAndLogin();
+    void authenticateWithLaravelClient();
   }, []);
 
   const [isOpen, setIsOpen] = useState(() => open ?? false);
