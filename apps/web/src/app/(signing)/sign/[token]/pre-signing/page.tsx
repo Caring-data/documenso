@@ -13,7 +13,6 @@ import { Img } from '@react-email/img';
 import { Section } from '@react-email/section';
 
 import { NEXT_PUBLIC_WEBAPP_URL, WEBAPP_BASE_URL } from '@documenso/lib/constants/app';
-import { authenticateWithLaravelClient } from '@documenso/lib/laravel-auth/client-auth-laravel';
 import type { getDocumentAndSenderByToken } from '@documenso/lib/server-only/document/get-document-by-token';
 import { useToast } from '@documenso/ui/primitives/use-toast';
 
@@ -49,10 +48,6 @@ export default function PreSigningPage() {
       });
       setLoading(false);
     }
-  }, []);
-
-  useEffect(() => {
-    void authenticateWithLaravelClient();
   }, []);
 
   const signDocumentUrl = new URL(`${NEXT_PUBLIC_WEBAPP_URL()}/sign/${token}`);

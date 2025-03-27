@@ -12,6 +12,7 @@ import { WEBAPP_BASE_URL } from '@documenso/lib/constants/app';
 import { DEFAULT_DOCUMENT_DATE_FORMAT } from '@documenso/lib/constants/date-formats';
 import { PDF_VIEWER_PAGE_SELECTOR } from '@documenso/lib/constants/pdf-viewer';
 import { DEFAULT_DOCUMENT_TIME_ZONE } from '@documenso/lib/constants/time-zones';
+import { authenticateWithLaravelClient } from '@documenso/lib/laravel-auth/client-auth-laravel';
 import type { DocumentAndSender } from '@documenso/lib/server-only/document/get-document-by-token';
 import {
   ZCheckboxFieldMeta,
@@ -81,6 +82,10 @@ export const SigningPageView = ({
 
   const { documentData, documentMeta } = document;
   const [selectedSignerId, setSelectedSignerId] = useState<number | null>(allRecipients?.[0]?.id);
+
+  useEffect(() => {
+    void authenticateWithLaravelClient();
+  }, []);
 
   useEffect(() => {
     if (!hasVisitedPreSignPage && extractedToken) {
