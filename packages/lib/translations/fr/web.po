@@ -2643,7 +2643,7 @@ msgstr "Entrez votre texte ici"
 #: apps/web/src/app/(signing)/sign/[token]/name-field.tsx:154
 #: apps/web/src/app/(signing)/sign/[token]/number-field.tsx:150
 #: apps/web/src/app/(signing)/sign/[token]/number-field.tsx:201
-#: apps/web/src/app/(signing)/sign/[token]/pre-signing/page.tsx:46
+#: apps/web/src/app/(signing)/sign/[token]/pre-signing/page.tsx:45
 #: apps/web/src/app/(signing)/sign/[token]/radio-field.tsx:101
 #: apps/web/src/app/(signing)/sign/[token]/radio-field.tsx:130
 #: apps/web/src/app/(signing)/sign/[token]/signature-field.tsx:131
@@ -2680,7 +2680,7 @@ msgstr "Expire le {0}"
 msgid "External ID"
 msgstr "ID externe"
 
-#: apps/web/src/app/(signing)/sign/[token]/pre-signing/page.tsx:47
+#: apps/web/src/app/(signing)/sign/[token]/pre-signing/page.tsx:46
 msgid "Failed to fetch document details"
 msgstr ""
 

@@ -1,7 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 
-import { getCookie } from 'cookies-next';
-
 import { DOCUMENT_AUDIT_LOG_TYPE } from '@documenso/lib/types/document-audit-logs';
 import type { RequestMetadata } from '@documenso/lib/universal/extract-request-metadata';
 import { fieldsContainUnsignedRequiredField } from '@documenso/lib/utils/advanced-fields-helpers';
@@ -25,6 +23,7 @@ import {
   ZWebhookDocumentSchema,
   mapDocumentToWebhookDocumentPayload,
 } from '../../types/webhook-payload';
+import { getLaravelToken } from '../laravel-auth/getLaravelToken';
 import { getIsRecipientsTurnToSign } from '../recipient/get-is-recipient-turn';
 import { triggerWebhook } from '../webhooks/trigger/trigger-webhook';
 import { sendPendingEmail } from './send-pending-email';
@@ -313,13 +312,7 @@ const storeSignedDocument = async (
   allSigned: boolean = false,
 ) => {
   try {
-    const authToken = await getCookie('laravel_jwt', { req, res });
-
-    if (typeof authToken !== 'string' || !authToken) {
-      throw new Error('Token not found or invalid in cookies.');
-    }
-
-    if (!authToken) throw new Error('Token not found in cookies');
+    const laravelToken = await getLaravelToken();
 
     const base64File = Buffer.isBuffer(document.documentData.data)
       ? document.documentData.data.toString('base64')
@@ -347,7 +340,7 @@ const storeSignedDocument = async (
         method: 'POST',
         body: JSON.stringify(formData),
       },
-      authToken,
+      laravelToken,
     );
   } catch (error) {
     console.error('Error storing signed document:', error);

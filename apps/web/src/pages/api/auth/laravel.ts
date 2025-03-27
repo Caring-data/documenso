@@ -1,6 +1,7 @@
+// pages/api/auth/laravel.ts
 import type { NextApiRequest, NextApiResponse } from 'next';
 
-import CryptoJS from 'crypto-js';
+import { getLaravelToken } from '@documenso/lib/server-only/laravel-auth/getLaravelToken';
 
 interface AuthResponse {
   access_token?: string;
@@ -13,49 +14,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
   }
 
   try {
-    const encryptionKey = process.env.NEXT_PRIVATE_LARAVEL_ENCRYPTION_KEY;
-    if (!encryptionKey) {
-      throw new Error('NEXT_PRIVATE_LARAVEL_ENCRYPTION_KEY is not defined');
-    }
-
-    const apiUrl = process.env.NEXT_PRIVATE_LARAVEL_API_URL;
-    const loginUrl = `${apiUrl}/auth/super-login`;
-
-    const key = CryptoJS.enc.Utf8.parse(encryptionKey);
-    const iv = CryptoJS.enc.Utf8.parse(encryptionKey);
-
-    const encryptedCredentials = CryptoJS.AES.encrypt(
-      JSON.stringify({
-        username: process.env.NEXT_PRIVATE_LARAVEL_USERNAME,
-        password: process.env.NEXT_PRIVATE_LARAVEL_PASSWORD,
-      }),
-      key,
-      { iv: iv },
-    ).toString();
-
-    const response = await fetch(loginUrl, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-      },
-      body: JSON.stringify({ data: encryptedCredentials }),
-    });
-
-    if (!response.ok) {
-      throw new Error('Error during Laravel authentication');
-    }
-
-    const data = await response.json();
-    if (!data.access_token) throw new Error('Laravel did not return a token.');
+    const access_token = await getLaravelToken();
 
     res.setHeader('Set-Cookie', [
-      `laravel_jwt=${data.access_token}; HttpOnly; Path=/; Max-Age=86400; SameSite=Lax; ${
+      `laravel_jwt=${access_token}; HttpOnly; Path=/; Max-Age=86400; SameSite=Lax; ${
         process.env.NODE_ENV === 'production' ? 'Secure;' : ''
       }`,
     ]);
 
-    res.status(200).json({ access_token: data.access_token });
+    res.status(200).json({ access_token });
   } catch (error) {
     console.error('Laravel auth API error:', error);
     res.status(500).json({ error: 'Authentication failed' });
