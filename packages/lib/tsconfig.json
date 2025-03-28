@@ -2,7 +2,10 @@
   "extends": "@documenso/tsconfig/react-library.json",
   "compilerOptions": {
     "types": ["@documenso/tsconfig/process-env.d.ts"],
-    "moduleResolution": "Bundler"
+    "moduleResolution": "Bundler",
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true
   },
   "include": ["**/*.ts", "**/*.tsx", "**/*.d.ts"],
   "exclude": ["dist", "build", "node_modules"]

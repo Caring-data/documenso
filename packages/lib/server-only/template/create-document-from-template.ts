@@ -5,6 +5,7 @@ import {
   DocumentSigningOrder,
   DocumentSource,
   type Field,
+  Prisma,
   type Recipient,
   RecipientRole,
   SendStatus,
@@ -29,6 +30,10 @@ import {
   createRecipientAuthOptions,
   extractDocumentAuthMethods,
 } from '../../utils/document-auth';
+import {
+  findFieldCoordinatesFromPdf,
+  getFieldVariableName,
+} from '../../utils/pdf/findFieldCoordinates';
 import { triggerWebhook } from '../webhooks/trigger/trigger-webhook';
 
 type FinalRecipient = Pick<
@@ -278,17 +283,29 @@ export const createDocumentFromTemplate = async ({
       },
     });
 
-    let fieldsToCreate: Omit<Field, 'id' | 'secondaryId' | 'templateId'>[] = [];
+    const base64Pdf = documentData.data;
 
-    Object.values(finalRecipients).forEach(({ email, fields }) => {
-      const recipient = document.recipients.find((recipient) => recipient.email === email);
+    const fieldsToCreate: Omit<Field, 'id' | 'secondaryId' | 'templateId'>[] = [];
 
-      if (!recipient) {
-        throw new Error('Recipient not found.');
-      }
+    for (const finalRecipient of finalRecipients) {
+      const recipient = document.recipients.find(
+        (recipient) => recipient.email === finalRecipient.email,
+      );
+      if (!recipient) continue;
 
-      fieldsToCreate = fieldsToCreate.concat(
-        fields.map((field) => ({
+      for (const field of finalRecipient.fields) {
+        const variableName = getFieldVariableName(recipient, field);
+        const coordinates = await findFieldCoordinatesFromPdf({
+          base64Pdf,
+          fieldName: variableName,
+        });
+
+        if (coordinates) {
+          field.positionX = new Prisma.Decimal(coordinates.x);
+          field.positionY = new Prisma.Decimal(coordinates.y);
+          field.page = coordinates.page;
+        }
+        fieldsToCreate.push({
           documentId: document.id,
           recipientId: recipient.id,
           type: field.type,
@@ -300,9 +317,9 @@ export const createDocumentFromTemplate = async ({
           customText: '',
           inserted: false,
           fieldMeta: field.fieldMeta,
-        })),
-      );
-    });
+        });
+      }
+    }
 
     await tx.field.createMany({
       data: fieldsToCreate.map((field) => ({

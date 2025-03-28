@@ -162,8 +162,8 @@ export default async function SigningCertificate({ searchParams }: SigningCertif
   };
 
   return (
-    <div className="print-provider pointer-events-none mx-auto max-w-screen-md">
-      <div className="border-brand m-3 border p-5">
+    <div className="print-provider pointer-events-none mx-auto max-w-screen-md print:mx-0 print:max-w-full print:p-0">
+      <div className="border-brand border p-5 print:m-0 print:p-0">
         <div
           className="bg-lightgray aspect-[17/22] flex-shrink-0 bg-cover bg-center bg-no-repeat"
           style={{ backgroundImage: "url('/static/background-certificate.png')" }}
