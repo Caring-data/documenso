@@ -56,5 +56,9 @@ export function getFieldVariableName(recipient: Recipient, field: Field): string
   if (field.type === 'SIGNATURE') return base;
   if (field.type === 'TEXT') return `${base}-text`;
   if (field.type === 'DATE') return `${base}-date`;
+  if (field.type === 'NAME') return `${base}-name`;
+  if (field.type === 'EMAIL') return `${base}-email`;
+  if (field.type === 'NUMBER') return `${base}-number`;
+  if (field.type === 'INITIALS') return `${base}-initials`;
   return base;
 }

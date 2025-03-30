@@ -580,7 +580,7 @@ msgstr "Acceptance and Consent"
 msgid "Accepted team invitation"
 msgstr "Accepted team invitation"
 
-#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:125
+#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:107
 msgid "Account Authentication"
 msgstr "Account Authentication"
 
@@ -597,7 +597,7 @@ msgstr "Account disabled"
 msgid "Account enabled"
 msgstr "Account enabled"
 
-#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:116
+#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:98
 msgid "Account Re-Authentication"
 msgstr "Account Re-Authentication"
 
@@ -2138,6 +2138,10 @@ msgstr "Document completed"
 msgid "Document Completed - {0}"
 msgstr "Document Completed - {0}"
 
+#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:347
+msgid "Document Completed by all parties on"
+msgstr "Document Completed by all parties on"
+
 #: packages/ui/components/document/document-email-checkboxes.tsx:203
 #: packages/ui/components/document/document-email-checkboxes.tsx:279
 msgid "Document completed email"
@@ -2446,8 +2450,8 @@ msgstr "Electronic Signature Disclosure"
 #: apps/web/src/app/(dashboard)/admin/users/data-table-users.tsx:71
 #: apps/web/src/app/(dashboard)/templates/use-template-dialog.tsx:277
 #: apps/web/src/app/(dashboard)/templates/use-template-dialog.tsx:284
-#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:119
-#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:126
+#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:101
+#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:108
 #: apps/web/src/app/(recipient)/d/[token]/configure-direct-template.tsx:119
 #: apps/web/src/app/(signing)/sign/[token]/email-field.tsx:133
 #: apps/web/src/app/embed/direct/[[...url]]/client.tsx:407
@@ -2920,7 +2924,7 @@ msgstr "I am an assistant of this document"
 msgid "I am required to receive a copy of this document"
 msgstr "I am required to receive a copy of this document"
 
-#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:40
+#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:39
 msgid "I am the owner of this document"
 msgstr "I am the owner of this document"
 
@@ -3046,7 +3050,7 @@ msgstr "Invited At"
 msgid "Invoice"
 msgstr "Invoice"
 
-#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:295
+#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:320
 msgid "IP address"
 msgstr "IP address"
 
@@ -3544,6 +3548,10 @@ msgstr "Number"
 msgid "Number format"
 msgstr "Number format"
 
+#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:359
+msgid "of"
+msgstr "of"
+
 #: apps/web/src/components/(dashboard)/settings/webhooks/create-webhook-dialog.tsx:128
 msgid "On this page, you can create a new webhook."
 msgstr "On this page, you can create a new webhook."
@@ -3625,6 +3633,10 @@ msgstr "Otherwise, the document will be created as a draft."
 msgid "Owner"
 msgstr "Owner"
 
+#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:359
+msgid "Page"
+msgstr "Page"
+
 #: packages/ui/primitives/data-table-pagination.tsx:77
 msgid "Page {0} of {1}"
 msgstr "Page {0} of {1}"
@@ -3657,7 +3669,7 @@ msgstr "Passkey has been updated"
 msgid "Passkey name"
 msgstr "Passkey name"
 
-#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:118
+#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:100
 msgid "Passkey Re-Authentication"
 msgstr "Passkey Re-Authentication"
 
@@ -4072,7 +4084,7 @@ msgstr "Recipient signing request email"
 msgid "Recipient updated"
 msgstr "Recipient updated"
 
-#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:206
+#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:230
 msgid "Recipient Verification"
 msgstr "Recipient Verification"
 
@@ -4474,7 +4486,7 @@ msgid "Sending..."
 msgstr "Sending..."
 
 #: apps/web/src/app/(dashboard)/documents/[id]/document-page-view-recipients.tsx:102
-#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:231
+#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:220
 msgid "Sent"
 msgstr "Sent"
 
@@ -4616,7 +4628,7 @@ msgid "Sign Up with OIDC"
 msgstr "Sign Up with OIDC"
 
 #: apps/web/src/app/(dashboard)/admin/documents/[id]/recipient-item.tsx:88
-#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:184
+#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:194
 #: apps/web/src/app/(recipient)/d/[token]/sign-direct-template.tsx:334
 #: apps/web/src/app/(signing)/sign/[token]/form.tsx:340
 #: apps/web/src/app/(signing)/sign/[token]/signature-field.tsx:249
@@ -4631,7 +4643,7 @@ msgstr "Sign Up with OIDC"
 msgid "Signature"
 msgstr "Signature"
 
-#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:173
+#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:180
 msgid "Signature Certificate"
 msgstr "Signature Certificate"
 
@@ -4651,7 +4663,7 @@ msgid "Signatures will appear once the document has been completed"
 msgstr "Signatures will appear once the document has been completed"
 
 #: apps/web/src/app/(dashboard)/documents/[id]/document-page-view-recipients.tsx:115
-#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:253
+#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:226
 #: apps/web/src/components/document/document-read-only-fields.tsx:84
 #: packages/lib/constants/recipient-roles.ts:23
 msgid "Signed"
@@ -4661,7 +4673,7 @@ msgstr "Signed"
 msgid "Signer"
 msgstr "Signer"
 
-#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:182
+#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:188
 msgid "Signer Events"
 msgstr "Signer Events"
 
@@ -4676,10 +4688,6 @@ msgstr "Signers must have unique emails"
 #: packages/lib/constants/recipient-roles.ts:24
 msgid "Signing"
 msgstr "Signing"
-
-#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:318
-msgid "Signing certificate provided by"
-msgstr "Signing certificate provided by"
 
 #: apps/web/src/app/embed/sign/[[...url]]/client.tsx:340
 msgid "Signing for"
@@ -5585,7 +5593,7 @@ msgstr "Time zone"
 msgid "Time Zone"
 msgstr "Time Zone"
 
-#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:183
+#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:191
 msgid "Timestamp"
 msgstr "Timestamp"
 
@@ -5753,7 +5761,7 @@ msgstr "Two-factor authentication enabled"
 msgid "Two-factor authentication has been disabled for your account. You will no longer be required to enter a code from your authenticator app when signing in."
 msgstr "Two-factor authentication has been disabled for your account. You will no longer be required to enter a code from your authenticator app when signing in."
 
-#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:117
+#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:99
 msgid "Two-Factor Re-Authentication"
 msgstr "Two-Factor Re-Authentication"
 
@@ -5862,10 +5870,12 @@ msgstr "Unauthorized"
 msgid "Uncompleted"
 msgstr "Uncompleted"
 
-#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:237
-#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:248
-#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:261
-#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:299
+#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:262
+#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:272
+#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:284
+#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:294
+#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:323
+#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:355
 #: apps/web/src/app/(teams)/t/[teamUrl]/settings/billing/page.tsx:55
 msgid "Unknown"
 msgstr "Unknown"
@@ -6088,7 +6098,7 @@ msgstr "Verification Email Sent"
 msgid "Verification email sent successfully."
 msgstr "Verification email sent successfully."
 
-#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:223
+#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:247
 msgid "Verified"
 msgstr "Verified"
 
@@ -6196,7 +6206,7 @@ msgid "View teams"
 msgstr "View teams"
 
 #: apps/web/src/app/(dashboard)/documents/[id]/document-page-view-recipients.tsx:121
-#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:242
+#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:223
 #: packages/lib/constants/recipient-roles.ts:30
 msgid "Viewed"
 msgstr "Viewed"
