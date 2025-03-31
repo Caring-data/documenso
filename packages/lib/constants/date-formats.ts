@@ -85,6 +85,15 @@ export const convertToLocalSystemFormat = (
   dateFormat: string | null = DEFAULT_DOCUMENT_DATE_FORMAT,
   timeZone: string | null = DEFAULT_DOCUMENT_TIME_ZONE,
 ): string => {
+  const fallbackFormat = 'MM/dd/yyyy';
+
+  const isFormattedUSDate = /^\d{2}\/\d{2}\/\d{4}$/.test(customText);
+  const isMismatchFormat = dateFormat !== fallbackFormat;
+
+  if (isFormattedUSDate && isMismatchFormat) {
+    return customText;
+  }
+
   const coalescedDateFormat = dateFormat ?? DEFAULT_DOCUMENT_DATE_FORMAT;
   const coalescedTimeZone = timeZone ?? DEFAULT_DOCUMENT_TIME_ZONE;
 
