@@ -47,7 +47,6 @@ pipeline {
                     sh """
                         docker compose down || true
                     """
-
                     // Build and start both services using docker-compose
                     sh """
                         docker compose up -d --build
