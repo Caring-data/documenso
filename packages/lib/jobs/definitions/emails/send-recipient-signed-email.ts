@@ -92,6 +92,7 @@ export const SEND_RECIPIENT_SIGNED_EMAIL_JOB_DEFINITION = {
       recipientName,
       recipientEmail,
       assetBaseUrl,
+      documentDetails: document.documentDetails || {},
     });
 
     await io.runTask('send-recipient-signed-email', async () => {

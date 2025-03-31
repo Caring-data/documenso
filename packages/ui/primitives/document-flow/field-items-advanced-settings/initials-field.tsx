@@ -5,6 +5,7 @@ import { validateFields as validateInitialsFields } from '@documenso/lib/advance
 import { type TInitialsFieldMeta as InitialsFieldMeta } from '@documenso/lib/types/field-meta';
 import { Input } from '@documenso/ui/primitives/input';
 import { Label } from '@documenso/ui/primitives/label';
+import { Switch } from '@documenso/ui/primitives/switch';
 
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../../select';
 
@@ -23,9 +24,11 @@ export const InitialsFieldAdvancedSettings = ({
 
   const handleInput = (field: keyof InitialsFieldMeta, value: string | boolean) => {
     const fontSize = field === 'fontSize' ? Number(value) : Number(fieldState.fontSize ?? 14);
+    const required = field === 'required' ? Boolean(value) : Boolean(fieldState.required);
 
     const errors = validateInitialsFields({
       fontSize,
+      required,
       type: 'initials',
     });
 
@@ -70,6 +73,29 @@ export const InitialsFieldAdvancedSettings = ({
             <SelectItem value="right">Right</SelectItem>
           </SelectContent>
         </Select>
+      </div>
+
+      <div className="mt-4 flex flex-col gap-4">
+        <div className="flex flex-row items-center gap-2">
+          <Switch
+            className="bg-background"
+            checked={fieldState.required}
+            onCheckedChange={(checked) => handleInput('required', checked)}
+          />
+          <Label>
+            <Trans>Required field</Trans>
+          </Label>
+        </div>
+        <div className="flex flex-row items-center gap-2">
+          <Switch
+            className="bg-background"
+            checked={fieldState.readOnly}
+            onCheckedChange={(checked) => handleInput('readOnly', checked)}
+          />
+          <Label>
+            <Trans>Read only</Trans>
+          </Label>
+        </div>
       </div>
     </div>
   );

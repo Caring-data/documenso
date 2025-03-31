@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { useRouter } from 'next/navigation';
 
@@ -21,6 +21,7 @@ import {
   DO_NOT_INVALIDATE_QUERY_ON_MUTATION,
   SKIP_QUERY_BATCH_META,
 } from '@documenso/lib/constants/trpc';
+import { authenticateWithLaravelClient } from '@documenso/lib/laravel-auth/client-auth-laravel';
 import { switchI18NLanguage } from '@documenso/lib/server-only/i18n/switch-i18n-language';
 import { dynamicActivate } from '@documenso/lib/utils/i18n';
 import { trpc as trpcReact } from '@documenso/trpc/react';
@@ -80,6 +81,10 @@ export function CommandMenu({ open, onOpenChange }: CommandMenuProps) {
   const { setTheme } = useTheme();
 
   const router = useRouter();
+
+  useEffect(() => {
+    void authenticateWithLaravelClient();
+  }, []);
 
   const [isOpen, setIsOpen] = useState(() => open ?? false);
   const [search, setSearch] = useState('');

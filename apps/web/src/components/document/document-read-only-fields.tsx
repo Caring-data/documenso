@@ -117,11 +117,13 @@ export const DocumentReadOnlyFields = ({
                   match(field)
                     .with({ type: FieldType.SIGNATURE }, (field) =>
                       field.signature?.signatureImageAsBase64 ? (
-                        <img
-                          src={field.signature.signatureImageAsBase64}
-                          alt="Signature"
-                          className="h-full w-full object-contain dark:invert"
-                        />
+                        <div className="flex h-full w-full items-center justify-center">
+                          <img
+                            src={field.signature.signatureImageAsBase64}
+                            alt="Signature"
+                            className="h-auto max-h-[75%] w-auto max-w-[75%] object-contain dark:invert"
+                          />
+                        </div>
                       ) : (
                         <p className="font-signature text-muted-foreground text-lg duration-200 sm:text-xl md:text-2xl">
                           {field.signature?.typedSignature}

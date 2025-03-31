@@ -251,11 +251,13 @@ export const SignatureField = ({
       )}
 
       {state === 'signed-image' && signature?.signatureImageAsBase64 && (
-        <img
-          src={signature.signatureImageAsBase64}
-          alt={`Signature for ${recipient.name}`}
-          className="h-full w-full object-contain"
-        />
+        <div className="flex h-full w-full items-center justify-center">
+          <img
+            src={signature.signatureImageAsBase64}
+            alt={`Signature for ${recipient.name}`}
+            className="h-auto max-h-[90%] w-auto max-w-[90%] object-contain"
+          />
+        </div>
       )}
 
       {state === 'signed-text' && (
@@ -275,7 +277,7 @@ export const SignatureField = ({
           <DialogTitle>
             <Trans>
               Sign as {recipient.name}{' '}
-              <div className="text-muted-foreground h-5">({recipient.email})</div>
+              <div className="text-muted-foreground mb-2 h-5">({recipient.email})</div>
             </Trans>
           </DialogTitle>
 

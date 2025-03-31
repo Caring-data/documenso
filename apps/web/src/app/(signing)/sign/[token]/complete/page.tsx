@@ -1,10 +1,8 @@
-import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
 import { Trans, msg } from '@lingui/macro';
 import { useLingui } from '@lingui/react';
 import { CheckCircle2, Clock8 } from 'lucide-react';
-import { getServerSession } from 'next-auth';
 import { env } from 'next-runtime-env';
 import { match } from 'ts-pattern';
 
@@ -19,13 +17,11 @@ import { getRecipientSignatures } from '@documenso/lib/server-only/recipient/get
 import { getUserByEmail } from '@documenso/lib/server-only/user/get-user-by-email';
 import { DocumentStatus, FieldType, RecipientRole } from '@documenso/prisma/client';
 import { DocumentDownloadButton } from '@documenso/ui/components/document/document-download-button';
-import { DocumentShareButton } from '@documenso/ui/components/document/document-share-button';
 import { SigningCard3D } from '@documenso/ui/components/signing-card';
 import { cn } from '@documenso/ui/lib/utils';
 import { Badge } from '@documenso/ui/primitives/badge';
 
 import { SigningAuthPageView } from '../signing-auth-page';
-import { ClaimAccount } from './claim-account';
 import { DocumentPreviewButton } from './document-preview-button';
 import { PollUntilDocumentCompleted } from './poll-until-document-completed';
 
@@ -91,14 +87,12 @@ export default async function CompletedSigningPage({
     fields.find((field) => field.type === FieldType.NAME)?.customText ||
     recipient.email;
 
-  const sessionData = await getServerSession();
-  const isLoggedIn = !!sessionData?.user;
   const canSignUp = !isExistingUser && NEXT_PUBLIC_DISABLE_SIGNUP !== 'true';
 
   return (
     <div
       className={cn(
-        '-mx-4 flex flex-col items-center overflow-x-hidden px-4 pt-24 md:-mx-8 md:px-8 lg:pt-36 xl:pt-44',
+        'flex flex-col items-center overflow-x-hidden px-4 pt-24 md:px-8 lg:pt-36 xl:pt-44',
         { 'pt-0 lg:pt-0 xl:pt-0': canSignUp },
       )}
     >
@@ -115,7 +109,7 @@ export default async function CompletedSigningPage({
         >
           <Badge variant="neutral" size="default" className="mb-6 rounded-xl border bg-transparent">
             <span className="block max-w-[10rem] truncate font-medium hover:underline md:max-w-[20rem]">
-              {document.title}
+              {document.documentDetails?.documentName}
             </span>
           </Badge>
 
@@ -126,8 +120,8 @@ export default async function CompletedSigningPage({
             signingCelebrationImage={signingCelebration}
           />
 
-          <h2 className="mt-6 max-w-[35ch] text-center text-2xl font-semibold leading-normal md:text-3xl lg:text-4xl">
-            {recipient.role === RecipientRole.SIGNER && <Trans>Document Signed</Trans>}
+          <h2 className="mt-6 max-w-[35ch] text-center text-2xl font-semibold leading-normal md:text-3xl lg:text-3xl">
+            {recipient.role === RecipientRole.SIGNER && <Trans>Document Successfully Signed</Trans>}
             {recipient.role === RecipientRole.VIEWER && <Trans>Document Viewed</Trans>}
             {recipient.role === RecipientRole.APPROVER && <Trans>Document Approved</Trans>}
           </h2>
@@ -137,7 +131,7 @@ export default async function CompletedSigningPage({
               <div className="text-documenso-700 mt-4 flex items-center text-center">
                 <CheckCircle2 className="mr-2 h-5 w-5" />
                 <span className="text-sm">
-                  <Trans>Everyone has signed</Trans>
+                  <Trans>All parties have signed the document.</Trans>
                 </span>
               </div>
             ))
@@ -162,7 +156,8 @@ export default async function CompletedSigningPage({
             .with({ status: DocumentStatus.COMPLETED }, () => (
               <p className="text-muted-foreground/60 mt-2.5 max-w-[60ch] text-center text-sm font-medium md:text-base">
                 <Trans>
-                  Everyone has signed! You will receive an Email copy of the signed document.
+                  A copy of the completed document will be sent to your email shortly. You may also
+                  download it below.
                 </Trans>
               </p>
             ))
@@ -183,8 +178,6 @@ export default async function CompletedSigningPage({
             ))}
 
           <div className="mt-8 flex w-full max-w-sm items-center justify-center gap-4">
-            <DocumentShareButton documentId={document.id} token={recipient.token} />
-
             {document.status === DocumentStatus.COMPLETED ? (
               <DocumentDownloadButton
                 className="flex-1"
@@ -200,30 +193,6 @@ export default async function CompletedSigningPage({
               />
             )}
           </div>
-        </div>
-
-        <div className="flex flex-col items-center">
-          {canSignUp && (
-            <div className="flex max-w-xl flex-col items-center justify-center p-4 md:p-12">
-              <h2 className="mt-8 text-center text-xl font-semibold md:mt-0">
-                <Trans>Need to sign documents?</Trans>
-              </h2>
-
-              <p className="text-muted-foreground/60 mt-4 max-w-[55ch] text-center leading-normal">
-                <Trans>
-                  Create your account and start using state-of-the-art document signing.
-                </Trans>
-              </p>
-
-              <ClaimAccount defaultName={recipientName} defaultEmail={recipient.email} />
-            </div>
-          )}
-
-          {isLoggedIn && (
-            <Link href="/documents" className="text-documenso-700 hover:text-documenso-600 mt-2">
-              <Trans>Go Back Home</Trans>
-            </Link>
-          )}
         </div>
       </div>
 

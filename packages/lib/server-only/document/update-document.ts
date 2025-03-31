@@ -262,6 +262,9 @@ export const updateDocument = async ({
       data: auditLogs,
     });
 
-    return updatedDocument;
+    return {
+      ...updatedDocument,
+      documentDetails: updatedDocument.documentDetails ?? null,
+    };
   });
 };

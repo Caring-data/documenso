@@ -1,6 +1,7 @@
 'use server';
 
 import { prisma } from '@documenso/prisma';
+import { EntityStatus } from '@documenso/prisma/client';
 
 export type DeleteTemplateOptions = {
   id: number;
@@ -30,6 +31,7 @@ export const deleteTemplate = async ({ id, userId, teamId }: DeleteTemplateOptio
     },
     data: {
       deletedAt: new Date(),
+      activityStatus: EntityStatus.INACTIVE,
     },
   });
 };

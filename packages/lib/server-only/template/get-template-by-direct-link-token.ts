@@ -1,4 +1,5 @@
 import { prisma } from '@documenso/prisma';
+import { EntityStatus } from '@documenso/prisma/client';
 
 export interface GetTemplateByDirectLinkTokenOptions {
   token: string;
@@ -13,6 +14,8 @@ export const getTemplateByDirectLinkToken = async ({
         token,
         enabled: true,
       },
+      activityStatus: { not: EntityStatus.INACTIVE },
+      deletedAt: null,
     },
     include: {
       directLink: true,

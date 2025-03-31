@@ -384,7 +384,7 @@ export const SigningForm = ({
                     <SignDialog
                       isSubmitting={isSubmitting}
                       onSignatureComplete={handleSubmit(onFormSubmit)}
-                      documentTitle={document.title}
+                      documentTitle={document.documentDetails?.documentName || document.title}
                       fields={fields}
                       fieldsValidated={fieldsValidated}
                       role={recipient.role}

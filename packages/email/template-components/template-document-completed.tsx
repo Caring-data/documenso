@@ -1,59 +1,52 @@
 import { Trans } from '@lingui/macro';
 
-import { Button, Column, Img, Section, Text } from '../components';
-import { TemplateDocumentImage } from './template-document-image';
+import { Button, Section, Text } from '../components';
 
 export interface TemplateDocumentCompletedProps {
   downloadLink: string;
-  documentName: string;
   assetBaseUrl: string;
-  customBody?: string;
+  recipientName?: string;
+  documentDetails?: {
+    companyName?: string;
+    facilityAdministrator?: string;
+    documentName?: string;
+    residentName?: string;
+    locationName?: string;
+  };
 }
 
 export const TemplateDocumentCompleted = ({
   downloadLink,
-  documentName,
-  assetBaseUrl,
-  customBody,
+  recipientName,
+  documentDetails,
 }: TemplateDocumentCompletedProps) => {
-  const getAssetUrl = (path: string) => {
-    return new URL(path, assetBaseUrl).toString();
-  };
-
   return (
     <>
-      <TemplateDocumentImage className="mt-6" assetBaseUrl={assetBaseUrl} />
-
       <Section>
-        <Section className="mb-4">
-          <Column align="center">
-            <Text className="text-base font-semibold text-[#7AC455]">
-              <Img
-                src={getAssetUrl('/static/completed.png')}
-                className="-mt-0.5 mr-2 inline h-7 w-7 align-middle"
-              />
-              <Trans>Completed</Trans>
-            </Text>
-          </Column>
+        <Section>
+          <Text className="self-stretch text-sm font-medium leading-5 text-zinc-600">
+            <Trans>Dear </Trans> {recipientName},
+          </Text>
+          <Text className="text-sm font-medium leading-5 text-zinc-600">
+            <Trans>
+              We are pleased to inform you that all required signatures have been completed, and the
+              document{' '}
+              <span className="text-brand-accent font-medium">{documentDetails?.documentName}</span>{' '}
+              is now ready for download.
+            </Trans>
+          </Text>
+          <Text className="text-sm font-medium leading-5 text-zinc-600">
+            <Trans>
+              You can access the final copy of the document by clicking the button below
+            </Trans>
+          </Text>
         </Section>
 
-        <Text className="text-primary mb-0 text-center text-lg font-semibold">
-          {customBody || <Trans>“{documentName}” was signed by all signers</Trans>}
-        </Text>
-
-        <Text className="my-1 text-center text-base text-slate-400">
-          <Trans>Continue by downloading the document.</Trans>
-        </Text>
-
-        <Section className="mb-6 mt-8 text-center">
+        <Section className="mt-6 text-center">
           <Button
-            className="rounded-lg border border-solid border-slate-200 px-4 py-2 text-center text-sm font-medium text-black no-underline"
+            className="bg-brand inline-flex items-center justify-center rounded-lg px-6 py-3 text-center text-sm font-medium text-white no-underline"
             href={downloadLink}
           >
-            <Img
-              src={getAssetUrl('/static/download.png')}
-              className="mb-0.5 mr-2 inline h-5 w-5 align-middle"
-            />
             <Trans>Download</Trans>
           </Button>
         </Section>

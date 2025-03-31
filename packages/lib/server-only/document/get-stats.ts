@@ -3,7 +3,7 @@ import { match } from 'ts-pattern';
 
 import type { PeriodSelectorValue } from '@documenso/lib/server-only/document/find-documents';
 import { prisma } from '@documenso/prisma';
-import { TeamMemberRole } from '@documenso/prisma/client';
+import { EntityStatus, TeamMemberRole } from '@documenso/prisma/client';
 import type { Prisma, User } from '@documenso/prisma/client';
 import { SigningStatus } from '@documenso/prisma/client';
 import { DocumentVisibility } from '@documenso/prisma/client';
@@ -101,6 +101,7 @@ const getCounts = async ({ user, createdAt, search }: GetCountsOption) => {
         userId: user.id,
         createdAt,
         teamId: null,
+        activityStatus: EntityStatus.ACTIVE,
         deletedAt: null,
         AND: [searchFilter],
       },
@@ -121,6 +122,8 @@ const getCounts = async ({ user, createdAt, search }: GetCountsOption) => {
           },
         },
         createdAt,
+        activityStatus: EntityStatus.ACTIVE,
+        deletedAt: null,
         AND: [searchFilter],
       },
     }),
@@ -159,6 +162,8 @@ const getCounts = async ({ user, createdAt, search }: GetCountsOption) => {
             },
           },
         ],
+        activityStatus: EntityStatus.ACTIVE,
+        deletedAt: null,
         AND: [searchFilter],
       },
     }),

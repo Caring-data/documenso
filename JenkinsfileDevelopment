@@ -5,6 +5,7 @@ pipeline {
         PROJECT_NAME = "documenso"
         REPO_URL = "https://github.com/Caring-data/documenso"
         CONTAINER_NAME = "documenso_container"
+        NGINX_CONTAINER_NAME = "nginx_next"
     }
 
     stages {
@@ -22,7 +23,7 @@ pipeline {
                           userRemoteConfigs: [[
                               url: "${REPO_URL}",
                               credentialsId: 'git_credentials'
-                ]]])
+                          ]]])
             }
         }
         stage('Copy .env') {
@@ -37,26 +38,19 @@ pipeline {
                 }
             }
         }
-        stage('Build and Start Docker Container') {
+        stage('Build and Start Docker Compose Services') {
             steps {
                 script {
                     sh 'cd ${JENKINS_HOME}/workspace/documenso_development'
 
-                    // Crear una imagen de Next.js
-                    sh "docker build -t ${PROJECT_NAME}:latest ."
-
-                    // Verificar si ya hay un contenedor corriendo
-                    def containerExists = sh(script: "docker ps -a --filter 'name=${CONTAINER_NAME}' --format '{{.Names}}'", returnStdout: true).trim()
-
-                    if (containerExists) {
-                        // Si ya existe, detenerlo y eliminarlo antes de lanzar uno nuevo
-                        sh "docker stop ${CONTAINER_NAME} || true"
-                        sh "docker rm ${CONTAINER_NAME} || true"
-                    }
-
-                    // Iniciar un único contenedor de Next.js
+                    // Stop and remove any existing containers (if they exist)
                     sh """
-                    docker run -d --name ${CONTAINER_NAME} -p 3002:3002 --env-file .env ${PROJECT_NAME}:latest
+                        docker compose down || true
+                    """
+
+                    // Build and start both services using docker-compose
+                    sh """
+                        docker compose up -d --build
                     """
                 }
             }

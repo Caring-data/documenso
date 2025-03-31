@@ -74,7 +74,6 @@ export default async function RejectedSigningPage({ params: { token } }: Rejecte
       <Badge variant="neutral" size="default" className="mb-6 rounded-xl border bg-transparent">
         {truncatedTitle}
       </Badge>
-
       <div className="flex flex-col items-center">
         <div className="flex items-center gap-x-4">
           <XCircle className="text-destructive h-10 w-10" />

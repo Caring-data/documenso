@@ -5,6 +5,7 @@ import {
   DocumentSigningOrder,
   DocumentSource,
   type Field,
+  Prisma,
   type Recipient,
   RecipientRole,
   SendStatus,
@@ -29,11 +30,15 @@ import {
   createRecipientAuthOptions,
   extractDocumentAuthMethods,
 } from '../../utils/document-auth';
+import {
+  findFieldCoordinatesFromPdf,
+  getFieldVariableName,
+} from '../../utils/pdf/findFieldCoordinates';
 import { triggerWebhook } from '../webhooks/trigger/trigger-webhook';
 
 type FinalRecipient = Pick<
   Recipient,
-  'name' | 'email' | 'role' | 'authOptions' | 'signingOrder'
+  'name' | 'email' | 'role' | 'authOptions' | 'signingOrder' | 'expired'
 > & {
   templateRecipientId: number;
   fields: Field[];
@@ -49,6 +54,7 @@ export type CreateDocumentFromTemplateOptions = {
     name?: string;
     email: string;
     signingOrder?: number | null;
+    expired?: Date | null;
   }[];
   customDocumentDataId?: string;
 
@@ -70,6 +76,15 @@ export type CreateDocumentFromTemplateOptions = {
     emailSettings?: TDocumentEmailSettings;
   };
   requestMetadata: ApiRequestMetadata;
+  formKey?: string;
+  residentId?: string;
+  documentDetails?: {
+    companyName?: string;
+    facilityAdministrator?: string;
+    documentName?: string;
+    residentName?: string;
+    locationName?: string;
+  };
 };
 
 export const createDocumentFromTemplate = async ({
@@ -81,6 +96,9 @@ export const createDocumentFromTemplate = async ({
   customDocumentDataId,
   override,
   requestMetadata,
+  formKey,
+  residentId,
+  documentDetails,
 }: CreateDocumentFromTemplateOptions) => {
   const template = await prisma.template.findUnique({
     where: {
@@ -123,25 +141,25 @@ export const createDocumentFromTemplate = async ({
     });
   }
 
-  // Check that all the passed in recipient IDs can be associated with a template recipient.
-  recipients.forEach((recipient) => {
-    const foundRecipient = template.recipients.find(
-      (templateRecipient) => templateRecipient.id === recipient.id,
-    );
-
-    if (!foundRecipient) {
-      throw new AppError(AppErrorCode.INVALID_BODY, {
-        message: `Recipient with ID ${recipient.id} not found in the template.`,
-      });
-    }
-  });
+  // Check that the template has IDs.
+  if (template.recipients.length === 0) {
+    throw new AppError(AppErrorCode.INVALID_BODY, {
+      message: 'The template does not contain any recipients.',
+    });
+  }
 
   const { documentAuthOption: templateAuthOptions } = extractDocumentAuthMethods({
     documentAuth: template.authOptions,
   });
 
   const finalRecipients: FinalRecipient[] = template.recipients.map((templateRecipient) => {
-    const foundRecipient = recipients.find((recipient) => recipient.id === templateRecipient.id);
+    const foundRecipient = recipients.find((recipient) => {
+      if (recipient.signingOrder != null && templateRecipient.signingOrder != null) {
+        return recipient.signingOrder === templateRecipient.signingOrder;
+      }
+
+      return recipient.id === templateRecipient.id;
+    });
 
     return {
       templateRecipientId: templateRecipient.id,
@@ -151,6 +169,8 @@ export const createDocumentFromTemplate = async ({
       role: templateRecipient.role,
       signingOrder: foundRecipient?.signingOrder ?? templateRecipient.signingOrder,
       authOptions: templateRecipient.authOptions,
+      expired: foundRecipient?.expired ?? templateRecipient?.expired ?? null,
+      //id: nanoid(),
     };
   });
 
@@ -194,6 +214,9 @@ export const createDocumentFromTemplate = async ({
           globalAccessAuth: templateAuthOptions.globalAccessAuth,
           globalActionAuth: templateAuthOptions.globalActionAuth,
         }),
+        formKey,
+        residentId,
+        documentDetails,
         visibility: template.visibility || template.team?.teamGlobalSettings?.documentVisibility,
         documentMeta: {
           create: {
@@ -222,27 +245,31 @@ export const createDocumentFromTemplate = async ({
         },
         recipients: {
           createMany: {
-            data: finalRecipients.map((recipient) => {
-              const authOptions = ZRecipientAuthOptionsSchema.parse(recipient?.authOptions);
+            data: Object.values(finalRecipients)
+              .filter((recipient) => !recipient.email.includes('recipient'))
+              .map((recipient) => {
+                const authOptions = ZRecipientAuthOptionsSchema.parse(recipient?.authOptions);
 
-              return {
-                email: recipient.email,
-                name: recipient.name,
-                role: recipient.role,
-                authOptions: createRecipientAuthOptions({
-                  accessAuth: authOptions.accessAuth,
-                  actionAuth: authOptions.actionAuth,
-                }),
-                sendStatus:
-                  recipient.role === RecipientRole.CC ? SendStatus.SENT : SendStatus.NOT_SENT,
-                signingStatus:
-                  recipient.role === RecipientRole.CC
-                    ? SigningStatus.SIGNED
-                    : SigningStatus.NOT_SIGNED,
-                signingOrder: recipient.signingOrder,
-                token: nanoid(),
-              };
-            }),
+                return {
+                  //id: recipient.id,
+                  email: recipient.email,
+                  name: recipient.name,
+                  role: recipient.role,
+                  authOptions: createRecipientAuthOptions({
+                    accessAuth: authOptions.accessAuth,
+                    actionAuth: authOptions.actionAuth,
+                  }),
+                  sendStatus:
+                    recipient.role === RecipientRole.CC ? SendStatus.SENT : SendStatus.NOT_SENT,
+                  signingStatus:
+                    recipient.role === RecipientRole.CC
+                      ? SigningStatus.SIGNED
+                      : SigningStatus.NOT_SIGNED,
+                  signingOrder: recipient.signingOrder,
+                  token: nanoid(),
+                  expired: recipient.expired,
+                };
+              }),
           },
         },
       },
@@ -256,17 +283,29 @@ export const createDocumentFromTemplate = async ({
       },
     });
 
-    let fieldsToCreate: Omit<Field, 'id' | 'secondaryId' | 'templateId'>[] = [];
+    const base64Pdf = documentData.data;
 
-    Object.values(finalRecipients).forEach(({ email, fields }) => {
-      const recipient = document.recipients.find((recipient) => recipient.email === email);
+    const fieldsToCreate: Omit<Field, 'id' | 'secondaryId' | 'templateId'>[] = [];
 
-      if (!recipient) {
-        throw new Error('Recipient not found.');
-      }
+    for (const finalRecipient of finalRecipients) {
+      const recipient = document.recipients.find(
+        (recipient) => recipient.email === finalRecipient.email,
+      );
+      if (!recipient) continue;
 
-      fieldsToCreate = fieldsToCreate.concat(
-        fields.map((field) => ({
+      for (const field of finalRecipient.fields) {
+        const variableName = getFieldVariableName(recipient, field);
+        const coordinates = await findFieldCoordinatesFromPdf({
+          base64Pdf,
+          fieldName: variableName,
+        });
+
+        if (coordinates) {
+          field.positionX = new Prisma.Decimal(coordinates.x);
+          field.positionY = new Prisma.Decimal(coordinates.y);
+          field.page = coordinates.page;
+        }
+        fieldsToCreate.push({
           documentId: document.id,
           recipientId: recipient.id,
           type: field.type,
@@ -278,9 +317,9 @@ export const createDocumentFromTemplate = async ({
           customText: '',
           inserted: false,
           fieldMeta: field.fieldMeta,
-        })),
-      );
-    });
+        });
+      }
+    }
 
     await tx.field.createMany({
       data: fieldsToCreate.map((field) => ({

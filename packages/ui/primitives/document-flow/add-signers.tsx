@@ -13,7 +13,6 @@ import { useSession } from 'next-auth/react';
 import { useFieldArray, useForm } from 'react-hook-form';
 import { prop, sortBy } from 'remeda';
 
-import { useLimits } from '@documenso/ee/server-only/limits/provider/client';
 import { ZRecipientAuthOptionsSchema } from '@documenso/lib/types/document-auth';
 import { nanoid } from '@documenso/lib/universal/id';
 import { canRecipientBeModified as utilCanRecipientBeModified } from '@documenso/lib/utils/recipients';
@@ -65,7 +64,6 @@ export const AddSignersFormPartial = ({
 }: AddSignersFormProps) => {
   const { _ } = useLingui();
   const { toast } = useToast();
-  const { remaining } = useLimits();
   const { data: session } = useSession();
 
   const user = session?.user;
@@ -678,7 +676,7 @@ export const AddSignersFormPartial = ({
               <Button
                 type="button"
                 className="flex-1"
-                disabled={isSubmitting || signers.length >= remaining.recipients}
+                disabled={isSubmitting}
                 onClick={() => onAddSigner()}
               >
                 <Plus className="-ml-1 mr-2 h-5 w-5" />

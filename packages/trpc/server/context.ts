@@ -35,6 +35,7 @@ export const createTrpcContext = async ({
       user: null,
       teamId,
       req,
+      res,
       metadata,
     };
   }
@@ -45,6 +46,7 @@ export const createTrpcContext = async ({
       user: null,
       teamId,
       req,
+      res,
       metadata,
     };
   }
@@ -54,6 +56,7 @@ export const createTrpcContext = async ({
     user,
     teamId,
     req,
+    res,
     metadata,
   };
 };
