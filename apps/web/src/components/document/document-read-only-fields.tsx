@@ -125,7 +125,7 @@ export const DocumentReadOnlyFields = ({
                           />
                         </div>
                       ) : (
-                        <p className="font-signature text-muted-foreground text-lg duration-200 sm:text-xl md:text-2xl">
+                        <p className="font-signature text-muted-foreground sm:text-md text-sm duration-200 md:text-lg">
                           {field.signature?.typedSignature}
                         </p>
                       ),
@@ -157,8 +157,8 @@ export const DocumentReadOnlyFields = ({
 
                 {field.recipient.signingStatus === SigningStatus.NOT_SIGNED && (
                   <p
-                    className={cn('text-muted-foreground text-lg duration-200', {
-                      'font-signature sm:text-xl md:text-2xl':
+                    className={cn('text-muted-foreground text-sm duration-200', {
+                      'font-signature sm:text-md md:text-lg':
                         field.type === FieldType.SIGNATURE ||
                         field.type === FieldType.FREE_SIGNATURE,
                     })}
