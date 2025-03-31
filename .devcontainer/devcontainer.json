@@ -10,7 +10,7 @@
     "ghcr.io/devcontainers/features/node:1": {}
   },
   "onCreateCommand": "./.devcontainer/on-create.sh",
-  "forwardPorts": [3002, 54320, 9000, 2500, 1100],
+  "forwardPorts": [3002, 54320, 9000, 2500, 1100, 6000],
   "customizations": {
     "vscode": {
       "extensions": [
