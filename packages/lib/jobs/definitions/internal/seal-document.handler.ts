@@ -14,11 +14,13 @@ import { signPdf } from '@documenso/signing';
 import { sendCompletedEmail } from '../../../server-only/document/send-completed-email';
 import PostHogServerClient from '../../../server-only/feature-flags/get-post-hog-server-client';
 import { getCertificatePdf } from '../../../server-only/htmltopdf/get-certificate-pdf';
+import { storeSignedDocument } from '../../../server-only/laravel-auth/storeSignedDocument';
 import { flattenAnnotations } from '../../../server-only/pdf/flatten-annotations';
 import { flattenForm } from '../../../server-only/pdf/flatten-form';
 import { insertFieldInPDF } from '../../../server-only/pdf/insert-field-in-pdf';
 import { normalizeSignatureAppearances } from '../../../server-only/pdf/normalize-signature-appearances';
 import { triggerWebhook } from '../../../server-only/webhooks/trigger/trigger-webhook';
+import type { TDocumentDetails } from '../../../types/document';
 import { DOCUMENT_AUDIT_LOG_TYPE } from '../../../types/document-audit-logs';
 import {
   ZWebhookDocumentSchema,
@@ -121,13 +123,10 @@ export const run = async ({
 
   const pdfData = await getFile(documentData);
 
-  const certificateData =
-    (document.team?.teamGlobalSettings?.includeSigningCertificate ?? true)
-      ? await getCertificatePdf({
-          documentId,
-          language: document.documentMeta?.language,
-        }).catch(() => null)
-      : null;
+  const certificateData = await getCertificatePdf({
+    documentId,
+    language: document.documentMeta?.language,
+  }).catch(() => null);
 
   const newDataId = await io.runTask('decorate-and-sign-pdf', async () => {
     const pdfDoc = await PDFDocument.load(pdfData);
@@ -250,10 +249,47 @@ export const run = async ({
     },
   });
 
+  const rawDetails = document?.documentDetails;
+
+  if (!rawDetails || typeof rawDetails !== 'object') {
+    throw new Error('Invalid or missing documentDetails');
+  }
+
+  const documentDetails: TDocumentDetails = rawDetails;
+
   await triggerWebhook({
     event: WebhookTriggerEvents.DOCUMENT_COMPLETED,
     data: ZWebhookDocumentSchema.parse(mapDocumentToWebhookDocumentPayload(updatedDocument)),
     userId: updatedDocument.userId,
     teamId: updatedDocument.teamId ?? undefined,
+  });
+
+  await io.runTask('send-to-laravel', async () => {
+    try {
+      const base64Data = updatedDocument.documentData?.data;
+
+      if (!base64Data || typeof base64Data !== 'string') {
+        console.warn('The base64 of the signed document could not be obtained.');
+        return;
+      }
+
+      const mainRecipient = updatedDocument.recipients.find((r) => r.role !== RecipientRole.CC);
+
+      if (!mainRecipient) {
+        console.warn('No primary recipient was found for the Laravel submission.');
+        return;
+      }
+
+      await storeSignedDocument(
+        updatedDocument,
+        base64Data,
+        documentDetails,
+        updatedDocument.id,
+        mainRecipient,
+        true,
+      );
+    } catch (error) {
+      console.error('Error when sending the signed document to Laravel:', error);
+    }
   });
 };
