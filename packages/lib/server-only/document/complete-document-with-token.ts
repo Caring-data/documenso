@@ -5,7 +5,6 @@ import type { RequestMetadata } from '@documenso/lib/universal/extract-request-m
 import { fieldsContainUnsignedRequiredField } from '@documenso/lib/utils/advanced-fields-helpers';
 import { createDocumentAuditLogData } from '@documenso/lib/utils/document-audit-logs';
 import { prisma } from '@documenso/prisma';
-import type { Document, Recipient } from '@documenso/prisma/client';
 import {
   DocumentSigningOrder,
   DocumentStatus,
@@ -17,13 +16,13 @@ import {
 
 import { AppError, AppErrorCode } from '../../errors/app-error';
 import { jobs } from '../../jobs/client';
-import { fetchWithLaravelAuth } from '../../laravel-auth/fetch-with-laravel-auth';
 import type { TRecipientActionAuth } from '../../types/document-auth';
 import {
   ZWebhookDocumentSchema,
   mapDocumentToWebhookDocumentPayload,
 } from '../../types/webhook-payload';
-import { getLaravelToken } from '../laravel-auth/getLaravelToken';
+import { storeSignedDocument } from '../laravel-auth/storeSignedDocument';
+import { generateSignedPdf } from '../pdf/generate-signed-pdf';
 import { getIsRecipientsTurnToSign } from '../recipient/get-is-recipient-turn';
 import { triggerWebhook } from '../webhooks/trigger/trigger-webhook';
 import { sendPendingEmail } from './send-pending-email';
@@ -67,6 +66,15 @@ const getDocument = async ({ token, documentId }: GetDocumentOptions) => {
         },
       },
       documentData: true,
+      team: {
+        select: {
+          teamGlobalSettings: {
+            select: {
+              includeSigningCertificate: true,
+            },
+          },
+        },
+      },
     },
   });
 };
@@ -178,18 +186,6 @@ export const completeDocumentWithToken = async ({
     });
   });
 
-  await storeSignedDocument(
-    {
-      ...document,
-      documentDetails,
-    },
-    documentDetails,
-    documentId,
-    recipient,
-    req,
-    res,
-  );
-
   await jobs.triggerJob({
     name: 'send.recipient.signed.email',
     payload: {
@@ -197,6 +193,35 @@ export const completeDocumentWithToken = async ({
       recipientId: recipient.id,
     },
   });
+
+  const documentFields = await prisma.field.findMany({
+    where: {
+      documentId: document.id,
+    },
+    include: {
+      signature: true,
+    },
+  });
+
+  const signedPdfBuffer = await generateSignedPdf({
+    document: {
+      ...document,
+      documentData: { data: document.documentData.data },
+    },
+    fields: documentFields,
+    certificateData: null,
+  });
+
+  const base64SignedPdf = signedPdfBuffer.toString('base64');
+
+  await storeSignedDocument(
+    document,
+    base64SignedPdf,
+    documentDetails,
+    document.id,
+    recipient,
+    false,
+  );
 
   const pendingRecipients = await prisma.recipient.findMany({
     select: {
@@ -256,8 +281,6 @@ export const completeDocumentWithToken = async ({
     },
   });
 
-  const allSigned = Boolean(haveAllRecipientsSigned);
-
   if (haveAllRecipientsSigned) {
     await jobs.triggerJob({
       name: 'internal.seal-document',
@@ -267,83 +290,21 @@ export const completeDocumentWithToken = async ({
       },
     });
 
-    await storeSignedDocument(
-      {
-        ...document,
-        documentDetails,
+    const updatedDocument = await prisma.document.findFirstOrThrow({
+      where: {
+        id: document.id,
       },
-      documentDetails,
-      documentId,
-      recipient,
-      req,
-      res,
-      allSigned,
-    );
-  }
-
-  const updatedDocument = await prisma.document.findFirstOrThrow({
-    where: {
-      id: document.id,
-    },
-    include: {
-      documentMeta: true,
-      recipients: true,
-    },
-  });
-
-  await triggerWebhook({
-    event: WebhookTriggerEvents.DOCUMENT_SIGNED,
-    data: ZWebhookDocumentSchema.parse(mapDocumentToWebhookDocumentPayload(updatedDocument)),
-    userId: updatedDocument.userId,
-    teamId: updatedDocument.teamId ?? undefined,
-  });
-};
-
-const storeSignedDocument = async (
-  document: Document & {
-    documentData: { data: Buffer | string };
-    documentDetails?: DocumentDetails | null;
-  },
-  documentDetails: DocumentDetails | undefined,
-  documentId: number,
-  recipient: Recipient,
-  req: NextApiRequest,
-  res: NextApiResponse,
-  allSigned: boolean = false,
-) => {
-  try {
-    const laravelToken = await getLaravelToken();
-
-    const base64File = Buffer.isBuffer(document.documentData.data)
-      ? document.documentData.data.toString('base64')
-      : document.documentData.data;
-
-    const formData = {
-      clientName: String(documentDetails?.companyName || ''),
-      documensoId: String(documentId),
-      documentKey: String(document.formKey || ''),
-      residentId: String(document.residentId || ''),
-      base64File: base64File,
-      recipient: allSigned ? 'AllRecipientsSigned' : recipient?.email,
-    };
-
-    const apiUrl = process.env.NEXT_PRIVATE_LARAVEL_API_URL;
-    const url = `${apiUrl}/residents/electronic-signature/store-signed-document`;
-
-    if (!apiUrl) {
-      throw new Error('Environment variables for the Laravel API are not defined.');
-    }
-
-    return await fetchWithLaravelAuth(
-      url,
-      {
-        method: 'POST',
-        body: JSON.stringify(formData),
+      include: {
+        documentMeta: true,
+        recipients: true,
       },
-      laravelToken,
-    );
-  } catch (error) {
-    console.error('Error storing signed document:', error);
-    throw new Error('Could not store the signed document.');
+    });
+
+    await triggerWebhook({
+      event: WebhookTriggerEvents.DOCUMENT_SIGNED,
+      data: ZWebhookDocumentSchema.parse(mapDocumentToWebhookDocumentPayload(updatedDocument)),
+      userId: updatedDocument.userId,
+      teamId: updatedDocument.teamId ?? undefined,
+    });
   }
 };
