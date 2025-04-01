@@ -445,6 +445,8 @@ export const recipientRouter = router({
         authOptions,
         userId: ctx.user?.id,
         requestMetadata: extractNextApiRequestMetadata(ctx.req),
+        req: ctx.req,
+        res: ctx.res,
       });
     }),
 

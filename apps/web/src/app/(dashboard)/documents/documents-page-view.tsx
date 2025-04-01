@@ -86,6 +86,18 @@ export const DocumentsPageView = async ({ searchParams = {}, team }: DocumentsPa
     query: search,
   });
 
+  const formattedResults = {
+    ...results,
+    data: results.data.map((doc) => ({
+      ...doc,
+      documentDetails: doc.documentDetails ?? null,
+      teamId: doc.teamId ?? null,
+      templateId: doc.templateId ?? null,
+      deletedAt: doc.deletedAt ?? null,
+      residentId: doc.residentId ?? null,
+    })),
+  };
+
   const getTabHref = (value: typeof status) => {
     const params = new URLSearchParams(searchParams);
 
@@ -162,7 +174,7 @@ export const DocumentsPageView = async ({ searchParams = {}, team }: DocumentsPa
       <div className="mt-8">
         {results.count > 0 && (
           <DocumentsDataTable
-            results={results}
+            results={formattedResults}
             showSenderColumn={team !== undefined}
             team={currentTeam}
           />

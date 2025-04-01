@@ -137,9 +137,9 @@ export const ApiContractV1 = c.router(
         401: ZUnsuccessfulResponseSchema,
         404: ZUnsuccessfulResponseSchema,
       },
-      summary: 'Create a new document from an existing template',
+      summary: 'Create a new template',
       deprecated: true,
-      description: `This has been deprecated in favour of "/api/v1/templates/:templateId/generate-document". You may face unpredictable behavior using this endpoint as it is no longer maintained.`,
+      description: ``,
     },
 
     createDocumentFromTemplate: {

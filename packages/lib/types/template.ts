@@ -31,6 +31,7 @@ export const ZTemplateSchema = TemplateSchema.pick({
   updatedAt: true,
   publicTitle: true,
   publicDescription: true,
+  activityStatus: true,
 }).extend({
   // Todo: Maybe we want to alter this a bit since this returns a lot of data.
   templateDocumentData: DocumentDataSchema.pick({
@@ -82,6 +83,7 @@ export const ZTemplateLiteSchema = TemplateSchema.pick({
   updatedAt: true,
   publicTitle: true,
   publicDescription: true,
+  activityStatus: true,
 });
 
 /**
@@ -103,7 +105,7 @@ export const ZTemplateManySchema = TemplateSchema.pick({
   publicDescription: true,
   formKey: true,
   deletedAt: true,
-  status: true,
+  activityStatus: true,
 }).extend({
   team: TeamSchema.pick({
     id: true,

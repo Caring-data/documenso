@@ -1,4 +1,5 @@
 import { prisma } from '@documenso/prisma';
+import { EntityStatus } from '@documenso/prisma/client';
 
 import { AppError, AppErrorCode } from '../../errors/app-error';
 import { getDocumentWhereInput } from './get-document-by-id';
@@ -21,7 +22,11 @@ export const getDocumentWithDetailsById = async ({
   });
 
   const document = await prisma.document.findFirst({
-    where: documentWhereInput,
+    where: {
+      ...documentWhereInput,
+      activityStatus: EntityStatus.ACTIVE,
+      deletedAt: null,
+    },
     include: {
       documentData: true,
       documentMeta: true,
@@ -36,5 +41,8 @@ export const getDocumentWithDetailsById = async ({
     });
   }
 
-  return document;
+  return {
+    ...document,
+    documentDetails: document.documentDetails ?? null,
+  };
 };

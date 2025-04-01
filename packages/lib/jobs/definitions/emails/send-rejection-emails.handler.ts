@@ -72,6 +72,7 @@ export const run = async ({
       documentOwnerName: document.user.name || document.user.email,
       reason: recipient.rejectionReason || '',
       assetBaseUrl: NEXT_PUBLIC_WEBAPP_URL(),
+      documentDetails: document.documentDetails || {},
     });
 
     const branding = document.team?.teamGlobalSettings
@@ -121,6 +122,7 @@ export const run = async ({
       }`,
       rejectionReason: recipient.rejectionReason || '',
       assetBaseUrl: NEXT_PUBLIC_WEBAPP_URL(),
+      documentDetails: document.documentDetails || {},
     });
 
     const branding = document.team?.teamGlobalSettings

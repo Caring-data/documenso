@@ -2,7 +2,6 @@ import React from 'react';
 
 import { RedirectType, redirect } from 'next/navigation';
 
-import { LimitsProvider } from '@documenso/ee/server-only/limits/provider/server';
 import { setupI18nSSR } from '@documenso/lib/client-only/providers/i18n.server';
 import { getServerComponentSession } from '@documenso/lib/next-auth/get-server-component-session';
 import { getTeamByUrl } from '@documenso/lib/server-only/team/get-team';
@@ -54,25 +53,23 @@ export default async function AuthenticatedTeamsLayout({
 
   return (
     <NextAuthProvider session={session}>
-      <LimitsProvider teamId={team.id}>
-        {team.subscription && team.subscription.status !== SubscriptionStatus.ACTIVE && (
-          <LayoutBillingBanner
-            subscription={team.subscription}
-            teamId={team.id}
-            userRole={team.currentTeamMember.role}
-          />
-        )}
+      {team.subscription && team.subscription.status !== SubscriptionStatus.ACTIVE && (
+        <LayoutBillingBanner
+          subscription={team.subscription}
+          teamId={team.id}
+          userRole={team.currentTeamMember.role}
+        />
+      )}
 
-        <Header user={user} teams={teams} />
+      <Header user={user} teams={teams} />
 
-        <TeamProvider team={team}>
-          <TrpcProvider headers={trpcHeaders}>
-            <main className="mt-8 pb-8 md:mt-12 md:pb-12">{children}</main>
-          </TrpcProvider>
-        </TeamProvider>
+      <TeamProvider team={team}>
+        <TrpcProvider headers={trpcHeaders}>
+          <main className="mt-8 pb-8 md:mt-12 md:pb-12">{children}</main>
+        </TrpcProvider>
+      </TeamProvider>
 
-        <RefreshOnFocus />
-      </LimitsProvider>
+      <RefreshOnFocus />
     </NextAuthProvider>
   );
 }

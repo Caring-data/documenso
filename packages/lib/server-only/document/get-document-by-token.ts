@@ -1,9 +1,18 @@
 import { prisma } from '@documenso/prisma';
+import { EntityStatus } from '@documenso/prisma/client';
 import type { DocumentWithRecipient } from '@documenso/prisma/types/document-with-recipient';
 
 import { AppError, AppErrorCode } from '../../errors/app-error';
 import type { TDocumentAuthMethods } from '../../types/document-auth';
 import { isRecipientAuthorized } from './is-recipient-authorized';
+
+interface DocumentDetails {
+  companyName?: string;
+  facilityAdministrator?: string;
+  documentName?: string;
+  residentName?: string;
+  locationName?: string;
+}
 
 export interface GetDocumentAndSenderByTokenOptions {
   token: string;
@@ -46,6 +55,8 @@ export const getDocumentByToken = async ({ token }: GetDocumentByTokenOptions) =
           token,
         },
       },
+      activityStatus: EntityStatus.ACTIVE,
+      deletedAt: null,
     },
   });
 
@@ -71,6 +82,8 @@ export const getDocumentAndSenderByToken = async ({
           token,
         },
       },
+      activityStatus: EntityStatus.ACTIVE,
+      deletedAt: null,
     },
     include: {
       user: true,
@@ -126,6 +139,7 @@ export const getDocumentAndSenderByToken = async ({
   return {
     ...result,
     user,
+    documentDetails: (result.documentDetails as DocumentDetails) ?? null,
   };
 };
 
@@ -149,6 +163,8 @@ export const getDocumentAndRecipientByToken = async ({
           token,
         },
       },
+      activityStatus: EntityStatus.ACTIVE,
+      deletedAt: null,
     },
     include: {
       recipients: {

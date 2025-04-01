@@ -77,9 +77,7 @@ export const SignDialog = ({
               <Trans>
                 <span className="inline-flex flex-wrap">
                   You are about to complete viewing "
-                  <span className="inline-block max-w-[11rem] truncate align-baseline">
-                    {documentTitle}
-                  </span>
+                  <span className="inline-block max-w-[11rem] align-baseline">{documentTitle}</span>
                   ".
                 </span>
                 <br /> Are you sure?
@@ -89,14 +87,11 @@ export const SignDialog = ({
           {role === RecipientRole.SIGNER && (
             <span>
               <Trans>
-                <span className="inline-flex flex-wrap">
-                  You are about to complete signing "
-                  <span className="inline-block max-w-[11rem] truncate align-baseline">
-                    {documentTitle}
-                  </span>
-                  ".
+                <span className="flex-wrap font-normal leading-4 text-zinc-600">
+                  Confirm your electronic signature on "
+                  <span className="max-w-[11rem] align-baseline">{documentTitle}</span>" by clicking
+                  “I Accept".
                 </span>
-                <br /> Are you sure?
               </Trans>
             </span>
           )}
@@ -116,7 +111,9 @@ export const SignDialog = ({
           )}
         </div>
 
-        <SigningDisclosure className="mt-4" />
+        <hr className="w-full border-t border-gray-300 bg-gray-300" />
+
+        <SigningDisclosure />
 
         <DialogFooter>
           <div className="flex w-full flex-1 flex-nowrap gap-4">
@@ -139,7 +136,7 @@ export const SignDialog = ({
               onClick={onSignatureComplete}
             >
               {role === RecipientRole.VIEWER && <Trans>Mark as Viewed</Trans>}
-              {role === RecipientRole.SIGNER && <Trans>Sign</Trans>}
+              {role === RecipientRole.SIGNER && <Trans>I Accept</Trans>}
               {role === RecipientRole.APPROVER && <Trans>Approve</Trans>}
             </Button>
           </div>

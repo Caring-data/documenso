@@ -1,13 +1,18 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
-import { Trans } from '@lingui/macro';
+import { useSearchParams } from 'next/navigation';
+import { usePathname } from 'next/navigation';
+
+import { Loader } from 'lucide-react';
 import { match } from 'ts-pattern';
 
+import { WEBAPP_BASE_URL } from '@documenso/lib/constants/app';
 import { DEFAULT_DOCUMENT_DATE_FORMAT } from '@documenso/lib/constants/date-formats';
 import { PDF_VIEWER_PAGE_SELECTOR } from '@documenso/lib/constants/pdf-viewer';
 import { DEFAULT_DOCUMENT_TIME_ZONE } from '@documenso/lib/constants/time-zones';
+import { authenticateWithLaravelClient } from '@documenso/lib/laravel-auth/client-auth-laravel';
 import type { DocumentAndSender } from '@documenso/lib/server-only/document/get-document-by-token';
 import {
   ZCheckboxFieldMeta,
@@ -49,7 +54,15 @@ export type SigningPageViewProps = {
   completedFields: CompletedField[];
   isRecipientsTurn: boolean;
   allRecipients?: RecipientWithFields[];
+  token?: string;
 };
+
+interface DocumentDetails {
+  documentName?: string;
+  facilityAdministrator?: string;
+  residentName?: string;
+  locationName?: string;
+}
 
 export const SigningPageView = ({
   document,
@@ -58,85 +71,75 @@ export const SigningPageView = ({
   completedFields,
   isRecipientsTurn,
   allRecipients = [],
+  token,
 }: SigningPageViewProps) => {
-  const { documentData, documentMeta } = document;
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const assetBaseUrl = WEBAPP_BASE_URL;
 
+  const extractedToken = token || (pathname ? pathname.split('/')[2] : '');
+  const hasVisitedPreSignPage = searchParams?.get('accessed') === 'true';
+
+  const { documentData, documentMeta } = document;
   const [selectedSignerId, setSelectedSignerId] = useState<number | null>(allRecipients?.[0]?.id);
 
-  const shouldUseTeamDetails =
-    document.teamId && document.team?.teamGlobalSettings?.includeSenderDetails === false;
+  useEffect(() => {
+    void authenticateWithLaravelClient();
+  }, []);
 
-  let senderName = document.user.name ?? '';
-  let senderEmail = `(${document.user.email})`;
+  useEffect(() => {
+    if (!hasVisitedPreSignPage && extractedToken) {
+      sessionStorage.setItem('preSigningData', JSON.stringify(document?.documentDetails ?? {}));
 
-  if (shouldUseTeamDetails) {
-    senderName = document.team?.name ?? '';
-    senderEmail = document.team?.teamEmail?.email ? `(${document.team.teamEmail.email})` : '';
-  }
+      window.location.href = `/sign/${extractedToken}/pre-signing`;
+    }
+  }, [hasVisitedPreSignPage, extractedToken, document]);
 
   const selectedSigner = allRecipients?.find((r) => r.id === selectedSignerId);
 
+  if (!hasVisitedPreSignPage && extractedToken) {
+    return (
+      <div className="flex h-screen items-center justify-center text-lg font-semibold text-gray-700">
+        <Loader className="h-8 w-8 animate-spin text-gray-500" />
+      </div>
+    );
+  }
+
+  const isValidDocumentDetails = (details: unknown): details is DocumentDetails => {
+    return typeof details === 'object' && details !== null && 'documentName' in details;
+  };
+
+  const normalizedDocument = {
+    ...document,
+    documentDetails: isValidDocumentDetails(document.documentDetails)
+      ? document.documentDetails
+      : {},
+  };
+
+  const getAssetUrl = (path: string) => {
+    return new URL(path, assetBaseUrl).toString();
+  };
+
   return (
     <RecipientProvider recipient={recipient} targetSigner={selectedSigner ?? null}>
-      <div className="mx-auto w-full max-w-screen-xl">
-        <h1
-          className="mt-4 block max-w-[20rem] truncate text-2xl font-semibold md:max-w-[30rem] md:text-3xl"
-          title={document.title}
-        >
-          {document.title}
-        </h1>
-
-        <div className="mt-2.5 flex flex-wrap items-center justify-between gap-x-6">
+      <header className="fixed left-0 top-0 z-50 flex w-full items-center bg-white px-6 py-3 shadow-md">
+        <img src={getAssetUrl('/static/logo-bg-white.png')} alt="Logo" className="h-8 w-auto" />
+      </header>
+      <div className="mx-auto mb-8 mt-20 w-full max-w-screen-xl px-4 md:mb-12 md:px-8">
+        <div className="mt-2.5 flex flex-wrap items-center justify-between gap-6">
           <div className="max-w-[50ch]">
-            <span className="text-muted-foreground truncate" title={senderName}>
-              {senderName} {senderEmail}
-            </span>{' '}
-            <span className="text-muted-foreground">
-              {match(recipient.role)
-                .with(RecipientRole.VIEWER, () =>
-                  document.teamId && !shouldUseTeamDetails ? (
-                    <Trans>
-                      on behalf of "{document.team?.name}" has invited you to view this document
-                    </Trans>
-                  ) : (
-                    <Trans>has invited you to view this document</Trans>
-                  ),
-                )
-                .with(RecipientRole.SIGNER, () =>
-                  document.teamId && !shouldUseTeamDetails ? (
-                    <Trans>
-                      on behalf of "{document.team?.name}" has invited you to sign this document
-                    </Trans>
-                  ) : (
-                    <Trans>has invited you to sign this document</Trans>
-                  ),
-                )
-                .with(RecipientRole.APPROVER, () =>
-                  document.teamId && !shouldUseTeamDetails ? (
-                    <Trans>
-                      on behalf of "{document.team?.name}" has invited you to approve this document
-                    </Trans>
-                  ) : (
-                    <Trans>has invited you to approve this document</Trans>
-                  ),
-                )
-                .with(RecipientRole.ASSISTANT, () =>
-                  document.teamId && !shouldUseTeamDetails ? (
-                    <Trans>
-                      on behalf of "{document.team?.name}" has invited you to assist this document
-                    </Trans>
-                  ) : (
-                    <Trans>has invited you to assist this document</Trans>
-                  ),
-                )
-                .otherwise(() => null)}
-            </span>
+            <h1
+              className="mt-4 block w-full text-lg font-semibold md:max-w-[30rem] md:text-xl"
+              title={normalizedDocument.documentDetails.documentName ?? 'Untitled Document'}
+            >
+              {normalizedDocument.documentDetails.documentName ?? 'Untitled Document'}
+            </h1>
           </div>
 
           <RejectDocumentDialog document={document} token={recipient.token} />
         </div>
 
-        <div className="mt-8 grid grid-cols-12 gap-y-8 lg:gap-x-8 lg:gap-y-0">
+        <div className="mt-6 grid grid-cols-12 gap-y-8 lg:gap-x-8 lg:gap-y-0">
           <Card
             className="col-span-12 rounded-xl before:rounded-xl lg:col-span-7 xl:col-span-8"
             gradient

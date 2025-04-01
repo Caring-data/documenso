@@ -1,12 +1,12 @@
 import type { HTMLAttributes } from 'react';
 import { useEffect, useState } from 'react';
 
+import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { useParams, usePathname } from 'next/navigation';
 
 import { Trans, msg } from '@lingui/macro';
 import { useLingui } from '@lingui/react';
-import { Search } from 'lucide-react';
 
 import { getRootHref } from '@documenso/lib/utils/params';
 import { cn } from '@documenso/ui/lib/utils';
@@ -44,6 +44,10 @@ export const DesktopNav = ({ className, setIsCommandMenuOpen, ...props }: Deskto
     setModifierKey(isMacOS ? '⌘' : 'Ctrl');
   }, []);
 
+  const SearchIcon = dynamic(async () => import('lucide-react').then((mod) => mod.Search), {
+    ssr: false,
+  });
+
   return (
     <div
       className={cn(
@@ -77,7 +81,7 @@ export const DesktopNav = ({ className, setIsCommandMenuOpen, ...props }: Deskto
         onClick={() => setIsCommandMenuOpen(true)}
       >
         <div className="flex items-center">
-          <Search className="mr-2 h-5 w-5" />
+          <SearchIcon className="mr-2 h-5 w-5" />
           <Trans>Search</Trans>
         </div>
 

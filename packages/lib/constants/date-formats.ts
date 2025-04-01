@@ -15,6 +15,7 @@ export const VALID_DATE_FORMAT_VALUES = [
   'MMMM dd, yyyy hh:mm a',
   'EEEE, MMMM dd, yyyy hh:mm a',
   "yyyy-MM-dd'T'HH:mm:ss.SSSXXX",
+  'MM/dd/yyyy',
 ] as const;
 
 export const DATE_FORMATS = [
@@ -34,9 +35,14 @@ export const DATE_FORMATS = [
     value: 'dd/MM/yyyy hh:mm a',
   },
   {
+    key: 'MMDDYYYY_HHmm',
+    label: 'MM/DD/YYYY HH:mm a',
+    value: 'MM/dd/yyyy hh:mm a',
+  },
+  {
     key: 'MMDDYYYY',
     label: 'MM/DD/YYYY',
-    value: 'MM/dd/yyyy hh:mm a',
+    value: 'MM/dd/yyyy',
   },
   {
     key: 'YYYYMMDDHHmm',
@@ -79,6 +85,15 @@ export const convertToLocalSystemFormat = (
   dateFormat: string | null = DEFAULT_DOCUMENT_DATE_FORMAT,
   timeZone: string | null = DEFAULT_DOCUMENT_TIME_ZONE,
 ): string => {
+  const fallbackFormat = 'MM/dd/yyyy';
+
+  const isFormattedUSDate = /^\d{2}\/\d{2}\/\d{4}$/.test(customText);
+  const isMismatchFormat = dateFormat !== fallbackFormat;
+
+  if (isFormattedUSDate && isMismatchFormat) {
+    return customText;
+  }
+
   const coalescedDateFormat = dateFormat ?? DEFAULT_DOCUMENT_DATE_FORMAT;
   const coalescedTimeZone = timeZone ?? DEFAULT_DOCUMENT_TIME_ZONE;
 

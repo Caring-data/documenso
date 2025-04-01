@@ -242,5 +242,8 @@ export const sendDocument = async ({
     teamId,
   });
 
-  return updatedDocument;
+  return {
+    ...updatedDocument,
+    documentDetails: updatedDocument.documentDetails ?? null,
+  };
 };

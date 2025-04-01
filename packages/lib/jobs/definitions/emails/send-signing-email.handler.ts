@@ -148,6 +148,9 @@ export const run = async ({
     teamName: team?.name,
     teamEmail: team?.teamEmail?.email,
     includeSenderDetails: team?.teamGlobalSettings?.includeSenderDetails,
+    recipientName: recipient.name,
+    documentDetails: document.documentDetails || {},
+    tokenExpiration: recipient.expired ? recipient.expired.toISOString() : undefined,
   });
 
   await io.runTask('send-signing-email', async () => {

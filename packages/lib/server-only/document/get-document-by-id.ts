@@ -2,7 +2,7 @@ import { match } from 'ts-pattern';
 
 import { prisma } from '@documenso/prisma';
 import type { Prisma } from '@documenso/prisma/client';
-import { TeamMemberRole } from '@documenso/prisma/client';
+import { EntityStatus, TeamMemberRole } from '@documenso/prisma/client';
 
 import { AppError, AppErrorCode } from '../../errors/app-error';
 import { DocumentVisibility } from '../../types/document-visibility';
@@ -22,7 +22,11 @@ export const getDocumentById = async ({ documentId, userId, teamId }: GetDocumen
   });
 
   const document = await prisma.document.findFirst({
-    where: documentWhereInput,
+    where: {
+      ...documentWhereInput,
+      activityStatus: EntityStatus.ACTIVE,
+      deletedAt: null,
+    },
     include: {
       documentData: true,
       documentMeta: true,
@@ -86,6 +90,8 @@ export const getDocumentWhereInput = async ({
 }: GetDocumentWhereInputOptions) => {
   const documentWhereInput: Prisma.DocumentWhereUniqueInput = {
     id: documentId,
+    activityStatus: EntityStatus.ACTIVE,
+    deletedAt: null,
     OR: [
       {
         userId,

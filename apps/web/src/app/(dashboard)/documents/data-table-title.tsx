@@ -13,8 +13,6 @@ export type DataTableTitleProps = {
     user: Pick<User, 'id' | 'name' | 'email'>;
     team: Pick<Team, 'url'> | null;
     recipients: Recipient[];
-    residentId?: string | null;
-    formKey?: string | null;
   };
   teamUrl?: string;
 };

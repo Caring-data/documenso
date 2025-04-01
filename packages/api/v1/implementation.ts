@@ -454,9 +454,9 @@ export const ApiContractV1Implementation = createNextRoute(ApiContractV1, {
 
   createTemplate: authenticatedMiddleware(async (args, user, team) => {
     const { body } = args;
+
     try {
       const fileName = body.title.endsWith('.pdf') ? body.title : `${body.title}.pdf`;
-
       const { id: templateDocumentDataId } = await createDocumentData({
         type: body.type,
         data: body.data,
@@ -486,7 +486,6 @@ export const ApiContractV1Implementation = createNextRoute(ApiContractV1, {
 
   createDocumentFromTemplate: authenticatedMiddleware(async (args, user, team, { metadata }) => {
     const { body, params } = args;
-
     const templateId = Number(params.templateId);
 
     const fileName = body.title.endsWith('.pdf') ? body.title : `${body.title}.pdf`;
@@ -578,17 +577,30 @@ export const ApiContractV1Implementation = createNextRoute(ApiContractV1, {
     let document: Awaited<ReturnType<typeof createDocumentFromTemplate>> | null = null;
 
     try {
+      let customDocumentDataId: string | undefined;
+      if (body.type && body.data) {
+        const newDocumentData = await createDocumentData({
+          type: body.type,
+          data: body.data,
+        });
+        customDocumentDataId = newDocumentData.id;
+      }
+
       document = await createDocumentFromTemplate({
         templateId,
         externalId: body.externalId || null,
         userId: user.id,
         teamId: team?.id,
         recipients: body.recipients,
+        customDocumentDataId,
         override: {
           title: body.title,
           ...body.meta,
         },
         requestMetadata: metadata,
+        formKey: body.formKey,
+        residentId: body.residentId,
+        documentDetails: body.documentDetails,
       });
     } catch (err) {
       return AppError.toRestAPIError(err);

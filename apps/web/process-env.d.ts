@@ -19,5 +19,8 @@ declare namespace NodeJS {
     NEXT_PRIVATE_OIDC_CLIENT_SECRET: string;
     NEXT_PRIVATE_OIDC_ALLOW_SIGNUP?: string;
     NEXT_PRIVATE_OIDC_SKIP_VERIFY?: string;
+
+    NEXT_PRIVATE_LARAVEL_API_URL?: string;
+    NEXT_PRIVATE_LARAVEL_ENCRYPTION_KEY?: string;
   }
 }
