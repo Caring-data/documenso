@@ -23,6 +23,14 @@ COPY apps/*/package.json ./dummy-apps/
 COPY . .
 # Ejecutar npm ci para instalar todas las dependencias
 RUN npm ci
+# Instalar Chromium en Alpine
+RUN apk add --no-cache \
+    chromium \
+    nss \
+    freetype \
+    harfbuzz \
+    ca-certificates \
+    ttf-freefont
 # Ejecutar turbo prune para reducir el tamaño de la imagen
 RUN turbo prune --scope=@documenso/web --docker
 

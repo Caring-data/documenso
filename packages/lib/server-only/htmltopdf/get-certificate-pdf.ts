@@ -19,15 +19,21 @@ export const getCertificatePdf = async ({ documentId, language }: GetCertificate
     expiresAt: DateTime.now().plus({ minutes: 5 }).toJSDate().valueOf(),
   });
 
-  let browser: Browser;
+  const browser: Browser = await chromium.launch({
+    executablePath: '/usr/bin/chromium-browser',
+    headless: true,
+    args: ['--no-sandbox', '--disable-setuid-sandbox'],
+  });
 
-  if (process.env.NEXT_PRIVATE_BROWSERLESS_URL) {
-    // !: Use CDP rather than the default `connect` method to avoid coupling to the playwright version.
-    // !: Previously we would have to keep the playwright version in sync with the browserless version to avoid errors.
-    browser = await chromium.connectOverCDP(process.env.NEXT_PRIVATE_BROWSERLESS_URL);
-  } else {
-    browser = await chromium.launch();
-  }
+  // const browserlessUrl = env('NEXT_PRIVATE_BROWSERLESS_URL');
+
+  // if (browserlessUrl) {
+  //   // !: Use CDP rather than the default `connect` method to avoid coupling to the playwright version.
+  //   // !: Previously we would have to keep the playwright version in sync with the browserless version to avoid errors.
+  //   browser = await chromium.connectOverCDP(browserlessUrl);
+  // } else {
+  //   browser = await chromium.launch();
+  // }
 
   if (!browser) {
     throw new Error(
