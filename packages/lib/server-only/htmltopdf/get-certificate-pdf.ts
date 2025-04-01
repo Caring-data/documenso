@@ -12,19 +12,20 @@ export type GetCertificatePdfOptions = {
 };
 
 export const getCertificatePdf = async ({ documentId, language }: GetCertificatePdfOptions) => {
+  console.log('entreeee getCertificatePdf', documentId, language);
   const { chromium } = await import('playwright');
 
   const encryptedId = encryptSecondaryData({
     data: documentId.toString(),
     expiresAt: DateTime.now().plus({ minutes: 5 }).toJSDate().valueOf(),
   });
-
+  console.log('encryptedId ------', encryptedId);
   const browser: Browser = await chromium.launch({
     executablePath: '/usr/bin/chromium-browser',
     headless: true,
     args: ['--no-sandbox', '--disable-setuid-sandbox'],
   });
-
+  console.log('browser ---------', browser);
   // const browserlessUrl = env('NEXT_PRIVATE_BROWSERLESS_URL');
 
   // if (browserlessUrl) {
