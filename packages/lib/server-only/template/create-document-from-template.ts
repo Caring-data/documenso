@@ -305,6 +305,7 @@ export const createDocumentFromTemplate = async ({
           field.positionY = new Prisma.Decimal(coordinates.y);
           field.page = coordinates.page;
         }
+
         fieldsToCreate.push({
           documentId: document.id,
           recipientId: recipient.id,
