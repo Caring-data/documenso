@@ -122,23 +122,14 @@ export const run = async ({
   }
 
   const pdfData = await getFile(documentData);
-  console.log(
-    '----- certificateData validation -----',
-    document.team?.teamGlobalSettings?.includeSigningCertificate ?? true,
-  );
-  // const certificateData =
-  //   (document.team?.teamGlobalSettings?.includeSigningCertificate ?? true)
-  //     ? await getCertificatePdf({
-  //         documentId,
-  //         language: document.documentMeta?.language,
-  //       }).catch(() => null)
-  //     : null;
 
-  const certificateData = await getCertificatePdf({
-    documentId,
-    language: document.documentMeta?.language,
-  }).catch(() => null);
-  console.log('----- certificateData -----', certificateData);
+  const certificateData =
+    (document.team?.teamGlobalSettings?.includeSigningCertificate ?? true)
+      ? await getCertificatePdf({
+          documentId,
+          language: document.documentMeta?.language,
+        }).catch(() => null)
+      : null;
 
   const newDataId = await io.runTask('decorate-and-sign-pdf', async () => {
     const pdfDoc = await PDFDocument.load(pdfData);
@@ -147,9 +138,8 @@ export const run = async ({
     normalizeSignatureAppearances(pdfDoc);
     flattenForm(pdfDoc);
     flattenAnnotations(pdfDoc);
-    console.log('----- certificateData ifiiii -----', certificateData);
+
     if (certificateData) {
-      console.log('----- entre -----');
       const certificateDoc = await PDFDocument.load(certificateData);
 
       const certificatePages = await pdfDoc.copyPages(
