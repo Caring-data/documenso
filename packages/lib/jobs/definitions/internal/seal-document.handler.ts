@@ -123,10 +123,13 @@ export const run = async ({
 
   const pdfData = await getFile(documentData);
 
-  const certificateData = await getCertificatePdf({
-    documentId,
-    language: document.documentMeta?.language,
-  }).catch(() => null);
+  const certificateData =
+    (document.team?.teamGlobalSettings?.includeSigningCertificate ?? true)
+      ? await getCertificatePdf({
+          documentId,
+          language: document.documentMeta?.language,
+        }).catch(() => null)
+      : null;
 
   const newDataId = await io.runTask('decorate-and-sign-pdf', async () => {
     const pdfDoc = await PDFDocument.load(pdfData);

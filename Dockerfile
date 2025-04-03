@@ -6,6 +6,15 @@ FROM node:18-alpine AS base
 RUN apk add --no-cache libc6-compat jq make cmake g++ openssl
 # Instalar dotenv-cli globalmente para los scripts de migración
 RUN npm install -g dotenv-cli
+# Instalar Chromium en el contenedor final
+RUN apk add --no-cache \
+    chromium \
+    nss \
+    freetype \
+    harfbuzz \
+    ca-certificates \
+    ttf-freefont
+
 WORKDIR /app
 
 ###########################

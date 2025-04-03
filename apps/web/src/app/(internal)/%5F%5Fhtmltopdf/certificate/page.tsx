@@ -184,13 +184,13 @@ export default async function SigningCertificate({ searchParams }: SigningCertif
             <Table className="w-full border-collapse border-0" overflowHidden>
               <TableHeader>
                 <TableRow className="border-b border-zinc-200">
-                  <TableHead className="text-brand w-1/3 text-xs font-semibold leading-4">
+                  <TableHead className="text-brand w-1/3 text-sm font-semibold leading-4 print:text-xs">
                     {_(msg`Signer Events`)}
                   </TableHead>
-                  <TableHead className="text-brand w-1/3 text-xs font-semibold leading-4">
+                  <TableHead className="text-brand w-1/3 text-sm font-semibold leading-4 print:text-xs">
                     {_(msg`Timestamp`)}
                   </TableHead>
-                  <TableHead className="text-brand w-1/3 text-xs font-semibold leading-4">
+                  <TableHead className="text-brand w-1/3 text-sm font-semibold leading-4 print:text-xs">
                     {_(msg`Signature`)}
                   </TableHead>
                 </TableRow>
@@ -209,10 +209,10 @@ export default async function SigningCertificate({ searchParams }: SigningCertif
                         truncate={false}
                         className="w-[min-content] max-w-[220px] align-top"
                       >
-                        <div className="hyphens-auto break-words text-sm font-semibold leading-4 text-zinc-700">
+                        <div className="hyphens-auto break-words text-sm font-semibold leading-4 text-zinc-700 print:text-xs">
                           {recipient.name}
                         </div>
-                        <div className="break-all text-[11px] font-medium leading-4 text-zinc-600">
+                        <div className="break-all text-sm font-medium leading-4 text-zinc-600 print:text-xs">
                           Email: {recipient.email}
                         </div>
                         <div className="mt-2 space-y-1 text-sm text-zinc-700 print:text-xs">
@@ -309,17 +309,17 @@ export default async function SigningCertificate({ searchParams }: SigningCertif
                               )}
 
                               {signature.signature?.typedSignature && (
-                                <p className="font-signature text-center text-sm">
+                                <p className="font-signature text-center text-sm print:text-xs">
                                   {signature.signature?.typedSignature}
                                 </p>
                               )}
                             </div>
 
                             <p className="mt-2 flex h-4 flex-col justify-center self-stretch">
-                              <span className="text-[10px] font-medium leading-4 text-zinc-600">
+                              <span className="text-sm font-medium leading-4 text-zinc-600 print:text-xs">
                                 {_(msg`IP address`)}:
                               </span>{' '}
-                              <span className="text-[10px] font-normal leading-4 text-zinc-600">
+                              <span className="text-sm font-normal leading-4 text-zinc-600 print:text-xs">
                                 {logs.DOCUMENT_RECIPIENT_COMPLETED[0]?.ipAddress ?? _(msg`Unknown`)}
                               </span>
                             </p>

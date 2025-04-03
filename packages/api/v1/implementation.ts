@@ -43,6 +43,7 @@ import {
   ZTextFieldMeta,
 } from '@documenso/lib/types/field-meta';
 import { extractNextApiRequestMetadata } from '@documenso/lib/universal/extract-request-metadata';
+import { nanoid } from '@documenso/lib/universal/id';
 import { getFile } from '@documenso/lib/universal/upload/get-file';
 import { putPdfFile } from '@documenso/lib/universal/upload/put-file';
 import {
@@ -51,7 +52,7 @@ import {
 } from '@documenso/lib/universal/upload/server-actions';
 import { createDocumentAuditLogData } from '@documenso/lib/utils/document-audit-logs';
 import { prisma } from '@documenso/prisma';
-import type { Prisma } from '@documenso/prisma/client';
+import { Prisma } from '@documenso/prisma/client';
 import {
   DocumentDataType,
   DocumentStatus,
@@ -454,6 +455,7 @@ export const ApiContractV1Implementation = createNextRoute(ApiContractV1, {
 
   createTemplate: authenticatedMiddleware(async (args, user, team) => {
     const { body } = args;
+    const templateIdToClone = body.templateId;
 
     try {
       const fileName = body.title.endsWith('.pdf') ? body.title : `${body.title}.pdf`;
@@ -469,6 +471,75 @@ export const ApiContractV1Implementation = createNextRoute(ApiContractV1, {
         formKey: body.title,
         templateDocumentDataId,
       });
+
+      if (templateIdToClone) {
+        const originalTemplate = await prisma.template.findUnique({
+          where: { id: templateIdToClone },
+          include: {
+            recipients: { include: { fields: true } },
+            templateMeta: true,
+          },
+        });
+
+        if (!originalTemplate) {
+          return { status: 404, body: { message: 'Original template not found' } };
+        }
+
+        for (const recipient of originalTemplate.recipients) {
+          const clonedRecipient = await prisma.recipient.create({
+            data: {
+              email: recipient.email,
+              name: recipient.name,
+              token: nanoid(),
+              expired: recipient.expired,
+              readStatus: recipient.readStatus,
+              signingStatus: recipient.signingStatus,
+              sendStatus: recipient.sendStatus,
+              signedAt: recipient.signedAt,
+              role: recipient.role,
+              templateId: createdTemplate.id,
+              authOptions: recipient.authOptions ?? Prisma.JsonNull,
+              signingOrder: recipient.signingOrder,
+              rejectionReason: recipient.rejectionReason,
+            },
+          });
+
+          for (const originalField of recipient.fields) {
+            await prisma.field.create({
+              data: {
+                templateId: createdTemplate.id,
+                recipientId: clonedRecipient.id,
+                type: originalField.type,
+                page: originalField.page,
+                positionX: originalField.positionX,
+                positionY: originalField.positionY,
+                width: originalField.width,
+                height: originalField.height,
+                customText: originalField.customText,
+                inserted: originalField.inserted,
+                fieldMeta: originalField.fieldMeta ?? Prisma.JsonNull,
+              },
+            });
+          }
+        }
+
+        if (originalTemplate.templateMeta) {
+          const {
+            id: _,
+            templateId: __,
+            emailSettings,
+            ...restMetaData
+          } = originalTemplate.templateMeta;
+
+          await prisma.templateMeta.create({
+            data: {
+              templateId: createdTemplate.id,
+              ...restMetaData,
+              emailSettings: emailSettings ?? Prisma.JsonNull,
+            },
+          });
+        }
+      }
 
       return {
         status: 200,
