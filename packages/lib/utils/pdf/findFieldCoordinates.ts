@@ -28,7 +28,7 @@ export async function findFieldCoordinatesFromPdf({
     const content = await page.getTextContent();
 
     for (const item of content.items) {
-      if ('str' in item && item.str.includes(`{{${fieldName}}}`)) {
+      if ('str' in item && item.str.includes(`__${fieldName}__`)) {
         const x = item.transform[4];
         const y = viewport.height - item.transform[5];
 

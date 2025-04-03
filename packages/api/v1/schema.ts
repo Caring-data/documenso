@@ -182,6 +182,7 @@ export const ZCreateTemplateMutationSchema = z.object({
   title: z.string().min(1).trim(),
   type: z.nativeEnum(DocumentDataType),
   data: z.string().min(1),
+  templateId: z.number().optional(),
 });
 
 export const ZCreateDocumentMutationResponseSchema = z.object({
