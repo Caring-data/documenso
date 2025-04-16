@@ -14,13 +14,6 @@ RUN apk add --no-cache \
     harfbuzz \
     ca-certificates \
     ttf-freefont
-    python3 \
-    cairo-dev \
-    jpeg-dev \
-    pango-dev \
-    giflib-dev \
-    libpng-dev \
-    pixman-dev
 
 WORKDIR /app
 
