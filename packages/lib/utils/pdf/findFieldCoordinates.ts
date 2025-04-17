@@ -14,13 +14,15 @@ export async function findFieldCoordinatesFromPdf({
 }: {
   base64Pdf: string;
   fieldName: string;
-}): Promise<PDFTextPosition | null> {
+}): Promise<PDFTextPosition[]> {
   const base64 = base64Pdf.replace(/^data:application\/pdf;base64,/, '');
   const buffer = Buffer.from(base64, 'base64');
   const uint8Array = new Uint8Array(buffer);
 
   const loadingTask = pdfjsLib.getDocument({ data: uint8Array });
   const pdf = await loadingTask.promise;
+
+  const positions: PDFTextPosition[] = [];
 
   for (let pageIndex = 0; pageIndex < pdf.numPages; pageIndex++) {
     const page = await pdf.getPage(pageIndex + 1);
@@ -38,17 +40,20 @@ export async function findFieldCoordinatesFromPdf({
         const verticalOffset = 0.4;
         const adjustedY = percentY - verticalOffset;
 
-        return {
+        positions.push({
           x: Number(percentX.toFixed(4)),
           y: Number(adjustedY.toFixed(4)),
           page: pageIndex + 1,
-        };
+        });
       }
     }
   }
 
-  console.warn('⚠️ Field not found:', fieldName);
-  return null;
+  if (positions.length === 0) {
+    console.warn('⚠️ Field not found:', fieldName);
+  }
+
+  return positions;
 }
 
 export function getFieldVariableName(recipient: Recipient, field: Field): string {

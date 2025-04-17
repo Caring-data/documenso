@@ -287,6 +287,8 @@ export const createDocumentFromTemplate = async ({
 
     const fieldsToCreate: Omit<Field, 'id' | 'secondaryId' | 'templateId'>[] = [];
 
+    const variableCounters: Record<string, number> = {};
+
     for (const finalRecipient of finalRecipients) {
       const recipient = document.recipients.find(
         (recipient) => recipient.email === finalRecipient.email,
@@ -295,30 +297,31 @@ export const createDocumentFromTemplate = async ({
 
       for (const field of finalRecipient.fields) {
         const variableName = getFieldVariableName(recipient, field);
-        const coordinates = await findFieldCoordinatesFromPdf({
+        const coordinatesList = await findFieldCoordinatesFromPdf({
           base64Pdf,
           fieldName: variableName,
         });
 
-        if (coordinates) {
-          field.positionX = new Prisma.Decimal(coordinates.x);
-          field.positionY = new Prisma.Decimal(coordinates.y);
-          field.page = coordinates.page;
-        }
+        if (coordinatesList && coordinatesList.length > 0) {
+          const index = variableCounters[variableName] ?? 0;
+          const coordinates = coordinatesList[index] || coordinatesList[0];
 
-        fieldsToCreate.push({
-          documentId: document.id,
-          recipientId: recipient.id,
-          type: field.type,
-          page: field.page,
-          positionX: field.positionX,
-          positionY: field.positionY,
-          width: field.width,
-          height: field.height,
-          customText: '',
-          inserted: false,
-          fieldMeta: field.fieldMeta,
-        });
+          fieldsToCreate.push({
+            documentId: document.id,
+            recipientId: recipient.id,
+            type: field.type,
+            page: coordinates.page,
+            positionX: new Prisma.Decimal(coordinates.x),
+            positionY: new Prisma.Decimal(coordinates.y),
+            width: field.width,
+            height: field.height,
+            customText: '',
+            inserted: false,
+            fieldMeta: field.fieldMeta,
+          });
+
+          variableCounters[variableName] = index + 1;
+        }
       }
     }
 

@@ -1,12 +1,13 @@
 'use client';
 
-import { useTransition } from 'react';
+import { useEffect, useTransition } from 'react';
 
 import { useRouter } from 'next/navigation';
 
 import { Trans, msg } from '@lingui/macro';
 import { useLingui } from '@lingui/react';
 import { Loader } from 'lucide-react';
+import { DateTime } from 'luxon';
 
 import {
   DEFAULT_DOCUMENT_DATE_FORMAT,
@@ -106,6 +107,29 @@ export const DateField = ({
       });
     }
   };
+
+  useEffect(() => {
+    const signDefaultDate = async () => {
+      if (!field.inserted) {
+        const today = DateTime.now()
+          .setZone(timezone ?? DEFAULT_DOCUMENT_TIME_ZONE)
+          .toFormat(dateFormat ?? DEFAULT_DOCUMENT_DATE_FORMAT);
+
+        const payload: TSignFieldWithTokenMutationSchema = {
+          token: recipient.token,
+          fieldId: field.id,
+          value: today,
+          authOptions: undefined,
+        };
+
+        await signFieldWithToken(payload);
+        startTransition(() => router.refresh());
+      }
+    };
+
+    void signDefaultDate();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const onRemove = async () => {
     try {
