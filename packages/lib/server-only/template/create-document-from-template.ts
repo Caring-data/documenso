@@ -200,111 +200,122 @@ export const createDocumentFromTemplate = async ({
     },
   });
 
-  return await prisma.$transaction(async (tx) => {
-    const document = await tx.document.create({
-      data: {
-        source: DocumentSource.TEMPLATE,
-        externalId: externalId || template.externalId,
-        templateId: template.id,
-        userId,
-        teamId: template.teamId,
-        title: override?.title || template.title,
-        documentDataId: documentData.id,
-        authOptions: createDocumentAuthOptions({
-          globalAccessAuth: templateAuthOptions.globalAccessAuth,
-          globalActionAuth: templateAuthOptions.globalActionAuth,
-        }),
-        formKey,
-        residentId,
-        documentDetails,
-        visibility: template.visibility || template.team?.teamGlobalSettings?.documentVisibility,
-        documentMeta: {
-          create: {
-            subject: override?.subject || template.templateMeta?.subject,
-            message: override?.message || template.templateMeta?.message,
-            timezone: override?.timezone || template.templateMeta?.timezone,
-            password: override?.password || template.templateMeta?.password,
-            dateFormat: override?.dateFormat || template.templateMeta?.dateFormat,
-            redirectUrl: override?.redirectUrl || template.templateMeta?.redirectUrl,
-            distributionMethod:
-              override?.distributionMethod || template.templateMeta?.distributionMethod,
-            // last `undefined` is due to JsonValue's
-            emailSettings:
-              override?.emailSettings || template.templateMeta?.emailSettings || undefined,
-            signingOrder:
-              override?.signingOrder ||
-              template.templateMeta?.signingOrder ||
-              DocumentSigningOrder.PARALLEL,
-            language:
-              override?.language ||
-              template.templateMeta?.language ||
-              template.team?.teamGlobalSettings?.documentLanguage,
-            typedSignatureEnabled:
-              override?.typedSignatureEnabled ?? template.templateMeta?.typedSignatureEnabled,
+  return await prisma.$transaction(
+    async (tx) => {
+      const document = await tx.document.create({
+        data: {
+          source: DocumentSource.TEMPLATE,
+          externalId: externalId || template.externalId,
+          templateId: template.id,
+          userId,
+          teamId: template.teamId,
+          title: override?.title || template.title,
+          documentDataId: documentData.id,
+          authOptions: createDocumentAuthOptions({
+            globalAccessAuth: templateAuthOptions.globalAccessAuth,
+            globalActionAuth: templateAuthOptions.globalActionAuth,
+          }),
+          formKey,
+          residentId,
+          documentDetails,
+          visibility: template.visibility || template.team?.teamGlobalSettings?.documentVisibility,
+          documentMeta: {
+            create: {
+              subject: override?.subject || template.templateMeta?.subject,
+              message: override?.message || template.templateMeta?.message,
+              timezone: override?.timezone || template.templateMeta?.timezone,
+              password: override?.password || template.templateMeta?.password,
+              dateFormat: override?.dateFormat || template.templateMeta?.dateFormat,
+              redirectUrl: override?.redirectUrl || template.templateMeta?.redirectUrl,
+              distributionMethod:
+                override?.distributionMethod || template.templateMeta?.distributionMethod,
+              // last `undefined` is due to JsonValue's
+              emailSettings:
+                override?.emailSettings || template.templateMeta?.emailSettings || undefined,
+              signingOrder:
+                override?.signingOrder ||
+                template.templateMeta?.signingOrder ||
+                DocumentSigningOrder.PARALLEL,
+              language:
+                override?.language ||
+                template.templateMeta?.language ||
+                template.team?.teamGlobalSettings?.documentLanguage,
+              typedSignatureEnabled:
+                override?.typedSignatureEnabled ?? template.templateMeta?.typedSignatureEnabled,
+            },
+          },
+          recipients: {
+            createMany: {
+              data: Object.values(finalRecipients)
+                .filter((recipient) => !recipient.email.includes('recipient'))
+                .map((recipient) => {
+                  const authOptions = ZRecipientAuthOptionsSchema.parse(recipient?.authOptions);
+
+                  return {
+                    //id: recipient.id,
+                    email: recipient.email,
+                    name: recipient.name,
+                    role: recipient.role,
+                    authOptions: createRecipientAuthOptions({
+                      accessAuth: authOptions.accessAuth,
+                      actionAuth: authOptions.actionAuth,
+                    }),
+                    sendStatus:
+                      recipient.role === RecipientRole.CC ? SendStatus.SENT : SendStatus.NOT_SENT,
+                    signingStatus:
+                      recipient.role === RecipientRole.CC
+                        ? SigningStatus.SIGNED
+                        : SigningStatus.NOT_SIGNED,
+                    signingOrder: recipient.signingOrder,
+                    token: nanoid(),
+                    expired: recipient.expired,
+                  };
+                }),
+            },
           },
         },
-        recipients: {
-          createMany: {
-            data: Object.values(finalRecipients)
-              .filter((recipient) => !recipient.email.includes('recipient'))
-              .map((recipient) => {
-                const authOptions = ZRecipientAuthOptionsSchema.parse(recipient?.authOptions);
-
-                return {
-                  //id: recipient.id,
-                  email: recipient.email,
-                  name: recipient.name,
-                  role: recipient.role,
-                  authOptions: createRecipientAuthOptions({
-                    accessAuth: authOptions.accessAuth,
-                    actionAuth: authOptions.actionAuth,
-                  }),
-                  sendStatus:
-                    recipient.role === RecipientRole.CC ? SendStatus.SENT : SendStatus.NOT_SENT,
-                  signingStatus:
-                    recipient.role === RecipientRole.CC
-                      ? SigningStatus.SIGNED
-                      : SigningStatus.NOT_SIGNED,
-                  signingOrder: recipient.signingOrder,
-                  token: nanoid(),
-                  expired: recipient.expired,
-                };
-              }),
+        include: {
+          recipients: {
+            orderBy: {
+              id: 'asc',
+            },
           },
+          documentData: true,
         },
-      },
-      include: {
-        recipients: {
-          orderBy: {
-            id: 'asc',
-          },
-        },
-        documentData: true,
-      },
-    });
+      });
 
-    const base64Pdf = documentData.data;
+      const base64Pdf = documentData.data;
+      const fieldsToCreate: Omit<Field, 'id' | 'secondaryId' | 'templateId'>[] = [];
+      const variableCounters: Record<string, number> = {};
 
-    const fieldsToCreate: Omit<Field, 'id' | 'secondaryId' | 'templateId'>[] = [];
+      for (const finalRecipient of finalRecipients) {
+        const recipient = document.recipients.find(
+          (recipient) => recipient.email === finalRecipient.email,
+        );
+        if (!recipient) continue;
 
-    const variableCounters: Record<string, number> = {};
+        for (const field of finalRecipient.fields) {
+          const variableName = getFieldVariableName(recipient, field);
 
-    for (const finalRecipient of finalRecipients) {
-      const recipient = document.recipients.find(
-        (recipient) => recipient.email === finalRecipient.email,
-      );
-      if (!recipient) continue;
+          const coordinatesList = await findFieldCoordinatesFromPdf({
+            base64Pdf,
+            fieldName: variableName,
+          });
 
-      for (const field of finalRecipient.fields) {
-        const variableName = getFieldVariableName(recipient, field);
-        const coordinatesList = await findFieldCoordinatesFromPdf({
-          base64Pdf,
-          fieldName: variableName,
-        });
+          let coordinates;
 
-        if (coordinatesList && coordinatesList.length > 0) {
-          const index = variableCounters[variableName] ?? 0;
-          const coordinates = coordinatesList[index] || coordinatesList[0];
+          if (coordinatesList && coordinatesList.length > 0) {
+            const index = variableCounters[variableName] ?? 0;
+            coordinates = coordinatesList[index] || coordinatesList[0];
+            variableCounters[variableName] = index + 1;
+          } else {
+            // fallback: use coordinates from the field itself (assumes comes from DB)
+            coordinates = {
+              x: field.positionX,
+              y: field.positionY,
+              page: field.page,
+            };
+          }
 
           fieldsToCreate.push({
             documentId: document.id,
@@ -319,55 +330,56 @@ export const createDocumentFromTemplate = async ({
             inserted: false,
             fieldMeta: field.fieldMeta,
           });
-
-          variableCounters[variableName] = index + 1;
         }
       }
-    }
 
-    await tx.field.createMany({
-      data: fieldsToCreate.map((field) => ({
-        ...field,
-        fieldMeta: field.fieldMeta ? ZFieldMetaSchema.parse(field.fieldMeta) : undefined,
-      })),
-    });
+      await tx.field.createMany({
+        data: fieldsToCreate.map((field) => ({
+          ...field,
+          fieldMeta: field.fieldMeta ? ZFieldMetaSchema.parse(field.fieldMeta) : undefined,
+        })),
+      });
 
-    await tx.documentAuditLog.create({
-      data: createDocumentAuditLogData({
-        type: DOCUMENT_AUDIT_LOG_TYPE.DOCUMENT_CREATED,
-        documentId: document.id,
-        metadata: requestMetadata,
-        data: {
-          title: document.title,
-          source: {
-            type: DocumentSource.TEMPLATE,
-            templateId: template.id,
+      await tx.documentAuditLog.create({
+        data: createDocumentAuditLogData({
+          type: DOCUMENT_AUDIT_LOG_TYPE.DOCUMENT_CREATED,
+          documentId: document.id,
+          metadata: requestMetadata,
+          data: {
+            title: document.title,
+            source: {
+              type: DocumentSource.TEMPLATE,
+              templateId: template.id,
+            },
           },
+        }),
+      });
+
+      const createdDocument = await tx.document.findFirst({
+        where: {
+          id: document.id,
         },
-      }),
-    });
+        include: {
+          documentMeta: true,
+          recipients: true,
+        },
+      });
 
-    const createdDocument = await tx.document.findFirst({
-      where: {
-        id: document.id,
-      },
-      include: {
-        documentMeta: true,
-        recipients: true,
-      },
-    });
+      if (!createdDocument) {
+        throw new Error('Document not found');
+      }
 
-    if (!createdDocument) {
-      throw new Error('Document not found');
-    }
+      await triggerWebhook({
+        event: WebhookTriggerEvents.DOCUMENT_CREATED,
+        data: ZWebhookDocumentSchema.parse(mapDocumentToWebhookDocumentPayload(createdDocument)),
+        userId,
+        teamId,
+      });
 
-    await triggerWebhook({
-      event: WebhookTriggerEvents.DOCUMENT_CREATED,
-      data: ZWebhookDocumentSchema.parse(mapDocumentToWebhookDocumentPayload(createdDocument)),
-      userId,
-      teamId,
-    });
-
-    return document;
-  });
+      return document;
+    },
+    {
+      timeout: 50000,
+    },
+  );
 };

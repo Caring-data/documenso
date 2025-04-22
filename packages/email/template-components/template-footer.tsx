@@ -53,7 +53,7 @@ export const TemplateFooter = ({ isDocument = true, companyName = '' }: Template
           <Text className="font-montserrat text-xs font-medium text-zinc-500">
             Visit{' '}
             <a
-              href="https://www.caringdata.com"
+              href="https://rise.caringdata.com"
               target="_blank"
               rel="noopener noreferrer"
               className="text-brand-accent font-medium"
