@@ -40,6 +40,7 @@ import { useStep } from '@documenso/ui/primitives/stepper';
 
 import { CheckboxField } from '~/app/(signing)/sign/[token]/checkbox-field';
 import { DateField } from '~/app/(signing)/sign/[token]/date-field';
+import { DatePickerField } from '~/app/(signing)/sign/[token]/date-picker-field';
 import { DropdownField } from '~/app/(signing)/sign/[token]/dropdown-field';
 import { EmailField } from '~/app/(signing)/sign/[token]/email-field';
 import { InitialsField } from '~/app/(signing)/sign/[token]/initials-field';
@@ -210,6 +211,16 @@ export const SignDirectTemplateForm = ({
               ))
               .with(FieldType.DATE, () => (
                 <DateField
+                  key={field.id}
+                  field={field}
+                  dateFormat={template.templateMeta?.dateFormat ?? DEFAULT_DOCUMENT_DATE_FORMAT}
+                  timezone={template.templateMeta?.timezone ?? DEFAULT_DOCUMENT_TIME_ZONE}
+                  onSignField={onSignField}
+                  onUnsignField={onUnsignField}
+                />
+              ))
+              .with(FieldType.CALENDAR, () => (
+                <DatePickerField
                   key={field.id}
                   field={field}
                   dateFormat={template.templateMeta?.dateFormat ?? DEFAULT_DOCUMENT_DATE_FORMAT}

@@ -474,6 +474,7 @@ enum FieldType {
   NAME
   EMAIL
   DATE
+  CALENDAR
   TEXT
   NUMBER
   RADIO

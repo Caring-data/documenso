@@ -957,6 +957,23 @@ export const AddFieldsFormPartial = ({
                     <button
                       type="button"
                       className="group h-full w-full"
+                      onClick={() => setSelectedField(FieldType.CALENDAR)}
+                      onMouseDown={() => setSelectedField(FieldType.CALENDAR)}
+                      data-selected={selectedField === FieldType.CALENDAR ? true : undefined}
+                    >
+                      <Card className="flex h-full w-full items-center justify-center">
+                        <CardContent className="p-4">
+                          <p className="text-muted-foreground group-data-[selected]:text-foreground flex items-center justify-center gap-x-1.5 text-sm font-normal">
+                            <CalendarDays className="h-4 w-4" />
+                            <Trans>Calendar</Trans>
+                          </p>
+                        </CardContent>
+                      </Card>
+                    </button>
+
+                    <button
+                      type="button"
+                      className="group h-full w-full"
                       onClick={() => setSelectedField(FieldType.TEXT)}
                       onMouseDown={() => setSelectedField(FieldType.TEXT)}
                       data-selected={selectedField === FieldType.TEXT ? true : undefined}

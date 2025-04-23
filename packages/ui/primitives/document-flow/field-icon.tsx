@@ -1,5 +1,6 @@
 import { Trans } from '@lingui/macro';
 import {
+  Calendar,
   CalendarDays,
   CheckSquare,
   ChevronDown,
@@ -33,6 +34,7 @@ const fieldIcons = {
   [FieldType.RADIO]: { icon: Disc, label: 'Radio' },
   [FieldType.CHECKBOX]: { icon: CheckSquare, label: 'Checkbox' },
   [FieldType.DROPDOWN]: { icon: ChevronDown, label: 'Select' },
+  [FieldType.CALENDAR]: { icon: Calendar, label: 'Calendar' },
 };
 
 export const FieldIcon = ({

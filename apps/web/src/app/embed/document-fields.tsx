@@ -23,6 +23,7 @@ import { ElementVisible } from '@documenso/ui/primitives/element-visible';
 
 import { CheckboxField } from '~/app/(signing)/sign/[token]/checkbox-field';
 import { DateField } from '~/app/(signing)/sign/[token]/date-field';
+import { DatePickerField } from '~/app/(signing)/sign/[token]/date-picker-field';
 import { DropdownField } from '~/app/(signing)/sign/[token]/dropdown-field';
 import { EmailField } from '~/app/(signing)/sign/[token]/email-field';
 import { InitialsField } from '~/app/(signing)/sign/[token]/initials-field';
@@ -76,6 +77,16 @@ export const EmbedDocumentFields = ({
           ))
           .with(FieldType.DATE, () => (
             <DateField
+              key={field.id}
+              field={field}
+              onSignField={onSignField}
+              onUnsignField={onUnsignField}
+              dateFormat={metadata?.dateFormat ?? DEFAULT_DOCUMENT_DATE_FORMAT}
+              timezone={metadata?.timezone ?? DEFAULT_DOCUMENT_TIME_ZONE}
+            />
+          ))
+          .with(FieldType.CALENDAR, () => (
+            <DatePickerField
               key={field.id}
               field={field}
               onSignField={onSignField}

@@ -51,6 +51,7 @@ export const FRIENDLY_FIELD_TYPE: Record<FieldType, MessageDescriptor> = {
   [FieldType.INITIALS]: msg`Initials`,
   [FieldType.TEXT]: msg`Text`,
   [FieldType.DATE]: msg`Date`,
+  [FieldType.CALENDAR]: msg`Calendar`,
   [FieldType.EMAIL]: msg`Email`,
   [FieldType.NAME]: msg`Name`,
   [FieldType.NUMBER]: msg`Number`,

@@ -93,6 +93,12 @@ const getDefaultState = (fieldType: FieldType): FieldMeta => {
         fontSize: 14,
         textAlign: 'left',
       };
+    case FieldType.CALENDAR:
+      return {
+        type: 'date',
+        fontSize: 14,
+        textAlign: 'left',
+      };
     case FieldType.TEXT:
       return {
         type: 'text',

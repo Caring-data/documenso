@@ -34,6 +34,7 @@ import { DocumentReadOnlyFields } from '~/components/document/document-read-only
 
 import { CheckboxField } from './checkbox-field';
 import { DateField } from './date-field';
+import { DatePickerField } from './date-picker-field';
 import { DropdownField } from './dropdown-field';
 import { EmailField } from './email-field';
 import { SigningForm } from './form';
@@ -192,6 +193,14 @@ export const SigningPageView = ({
                 .with(FieldType.NAME, () => <NameField key={field.id} field={field} />)
                 .with(FieldType.DATE, () => (
                   <DateField
+                    key={field.id}
+                    field={field}
+                    dateFormat={documentMeta?.dateFormat ?? DEFAULT_DOCUMENT_DATE_FORMAT}
+                    timezone={documentMeta?.timezone ?? DEFAULT_DOCUMENT_TIME_ZONE}
+                  />
+                ))
+                .with(FieldType.CALENDAR, () => (
+                  <DatePickerField
                     key={field.id}
                     field={field}
                     dateFormat={documentMeta?.dateFormat ?? DEFAULT_DOCUMENT_DATE_FORMAT}
