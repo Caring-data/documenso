@@ -21,7 +21,7 @@ msgstr "“{0}” has been signed"
 msgid "\"{0}\" has invited you to sign \"example document\"."
 msgstr "\"{0}\" has invited you to sign \"example document\"."
 
-#: apps/web/src/app/(signing)/sign/[token]/date-field.tsx:71
+#: apps/web/src/app/(signing)/sign/[token]/date-field.tsx:72
 msgid "\"{0}\" will appear on the document as it has a timezone of \"{timezone}\"."
 msgstr "\"{0}\" will appear on the document as it has a timezone of \"{timezone}\"."
 
@@ -441,7 +441,7 @@ msgstr "7 days"
 msgid "A confirmation email has been sent, and it should arrive in your inbox shortly."
 msgstr "A confirmation email has been sent, and it should arrive in your inbox shortly."
 
-#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:158
+#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:194
 msgid "A copy of the completed document will be sent to your email shortly. You may also download it below."
 msgstr "A copy of the completed document will be sent to your email shortly. You may also download it below."
 
@@ -801,7 +801,7 @@ msgstr "All documents related to the electronic signing process will be provided
 msgid "All inserted signatures will be voided"
 msgstr "All inserted signatures will be voided"
 
-#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:134
+#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:144
 msgid "All parties have signed the document."
 msgstr "All parties have signed the document."
 
@@ -944,7 +944,7 @@ msgid "An error occurred while moving the template."
 msgstr "An error occurred while moving the template."
 
 #: apps/web/src/app/(signing)/sign/[token]/checkbox-field.tsx:151
-#: apps/web/src/app/(signing)/sign/[token]/date-field.tsx:130
+#: apps/web/src/app/(signing)/sign/[token]/date-field.tsx:154
 #: apps/web/src/app/(signing)/sign/[token]/dropdown-field.tsx:134
 #: apps/web/src/app/(signing)/sign/[token]/email-field.tsx:117
 #: apps/web/src/app/(signing)/sign/[token]/initials-field.tsx:151
@@ -971,7 +971,7 @@ msgid "An error occurred while sending your confirmation email"
 msgstr "An error occurred while sending your confirmation email"
 
 #: apps/web/src/app/(signing)/sign/[token]/checkbox-field.tsx:121
-#: apps/web/src/app/(signing)/sign/[token]/date-field.tsx:103
+#: apps/web/src/app/(signing)/sign/[token]/date-field.tsx:104
 #: apps/web/src/app/(signing)/sign/[token]/dropdown-field.tsx:102
 #: apps/web/src/app/(signing)/sign/[token]/email-field.tsx:90
 #: apps/web/src/app/(signing)/sign/[token]/initials-field.tsx:124
@@ -983,7 +983,7 @@ msgid "An error occurred while signing as assistant."
 msgstr "An error occurred while signing as assistant."
 
 #: apps/web/src/app/(signing)/sign/[token]/checkbox-field.tsx:122
-#: apps/web/src/app/(signing)/sign/[token]/date-field.tsx:104
+#: apps/web/src/app/(signing)/sign/[token]/date-field.tsx:105
 #: apps/web/src/app/(signing)/sign/[token]/dropdown-field.tsx:103
 #: apps/web/src/app/(signing)/sign/[token]/email-field.tsx:91
 #: apps/web/src/app/(signing)/sign/[token]/initials-field.tsx:125
@@ -1854,7 +1854,7 @@ msgid "Dark Mode"
 msgstr "Dark Mode"
 
 #: apps/web/src/app/(dashboard)/settings/security/activity/user-security-activity-data-table.tsx:67
-#: apps/web/src/app/(signing)/sign/[token]/date-field.tsx:152
+#: apps/web/src/app/(signing)/sign/[token]/date-field.tsx:176
 #: packages/ui/primitives/document-flow/add-fields.tsx:951
 #: packages/ui/primitives/document-flow/types.ts:53
 #: packages/ui/primitives/template-flow/add-template-fields.tsx:825
@@ -2117,7 +2117,7 @@ msgstr "Document access auth updated"
 msgid "Document All"
 msgstr "Document All"
 
-#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:126
+#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:132
 msgid "Document Approved"
 msgstr "Document Approved"
 
@@ -2219,6 +2219,10 @@ msgstr "Document ID"
 msgid "Document inbox"
 msgstr "Document inbox"
 
+#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:160
+msgid "Document is preparing..."
+msgstr "Document is preparing..."
+
 #: apps/web/src/app/(dashboard)/admin/stats/page.tsx:82
 msgid "Document metrics"
 msgstr "Document metrics"
@@ -2231,7 +2235,7 @@ msgstr "Document moved"
 msgid "Document moved to team"
 msgstr "Document moved to team"
 
-#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:150
+#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:181
 msgid "Document no longer available to sign"
 msgstr "Document no longer available to sign"
 
@@ -2281,7 +2285,7 @@ msgstr "Document signing process will be cancelled"
 msgid "Document status"
 msgstr "Document status"
 
-#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:124
+#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:130
 msgid "Document Successfully Signed"
 msgstr "Document Successfully Signed"
 
@@ -2301,7 +2305,7 @@ msgstr "Document updated"
 msgid "Document uploaded"
 msgstr "Document uploaded"
 
-#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:125
+#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:131
 msgid "Document Viewed"
 msgstr "Document Viewed"
 
@@ -2630,8 +2634,8 @@ msgstr "Enter your text here"
 #: apps/web/src/app/(signing)/sign/[token]/checkbox-field.tsx:119
 #: apps/web/src/app/(signing)/sign/[token]/checkbox-field.tsx:150
 #: apps/web/src/app/(signing)/sign/[token]/checkbox-field.tsx:208
-#: apps/web/src/app/(signing)/sign/[token]/date-field.tsx:101
-#: apps/web/src/app/(signing)/sign/[token]/date-field.tsx:129
+#: apps/web/src/app/(signing)/sign/[token]/date-field.tsx:102
+#: apps/web/src/app/(signing)/sign/[token]/date-field.tsx:153
 #: apps/web/src/app/(signing)/sign/[token]/dropdown-field.tsx:100
 #: apps/web/src/app/(signing)/sign/[token]/dropdown-field.tsx:133
 #: apps/web/src/app/(signing)/sign/[token]/email-field.tsx:88
@@ -4658,7 +4662,7 @@ msgstr "Signature is too small. Please provide a more complete signature."
 msgid "Signatures Collected"
 msgstr "Signatures Collected"
 
-#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:191
+#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:248
 msgid "Signatures will appear once the document has been completed"
 msgstr "Signatures will appear once the document has been completed"
 
@@ -5198,6 +5202,10 @@ msgstr "The direct link has been copied to your clipboard"
 msgid "The document has been successfully moved to the selected team."
 msgstr "The document has been successfully moved to the selected team."
 
+#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:210
+msgid "The document is being prepared. You'll receive a copy once it's ready."
+msgstr "The document is being prepared. You'll receive a copy once it's ready."
+
 #: apps/web/src/app/embed/completed.tsx:30
 msgid "The document is now completed, please follow any instructions provided within the parent application."
 msgstr "The document is now completed, please follow any instructions provided within the parent application."
@@ -5437,7 +5445,7 @@ msgstr "This document could not be re-sent at this time. Please try again."
 msgid "This document has already been sent to this recipient. You can no longer edit this recipient."
 msgstr "This document has already been sent to this recipient. You can no longer edit this recipient."
 
-#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:173
+#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:229
 msgid "This document has been cancelled by the owner and is no longer available for others to sign."
 msgstr "This document has been cancelled by the owner and is no longer available for others to sign."
 
@@ -6235,7 +6243,7 @@ msgstr "Waiting for others"
 msgid "Waiting for others to complete signing."
 msgstr "Waiting for others to complete signing."
 
-#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:142
+#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:171
 msgid "Waiting for others to sign"
 msgstr "Waiting for others to sign"
 
@@ -6876,7 +6884,7 @@ msgstr "You will get notified & be able to set up your documenso public profile 
 msgid "You will now be required to enter a code from your authenticator app when signing in."
 msgstr "You will now be required to enter a code from your authenticator app when signing in."
 
-#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:166
+#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:220
 msgid "You will receive an Email copy of the signed document once everyone has signed."
 msgstr "You will receive an Email copy of the signed document once everyone has signed."
 
