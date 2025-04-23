@@ -129,7 +129,7 @@ export const AddTemplateFieldsFormPartial = ({
           recipients.find((recipient) => recipient.id === field.recipientId)?.token ?? '',
         fieldMeta: field.fieldMeta ? ZFieldMetaSchema.parse(field.fieldMeta) : undefined,
       })),
-      typedSignatureEnabled: typedSignatureEnabled ?? false,
+      typedSignatureEnabled: typedSignatureEnabled ?? true,
     },
   });
 

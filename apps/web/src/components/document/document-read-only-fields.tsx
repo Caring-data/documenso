@@ -4,7 +4,7 @@ import { useState } from 'react';
 
 import { Trans } from '@lingui/macro';
 import { useLingui } from '@lingui/react';
-import { Clock, EyeOffIcon } from 'lucide-react';
+import { Clock } from 'lucide-react';
 import { P, match } from 'ts-pattern';
 
 import {
@@ -101,18 +101,10 @@ export const DocumentReadOnlyFields = ({
                       ? `${field.recipient.name} (${field.recipient.email})`
                       : field.recipient.email}{' '}
                   </p>
-
-                  <button
-                    className="absolute right-0 top-0 my-1 p-2 focus:outline-none focus-visible:ring-0"
-                    onClick={() => handleHideField(field.secondaryId)}
-                    title="Hide field"
-                  >
-                    <EyeOffIcon className="h-3 w-3" />
-                  </button>
                 </PopoverHover>
               </div>
 
-              <div className="text-muted-foreground dark:text-background/70 break-all text-sm">
+              <div className="text-muted-foreground dark:text-background/70 break-all text-[10px] sm:text-sm">
                 {field.recipient.signingStatus === SigningStatus.SIGNED &&
                   match(field)
                     .with({ type: FieldType.SIGNATURE }, (field) =>
@@ -121,11 +113,11 @@ export const DocumentReadOnlyFields = ({
                           <img
                             src={field.signature.signatureImageAsBase64}
                             alt="Signature"
-                            className="h-auto max-h-[75%] w-auto max-w-[75%] object-contain dark:invert"
+                            className="h-auto max-h-[65%] w-auto max-w-[65%] object-contain dark:invert"
                           />
                         </div>
                       ) : (
-                        <p className="font-signature text-muted-foreground sm:text-md text-sm duration-200 md:text-lg">
+                        <p className="font-signature text-muted-foreground sm:text-md text-sm duration-200 md:text-2xl">
                           {field.signature?.typedSignature}
                         </p>
                       ),

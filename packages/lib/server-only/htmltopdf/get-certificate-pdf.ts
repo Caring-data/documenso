@@ -24,14 +24,14 @@ export const getCertificatePdf = async ({ documentId, language }: GetCertificate
 
   const environment = env('NODE_ENV');
 
-  if (environment !== 'local') {
+  if (environment === 'development') {
+    browser = await chromium.launch();
+  } else {
     browser = await chromium.launch({
       executablePath: '/usr/bin/chromium-browser',
       headless: true,
       args: ['--no-sandbox', '--disable-setuid-sandbox'],
     });
-  } else {
-    browser = await chromium.launch();
   }
 
   if (!browser) {
@@ -56,7 +56,7 @@ export const getCertificatePdf = async ({ documentId, language }: GetCertificate
 
   await page.goto(`${NEXT_PUBLIC_WEBAPP_URL()}/__htmltopdf/certificate?d=${encryptedId}`, {
     waitUntil: 'networkidle',
-    timeout: 10_000,
+    timeout: 50000,
   });
 
   const result = await page.pdf({

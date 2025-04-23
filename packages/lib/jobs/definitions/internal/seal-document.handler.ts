@@ -123,13 +123,18 @@ export const run = async ({
 
   const pdfData = await getFile(documentData);
 
-  const certificateData =
-    (document.team?.teamGlobalSettings?.includeSigningCertificate ?? true)
-      ? await getCertificatePdf({
-          documentId,
-          language: document.documentMeta?.language,
-        }).catch(() => null)
-      : null;
+  let certificateData = null;
+
+  try {
+    if (document.team?.teamGlobalSettings?.includeSigningCertificate ?? true) {
+      certificateData = await getCertificatePdf({
+        documentId,
+        language: document.documentMeta?.language,
+      });
+    }
+  } catch (error) {
+    console.error('Error generating certificate PDF:', error);
+  }
 
   const newDataId = await io.runTask('decorate-and-sign-pdf', async () => {
     const pdfDoc = await PDFDocument.load(pdfData);

@@ -1,6 +1,6 @@
 'use client';
 
-import { useLayoutEffect, useMemo, useRef, useState, useTransition } from 'react';
+import { useMemo, useRef, useState, useTransition } from 'react';
 
 import { useRouter } from 'next/navigation';
 
@@ -51,7 +51,6 @@ export const SignatureField = ({
 
   const signatureRef = useRef<HTMLParagraphElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-  const [fontSize, setFontSize] = useState(2);
 
   const {
     signature: providedSignature,
@@ -195,41 +194,6 @@ export const SignatureField = ({
     }
   };
 
-  useLayoutEffect(() => {
-    if (!signatureRef.current || !containerRef.current || !signature?.typedSignature) {
-      return;
-    }
-
-    const adjustTextSize = () => {
-      const container = containerRef.current;
-      const text = signatureRef.current;
-
-      if (!container || !text) {
-        return;
-      }
-
-      let size = 2;
-      text.style.fontSize = `${size}rem`;
-
-      while (
-        (text.scrollWidth > container.clientWidth || text.scrollHeight > container.clientHeight) &&
-        size > 0.8
-      ) {
-        size -= 0.1;
-        text.style.fontSize = `${size}rem`;
-      }
-
-      setFontSize(size);
-    };
-
-    const resizeObserver = new ResizeObserver(adjustTextSize);
-    resizeObserver.observe(containerRef.current);
-
-    adjustTextSize();
-
-    return () => resizeObserver.disconnect();
-  }, [signature?.typedSignature]);
-
   return (
     <SigningFieldContainer
       field={field}
@@ -251,11 +215,11 @@ export const SignatureField = ({
       )}
 
       {state === 'signed-image' && signature?.signatureImageAsBase64 && (
-        <div className="flex h-full w-full items-center justify-center">
+        <div className="-mt-1 flex h-full w-full items-center justify-center">
           <img
             src={signature.signatureImageAsBase64}
             alt={`Signature for ${recipient.name}`}
-            className="h-auto max-h-[90%] w-auto max-w-[90%] object-contain"
+            className="h-6 w-auto object-contain sm:h-12"
           />
         </div>
       )}
@@ -264,8 +228,7 @@ export const SignatureField = ({
         <div ref={containerRef} className="flex h-full w-full items-center justify-center p-2">
           <p
             ref={signatureRef}
-            className="font-signature text-muted-foreground dark:text-background w-full overflow-hidden break-all text-center leading-tight duration-200"
-            style={{ fontSize: `${fontSize}rem` }}
+            className="font-signature text-muted-foreground dark:text-background w-full overflow-hidden break-all text-center text-sm leading-tight duration-200 sm:text-2xl"
           >
             {signature?.typedSignature}
           </p>

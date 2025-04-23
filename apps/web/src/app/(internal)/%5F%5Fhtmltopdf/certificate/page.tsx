@@ -9,7 +9,7 @@ import { match } from 'ts-pattern';
 
 import { setupI18nSSR } from '@documenso/lib/client-only/providers/i18n.server';
 import { WEBAPP_BASE_URL } from '@documenso/lib/constants/app';
-import { APP_I18N_OPTIONS, ZSupportedLanguageCodeSchema } from '@documenso/lib/constants/i18n';
+import { ZSupportedLanguageCodeSchema } from '@documenso/lib/constants/i18n';
 import { RECIPIENT_ROLE_SIGNING_REASONS } from '@documenso/lib/constants/recipient-roles';
 import { getEntireDocument } from '@documenso/lib/server-only/admin/get-entire-document';
 import { decryptSecondaryData } from '@documenso/lib/server-only/crypto/decrypt';
@@ -167,6 +167,18 @@ export default async function SigningCertificate({ searchParams }: SigningCertif
     return allCompletionDates.reduce((latest, current) => (current > latest ? current : latest));
   };
 
+  const formatDateWithTimezone = (
+    date: Date | null | undefined,
+    fallbackZone: string = DateTime.local().zoneName ?? 'UTC',
+    timezone: string | null | undefined = null,
+  ): string => {
+    if (!date) return 'Unknown';
+
+    const zoneToUse = timezone ?? fallbackZone;
+
+    return DateTime.fromJSDate(date).setZone(zoneToUse).toFormat('dd LLL yyyy hh:mm:ss a (ZZZZ)');
+  };
+
   return (
     <div
       className="relative min-h-[100vh] w-full bg-cover bg-center bg-no-repeat print:overflow-hidden"
@@ -255,43 +267,41 @@ export default async function SigningCertificate({ searchParams }: SigningCertif
                         <div className="mt-2 space-y-1">
                           <p className="text-muted-foreground text-sm print:text-xs">
                             <span className="inline-block">
-                              {logs.EMAIL_SENT[0]
-                                ? DateTime.fromJSDate(logs.EMAIL_SENT[0].createdAt)
-                                    .setLocale(APP_I18N_OPTIONS.defaultLocale)
-                                    .toFormat('dd LLL yyyy hh:mm:ss a (ZZZZ)')
-                                : _(msg`Unknown`)}
+                              {formatDateWithTimezone(
+                                logs.EMAIL_SENT[0]?.createdAt,
+                                undefined,
+                                document.documentMeta?.timezone,
+                              )}
                             </span>
                           </p>
 
                           <p className="text-muted-foreground text-sm print:text-xs">
                             <span className="inline-block">
-                              {logs.DOCUMENT_OPENED[0]
-                                ? DateTime.fromJSDate(logs.DOCUMENT_OPENED[0].createdAt)
-                                    .setLocale(APP_I18N_OPTIONS.defaultLocale)
-                                    .toFormat('dd LLL yyyy hh:mm:ss a (ZZZZ)')
-                                : _(msg`Unknown`)}
+                              {formatDateWithTimezone(
+                                logs.DOCUMENT_OPENED[0]?.createdAt,
+                                undefined,
+                                document.documentMeta?.timezone,
+                              )}
                             </span>
                           </p>
 
                           <p className="text-muted-foreground text-sm print:text-xs">
                             <span className="inline-block">
-                              {logs.DOCUMENT_RECIPIENT_COMPLETED[0]
-                                ? DateTime.fromJSDate(
-                                    logs.DOCUMENT_RECIPIENT_COMPLETED[0].createdAt,
-                                  )
-                                    .setLocale(APP_I18N_OPTIONS.defaultLocale)
-                                    .toFormat('dd LLL yyyy hh:mm:ss a (ZZZZ)')
-                                : _(msg`Unknown`)}
+                              {formatDateWithTimezone(
+                                logs.DOCUMENT_RECIPIENT_COMPLETED[0]?.createdAt,
+                                undefined,
+                                document.documentMeta?.timezone,
+                              )}
                             </span>
                           </p>
                         </div>
                         <p className="text-muted-foreground mt-2 text-sm print:text-xs">
                           <span className="inline-block">
-                            {logs.DOCUMENT_RECIPIENT_COMPLETED[0]
-                              ? DateTime.fromJSDate(logs.DOCUMENT_RECIPIENT_COMPLETED[0].createdAt)
-                                  .setLocale(APP_I18N_OPTIONS.defaultLocale)
-                                  .toFormat('dd LLL yyyy hh:mm:ss a (ZZZZ)')
-                              : _(msg`Unknown`)}
+                            {formatDateWithTimezone(
+                              logs.DOCUMENT_RECIPIENT_COMPLETED[0]?.createdAt,
+                              undefined,
+                              document.documentMeta?.timezone,
+                            )}
                           </span>
                         </p>
                       </TableCell>
@@ -348,9 +358,12 @@ export default async function SigningCertificate({ searchParams }: SigningCertif
               <p>
                 {(() => {
                   const finalDate = getFinalCompletionDate();
+                  const fallbackZone = DateTime.local().zoneName ?? 'UTC';
+                  const docTimezone = document.documentMeta?.timezone ?? fallbackZone;
+
                   return finalDate
                     ? DateTime.fromJSDate(finalDate)
-                        .setLocale(APP_I18N_OPTIONS.defaultLocale)
+                        .setZone(docTimezone)
                         .toFormat('dd LLL yyyy hh:mm:ss a (ZZZZ)')
                     : _(msg`Unknown`);
                 })()}

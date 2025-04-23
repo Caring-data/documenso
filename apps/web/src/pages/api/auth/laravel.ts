@@ -1,4 +1,3 @@
-// pages/api/auth/laravel.ts
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 import { getLaravelToken } from '@documenso/lib/server-only/laravel-auth/getLaravelToken';

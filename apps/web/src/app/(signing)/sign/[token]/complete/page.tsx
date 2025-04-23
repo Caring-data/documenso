@@ -4,7 +4,6 @@ import { Trans, msg } from '@lingui/macro';
 import { useLingui } from '@lingui/react';
 import { CheckCircle2, Clock8 } from 'lucide-react';
 import { env } from 'next-runtime-env';
-import { match } from 'ts-pattern';
 
 import signingCelebration from '@documenso/assets/images/signing-celebration.png';
 import { setupI18nSSR } from '@documenso/lib/client-only/providers/i18n.server';
@@ -126,56 +125,120 @@ export default async function CompletedSigningPage({
             {recipient.role === RecipientRole.APPROVER && <Trans>Document Approved</Trans>}
           </h2>
 
-          {match({ status: document.status, deletedAt: document.deletedAt })
-            .with({ status: DocumentStatus.COMPLETED }, () => (
-              <div className="text-documenso-700 mt-4 flex items-center text-center">
-                <CheckCircle2 className="mr-2 h-5 w-5" />
-                <span className="text-sm">
-                  <Trans>All parties have signed the document.</Trans>
-                </span>
-              </div>
-            ))
-            .with({ deletedAt: null }, () => (
-              <div className="mt-4 flex items-center text-center text-blue-600">
-                <Clock8 className="mr-2 h-5 w-5" />
-                <span className="text-sm">
-                  <Trans>Waiting for others to sign</Trans>
-                </span>
-              </div>
-            ))
-            .otherwise(() => (
+          {(() => {
+            const allSigned = document.recipients?.every((r) => r.signingStatus === 'SIGNED');
+
+            const emailSettings = document.documentMeta?.emailSettings;
+            const isSingleRecipient = emailSettings?.documentPending === false;
+
+            const hasRecipientWithOrder2or3 = document.recipients?.some(
+              (r) => r.signingOrder === 2 || r.signingOrder === 3,
+            );
+
+            if (document.status === DocumentStatus.COMPLETED) {
+              return (
+                <div className="text-documenso-700 mt-4 flex items-center text-center">
+                  <CheckCircle2 className="mr-2 h-5 w-5" />
+                  <span className="text-sm">
+                    <Trans>All parties have signed the document.</Trans>
+                  </span>
+                </div>
+              );
+            }
+
+            if (
+              document.deletedAt === null &&
+              document.status === DocumentStatus.PENDING &&
+              allSigned &&
+              (isSingleRecipient || hasRecipientWithOrder2or3)
+            ) {
+              return (
+                <div className="mt-4 flex items-center text-center text-blue-600">
+                  <Clock8 className="mr-2 h-5 w-5" />
+                  <span className="text-sm">
+                    <Trans>Document is preparing...</Trans>
+                  </span>
+                </div>
+              );
+            }
+
+            if (document.deletedAt === null) {
+              return (
+                <div className="mt-4 flex items-center text-center text-blue-600">
+                  <Clock8 className="mr-2 h-5 w-5" />
+                  <span className="text-sm">
+                    <Trans>Waiting for others to sign</Trans>
+                  </span>
+                </div>
+              );
+            }
+
+            return (
               <div className="flex items-center text-center text-red-600">
                 <Clock8 className="mr-2 h-5 w-5" />
                 <span className="text-sm">
                   <Trans>Document no longer available to sign</Trans>
                 </span>
               </div>
-            ))}
+            );
+          })()}
 
-          {match({ status: document.status, deletedAt: document.deletedAt })
-            .with({ status: DocumentStatus.COMPLETED }, () => (
-              <p className="text-muted-foreground/60 mt-2.5 max-w-[60ch] text-center text-sm font-medium md:text-base">
-                <Trans>
-                  A copy of the completed document will be sent to your email shortly. You may also
-                  download it below.
-                </Trans>
-              </p>
-            ))
-            .with({ deletedAt: null }, () => (
-              <p className="text-muted-foreground/60 mt-2.5 max-w-[60ch] text-center text-sm font-medium md:text-base">
-                <Trans>
-                  You will receive an Email copy of the signed document once everyone has signed.
-                </Trans>
-              </p>
-            ))
-            .otherwise(() => (
+          {(() => {
+            const allSigned = document.recipients?.every((r) => r.signingStatus === 'SIGNED');
+
+            const emailSettings = document.documentMeta?.emailSettings;
+            const isSingleRecipient = emailSettings?.documentPending === false;
+
+            const hasRecipientWithOrder2or3 = document.recipients?.some(
+              (r) => r.signingOrder === 2 || r.signingOrder === 3,
+            );
+
+            if (document.status === DocumentStatus.COMPLETED) {
+              return (
+                <p className="text-muted-foreground/60 mt-2.5 max-w-[60ch] text-center text-sm font-medium md:text-base">
+                  <Trans>
+                    A copy of the completed document will be sent to your email shortly. You may
+                    also download it below.
+                  </Trans>
+                </p>
+              );
+            }
+
+            if (
+              document.deletedAt === null &&
+              document.status === DocumentStatus.PENDING &&
+              isSingleRecipient &&
+              allSigned &&
+              (isSingleRecipient || hasRecipientWithOrder2or3)
+            ) {
+              return (
+                <p className="text-muted-foreground/60 mt-2.5 max-w-[60ch] text-center text-sm font-medium md:text-base">
+                  <Trans>
+                    The document is being prepared. You'll receive a copy once it's ready.
+                  </Trans>
+                </p>
+              );
+            }
+
+            if (document.deletedAt === null) {
+              return (
+                <p className="text-muted-foreground/60 mt-2.5 max-w-[60ch] text-center text-sm font-medium md:text-base">
+                  <Trans>
+                    You will receive an Email copy of the signed document once everyone has signed.
+                  </Trans>
+                </p>
+              );
+            }
+
+            return (
               <p className="text-muted-foreground/60 mt-2.5 max-w-[60ch] text-center text-sm font-medium md:text-base">
                 <Trans>
                   This document has been cancelled by the owner and is no longer available for
                   others to sign.
                 </Trans>
               </p>
-            ))}
+            );
+          })()}
 
           <div className="mt-8 flex w-full max-w-sm items-center justify-center gap-4">
             {document.status === DocumentStatus.COMPLETED ? (

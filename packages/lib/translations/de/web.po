@@ -26,7 +26,7 @@ msgstr ""
 msgid "\"{0}\" has invited you to sign \"example document\"."
 msgstr "\"{0}\" hat Sie eingeladen, \"Beispieldokument\" zu unterschreiben."
 
-#: apps/web/src/app/(signing)/sign/[token]/date-field.tsx:71
+#: apps/web/src/app/(signing)/sign/[token]/date-field.tsx:72
 msgid "\"{0}\" will appear on the document as it has a timezone of \"{timezone}\"."
 msgstr "\"{0}\" wird im Dokument erscheinen, da es eine Zeitzone von \"{timezone}\" hat."
 
@@ -446,7 +446,7 @@ msgstr "7 Tage"
 msgid "A confirmation email has been sent, and it should arrive in your inbox shortly."
 msgstr "Eine Bestätigungs-E-Mail wurde gesendet, und sie sollte in Kürze in deinem Posteingang ankommen."
 
-#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:158
+#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:194
 msgid "A copy of the completed document will be sent to your email shortly. You may also download it below."
 msgstr ""
 
@@ -806,7 +806,7 @@ msgstr "Alle Dokumente, die mit dem elektronischen Unterzeichnungsprozess zusamm
 msgid "All inserted signatures will be voided"
 msgstr "Alle eingefügten Unterschriften werden annulliert"
 
-#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:134
+#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:144
 msgid "All parties have signed the document."
 msgstr ""
 
@@ -949,7 +949,7 @@ msgid "An error occurred while moving the template."
 msgstr "Ein Fehler ist aufgetreten, während die Vorlage verschoben wurde."
 
 #: apps/web/src/app/(signing)/sign/[token]/checkbox-field.tsx:151
-#: apps/web/src/app/(signing)/sign/[token]/date-field.tsx:130
+#: apps/web/src/app/(signing)/sign/[token]/date-field.tsx:154
 #: apps/web/src/app/(signing)/sign/[token]/dropdown-field.tsx:134
 #: apps/web/src/app/(signing)/sign/[token]/email-field.tsx:117
 #: apps/web/src/app/(signing)/sign/[token]/initials-field.tsx:151
@@ -963,7 +963,7 @@ msgstr "Ein Fehler ist beim Entfernen des Feldes aufgetreten."
 msgid "An error occurred while removing the selection."
 msgstr ""
 
-#: apps/web/src/app/(signing)/sign/[token]/signature-field.tsx:192
+#: apps/web/src/app/(signing)/sign/[token]/signature-field.tsx:191
 msgid "An error occurred while removing the signature."
 msgstr "Ein Fehler ist aufgetreten, während die Unterschrift entfernt wurde."
 
@@ -976,7 +976,7 @@ msgid "An error occurred while sending your confirmation email"
 msgstr "Beim Senden Ihrer Bestätigungs-E-Mail ist ein Fehler aufgetreten"
 
 #: apps/web/src/app/(signing)/sign/[token]/checkbox-field.tsx:121
-#: apps/web/src/app/(signing)/sign/[token]/date-field.tsx:103
+#: apps/web/src/app/(signing)/sign/[token]/date-field.tsx:104
 #: apps/web/src/app/(signing)/sign/[token]/dropdown-field.tsx:102
 #: apps/web/src/app/(signing)/sign/[token]/email-field.tsx:90
 #: apps/web/src/app/(signing)/sign/[token]/initials-field.tsx:124
@@ -988,14 +988,14 @@ msgid "An error occurred while signing as assistant."
 msgstr ""
 
 #: apps/web/src/app/(signing)/sign/[token]/checkbox-field.tsx:122
-#: apps/web/src/app/(signing)/sign/[token]/date-field.tsx:104
+#: apps/web/src/app/(signing)/sign/[token]/date-field.tsx:105
 #: apps/web/src/app/(signing)/sign/[token]/dropdown-field.tsx:103
 #: apps/web/src/app/(signing)/sign/[token]/email-field.tsx:91
 #: apps/web/src/app/(signing)/sign/[token]/initials-field.tsx:125
 #: apps/web/src/app/(signing)/sign/[token]/name-field.tsx:129
 #: apps/web/src/app/(signing)/sign/[token]/number-field.tsx:153
 #: apps/web/src/app/(signing)/sign/[token]/radio-field.tsx:104
-#: apps/web/src/app/(signing)/sign/[token]/signature-field.tsx:166
+#: apps/web/src/app/(signing)/sign/[token]/signature-field.tsx:165
 #: apps/web/src/app/(signing)/sign/[token]/text-field.tsx:175
 msgid "An error occurred while signing the document."
 msgstr "Ein Fehler ist aufgetreten, während das Dokument unterzeichnet wurde."
@@ -1350,7 +1350,7 @@ msgstr ""
 #: apps/web/src/app/(signing)/sign/[token]/number-field.tsx:347
 #: apps/web/src/app/(signing)/sign/[token]/reject-document-dialog.tsx:158
 #: apps/web/src/app/(signing)/sign/[token]/sign-dialog.tsx:128
-#: apps/web/src/app/(signing)/sign/[token]/signature-field.tsx:320
+#: apps/web/src/app/(signing)/sign/[token]/signature-field.tsx:283
 #: apps/web/src/app/(signing)/sign/[token]/text-field.tsx:358
 #: apps/web/src/app/(teams)/t/[teamUrl]/settings/team-transfer-status.tsx:121
 #: apps/web/src/components/(dashboard)/settings/token/delete-token-dialog.tsx:176
@@ -1859,7 +1859,7 @@ msgid "Dark Mode"
 msgstr "Dunkelmodus"
 
 #: apps/web/src/app/(dashboard)/settings/security/activity/user-security-activity-data-table.tsx:67
-#: apps/web/src/app/(signing)/sign/[token]/date-field.tsx:152
+#: apps/web/src/app/(signing)/sign/[token]/date-field.tsx:176
 #: packages/ui/primitives/document-flow/add-fields.tsx:951
 #: packages/ui/primitives/document-flow/types.ts:53
 #: packages/ui/primitives/template-flow/add-template-fields.tsx:825
@@ -2122,7 +2122,7 @@ msgstr "Die Authentifizierung für den Dokumentenzugriff wurde aktualisiert"
 msgid "Document All"
 msgstr "Dokument Alle"
 
-#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:126
+#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:132
 msgid "Document Approved"
 msgstr "Dokument genehmigt"
 
@@ -2224,6 +2224,10 @@ msgstr "Dokument-ID"
 msgid "Document inbox"
 msgstr "Dokumenten-Posteingang"
 
+#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:160
+msgid "Document is preparing..."
+msgstr ""
+
 #: apps/web/src/app/(dashboard)/admin/stats/page.tsx:82
 msgid "Document metrics"
 msgstr "Dokumentmetrik"
@@ -2236,7 +2240,7 @@ msgstr "Dokument verschoben"
 msgid "Document moved to team"
 msgstr "Dokument ins Team verschoben"
 
-#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:150
+#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:181
 msgid "Document no longer available to sign"
 msgstr "Dokument steht nicht mehr zur Unterschrift zur Verfügung"
 
@@ -2286,7 +2290,7 @@ msgstr "Der Dokumentenunterzeichnungsprozess wird abgebrochen"
 msgid "Document status"
 msgstr "Dokumentenstatus"
 
-#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:124
+#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:130
 msgid "Document Successfully Signed"
 msgstr ""
 
@@ -2306,7 +2310,7 @@ msgstr "Dokument aktualisiert"
 msgid "Document uploaded"
 msgstr "Dokument hochgeladen"
 
-#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:125
+#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:131
 msgid "Document Viewed"
 msgstr "Dokument angesehen"
 
@@ -2635,8 +2639,8 @@ msgstr "Geben Sie hier Ihren Text ein"
 #: apps/web/src/app/(signing)/sign/[token]/checkbox-field.tsx:119
 #: apps/web/src/app/(signing)/sign/[token]/checkbox-field.tsx:150
 #: apps/web/src/app/(signing)/sign/[token]/checkbox-field.tsx:208
-#: apps/web/src/app/(signing)/sign/[token]/date-field.tsx:101
-#: apps/web/src/app/(signing)/sign/[token]/date-field.tsx:129
+#: apps/web/src/app/(signing)/sign/[token]/date-field.tsx:102
+#: apps/web/src/app/(signing)/sign/[token]/date-field.tsx:153
 #: apps/web/src/app/(signing)/sign/[token]/dropdown-field.tsx:100
 #: apps/web/src/app/(signing)/sign/[token]/dropdown-field.tsx:133
 #: apps/web/src/app/(signing)/sign/[token]/email-field.tsx:88
@@ -2650,9 +2654,9 @@ msgstr "Geben Sie hier Ihren Text ein"
 #: apps/web/src/app/(signing)/sign/[token]/pre-signing/page.tsx:45
 #: apps/web/src/app/(signing)/sign/[token]/radio-field.tsx:101
 #: apps/web/src/app/(signing)/sign/[token]/radio-field.tsx:130
-#: apps/web/src/app/(signing)/sign/[token]/signature-field.tsx:131
-#: apps/web/src/app/(signing)/sign/[token]/signature-field.tsx:165
-#: apps/web/src/app/(signing)/sign/[token]/signature-field.tsx:191
+#: apps/web/src/app/(signing)/sign/[token]/signature-field.tsx:130
+#: apps/web/src/app/(signing)/sign/[token]/signature-field.tsx:164
+#: apps/web/src/app/(signing)/sign/[token]/signature-field.tsx:190
 #: apps/web/src/app/(signing)/sign/[token]/text-field.tsx:172
 #: apps/web/src/app/(signing)/sign/[token]/text-field.tsx:202
 #: apps/web/src/components/(dashboard)/layout/verify-email-banner.tsx:54
@@ -4560,14 +4564,14 @@ msgstr "Vorlagen in Ihrem Team-Öffentliches Profil anzeigen, damit Ihre Zielgru
 #: apps/web/src/app/(signing)/sign/[token]/auto-sign.tsx:229
 #: apps/web/src/app/(signing)/sign/[token]/document-action-auth-2fa.tsx:182
 #: apps/web/src/app/(signing)/sign/[token]/name-field.tsx:243
-#: apps/web/src/app/(signing)/sign/[token]/signature-field.tsx:328
+#: apps/web/src/app/(signing)/sign/[token]/signature-field.tsx:291
 #: apps/web/src/components/ui/user-profile-skeleton.tsx:75
 #: apps/web/src/components/ui/user-profile-timur.tsx:81
 #: packages/lib/constants/recipient-roles.ts:22
 msgid "Sign"
 msgstr "Unterschreiben"
 
-#: apps/web/src/app/(signing)/sign/[token]/signature-field.tsx:278
+#: apps/web/src/app/(signing)/sign/[token]/signature-field.tsx:241
 msgid "Sign as {0} <0>({1})</0>"
 msgstr "Unterzeichnen als {0} <0>({1})</0>"
 
@@ -4636,8 +4640,8 @@ msgstr "Registrieren mit OIDC"
 #: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:194
 #: apps/web/src/app/(recipient)/d/[token]/sign-direct-template.tsx:334
 #: apps/web/src/app/(signing)/sign/[token]/form.tsx:340
+#: apps/web/src/app/(signing)/sign/[token]/signature-field.tsx:213
 #: apps/web/src/app/(signing)/sign/[token]/signature-field.tsx:249
-#: apps/web/src/app/(signing)/sign/[token]/signature-field.tsx:286
 #: apps/web/src/app/embed/direct/[[...url]]/client.tsx:422
 #: apps/web/src/app/embed/sign/[[...url]]/client.tsx:424
 #: apps/web/src/components/forms/profile.tsx:123
@@ -4653,7 +4657,7 @@ msgid "Signature Certificate"
 msgstr ""
 
 #: apps/web/src/app/(signing)/sign/[token]/form.tsx:364
-#: apps/web/src/app/(signing)/sign/[token]/signature-field.tsx:303
+#: apps/web/src/app/(signing)/sign/[token]/signature-field.tsx:266
 #: apps/web/src/app/embed/direct/[[...url]]/client.tsx:448
 #: apps/web/src/app/embed/sign/[[...url]]/client.tsx:450
 msgid "Signature is too small. Please provide a more complete signature."
@@ -4663,7 +4667,7 @@ msgstr "Die Unterschrift ist zu klein. Bitte geben Sie eine vollständigere Unte
 msgid "Signatures Collected"
 msgstr "Gesammelte Unterschriften"
 
-#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:191
+#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:248
 msgid "Signatures will appear once the document has been completed"
 msgstr "Unterschriften erscheinen, sobald das Dokument abgeschlossen ist"
 
@@ -5203,6 +5207,10 @@ msgstr "Der direkte Linkt wurde in die Zwischenablage kopiert"
 msgid "The document has been successfully moved to the selected team."
 msgstr "Das Dokument wurde erfolgreich in das ausgewählte Team verschoben."
 
+#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:210
+msgid "The document is being prepared. You'll receive a copy once it's ready."
+msgstr ""
+
 #: apps/web/src/app/embed/completed.tsx:30
 msgid "The document is now completed, please follow any instructions provided within the parent application."
 msgstr "Das Dokument ist jetzt abgeschlossen. Bitte folgen Sie allen Anweisungen, die in der übergeordneten Anwendung bereitgestellt werden."
@@ -5442,7 +5450,7 @@ msgstr "Dieses Dokument konnte zu diesem Zeitpunkt nicht erneut gesendet werden.
 msgid "This document has already been sent to this recipient. You can no longer edit this recipient."
 msgstr "Dieses Dokument wurde bereits an diesen Empfänger gesendet. Sie können diesen Empfänger nicht mehr bearbeiten."
 
-#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:173
+#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:229
 msgid "This document has been cancelled by the owner and is no longer available for others to sign."
 msgstr "Dieses Dokument wurde vom Eigentümer storniert und steht anderen nicht mehr zur Unterzeichnung zur Verfügung."
 
@@ -5779,7 +5787,7 @@ msgstr "Typ"
 msgid "Type a command or search..."
 msgstr "Geben Sie einen Befehl ein oder suchen Sie..."
 
-#: apps/web/src/app/(signing)/sign/[token]/signature-field.tsx:132
+#: apps/web/src/app/(signing)/sign/[token]/signature-field.tsx:131
 msgid "Typed signatures are not allowed. Please draw your signature."
 msgstr "Getippte Unterschriften sind nicht erlaubt. Bitte zeichnen Sie Ihre Unterschrift."
 
@@ -6240,7 +6248,7 @@ msgstr "Warten auf andere"
 msgid "Waiting for others to complete signing."
 msgstr "Warten auf andere, um die Unterzeichnung abzuschließen."
 
-#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:142
+#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:171
 msgid "Waiting for others to sign"
 msgstr "Warten auf andere, um zu unterschreiben"
 
@@ -6881,7 +6889,7 @@ msgstr "Sie werden benachrichtigt und können Ihr Documenso öffentliches Profil
 msgid "You will now be required to enter a code from your authenticator app when signing in."
 msgstr "Sie müssen bei der Anmeldung jetzt einen Code von Ihrer Authenticator-App eingeben."
 
-#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:166
+#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:220
 msgid "You will receive an Email copy of the signed document once everyone has signed."
 msgstr "Sie erhalten eine E-Mail-Kopie des unterzeichneten Dokuments, sobald alle unterschrieben haben."
 
