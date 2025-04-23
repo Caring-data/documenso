@@ -32,7 +32,6 @@ import { LazyPDFViewer } from '@documenso/ui/primitives/lazy-pdf-viewer';
 
 import { DocumentReadOnlyFields } from '~/components/document/document-read-only-fields';
 
-import { AutoSign } from './auto-sign';
 import { CheckboxField } from './checkbox-field';
 import { DateField } from './date-field';
 import { DropdownField } from './dropdown-field';
@@ -169,9 +168,9 @@ export const SigningPageView = ({
 
         <DocumentReadOnlyFields fields={completedFields} />
 
-        {recipient.role !== RecipientRole.ASSISTANT && (
+        {/* {recipient.role !== RecipientRole.ASSISTANT && (
           <AutoSign recipient={recipient} fields={fields} />
-        )}
+        )} */}
 
         <ElementVisible target={PDF_VIEWER_PAGE_SELECTOR}>
           {fields

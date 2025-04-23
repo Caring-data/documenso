@@ -287,6 +287,14 @@ export const createDocumentFromTemplate = async ({
       const base64Pdf = documentData.data;
       const fieldsToCreate: Omit<Field, 'id' | 'secondaryId' | 'templateId'>[] = [];
       const variableCounters: Record<string, number> = {};
+      const skipCoordinateSearchKeys = [
+        'signed_admission_agreement',
+        'hospice_agreement',
+        'home_health_agreement',
+      ];
+
+      const shouldSkipCoordinateSearch =
+        template.formKey && skipCoordinateSearchKeys.includes(template.formKey);
 
       for (const finalRecipient of finalRecipients) {
         const recipient = document.recipients.find(
@@ -295,21 +303,24 @@ export const createDocumentFromTemplate = async ({
         if (!recipient) continue;
 
         for (const field of finalRecipient.fields) {
-          const variableName = getFieldVariableName(recipient, field);
-
-          const coordinatesList = await findFieldCoordinatesFromPdf({
-            base64Pdf,
-            fieldName: variableName,
-          });
-
           let coordinates;
 
-          if (coordinatesList && coordinatesList.length > 0) {
-            const index = variableCounters[variableName] ?? 0;
-            coordinates = coordinatesList[index] || coordinatesList[0];
-            variableCounters[variableName] = index + 1;
-          } else {
-            // fallback: use coordinates from the field itself (assumes comes from DB)
+          if (!shouldSkipCoordinateSearch) {
+            const variableName = getFieldVariableName(recipient, field);
+
+            const coordinatesList = await findFieldCoordinatesFromPdf({
+              base64Pdf,
+              fieldName: variableName,
+            });
+
+            if (coordinatesList && coordinatesList.length > 0) {
+              const index = variableCounters[variableName] ?? 0;
+              coordinates = coordinatesList[index] || coordinatesList[0];
+              variableCounters[variableName] = index + 1;
+            }
+          }
+
+          if (!coordinates) {
             coordinates = {
               x: field.positionX,
               y: field.positionY,
