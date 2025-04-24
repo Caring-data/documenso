@@ -38,9 +38,9 @@ import { Label } from '@documenso/ui/primitives/label';
 import { SignaturePad } from '@documenso/ui/primitives/signature-pad';
 import { useStep } from '@documenso/ui/primitives/stepper';
 
+import { CalendarField } from '~/app/(signing)/sign/[token]/calendar-field';
 import { CheckboxField } from '~/app/(signing)/sign/[token]/checkbox-field';
 import { DateField } from '~/app/(signing)/sign/[token]/date-field';
-import { DatePickerField } from '~/app/(signing)/sign/[token]/date-picker-field';
 import { DropdownField } from '~/app/(signing)/sign/[token]/dropdown-field';
 import { EmailField } from '~/app/(signing)/sign/[token]/email-field';
 import { InitialsField } from '~/app/(signing)/sign/[token]/initials-field';
@@ -220,7 +220,7 @@ export const SignDirectTemplateForm = ({
                 />
               ))
               .with(FieldType.CALENDAR, () => (
-                <DatePickerField
+                <CalendarField
                   key={field.id}
                   field={field}
                   dateFormat={template.templateMeta?.dateFormat ?? DEFAULT_DOCUMENT_DATE_FORMAT}

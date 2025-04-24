@@ -943,9 +943,9 @@ msgstr "An error occurred while moving the document."
 msgid "An error occurred while moving the template."
 msgstr "An error occurred while moving the template."
 
+#: apps/web/src/app/(signing)/sign/[token]/calendar-field.tsx:138
 #: apps/web/src/app/(signing)/sign/[token]/checkbox-field.tsx:151
 #: apps/web/src/app/(signing)/sign/[token]/date-field.tsx:154
-#: apps/web/src/app/(signing)/sign/[token]/date-picker-field.tsx:123
 #: apps/web/src/app/(signing)/sign/[token]/dropdown-field.tsx:134
 #: apps/web/src/app/(signing)/sign/[token]/email-field.tsx:117
 #: apps/web/src/app/(signing)/sign/[token]/initials-field.tsx:151
@@ -971,9 +971,9 @@ msgstr "An error occurred while sending the document."
 msgid "An error occurred while sending your confirmation email"
 msgstr "An error occurred while sending your confirmation email"
 
+#: apps/web/src/app/(signing)/sign/[token]/calendar-field.tsx:91
 #: apps/web/src/app/(signing)/sign/[token]/checkbox-field.tsx:121
 #: apps/web/src/app/(signing)/sign/[token]/date-field.tsx:104
-#: apps/web/src/app/(signing)/sign/[token]/date-picker-field.tsx:92
 #: apps/web/src/app/(signing)/sign/[token]/dropdown-field.tsx:102
 #: apps/web/src/app/(signing)/sign/[token]/email-field.tsx:90
 #: apps/web/src/app/(signing)/sign/[token]/initials-field.tsx:124
@@ -984,9 +984,9 @@ msgstr "An error occurred while sending your confirmation email"
 msgid "An error occurred while signing as assistant."
 msgstr "An error occurred while signing as assistant."
 
+#: apps/web/src/app/(signing)/sign/[token]/calendar-field.tsx:92
 #: apps/web/src/app/(signing)/sign/[token]/checkbox-field.tsx:122
 #: apps/web/src/app/(signing)/sign/[token]/date-field.tsx:105
-#: apps/web/src/app/(signing)/sign/[token]/date-picker-field.tsx:93
 #: apps/web/src/app/(signing)/sign/[token]/dropdown-field.tsx:103
 #: apps/web/src/app/(signing)/sign/[token]/email-field.tsx:91
 #: apps/web/src/app/(signing)/sign/[token]/initials-field.tsx:125
@@ -1321,7 +1321,10 @@ msgstr "By proceeding to use the electronic signature service provided by Docume
 msgid "By using the electronic signature feature, you are consenting to conduct transactions and receive disclosures electronically. You acknowledge that your electronic signature on documents is binding and that you accept the terms outlined in the documents you are signing."
 msgstr "By using the electronic signature feature, you are consenting to conduct transactions and receive disclosures electronically. You acknowledge that your electronic signature on documents is binding and that you accept the terms outlined in the documents you are signing."
 
-#: packages/ui/primitives/template-flow/add-template-fields.tsx:842
+#: apps/web/src/app/(signing)/sign/[token]/calendar-field.tsx:181
+#: packages/ui/primitives/document-flow/add-fields.tsx:972
+#: packages/ui/primitives/document-flow/types.ts:54
+#: packages/ui/primitives/template-flow/add-template-fields.tsx:846
 msgid "Calendar"
 msgstr "Calendar"
 
@@ -1373,7 +1376,7 @@ msgstr "Can prepare"
 #: apps/web/src/components/forms/2fa/view-recovery-codes-dialog.tsx:163
 #: apps/web/src/components/templates/manage-public-template-dialog.tsx:448
 #: apps/web/src/components/templates/template-bulk-send-dialog.tsx:263
-#: packages/ui/primitives/document-flow/field-item-advanced-settings.tsx:325
+#: packages/ui/primitives/document-flow/field-item-advanced-settings.tsx:341
 #: packages/ui/primitives/document-flow/send-document-action-dialog.tsx:58
 msgid "Cancel"
 msgstr "Cancel"
@@ -1411,7 +1414,7 @@ msgstr "Character Limit"
 msgid "Charts"
 msgstr "Charts"
 
-#: packages/ui/primitives/document-flow/types.ts:58
+#: packages/ui/primitives/document-flow/types.ts:59
 msgid "Checkbox"
 msgstr "Checkbox"
 
@@ -2168,7 +2171,7 @@ msgid "Document created by <0>{0}</0>"
 msgstr "Document created by <0>{0}</0>"
 
 #: packages/email/templates/document-created-from-direct-template.tsx:32
-#: packages/lib/server-only/template/create-document-from-direct-template.ts:597
+#: packages/lib/server-only/template/create-document-from-direct-template.ts:601
 msgid "Document created from direct template"
 msgstr "Document created from direct template"
 
@@ -2405,8 +2408,8 @@ msgstr "Drafted Documents"
 msgid "Drag & drop your PDF here."
 msgstr "Drag & drop your PDF here."
 
-#: packages/ui/primitives/document-flow/add-fields.tsx:1082
-#: packages/ui/primitives/template-flow/add-template-fields.tsx:973
+#: packages/ui/primitives/document-flow/add-fields.tsx:1103
+#: packages/ui/primitives/template-flow/add-template-fields.tsx:977
 msgid "Dropdown"
 msgstr "Dropdown"
 
@@ -2477,7 +2480,7 @@ msgstr "Electronic Signature Disclosure"
 #: packages/ui/primitives/document-flow/add-fields.tsx:899
 #: packages/ui/primitives/document-flow/add-signers.tsx:511
 #: packages/ui/primitives/document-flow/add-signers.tsx:518
-#: packages/ui/primitives/document-flow/types.ts:54
+#: packages/ui/primitives/document-flow/types.ts:55
 #: packages/ui/primitives/template-flow/add-template-fields.tsx:773
 #: packages/ui/primitives/template-flow/add-template-placeholder-recipients.tsx:537
 #: packages/ui/primitives/template-flow/add-template-placeholder-recipients.tsx:544
@@ -2526,7 +2529,7 @@ msgstr "Email verification has been removed"
 msgid "Email verification has been resent"
 msgstr "Email verification has been resent"
 
-#: packages/ui/primitives/document-flow/add-fields.tsx:1147
+#: packages/ui/primitives/document-flow/add-fields.tsx:1168
 msgid "Empty field"
 msgstr "Empty field"
 
@@ -2638,13 +2641,13 @@ msgstr "Enter your text here"
 #: apps/web/src/app/(dashboard)/templates/move-template-dialog.tsx:68
 #: apps/web/src/app/(dashboard)/templates/use-template-dialog.tsx:187
 #: apps/web/src/app/(signing)/sign/[token]/auto-sign.tsx:152
+#: apps/web/src/app/(signing)/sign/[token]/calendar-field.tsx:89
+#: apps/web/src/app/(signing)/sign/[token]/calendar-field.tsx:137
 #: apps/web/src/app/(signing)/sign/[token]/checkbox-field.tsx:119
 #: apps/web/src/app/(signing)/sign/[token]/checkbox-field.tsx:150
 #: apps/web/src/app/(signing)/sign/[token]/checkbox-field.tsx:208
 #: apps/web/src/app/(signing)/sign/[token]/date-field.tsx:102
 #: apps/web/src/app/(signing)/sign/[token]/date-field.tsx:153
-#: apps/web/src/app/(signing)/sign/[token]/date-picker-field.tsx:90
-#: apps/web/src/app/(signing)/sign/[token]/date-picker-field.tsx:122
 #: apps/web/src/app/(signing)/sign/[token]/dropdown-field.tsx:100
 #: apps/web/src/app/(signing)/sign/[token]/dropdown-field.tsx:133
 #: apps/web/src/app/(signing)/sign/[token]/email-field.tsx:88
@@ -2665,7 +2668,7 @@ msgstr "Enter your text here"
 #: apps/web/src/app/(signing)/sign/[token]/text-field.tsx:202
 #: apps/web/src/components/(dashboard)/layout/verify-email-banner.tsx:54
 #: apps/web/src/components/(dashboard)/settings/webhooks/create-webhook-dialog.tsx:101
-#: packages/ui/primitives/document-flow/field-item-advanced-settings.tsx:226
+#: packages/ui/primitives/document-flow/field-item-advanced-settings.tsx:235
 #: packages/ui/primitives/pdf-viewer.tsx:166
 msgid "Error"
 msgstr "Error"
@@ -2700,7 +2703,7 @@ msgstr "Failed to fetch document details"
 msgid "Failed to reseal document"
 msgstr "Failed to reseal document"
 
-#: packages/ui/primitives/document-flow/field-item-advanced-settings.tsx:227
+#: packages/ui/primitives/document-flow/field-item-advanced-settings.tsx:236
 msgid "Failed to save settings."
 msgstr "Failed to save settings."
 
@@ -2721,6 +2724,7 @@ msgstr "Failed: {failedCount}"
 msgid "Field character limit"
 msgstr "Field character limit"
 
+#: packages/ui/primitives/document-flow/field-items-advanced-settings/calendar-field.tsx:56
 #: packages/ui/primitives/document-flow/field-items-advanced-settings/date-field.tsx:69
 #: packages/ui/primitives/document-flow/field-items-advanced-settings/email-field.tsx:51
 #: packages/ui/primitives/document-flow/field-items-advanced-settings/initials-field.tsx:49
@@ -2770,6 +2774,7 @@ msgstr "File size exceeds the limit of {APP_DOCUMENT_UPLOAD_SIZE_LIMIT} MB"
 msgid "Final Document Available for Download"
 msgstr "Final Document Available for Download"
 
+#: packages/ui/primitives/document-flow/field-items-advanced-settings/calendar-field.tsx:50
 #: packages/ui/primitives/document-flow/field-items-advanced-settings/date-field.tsx:63
 #: packages/ui/primitives/document-flow/field-items-advanced-settings/email-field.tsx:45
 #: packages/ui/primitives/document-flow/field-items-advanced-settings/initials-field.tsx:43
@@ -3407,7 +3412,7 @@ msgstr "My templates"
 #: packages/ui/primitives/document-flow/add-fields.tsx:925
 #: packages/ui/primitives/document-flow/add-signers.tsx:549
 #: packages/ui/primitives/document-flow/add-signers.tsx:555
-#: packages/ui/primitives/document-flow/types.ts:55
+#: packages/ui/primitives/document-flow/types.ts:56
 #: packages/ui/primitives/template-flow/add-template-fields.tsx:799
 #: packages/ui/primitives/template-flow/add-template-placeholder-recipients.tsx:572
 #: packages/ui/primitives/template-flow/add-template-placeholder-recipients.tsx:578
@@ -3551,9 +3556,9 @@ msgid "Nothing to do"
 msgstr "Nothing to do"
 
 #: apps/web/src/app/(signing)/sign/[token]/number-field.tsx:290
-#: packages/ui/primitives/document-flow/add-fields.tsx:1003
-#: packages/ui/primitives/document-flow/types.ts:56
-#: packages/ui/primitives/template-flow/add-template-fields.tsx:894
+#: packages/ui/primitives/document-flow/add-fields.tsx:1024
+#: packages/ui/primitives/document-flow/types.ts:57
+#: packages/ui/primitives/template-flow/add-template-fields.tsx:898
 msgid "Number"
 msgstr "Number"
 
@@ -4009,7 +4014,7 @@ msgstr "Public profile username"
 msgid "Public templates are connected to your public profile. Any modifications to public templates will also appear in your public profile."
 msgstr "Public templates are connected to your public profile. Any modifications to public templates will also appear in your public profile."
 
-#: packages/ui/primitives/document-flow/types.ts:57
+#: packages/ui/primitives/document-flow/types.ts:58
 msgid "Radio"
 msgstr "Radio"
 
@@ -4017,6 +4022,7 @@ msgstr "Radio"
 msgid "Radio values"
 msgstr "Radio values"
 
+#: packages/ui/primitives/document-flow/field-items-advanced-settings/calendar-field.tsx:101
 #: packages/ui/primitives/document-flow/field-items-advanced-settings/checkbox-field.tsx:186
 #: packages/ui/primitives/document-flow/field-items-advanced-settings/dropdown-field.tsx:147
 #: packages/ui/primitives/document-flow/field-items-advanced-settings/initials-field.tsx:96
@@ -4190,7 +4196,7 @@ msgstr "Reminder: Please {recipientActionVerb} your document"
 #: apps/web/src/components/(teams)/tables/team-members-data-table.tsx:165
 #: apps/web/src/components/forms/avatar-image.tsx:166
 #: apps/web/src/components/templates/template-bulk-send-dialog.tsx:217
-#: packages/ui/primitives/document-flow/add-fields.tsx:1134
+#: packages/ui/primitives/document-flow/add-fields.tsx:1155
 msgid "Remove"
 msgstr "Remove"
 
@@ -4215,6 +4221,7 @@ msgstr "Repeat Password"
 msgid "Request transfer"
 msgstr "Request transfer"
 
+#: packages/ui/primitives/document-flow/field-items-advanced-settings/calendar-field.tsx:91
 #: packages/ui/primitives/document-flow/field-items-advanced-settings/checkbox-field.tsx:176
 #: packages/ui/primitives/document-flow/field-items-advanced-settings/dropdown-field.tsx:137
 #: packages/ui/primitives/document-flow/field-items-advanced-settings/initials-field.tsx:86
@@ -4333,11 +4340,11 @@ msgstr "Rows per page"
 #: apps/web/src/app/(signing)/sign/[token]/text-field.tsx:367
 #: apps/web/src/app/(teams)/t/[teamUrl]/settings/preferences/branding-preferences.tsx:312
 #: apps/web/src/app/(teams)/t/[teamUrl]/settings/preferences/document-preferences.tsx:305
-#: packages/ui/primitives/document-flow/field-item-advanced-settings.tsx:324
+#: packages/ui/primitives/document-flow/field-item-advanced-settings.tsx:340
 msgid "Save"
 msgstr "Save"
 
-#: packages/ui/primitives/template-flow/add-template-fields.tsx:1006
+#: packages/ui/primitives/template-flow/add-template-fields.tsx:1010
 msgid "Save Template"
 msgstr "Save Template"
 
@@ -4382,13 +4389,9 @@ msgstr "Security activity"
 
 #: apps/web/src/app/(signing)/sign/[token]/dropdown-field.tsx:191
 #: packages/ui/primitives/document-flow/field-items-advanced-settings/dropdown-field.tsx:115
-#: packages/ui/primitives/document-flow/types.ts:59
+#: packages/ui/primitives/document-flow/types.ts:60
 msgid "Select"
 msgstr "Select"
-
-#: apps/web/src/app/(signing)/sign/[token]/date-picker-field.tsx:145
-msgid "Select a date"
-msgstr "Select a date"
 
 #: apps/web/src/app/(dashboard)/documents/move-document-dialog.tsx:87
 #: apps/web/src/app/(dashboard)/templates/move-template-dialog.tsx:98
@@ -4654,7 +4657,7 @@ msgstr "Sign Up with OIDC"
 #: apps/web/src/app/embed/sign/[[...url]]/client.tsx:424
 #: apps/web/src/components/forms/profile.tsx:123
 #: packages/ui/primitives/document-flow/add-fields.tsx:847
-#: packages/ui/primitives/document-flow/field-icon.tsx:52
+#: packages/ui/primitives/document-flow/field-icon.tsx:54
 #: packages/ui/primitives/document-flow/types.ts:49
 #: packages/ui/primitives/template-flow/add-template-fields.tsx:721
 msgid "Signature"
@@ -5150,12 +5153,13 @@ msgstr "Templates allow you to quickly generate documents with pre-filled recipi
 
 #: apps/web/src/app/(signing)/sign/[token]/text-field.tsx:264
 #: apps/web/src/app/(signing)/sign/[token]/text-field.tsx:293
-#: packages/ui/primitives/document-flow/add-fields.tsx:977
+#: packages/ui/primitives/document-flow/add-fields.tsx:998
 #: packages/ui/primitives/document-flow/types.ts:52
-#: packages/ui/primitives/template-flow/add-template-fields.tsx:868
+#: packages/ui/primitives/template-flow/add-template-fields.tsx:872
 msgid "Text"
 msgstr "Text"
 
+#: packages/ui/primitives/document-flow/field-items-advanced-settings/calendar-field.tsx:66
 #: packages/ui/primitives/document-flow/field-items-advanced-settings/date-field.tsx:79
 #: packages/ui/primitives/document-flow/field-items-advanced-settings/email-field.tsx:61
 #: packages/ui/primitives/document-flow/field-items-advanced-settings/initials-field.tsx:59
@@ -5542,7 +5546,7 @@ msgstr "This passkey is not configured for this application. Please login and ad
 msgid "This price includes minimum 5 seats."
 msgstr "This price includes minimum 5 seats."
 
-#: packages/ui/primitives/document-flow/add-fields.tsx:1114
+#: packages/ui/primitives/document-flow/add-fields.tsx:1135
 msgid "This recipient can no longer be modified as they have signed a field, or completed the document."
 msgstr "This recipient can no longer be modified as they have signed a field, or completed the document."
 
@@ -5660,8 +5664,8 @@ msgstr "To gain access to your account, please confirm your email address by cli
 msgid "To mark this document as viewed, you need to be logged in as <0>{0}</0>"
 msgstr "To mark this document as viewed, you need to be logged in as <0>{0}</0>"
 
-#: packages/ui/primitives/document-flow/add-fields.tsx:1097
-#: packages/ui/primitives/template-flow/add-template-fields.tsx:986
+#: packages/ui/primitives/document-flow/add-fields.tsx:1118
+#: packages/ui/primitives/template-flow/add-template-fields.tsx:990
 msgid "To proceed further, please set at least one value for the {0} field."
 msgstr "To proceed further, please set at least one value for the {0} field."
 

@@ -32,6 +32,7 @@ import {
   DocumentFlowFormContainerHeader,
 } from './document-flow-root';
 import { FieldItem } from './field-item';
+import { CalendarFieldAdvancedSettings } from './field-items-advanced-settings/calendar-field';
 import { CheckboxFieldAdvancedSettings } from './field-items-advanced-settings/checkbox-field';
 import { DateFieldAdvancedSettings } from './field-items-advanced-settings/date-field';
 import { DropdownFieldAdvancedSettings } from './field-items-advanced-settings/dropdown-field';
@@ -97,6 +98,8 @@ const getDefaultState = (fieldType: FieldType): FieldMeta => {
       return {
         type: 'date',
         fontSize: 14,
+        required: false,
+        readOnly: false,
         textAlign: 'left',
       };
     case FieldType.TEXT:
@@ -271,6 +274,13 @@ export const FieldAdvancedSettings = forwardRef<HTMLDivElement, FieldAdvancedSet
             ))
             .with(FieldType.DATE, () => (
               <DateFieldAdvancedSettings
+                fieldState={fieldState}
+                handleFieldChange={handleFieldChange}
+                handleErrors={setErrors}
+              />
+            ))
+            .with(FieldType.CALENDAR, () => (
+              <CalendarFieldAdvancedSettings
                 fieldState={fieldState}
                 handleFieldChange={handleFieldChange}
                 handleErrors={setErrors}

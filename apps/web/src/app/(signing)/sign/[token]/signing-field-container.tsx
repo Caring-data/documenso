@@ -42,6 +42,7 @@ export type SignatureFieldProps = {
   onRemove?: (fieldType?: string) => Promise<void> | void;
   type?:
     | 'Date'
+    | 'Calendar'
     | 'Initials'
     | 'Email'
     | 'Name'
@@ -134,7 +135,7 @@ export const SigningFieldContainer = ({
         {!field.inserted && !loading && !readOnlyField && (
           <button
             type="submit"
-            className="absolute inset-0 z-10 h-full w-full rounded-md border"
+            className={`absolute inset-0 z-10 h-full w-full rounded-md border ${type === 'Calendar' ? 'pointer-events-none' : ''}`}
             onClick={async () => handleInsertField()}
           />
         )}
@@ -147,20 +148,23 @@ export const SigningFieldContainer = ({
           </button>
         )}
 
-        {type === 'Date' && field.inserted && !loading && !readOnlyField && (
-          <Tooltip delayDuration={0}>
-            <TooltipTrigger asChild>
-              <button
-                className="text-destructive bg-background/40 absolute inset-0 z-10 flex h-full w-full items-center justify-center rounded-md text-sm opacity-0 duration-200 group-hover:opacity-100"
-                onClick={onRemoveSignedFieldClick}
-              >
-                <Trans>Remove</Trans>
-              </button>
-            </TooltipTrigger>
+        {(type === 'Date' || type === 'Calendar') &&
+          field.inserted &&
+          !loading &&
+          !readOnlyField && (
+            <Tooltip delayDuration={0}>
+              <TooltipTrigger asChild>
+                <button
+                  className="text-destructive bg-background/40 absolute inset-0 z-10 flex h-full w-full items-center justify-center rounded-md text-sm opacity-0 duration-200 group-hover:opacity-100"
+                  onClick={onRemoveSignedFieldClick}
+                >
+                  <Trans>Remove</Trans>
+                </button>
+              </TooltipTrigger>
 
-            {tooltipText && <TooltipContent className="max-w-xs">{tooltipText}</TooltipContent>}
-          </Tooltip>
-        )}
+              {tooltipText && <TooltipContent className="max-w-xs">{tooltipText}</TooltipContent>}
+            </Tooltip>
+          )}
 
         {type === 'Checkbox' && field.inserted && !loading && !readOnlyField && (
           <button
@@ -173,14 +177,19 @@ export const SigningFieldContainer = ({
           </button>
         )}
 
-        {type !== 'Date' && type !== 'Checkbox' && field.inserted && !loading && !readOnlyField && (
-          <button
-            className="text-destructive bg-background/50 absolute inset-0 z-10 flex h-full w-full items-center justify-center rounded-md text-sm opacity-0 duration-200 group-hover:opacity-100"
-            onClick={onRemoveSignedFieldClick}
-          >
-            <Trans>Remove</Trans>
-          </button>
-        )}
+        {type !== 'Date' &&
+          type !== 'Calendar' &&
+          type !== 'Checkbox' &&
+          field.inserted &&
+          !loading &&
+          !readOnlyField && (
+            <button
+              className="text-destructive bg-background/50 absolute inset-0 z-10 flex h-full w-full items-center justify-center rounded-md text-sm opacity-0 duration-200 group-hover:opacity-100"
+              onClick={onRemoveSignedFieldClick}
+            >
+              <Trans>Remove</Trans>
+            </button>
+          )}
 
         {children}
       </FieldRootContainer>

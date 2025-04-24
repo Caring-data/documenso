@@ -199,6 +199,10 @@ export const signFieldWithToken = async ({
       .toFormat(documentMeta?.dateFormat ?? DEFAULT_DOCUMENT_DATE_FORMAT);
   }
 
+  if (field.type === FieldType.CALENDAR) {
+    customText = value;
+  }
+
   if (isSignatureField && !signatureImageAsBase64 && !typedSignature) {
     throw new Error('Signature field must have a signature');
   }

@@ -144,6 +144,13 @@ export const DocumentReadOnlyFields = ({
                         documentMeta?.timezone ?? DEFAULT_DOCUMENT_TIME_ZONE,
                       ),
                     )
+                    .with({ type: FieldType.CALENDAR }, () =>
+                      convertToLocalSystemFormat(
+                        field.customText,
+                        documentMeta?.dateFormat ?? DEFAULT_DOCUMENT_DATE_FORMAT,
+                        documentMeta?.timezone ?? DEFAULT_DOCUMENT_TIME_ZONE,
+                      ),
+                    )
                     .with({ type: FieldType.FREE_SIGNATURE }, () => null)
                     .exhaustive()}
 

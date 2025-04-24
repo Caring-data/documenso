@@ -21,9 +21,9 @@ import type {
 } from '@documenso/trpc/server/field-router/schema';
 import { ElementVisible } from '@documenso/ui/primitives/element-visible';
 
+import { CalendarField } from '~/app/(signing)/sign/[token]/calendar-field';
 import { CheckboxField } from '~/app/(signing)/sign/[token]/checkbox-field';
 import { DateField } from '~/app/(signing)/sign/[token]/date-field';
-import { DatePickerField } from '~/app/(signing)/sign/[token]/date-picker-field';
 import { DropdownField } from '~/app/(signing)/sign/[token]/dropdown-field';
 import { EmailField } from '~/app/(signing)/sign/[token]/email-field';
 import { InitialsField } from '~/app/(signing)/sign/[token]/initials-field';
@@ -86,7 +86,7 @@ export const EmbedDocumentFields = ({
             />
           ))
           .with(FieldType.CALENDAR, () => (
-            <DatePickerField
+            <CalendarField
               key={field.id}
               field={field}
               onSignField={onSignField}

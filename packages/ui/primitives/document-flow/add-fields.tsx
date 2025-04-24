@@ -963,7 +963,11 @@ export const AddFieldsFormPartial = ({
                     >
                       <Card className="flex h-full w-full items-center justify-center">
                         <CardContent className="p-4">
-                          <p className="text-muted-foreground group-data-[selected]:text-foreground flex items-center justify-center gap-x-1.5 text-sm font-normal">
+                          <p
+                            className={cn(
+                              'text-muted-foreground group-data-[selected]:text-foreground flex items-center justify-center gap-x-1.5 text-sm font-normal',
+                            )}
+                          >
                             <CalendarDays className="h-4 w-4" />
                             <Trans>Calendar</Trans>
                           </p>

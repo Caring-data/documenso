@@ -32,9 +32,9 @@ import { LazyPDFViewer } from '@documenso/ui/primitives/lazy-pdf-viewer';
 
 import { DocumentReadOnlyFields } from '~/components/document/document-read-only-fields';
 
+import { CalendarField } from './calendar-field';
 import { CheckboxField } from './checkbox-field';
 import { DateField } from './date-field';
-import { DatePickerField } from './date-picker-field';
 import { DropdownField } from './dropdown-field';
 import { EmailField } from './email-field';
 import { SigningForm } from './form';
@@ -200,7 +200,7 @@ export const SigningPageView = ({
                   />
                 ))
                 .with(FieldType.CALENDAR, () => (
-                  <DatePickerField
+                  <CalendarField
                     key={field.id}
                     field={field}
                     dateFormat={documentMeta?.dateFormat ?? DEFAULT_DOCUMENT_DATE_FORMAT}
