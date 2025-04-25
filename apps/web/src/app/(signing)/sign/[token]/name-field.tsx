@@ -173,7 +173,7 @@ export const NameField = ({ field, onSignField, onUnsignField }: NameFieldProps)
       )}
 
       {!field.inserted && (
-        <p className="group-hover:text-primary text-muted-foreground duration-200 group-hover:text-yellow-300">
+        <p className="group-hover:text-primary text-muted-foreground flex items-center justify-center text-[0.5rem] duration-200 group-hover:text-yellow-300 sm:text-xs md:text-sm">
           <Trans>Name</Trans>
         </p>
       )}

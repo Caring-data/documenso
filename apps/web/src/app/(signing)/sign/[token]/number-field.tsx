@@ -260,8 +260,8 @@ export const NumberField = ({ field, onSignField, onUnsignField }: NumberFieldPr
           )}
         >
           <span className="flex items-center justify-center gap-x-1">
-            <Hash className="h-[clamp(0.625rem,20cqw,0.925rem)] w-[clamp(0.625rem,20cqw,0.925rem)]" />{' '}
-            <span className="text-[clamp(0.425rem,25cqw,0.825rem)]">{fieldDisplayName}</span>
+            <Hash className="h-2 w-2 sm:h-[14px] sm:w-[14px]" />{' '}
+            <span className="text-[0.5rem] sm:text-xs md:text-sm">{fieldDisplayName}</span>
           </span>
         </p>
       )}

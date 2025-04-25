@@ -259,8 +259,8 @@ export const TextField = ({ field, onSignField, onUnsignField }: TextFieldProps)
           )}
         >
           <span className="flex items-center justify-center gap-x-1">
-            <Type className="h-[clamp(0.625rem,20cqw,0.925rem)] w-[clamp(0.625rem,20cqw,0.925rem)]" />
-            <span className="text-[clamp(0.425rem,25cqw,0.825rem)]">
+            <Type className="h-2 w-2 sm:h-[14px] sm:w-[14px]" />
+            <span className="text-[0.5rem] sm:text-xs md:text-sm">
               {fieldDisplayName || <Trans>Text</Trans>}
             </span>
           </span>

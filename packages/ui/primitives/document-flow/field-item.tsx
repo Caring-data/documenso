@@ -95,6 +95,7 @@ export const FieldItem = ({
     'EMAIL',
     'DATE',
     'NAME',
+    'CALENDAR',
   ].includes(field.type);
 
   const calculateCoords = useCallback(() => {

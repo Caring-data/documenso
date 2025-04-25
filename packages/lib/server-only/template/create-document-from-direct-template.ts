@@ -213,7 +213,7 @@ export const createDocumentFromDirectTemplate = async ({
       const signatureImageAsBase64 = isSignatureField && isBase64 ? value : undefined;
       const typedSignature = isSignatureField && !isBase64 ? value : undefined;
 
-      if (templateField.type === FieldType.DATE) {
+      if (templateField.type === FieldType.DATE || templateField.type === FieldType.CALENDAR) {
         customText = DateTime.now().setZone(metaTimezone).toFormat(metaDateFormat);
       }
 
@@ -508,6 +508,7 @@ export const createDocumentFromDirectTemplate = async ({
               }))
               .with(
                 FieldType.DATE,
+                FieldType.CALENDAR,
                 FieldType.EMAIL,
                 FieldType.INITIALS,
                 FieldType.NAME,

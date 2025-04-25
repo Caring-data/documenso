@@ -446,7 +446,7 @@ msgstr "7 días"
 msgid "A confirmation email has been sent, and it should arrive in your inbox shortly."
 msgstr "Se ha enviado un correo electrónico de confirmación y debería llegar a tu bandeja de entrada en breve."
 
-#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:194
+#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:187
 msgid "A copy of the completed document will be sent to your email shortly. You may also download it below."
 msgstr ""
 
@@ -806,7 +806,7 @@ msgstr "Todos los documentos relacionados con el proceso de firma electrónica s
 msgid "All inserted signatures will be voided"
 msgstr "Todas las firmas insertadas serán anuladas"
 
-#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:144
+#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:137
 msgid "All parties have signed the document."
 msgstr ""
 
@@ -948,6 +948,7 @@ msgstr "Ocurrió un error al mover el documento."
 msgid "An error occurred while moving the template."
 msgstr "Ocurrió un error al mover la plantilla."
 
+#: apps/web/src/app/(signing)/sign/[token]/calendar-field.tsx:138
 #: apps/web/src/app/(signing)/sign/[token]/checkbox-field.tsx:151
 #: apps/web/src/app/(signing)/sign/[token]/date-field.tsx:154
 #: apps/web/src/app/(signing)/sign/[token]/dropdown-field.tsx:134
@@ -975,6 +976,7 @@ msgstr "Ocurrió un error al enviar el documento."
 msgid "An error occurred while sending your confirmation email"
 msgstr "Ocurrió un error al enviar tu correo electrónico de confirmación"
 
+#: apps/web/src/app/(signing)/sign/[token]/calendar-field.tsx:91
 #: apps/web/src/app/(signing)/sign/[token]/checkbox-field.tsx:121
 #: apps/web/src/app/(signing)/sign/[token]/date-field.tsx:104
 #: apps/web/src/app/(signing)/sign/[token]/dropdown-field.tsx:102
@@ -987,6 +989,7 @@ msgstr "Ocurrió un error al enviar tu correo electrónico de confirmación"
 msgid "An error occurred while signing as assistant."
 msgstr ""
 
+#: apps/web/src/app/(signing)/sign/[token]/calendar-field.tsx:92
 #: apps/web/src/app/(signing)/sign/[token]/checkbox-field.tsx:122
 #: apps/web/src/app/(signing)/sign/[token]/date-field.tsx:105
 #: apps/web/src/app/(signing)/sign/[token]/dropdown-field.tsx:103
@@ -1201,7 +1204,7 @@ msgstr "Avatar actualizado"
 msgid "Awaiting email confirmation"
 msgstr "Esperando confirmación de correo electrónico"
 
-#: apps/web/src/app/(recipient)/d/[token]/sign-direct-template.tsx:366
+#: apps/web/src/app/(recipient)/d/[token]/sign-direct-template.tsx:377
 #: apps/web/src/components/(dashboard)/settings/layout/activity-back.tsx:20
 #: apps/web/src/components/forms/v2/signup.tsx:513
 msgid "Back"
@@ -1323,6 +1326,13 @@ msgstr "Al continuar utilizando el servicio de firma electrónica proporcionado 
 msgid "By using the electronic signature feature, you are consenting to conduct transactions and receive disclosures electronically. You acknowledge that your electronic signature on documents is binding and that you accept the terms outlined in the documents you are signing."
 msgstr "Al utilizar la función de firma electrónica, usted está consintiendo realizar transacciones y recibir divulgaciones electrónicamente. Reconoce que su firma electrónica en los documentos es vinculante y que acepta los términos esbozados en los documentos que está firmando."
 
+#: apps/web/src/app/(signing)/sign/[token]/calendar-field.tsx:181
+#: packages/ui/primitives/document-flow/add-fields.tsx:972
+#: packages/ui/primitives/document-flow/types.ts:54
+#: packages/ui/primitives/template-flow/add-template-fields.tsx:846
+msgid "Calendar"
+msgstr ""
+
 #: packages/ui/components/recipient/recipient-role-select.tsx:128
 msgid "Can prepare"
 msgstr ""
@@ -1371,7 +1381,7 @@ msgstr ""
 #: apps/web/src/components/forms/2fa/view-recovery-codes-dialog.tsx:163
 #: apps/web/src/components/templates/manage-public-template-dialog.tsx:448
 #: apps/web/src/components/templates/template-bulk-send-dialog.tsx:263
-#: packages/ui/primitives/document-flow/field-item-advanced-settings.tsx:325
+#: packages/ui/primitives/document-flow/field-item-advanced-settings.tsx:341
 #: packages/ui/primitives/document-flow/send-document-action-dialog.tsx:58
 msgid "Cancel"
 msgstr "Cancelar"
@@ -1409,7 +1419,7 @@ msgstr "Límite de caracteres"
 msgid "Charts"
 msgstr "Gráficas"
 
-#: packages/ui/primitives/document-flow/types.ts:58
+#: packages/ui/primitives/document-flow/types.ts:59
 msgid "Checkbox"
 msgstr "Casilla de verificación"
 
@@ -1485,7 +1495,7 @@ msgstr "Haga clic aquí para subir"
 msgid "Click to copy signing link for sending to recipient"
 msgstr "Haga clic para copiar el enlace de firma para enviar al destinatario"
 
-#: apps/web/src/app/(recipient)/d/[token]/sign-direct-template.tsx:180
+#: apps/web/src/app/(recipient)/d/[token]/sign-direct-template.tsx:181
 #: apps/web/src/app/(signing)/sign/[token]/form.tsx:174
 #: apps/web/src/app/embed/direct/[[...url]]/client.tsx:481
 #: apps/web/src/app/embed/sign/[[...url]]/client.tsx:487
@@ -2122,7 +2132,7 @@ msgstr "Se actualizó la autenticación de acceso al documento"
 msgid "Document All"
 msgstr "Documentar Todo"
 
-#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:132
+#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:125
 msgid "Document Approved"
 msgstr "Documento Aprobado"
 
@@ -2166,7 +2176,7 @@ msgid "Document created by <0>{0}</0>"
 msgstr "Documento creado por <0>{0}</0>"
 
 #: packages/email/templates/document-created-from-direct-template.tsx:32
-#: packages/lib/server-only/template/create-document-from-direct-template.ts:597
+#: packages/lib/server-only/template/create-document-from-direct-template.ts:601
 msgid "Document created from direct template"
 msgstr "Documento creado a partir de plantilla directa"
 
@@ -2224,7 +2234,7 @@ msgstr "ID del documento"
 msgid "Document inbox"
 msgstr "Bandeja de documentos"
 
-#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:160
+#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:153
 msgid "Document is preparing..."
 msgstr ""
 
@@ -2240,7 +2250,7 @@ msgstr "Documento movido"
 msgid "Document moved to team"
 msgstr "Documento movido al equipo"
 
-#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:181
+#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:174
 msgid "Document no longer available to sign"
 msgstr "El documento ya no está disponible para firmar"
 
@@ -2290,7 +2300,7 @@ msgstr "El proceso de firma del documento será cancelado"
 msgid "Document status"
 msgstr "Estado del documento"
 
-#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:130
+#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:123
 msgid "Document Successfully Signed"
 msgstr ""
 
@@ -2310,7 +2320,7 @@ msgstr "Documento actualizado"
 msgid "Document uploaded"
 msgstr "Documento subido"
 
-#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:131
+#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:124
 msgid "Document Viewed"
 msgstr "Documento visto"
 
@@ -2403,8 +2413,8 @@ msgstr "Documentos redactados"
 msgid "Drag & drop your PDF here."
 msgstr "Arrastre y suelte su PDF aquí."
 
-#: packages/ui/primitives/document-flow/add-fields.tsx:1082
-#: packages/ui/primitives/template-flow/add-template-fields.tsx:956
+#: packages/ui/primitives/document-flow/add-fields.tsx:1103
+#: packages/ui/primitives/template-flow/add-template-fields.tsx:977
 msgid "Dropdown"
 msgstr "Menú desplegable"
 
@@ -2475,7 +2485,7 @@ msgstr "Divulgación de Firma Electrónica"
 #: packages/ui/primitives/document-flow/add-fields.tsx:899
 #: packages/ui/primitives/document-flow/add-signers.tsx:511
 #: packages/ui/primitives/document-flow/add-signers.tsx:518
-#: packages/ui/primitives/document-flow/types.ts:54
+#: packages/ui/primitives/document-flow/types.ts:55
 #: packages/ui/primitives/template-flow/add-template-fields.tsx:773
 #: packages/ui/primitives/template-flow/add-template-placeholder-recipients.tsx:537
 #: packages/ui/primitives/template-flow/add-template-placeholder-recipients.tsx:544
@@ -2524,7 +2534,7 @@ msgstr "La verificación de correo electrónico ha sido eliminada"
 msgid "Email verification has been resent"
 msgstr "La verificación de correo electrónico ha sido reenviada"
 
-#: packages/ui/primitives/document-flow/add-fields.tsx:1147
+#: packages/ui/primitives/document-flow/add-fields.tsx:1168
 msgid "Empty field"
 msgstr "Campo vacío"
 
@@ -2636,6 +2646,8 @@ msgstr "Ingresa tu texto aquí"
 #: apps/web/src/app/(dashboard)/templates/move-template-dialog.tsx:68
 #: apps/web/src/app/(dashboard)/templates/use-template-dialog.tsx:187
 #: apps/web/src/app/(signing)/sign/[token]/auto-sign.tsx:152
+#: apps/web/src/app/(signing)/sign/[token]/calendar-field.tsx:89
+#: apps/web/src/app/(signing)/sign/[token]/calendar-field.tsx:137
 #: apps/web/src/app/(signing)/sign/[token]/checkbox-field.tsx:119
 #: apps/web/src/app/(signing)/sign/[token]/checkbox-field.tsx:150
 #: apps/web/src/app/(signing)/sign/[token]/checkbox-field.tsx:208
@@ -2661,7 +2673,7 @@ msgstr "Ingresa tu texto aquí"
 #: apps/web/src/app/(signing)/sign/[token]/text-field.tsx:202
 #: apps/web/src/components/(dashboard)/layout/verify-email-banner.tsx:54
 #: apps/web/src/components/(dashboard)/settings/webhooks/create-webhook-dialog.tsx:101
-#: packages/ui/primitives/document-flow/field-item-advanced-settings.tsx:226
+#: packages/ui/primitives/document-flow/field-item-advanced-settings.tsx:235
 #: packages/ui/primitives/pdf-viewer.tsx:166
 msgid "Error"
 msgstr "Error"
@@ -2696,7 +2708,7 @@ msgstr ""
 msgid "Failed to reseal document"
 msgstr "Falló al volver a sellar el documento"
 
-#: packages/ui/primitives/document-flow/field-item-advanced-settings.tsx:227
+#: packages/ui/primitives/document-flow/field-item-advanced-settings.tsx:236
 msgid "Failed to save settings."
 msgstr "Fallo al guardar configuraciones."
 
@@ -2717,6 +2729,7 @@ msgstr "Fallidos: {failedCount}"
 msgid "Field character limit"
 msgstr "Límite de caracteres del campo"
 
+#: packages/ui/primitives/document-flow/field-items-advanced-settings/calendar-field.tsx:56
 #: packages/ui/primitives/document-flow/field-items-advanced-settings/date-field.tsx:69
 #: packages/ui/primitives/document-flow/field-items-advanced-settings/email-field.tsx:51
 #: packages/ui/primitives/document-flow/field-items-advanced-settings/initials-field.tsx:49
@@ -2766,6 +2779,7 @@ msgstr "El tamaño del archivo excede el límite de {APP_DOCUMENT_UPLOAD_SIZE_LI
 msgid "Final Document Available for Download"
 msgstr ""
 
+#: packages/ui/primitives/document-flow/field-items-advanced-settings/calendar-field.tsx:50
 #: packages/ui/primitives/document-flow/field-items-advanced-settings/date-field.tsx:63
 #: packages/ui/primitives/document-flow/field-items-advanced-settings/email-field.tsx:45
 #: packages/ui/primitives/document-flow/field-items-advanced-settings/initials-field.tsx:43
@@ -2796,7 +2810,7 @@ msgstr "¿Olvidaste tu contraseña?"
 msgid "Free Signature"
 msgstr "Firma gratuita"
 
-#: apps/web/src/app/(recipient)/d/[token]/sign-direct-template.tsx:322
+#: apps/web/src/app/(recipient)/d/[token]/sign-direct-template.tsx:333
 #: apps/web/src/app/(signing)/sign/[token]/form.tsx:326
 #: apps/web/src/app/(signing)/sign/[token]/name-field.tsx:212
 #: apps/web/src/app/embed/direct/[[...url]]/client.tsx:392
@@ -3403,7 +3417,7 @@ msgstr "Mis plantillas"
 #: packages/ui/primitives/document-flow/add-fields.tsx:925
 #: packages/ui/primitives/document-flow/add-signers.tsx:549
 #: packages/ui/primitives/document-flow/add-signers.tsx:555
-#: packages/ui/primitives/document-flow/types.ts:55
+#: packages/ui/primitives/document-flow/types.ts:56
 #: packages/ui/primitives/template-flow/add-template-fields.tsx:799
 #: packages/ui/primitives/template-flow/add-template-placeholder-recipients.tsx:572
 #: packages/ui/primitives/template-flow/add-template-placeholder-recipients.tsx:578
@@ -3547,9 +3561,9 @@ msgid "Nothing to do"
 msgstr "Nada que hacer"
 
 #: apps/web/src/app/(signing)/sign/[token]/number-field.tsx:290
-#: packages/ui/primitives/document-flow/add-fields.tsx:1003
-#: packages/ui/primitives/document-flow/types.ts:56
-#: packages/ui/primitives/template-flow/add-template-fields.tsx:877
+#: packages/ui/primitives/document-flow/add-fields.tsx:1024
+#: packages/ui/primitives/document-flow/types.ts:57
+#: packages/ui/primitives/template-flow/add-template-fields.tsx:898
 msgid "Number"
 msgstr "Número"
 
@@ -4005,7 +4019,7 @@ msgstr "Nombre de usuario del perfil público"
 msgid "Public templates are connected to your public profile. Any modifications to public templates will also appear in your public profile."
 msgstr "Las plantillas públicas están conectadas a tu perfil público. Cualquier modificación a las plantillas públicas también aparecerá en tu perfil público."
 
-#: packages/ui/primitives/document-flow/types.ts:57
+#: packages/ui/primitives/document-flow/types.ts:58
 msgid "Radio"
 msgstr "Radio"
 
@@ -4013,6 +4027,7 @@ msgstr "Radio"
 msgid "Radio values"
 msgstr "Valores de radio"
 
+#: packages/ui/primitives/document-flow/field-items-advanced-settings/calendar-field.tsx:101
 #: packages/ui/primitives/document-flow/field-items-advanced-settings/checkbox-field.tsx:186
 #: packages/ui/primitives/document-flow/field-items-advanced-settings/dropdown-field.tsx:147
 #: packages/ui/primitives/document-flow/field-items-advanced-settings/initials-field.tsx:96
@@ -4186,7 +4201,7 @@ msgstr "Recordatorio: Por favor {recipientActionVerb} tu documento"
 #: apps/web/src/components/(teams)/tables/team-members-data-table.tsx:165
 #: apps/web/src/components/forms/avatar-image.tsx:166
 #: apps/web/src/components/templates/template-bulk-send-dialog.tsx:217
-#: packages/ui/primitives/document-flow/add-fields.tsx:1134
+#: packages/ui/primitives/document-flow/add-fields.tsx:1155
 msgid "Remove"
 msgstr "Eliminar"
 
@@ -4211,6 +4226,7 @@ msgstr "Repetir contraseña"
 msgid "Request transfer"
 msgstr "Solicitar transferencia"
 
+#: packages/ui/primitives/document-flow/field-items-advanced-settings/calendar-field.tsx:91
 #: packages/ui/primitives/document-flow/field-items-advanced-settings/checkbox-field.tsx:176
 #: packages/ui/primitives/document-flow/field-items-advanced-settings/dropdown-field.tsx:137
 #: packages/ui/primitives/document-flow/field-items-advanced-settings/initials-field.tsx:86
@@ -4329,11 +4345,11 @@ msgstr "Filas por página"
 #: apps/web/src/app/(signing)/sign/[token]/text-field.tsx:367
 #: apps/web/src/app/(teams)/t/[teamUrl]/settings/preferences/branding-preferences.tsx:312
 #: apps/web/src/app/(teams)/t/[teamUrl]/settings/preferences/document-preferences.tsx:305
-#: packages/ui/primitives/document-flow/field-item-advanced-settings.tsx:324
+#: packages/ui/primitives/document-flow/field-item-advanced-settings.tsx:340
 msgid "Save"
 msgstr "Guardar"
 
-#: packages/ui/primitives/template-flow/add-template-fields.tsx:989
+#: packages/ui/primitives/template-flow/add-template-fields.tsx:1010
 msgid "Save Template"
 msgstr "Guardar plantilla"
 
@@ -4378,7 +4394,7 @@ msgstr "Actividad de seguridad"
 
 #: apps/web/src/app/(signing)/sign/[token]/dropdown-field.tsx:191
 #: packages/ui/primitives/document-flow/field-items-advanced-settings/dropdown-field.tsx:115
-#: packages/ui/primitives/document-flow/types.ts:59
+#: packages/ui/primitives/document-flow/types.ts:60
 msgid "Select"
 msgstr "Seleccionar"
 
@@ -4638,7 +4654,7 @@ msgstr "Regístrate con OIDC"
 
 #: apps/web/src/app/(dashboard)/admin/documents/[id]/recipient-item.tsx:88
 #: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:194
-#: apps/web/src/app/(recipient)/d/[token]/sign-direct-template.tsx:334
+#: apps/web/src/app/(recipient)/d/[token]/sign-direct-template.tsx:345
 #: apps/web/src/app/(signing)/sign/[token]/form.tsx:340
 #: apps/web/src/app/(signing)/sign/[token]/signature-field.tsx:213
 #: apps/web/src/app/(signing)/sign/[token]/signature-field.tsx:249
@@ -4646,7 +4662,7 @@ msgstr "Regístrate con OIDC"
 #: apps/web/src/app/embed/sign/[[...url]]/client.tsx:424
 #: apps/web/src/components/forms/profile.tsx:123
 #: packages/ui/primitives/document-flow/add-fields.tsx:847
-#: packages/ui/primitives/document-flow/field-icon.tsx:52
+#: packages/ui/primitives/document-flow/field-icon.tsx:54
 #: packages/ui/primitives/document-flow/types.ts:49
 #: packages/ui/primitives/template-flow/add-template-fields.tsx:721
 msgid "Signature"
@@ -4667,7 +4683,7 @@ msgstr "La firma es demasiado pequeña. Proporcione una firma más completa."
 msgid "Signatures Collected"
 msgstr "Firmas recolectadas"
 
-#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:248
+#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:241
 msgid "Signatures will appear once the document has been completed"
 msgstr "Las firmas aparecerán una vez que el documento se haya completado"
 
@@ -5142,12 +5158,13 @@ msgstr "Las plantillas te permiten generar documentos rápidamente con destinata
 
 #: apps/web/src/app/(signing)/sign/[token]/text-field.tsx:264
 #: apps/web/src/app/(signing)/sign/[token]/text-field.tsx:293
-#: packages/ui/primitives/document-flow/add-fields.tsx:977
+#: packages/ui/primitives/document-flow/add-fields.tsx:998
 #: packages/ui/primitives/document-flow/types.ts:52
-#: packages/ui/primitives/template-flow/add-template-fields.tsx:851
+#: packages/ui/primitives/template-flow/add-template-fields.tsx:872
 msgid "Text"
 msgstr "Texto"
 
+#: packages/ui/primitives/document-flow/field-items-advanced-settings/calendar-field.tsx:66
 #: packages/ui/primitives/document-flow/field-items-advanced-settings/date-field.tsx:79
 #: packages/ui/primitives/document-flow/field-items-advanced-settings/email-field.tsx:61
 #: packages/ui/primitives/document-flow/field-items-advanced-settings/initials-field.tsx:59
@@ -5207,7 +5224,7 @@ msgstr "El enlace directo ha sido copiado a tu portapapeles"
 msgid "The document has been successfully moved to the selected team."
 msgstr "El documento ha sido movido con éxito al equipo seleccionado."
 
-#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:210
+#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:203
 msgid "The document is being prepared. You'll receive a copy once it's ready."
 msgstr ""
 
@@ -5450,7 +5467,7 @@ msgstr "Este documento no se pudo reenviar en este momento. Por favor, inténtal
 msgid "This document has already been sent to this recipient. You can no longer edit this recipient."
 msgstr "Este documento ya ha sido enviado a este destinatario. Ya no puede editar a este destinatario."
 
-#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:229
+#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:222
 msgid "This document has been cancelled by the owner and is no longer available for others to sign."
 msgstr "Este documento ha sido cancelado por el propietario y ya no está disponible para que otros lo firmen."
 
@@ -5534,7 +5551,7 @@ msgstr "Esta clave de acceso no está configurada para esta aplicación. Por fav
 msgid "This price includes minimum 5 seats."
 msgstr "Este precio incluye un mínimo de 5 asientos."
 
-#: packages/ui/primitives/document-flow/add-fields.tsx:1114
+#: packages/ui/primitives/document-flow/add-fields.tsx:1135
 msgid "This recipient can no longer be modified as they have signed a field, or completed the document."
 msgstr "Este destinatario ya no puede ser modificado ya que ha firmado un campo o completado el documento."
 
@@ -5652,8 +5669,8 @@ msgstr "Para acceder a tu cuenta, por favor confirma tu dirección de correo ele
 msgid "To mark this document as viewed, you need to be logged in as <0>{0}</0>"
 msgstr "Para marcar este documento como visto, debes iniciar sesión como <0>{0}</0>"
 
-#: packages/ui/primitives/document-flow/add-fields.tsx:1097
-#: packages/ui/primitives/template-flow/add-template-fields.tsx:969
+#: packages/ui/primitives/document-flow/add-fields.tsx:1118
+#: packages/ui/primitives/template-flow/add-template-fields.tsx:990
 msgid "To proceed further, please set at least one value for the {0} field."
 msgstr "Para continuar, por favor establezca al menos un valor para el campo {0}."
 
@@ -6248,7 +6265,7 @@ msgstr "Esperando a otros"
 msgid "Waiting for others to complete signing."
 msgstr "Esperando a que otros completen la firma."
 
-#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:171
+#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:164
 msgid "Waiting for others to sign"
 msgstr "Esperando a que otros firmen"
 
@@ -6889,7 +6906,7 @@ msgstr "Recibirás una notificación y podrás configurar tu perfil público de 
 msgid "You will now be required to enter a code from your authenticator app when signing in."
 msgstr "Ahora se te pedirá que ingreses un código de tu aplicación de autenticador al iniciar sesión."
 
-#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:220
+#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:213
 msgid "You will receive an Email copy of the signed document once everyone has signed."
 msgstr "Recibirás una copia por correo electrónico del documento firmado una vez que todos hayan firmado."
 

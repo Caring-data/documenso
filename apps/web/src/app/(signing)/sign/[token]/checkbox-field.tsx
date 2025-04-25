@@ -224,7 +224,7 @@ export const CheckboxField = ({ field, onSignField, onUnsignField }: CheckboxFie
   }, [checkedValues, isLengthConditionMet, field.inserted]);
 
   const parsedCheckedValues = useMemo(
-    () => fromCheckboxValue(field.customText),
+    () => fromCheckboxValue(field.customText ?? '[]'),
     [field.customText],
   );
 

@@ -14,6 +14,8 @@ import {
 import { PDF_VIEWER_PAGE_SELECTOR } from '@documenso/lib/constants/pdf-viewer';
 import { DEFAULT_DOCUMENT_TIME_ZONE } from '@documenso/lib/constants/time-zones';
 import type { DocumentField } from '@documenso/lib/server-only/field/get-fields-for-document';
+import { ZRadioFieldMeta } from '@documenso/lib/types/field-meta';
+import { fromCheckboxValue } from '@documenso/lib/universal/field-checkbox';
 import { parseMessageDescriptor } from '@documenso/lib/utils/i18n';
 import { extractInitials } from '@documenso/lib/utils/recipient-formatter';
 import type { DocumentMeta } from '@documenso/prisma/client';
@@ -23,9 +25,12 @@ import { SignatureIcon } from '@documenso/ui/icons/signature';
 import { cn } from '@documenso/ui/lib/utils';
 import { Avatar, AvatarFallback } from '@documenso/ui/primitives/avatar';
 import { Badge } from '@documenso/ui/primitives/badge';
+import { Checkbox } from '@documenso/ui/primitives/checkbox';
 import { FRIENDLY_FIELD_TYPE } from '@documenso/ui/primitives/document-flow/types';
 import { ElementVisible } from '@documenso/ui/primitives/element-visible';
+import { Label } from '@documenso/ui/primitives/label';
 import { PopoverHover } from '@documenso/ui/primitives/popover';
+import { RadioGroup, RadioGroupItem } from '@documenso/ui/primitives/radio-group';
 
 export type DocumentReadOnlyFieldsProps = {
   fields: DocumentField[];
@@ -129,15 +134,82 @@ export const DocumentReadOnlyFields = ({
                           FieldType.INITIALS,
                           FieldType.EMAIL,
                           FieldType.NUMBER,
-                          FieldType.RADIO,
-                          FieldType.CHECKBOX,
                           FieldType.DROPDOWN,
                         ),
                       },
                       () => field.customText,
                     )
+                    .with({ type: FieldType.CHECKBOX }, (field) => {
+                      const parsedValues = fromCheckboxValue(field.customText ?? '[]');
+
+                      return (
+                        <div className="flex flex-col gap-1 p-1">
+                          {parsedValues.length === 0 ? (
+                            <div className="flex items-center gap-x-1">
+                              <input type="checkbox" checked={false} disabled className="h-3 w-3" />
+                              <span className="text-muted-foreground text-xs italic">
+                                Sin selección
+                              </span>
+                            </div>
+                          ) : (
+                            parsedValues.map((value, idx) => (
+                              <div key={idx} className="flex items-center gap-x-1">
+                                <Checkbox checked disabled className="h-3 w-3" />
+                                <span className="text-muted-foreground text-xs">
+                                  {value.startsWith('empty-value-') ? '' : value}
+                                </span>
+                              </div>
+                            ))
+                          )}
+                        </div>
+                      );
+                    })
+                    .with({ type: FieldType.RADIO }, (field) => {
+                      const parsedFieldMeta = ZRadioFieldMeta.safeParse(field.fieldMeta);
+                      if (!parsedFieldMeta.success) return null;
+
+                      const values = parsedFieldMeta.data.values?.map((item) => ({
+                        ...item,
+                        value: item.value.length > 0 ? item.value : `empty-value-${item.id}`,
+                      }));
+
+                      if (!values || values.length === 0) return null;
+
+                      return (
+                        <RadioGroup className="gap-y-1 p-1">
+                          {values.map((item, index) => {
+                            const isChecked = item.value === field.customText;
+
+                            return (
+                              <div key={index} className="flex items-center gap-x-1.5">
+                                <RadioGroupItem
+                                  className="h-[11.5px] w-[11.5px]"
+                                  value={item.value}
+                                  id={`readonly-radio-${field.id}-${index}`}
+                                  checked={isChecked}
+                                  disabled
+                                />
+                                <Label
+                                  htmlFor={`readonly-radio-${field.id}-${index}`}
+                                  className="text-xs"
+                                >
+                                  {item.value.includes('empty-value-') ? '' : item.value}
+                                </Label>
+                              </div>
+                            );
+                          })}
+                        </RadioGroup>
+                      );
+                    })
                     .with({ type: FieldType.TEXT }, () => field.customText.substring(0, 20) + '...')
                     .with({ type: FieldType.DATE }, () =>
+                      convertToLocalSystemFormat(
+                        field.customText,
+                        documentMeta?.dateFormat ?? DEFAULT_DOCUMENT_DATE_FORMAT,
+                        documentMeta?.timezone ?? DEFAULT_DOCUMENT_TIME_ZONE,
+                      ),
+                    )
+                    .with({ type: FieldType.CALENDAR }, () =>
                       convertToLocalSystemFormat(
                         field.customText,
                         documentMeta?.dateFormat ?? DEFAULT_DOCUMENT_DATE_FORMAT,
