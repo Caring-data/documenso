@@ -86,6 +86,7 @@ export const FieldItem = ({
   const signerStyles = useSignerColors(recipientIndex);
 
   const advancedField = [
+    'SIGNATURE',
     'NUMBER',
     'RADIO',
     'CHECKBOX',
