@@ -155,7 +155,7 @@ export const SigningFieldContainer = ({
             <Tooltip delayDuration={0}>
               <TooltipTrigger asChild>
                 <button
-                  className="text-destructive bg-background/40 absolute inset-0 z-10 flex h-full w-full items-center justify-center rounded-md text-sm opacity-0 duration-200 group-hover:opacity-100"
+                  className="text-destructive bg-background/40 absolute inset-0 z-10 flex h-full w-full items-center justify-center rounded-md text-[0.5rem] opacity-0 duration-200 group-hover:opacity-100 sm:text-xs md:text-sm"
                   onClick={onRemoveSignedFieldClick}
                 >
                   <Trans>Remove</Trans>
@@ -184,7 +184,7 @@ export const SigningFieldContainer = ({
           !loading &&
           !readOnlyField && (
             <button
-              className="text-destructive bg-background/50 absolute inset-0 z-10 flex h-full w-full items-center justify-center rounded-md text-sm opacity-0 duration-200 group-hover:opacity-100"
+              className="text-destructive bg-background/50 absolute inset-0 z-10 flex h-full w-full items-center justify-center rounded-md text-[0.5rem] opacity-0 duration-200 group-hover:opacity-100 sm:text-sm xl:text-base"
               onClick={onRemoveSignedFieldClick}
             >
               <Trans>Remove</Trans>

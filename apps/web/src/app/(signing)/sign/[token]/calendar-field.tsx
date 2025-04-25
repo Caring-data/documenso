@@ -137,7 +137,7 @@ export const CalendarField = ({
     const dateTime = DateTime.fromJSDate(date)
       .setZone(timezone, { keepLocalTime: true })
       .set({ hour: 12, minute: 0, second: 0, millisecond: 0 });
-    console.log(selectedDate);
+
     void handleSign(dateTime);
   };
 
@@ -203,17 +203,15 @@ export const CalendarField = ({
           <PopoverTrigger>
             <div
               className={cn(
-                'group-hover:text-primary text-muted-foreground flex w-full cursor-pointer items-center justify-center gap-x-1 text-sm duration-200',
+                'group-hover:text-primary text-muted-foreground flex w-full cursor-pointer items-center justify-center gap-x-1 text-[0.5rem] duration-200 sm:text-xs md:text-sm',
                 {
                   'group-hover:text-yellow-300': !parsedFieldMeta?.required,
                   'group-hover:text-red-300': parsedFieldMeta?.required,
                 },
               )}
             >
-              <CalendarDays className="h-[clamp(0.625rem,20cqw,0.925rem)] w-[clamp(0.625rem,20cqw,0.925rem)]" />
-              <span className="text-[clamp(0.425rem,25cqw,0.825rem)]">
-                <Trans>Calendar</Trans>
-              </span>
+              <CalendarDays className="h-2 w-2 sm:h-[14px] sm:w-[14px]" />
+              <Trans>Calendar</Trans>
             </div>
           </PopoverTrigger>
           <PopoverContent className="z-50 p-0 shadow-md" align="start">
