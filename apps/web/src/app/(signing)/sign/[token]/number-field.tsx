@@ -67,7 +67,7 @@ export const NumberField = ({ field, onSignField, onUnsignField }: NumberFieldPr
 
   const defaultValue = parsedFieldMeta?.value;
   const [localNumber, setLocalNumber] = useState(
-    parsedFieldMeta?.value ? String(parsedFieldMeta.value) : '0',
+    parsedFieldMeta?.value ? String(parsedFieldMeta.value) : '',
   );
 
   const initialErrors: ValidationErrors = {
