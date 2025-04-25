@@ -126,8 +126,14 @@ export default async function CompletedSigningPage({
           </h2>
 
           {(() => {
-            const recipientsCount = document.recipients?.length ?? 0;
             const allSigned = document.recipients?.every((r) => r.signingStatus === 'SIGNED');
+
+            const emailSettings = document.documentMeta?.emailSettings;
+            const isSingleRecipient = emailSettings?.documentPending === false;
+
+            const hasRecipientWithOrder2or3 = document.recipients?.some(
+              (r) => r.signingOrder === 2 || r.signingOrder === 3,
+            );
 
             if (document.status === DocumentStatus.COMPLETED) {
               return (
@@ -143,8 +149,8 @@ export default async function CompletedSigningPage({
             if (
               document.deletedAt === null &&
               document.status === DocumentStatus.PENDING &&
-              recipientsCount === 1 &&
-              allSigned
+              allSigned &&
+              (isSingleRecipient || hasRecipientWithOrder2or3)
             ) {
               return (
                 <div className="mt-4 flex items-center text-center text-blue-600">
@@ -178,8 +184,14 @@ export default async function CompletedSigningPage({
           })()}
 
           {(() => {
-            const recipientsCount = document.recipients?.length ?? 0;
             const allSigned = document.recipients?.every((r) => r.signingStatus === 'SIGNED');
+
+            const emailSettings = document.documentMeta?.emailSettings;
+            const isSingleRecipient = emailSettings?.documentPending === false;
+
+            const hasRecipientWithOrder2or3 = document.recipients?.some(
+              (r) => r.signingOrder === 2 || r.signingOrder === 3,
+            );
 
             if (document.status === DocumentStatus.COMPLETED) {
               return (
@@ -195,8 +207,9 @@ export default async function CompletedSigningPage({
             if (
               document.deletedAt === null &&
               document.status === DocumentStatus.PENDING &&
-              recipientsCount === 1 &&
-              allSigned
+              isSingleRecipient &&
+              allSigned &&
+              (isSingleRecipient || hasRecipientWithOrder2or3)
             ) {
               return (
                 <p className="text-muted-foreground/60 mt-2.5 max-w-[60ch] text-center text-sm font-medium md:text-base">

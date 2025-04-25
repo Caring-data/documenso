@@ -15,6 +15,12 @@ export const ZFieldTextAlignSchema = z.enum(['left', 'center', 'right']);
 
 export type TFieldTextAlignSchema = z.infer<typeof ZFieldTextAlignSchema>;
 
+export const ZSignatureFieldMeta = ZBaseFieldMeta.extend({
+  type: z.literal('signature'),
+});
+
+export type TSignatureFieldMeta = z.infer<typeof ZSignatureFieldMeta>;
+
 export const ZInitialsFieldMeta = ZBaseFieldMeta.extend({
   type: z.literal('initials'),
   fontSize: z.number().min(8).max(96).optional(),
@@ -116,6 +122,7 @@ export const ZDropdownFieldMeta = ZBaseFieldMeta.extend({
 export type TDropdownFieldMeta = z.infer<typeof ZDropdownFieldMeta>;
 
 export const ZFieldMetaNotOptionalSchema = z.discriminatedUnion('type', [
+  ZSignatureFieldMeta,
   ZInitialsFieldMeta,
   ZNameFieldMeta,
   ZEmailFieldMeta,
@@ -146,7 +153,7 @@ export type TFieldMetaSchema = z.infer<typeof ZFieldMetaSchema>;
 export const ZFieldAndMetaSchema = z.discriminatedUnion('type', [
   z.object({
     type: z.literal(FieldType.SIGNATURE),
-    fieldMeta: z.undefined(),
+    fieldMeta: ZSignatureFieldMeta.optional(),
   }),
   z.object({
     type: z.literal(FieldType.FREE_SIGNATURE),
