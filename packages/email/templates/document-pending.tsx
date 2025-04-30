@@ -13,6 +13,7 @@ export const DocumentPendingEmailTemplate = ({
   documentName = 'Open Source Pledge.pdf',
   assetBaseUrl = 'http://localhost:3002',
   documentDetails,
+  recipientName,
 }: DocumentPendingEmailTemplateProps) => {
   const { _ } = useLingui();
   const branding = useBranding();
@@ -39,8 +40,8 @@ export const DocumentPendingEmailTemplate = ({
                   <div className="bg-brand mb-6 w-[97%] items-center justify-center gap-1 rounded-md px-2 py-4 text-center">
                     <div className="text-center text-white">
                       <Img
-                        src={getAssetUrl('/static/file-pen-line-white.png')}
-                        alt="icon image - file pen line"
+                        src={getAssetUrl('/static/clock-white.png')}
+                        alt="icon image - clock"
                         className="inline h-8"
                       />
                     </div>
@@ -56,6 +57,7 @@ export const DocumentPendingEmailTemplate = ({
                   documentName={documentName}
                   assetBaseUrl={assetBaseUrl}
                   documentDetails={documentDetails}
+                  recipientName={recipientName}
                 />
               </Section>
             </Container>
