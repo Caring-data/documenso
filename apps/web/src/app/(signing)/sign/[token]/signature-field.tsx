@@ -17,6 +17,7 @@ import type {
   TRemovedSignedFieldWithTokenMutationSchema,
   TSignFieldWithTokenMutationSchema,
 } from '@documenso/trpc/server/field-router/schema';
+import { cn } from '@documenso/ui/lib/utils';
 import { Button } from '@documenso/ui/primitives/button';
 import { Dialog, DialogContent, DialogFooter, DialogTitle } from '@documenso/ui/primitives/dialog';
 import { Label } from '@documenso/ui/primitives/label';
@@ -194,6 +195,8 @@ export const SignatureField = ({
     }
   };
 
+  const isRequired = field?.fieldMeta?.required === true;
+
   return (
     <SigningFieldContainer
       field={field}
@@ -209,7 +212,16 @@ export const SignatureField = ({
       )}
 
       {state === 'empty' && (
-        <p className="group-hover:text-primary font-signature text-muted-foreground text-[clamp(0.575rem,25cqw,1.2rem)] text-xl duration-200 group-hover:text-yellow-300">
+        <p
+          // className="group-hover:text-primary font-signature text-muted-foreground flex items-center justify-center text-[0.5rem] duration-200 group-hover:text-yellow-300 sm:text-xl"
+          className={cn(
+            'group-hover:text-primary font-signature text-muted-foreground flex items-center justify-center text-[0.5rem] duration-200 sm:text-xl',
+            {
+              'group-hover:text-yellow-300': !isRequired,
+              'group-hover:text-red-300': isRequired,
+            },
+          )}
+        >
           <Trans>Signature</Trans>
         </p>
       )}

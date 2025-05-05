@@ -250,6 +250,10 @@ export const ZDocumentAuditLogEventDocumentFieldInsertedSchema = z.object({
         data: z.string(),
       }),
       z.object({
+        type: z.literal(FieldType.CALENDAR),
+        data: z.string(),
+      }),
+      z.object({
         type: z.literal(FieldType.NAME),
         data: z.string(),
       }),
@@ -335,6 +339,10 @@ export const ZDocumentAuditLogEventDocumentFieldPrefilledSchema = z.object({
       }),
       z.object({
         type: z.literal(FieldType.DATE),
+        data: z.string(),
+      }),
+      z.object({
+        type: z.literal(FieldType.CALENDAR),
         data: z.string(),
       }),
       z.object({

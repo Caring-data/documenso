@@ -16,6 +16,7 @@ import { isSignatureFieldType } from '@documenso/prisma/guards/is-signature-fiel
 import type { FieldWithSignature } from '@documenso/prisma/types/field-with-signature';
 
 import {
+  ZCalendarFieldMeta,
   ZCheckboxFieldMeta,
   ZDateFieldMeta,
   ZEmailFieldMeta,
@@ -303,6 +304,7 @@ export const insertFieldInPDF = async (pdf: PDFDocument, field: FieldWithSignatu
         [FieldType.EMAIL]: ZEmailFieldMeta,
         [FieldType.NAME]: ZNameFieldMeta,
         [FieldType.INITIALS]: ZInitialsFieldMeta,
+        [FieldType.CALENDAR]: ZCalendarFieldMeta,
       } as const;
 
       // eslint-disable-next-line @typescript-eslint/consistent-type-assertions

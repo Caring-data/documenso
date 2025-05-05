@@ -6,7 +6,7 @@ export const validateNumberField = (
   fieldMeta?: NumberFieldMeta,
   isSigningPage: boolean = false,
 ): string[] => {
-  const errors = [];
+  const errors: string[] = [];
 
   const { minValue, maxValue, readOnly, required, numberFormat, fontSize } = fieldMeta || {};
 
@@ -15,6 +15,10 @@ export const validateNumberField = (
     '123.456.789,00': /^(?:\d{1,3}(?:\.\d{3})*|\d+)(?:,\d{1,2})?$/,
     '123456,789.00': /^(?:\d+)(?:,\d{1,3}(?:\.\d{1,2})?)?$/,
   };
+
+  if (value === '' || value === null || value === undefined) {
+    return errors;
+  }
 
   const isValidFormat = numberFormat ? formatRegex[numberFormat].test(value) : true;
 

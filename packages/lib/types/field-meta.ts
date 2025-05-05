@@ -15,6 +15,12 @@ export const ZFieldTextAlignSchema = z.enum(['left', 'center', 'right']);
 
 export type TFieldTextAlignSchema = z.infer<typeof ZFieldTextAlignSchema>;
 
+export const ZSignatureFieldMeta = ZBaseFieldMeta.extend({
+  type: z.literal('signature'),
+});
+
+export type TSignatureFieldMeta = z.infer<typeof ZSignatureFieldMeta>;
+
 export const ZInitialsFieldMeta = ZBaseFieldMeta.extend({
   type: z.literal('initials'),
   fontSize: z.number().min(8).max(96).optional(),
@@ -46,6 +52,12 @@ export const ZDateFieldMeta = ZBaseFieldMeta.extend({
 });
 
 export type TDateFieldMeta = z.infer<typeof ZDateFieldMeta>;
+
+export const ZCalendarFieldMeta = ZDateFieldMeta.extend({
+  type: z.literal('calendar'),
+});
+
+export type TCalendarFieldMeta = z.infer<typeof ZCalendarFieldMeta>;
 
 export const ZTextFieldMeta = ZBaseFieldMeta.extend({
   type: z.literal('text'),
@@ -110,10 +122,12 @@ export const ZDropdownFieldMeta = ZBaseFieldMeta.extend({
 export type TDropdownFieldMeta = z.infer<typeof ZDropdownFieldMeta>;
 
 export const ZFieldMetaNotOptionalSchema = z.discriminatedUnion('type', [
+  ZSignatureFieldMeta,
   ZInitialsFieldMeta,
   ZNameFieldMeta,
   ZEmailFieldMeta,
   ZDateFieldMeta,
+  ZCalendarFieldMeta,
   ZTextFieldMeta,
   ZNumberFieldMeta,
   ZRadioFieldMeta,
@@ -139,7 +153,7 @@ export type TFieldMetaSchema = z.infer<typeof ZFieldMetaSchema>;
 export const ZFieldAndMetaSchema = z.discriminatedUnion('type', [
   z.object({
     type: z.literal(FieldType.SIGNATURE),
-    fieldMeta: z.undefined(),
+    fieldMeta: ZSignatureFieldMeta.optional(),
   }),
   z.object({
     type: z.literal(FieldType.FREE_SIGNATURE),
@@ -160,6 +174,10 @@ export const ZFieldAndMetaSchema = z.discriminatedUnion('type', [
   z.object({
     type: z.literal(FieldType.DATE),
     fieldMeta: ZDateFieldMeta.optional(),
+  }),
+  z.object({
+    type: z.literal(FieldType.CALENDAR),
+    fieldMeta: ZCalendarFieldMeta.optional(),
   }),
   z.object({
     type: z.literal(FieldType.TEXT),

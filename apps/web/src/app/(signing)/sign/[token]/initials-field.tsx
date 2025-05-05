@@ -173,7 +173,7 @@ export const InitialsField = ({ field, onSignField, onUnsignField }: InitialsFie
       {!field.inserted && (
         <p
           className={cn(
-            'group-hover:text-primary text-muted-foreground text-[clamp(0.425rem,25cqw,0.825rem)] duration-200',
+            'group-hover:text-primary text-muted-foreground flex items-center justify-center text-[0.5rem] duration-200 sm:text-xs md:text-sm',
             {
               'group-hover:text-yellow-300': !isRequired,
               'group-hover:text-red-300': isRequired,

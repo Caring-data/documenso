@@ -38,7 +38,7 @@ export const NumberFieldAdvancedSettings = ({
   const [showValidation, setShowValidation] = useState(false);
 
   const handleInput = (field: keyof NumberFieldMeta, value: string | boolean) => {
-    const userValue = field === 'value' ? value : (fieldState.value ?? 0);
+    const userValue = field === 'value' ? value : (fieldState.value ?? '');
     const userMinValue = field === 'minValue' ? Number(value) : Number(fieldState.minValue ?? 0);
     const userMaxValue = field === 'maxValue' ? Number(value) : Number(fieldState.maxValue ?? 0);
     const readOnly = field === 'readOnly' ? Boolean(value) : Boolean(fieldState.readOnly);
@@ -70,7 +70,7 @@ export const NumberFieldAdvancedSettings = ({
           id="label"
           className="bg-background mt-2"
           placeholder={_(msg`Label`)}
-          value={fieldState.label}
+          value={fieldState.value ?? ''}
           onChange={(e) => handleFieldChange('label', e.target.value)}
         />
       </div>

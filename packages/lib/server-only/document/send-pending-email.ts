@@ -68,6 +68,7 @@ export const sendPendingEmail = async ({ documentId, recipientId }: SendPendingE
     documentName: document.title,
     assetBaseUrl,
     documentDetails: document.documentDetails || {},
+    recipientName: recipient.name,
   });
 
   const branding = document.team?.teamGlobalSettings

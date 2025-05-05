@@ -129,7 +129,7 @@ export const EmailField = ({ field, onSignField, onUnsignField }: EmailFieldProp
       )}
 
       {!field.inserted && (
-        <p className="group-hover:text-primary text-muted-foreground text-[clamp(0.425rem,25cqw,0.825rem)] duration-200 group-hover:text-yellow-300">
+        <p className="group-hover:text-primary text-muted-foreground text-[0.5rem] duration-200 group-hover:text-yellow-300 sm:text-xs md:text-sm">
           <Trans>Email</Trans>
         </p>
       )}

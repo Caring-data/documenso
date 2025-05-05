@@ -181,7 +181,7 @@ export const DateField = ({
         <div className="flex h-full w-full items-center">
           <p
             className={cn(
-              'text-muted-foreground dark:text-background/80 w-full text-[10px] duration-200 sm:text-[clamp(0.425rem,25cqw,0.825rem)]',
+              'text-muted-foreground dark:text-background/80 flex w-full items-center justify-center text-[0.5rem] duration-200 sm:text-xs md:text-sm',
               {
                 'text-left': parsedFieldMeta?.textAlign === 'left',
                 'text-center':

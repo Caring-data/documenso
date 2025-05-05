@@ -86,6 +86,7 @@ export const FieldItem = ({
   const signerStyles = useSignerColors(recipientIndex);
 
   const advancedField = [
+    'SIGNATURE',
     'NUMBER',
     'RADIO',
     'CHECKBOX',
@@ -95,6 +96,7 @@ export const FieldItem = ({
     'EMAIL',
     'DATE',
     'NAME',
+    'CALENDAR',
   ].includes(field.type);
 
   const calculateCoords = useCallback(() => {
