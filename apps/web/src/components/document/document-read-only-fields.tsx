@@ -221,11 +221,15 @@ export const DocumentReadOnlyFields = ({
 
                 {field.recipient.signingStatus === SigningStatus.NOT_SIGNED && (
                   <p
-                    className={cn('text-muted-foreground text-sm duration-200', {
-                      'font-signature sm:text-md md:text-lg':
-                        field.type === FieldType.SIGNATURE ||
-                        field.type === FieldType.FREE_SIGNATURE,
-                    })}
+                    className={cn(
+                      'text-muted-foreground text-center text-[10px] leading-tight duration-200',
+                      'overflow-hidden truncate whitespace-nowrap px-1',
+                      {
+                        'font-signature md:text-md sm:text-sm':
+                          field.type === FieldType.SIGNATURE ||
+                          field.type === FieldType.FREE_SIGNATURE,
+                      },
+                    )}
                   >
                     {parseMessageDescriptor(_, FRIENDLY_FIELD_TYPE[field.type])}
                   </p>
