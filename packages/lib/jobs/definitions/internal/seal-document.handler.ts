@@ -9,16 +9,11 @@ import {
   SigningStatus,
   WebhookTriggerEvents,
 } from '@documenso/prisma/client';
-import { signPdf } from '@documenso/signing';
 
 import { sendCompletedEmail } from '../../../server-only/document/send-completed-email';
 import PostHogServerClient from '../../../server-only/feature-flags/get-post-hog-server-client';
 import { getCertificatePdf } from '../../../server-only/htmltopdf/get-certificate-pdf';
 import { storeSignedDocument } from '../../../server-only/laravel-auth/storeSignedDocument';
-import { flattenAnnotations } from '../../../server-only/pdf/flatten-annotations';
-import { flattenForm } from '../../../server-only/pdf/flatten-form';
-import { insertFieldInPDF } from '../../../server-only/pdf/insert-field-in-pdf';
-import { normalizeSignatureAppearances } from '../../../server-only/pdf/normalize-signature-appearances';
 import { triggerWebhook } from '../../../server-only/webhooks/trigger/trigger-webhook';
 import type { TDocumentDetails } from '../../../types/document';
 import { DOCUMENT_AUDIT_LOG_TYPE } from '../../../types/document-audit-logs';
@@ -137,48 +132,40 @@ export const run = async ({
   }
 
   const newDataId = await io.runTask('decorate-and-sign-pdf', async () => {
-    const pdfDoc = await PDFDocument.load(pdfData);
+    try {
+      const pdfDoc = await PDFDocument.load(pdfData);
 
-    // Normalize and flatten layers that could cause issues with the signature
-    normalizeSignatureAppearances(pdfDoc);
-    flattenForm(pdfDoc);
-    flattenAnnotations(pdfDoc);
+      if (certificateData) {
+        const certificateDoc = await PDFDocument.load(certificateData);
+        const certificatePages = await pdfDoc.copyPages(
+          certificateDoc,
+          certificateDoc.getPageIndices(),
+        );
 
-    if (certificateData) {
-      const certificateDoc = await PDFDocument.load(certificateData);
-
-      const certificatePages = await pdfDoc.copyPages(
-        certificateDoc,
-        certificateDoc.getPageIndices(),
-      );
-
-      certificatePages.forEach((page) => {
-        pdfDoc.addPage(page);
-      });
-    }
-
-    for (const field of fields) {
-      if (field.inserted) {
-        await insertFieldInPDF(pdfDoc, field);
+        certificatePages.forEach((page) => {
+          pdfDoc.addPage(page);
+        });
       }
+
+      const finalPdfBytes = await pdfDoc.save({
+        useObjectStreams: false,
+        addDefaultPage: false,
+      });
+      console.log(`📦 Final PDF size: ${(finalPdfBytes.length / 1024 / 1024).toFixed(2)} MB`);
+
+      const { name } = path.parse(document.title);
+
+      const documentData = await putPdfFile({
+        name: `${name}_signed.pdf`,
+        type: 'application/pdf',
+        arrayBuffer: async () => Promise.resolve(finalPdfBytes),
+      });
+
+      return documentData.id;
+    } catch (error) {
+      console.error('Critical error in PDF process:', error);
+      throw error;
     }
-
-    // Re-flatten the form to handle our checkbox and radio fields that
-    // create native arcoFields
-    flattenForm(pdfDoc);
-
-    const pdfBytes = await pdfDoc.save();
-    const pdfBuffer = await signPdf({ pdf: Buffer.from(pdfBytes) });
-
-    const { name } = path.parse(document.title);
-
-    const documentData = await putPdfFile({
-      name: `${name}_signed.pdf`,
-      type: 'application/pdf',
-      arrayBuffer: async () => Promise.resolve(pdfBuffer),
-    });
-
-    return documentData.id;
   });
 
   const postHog = PostHogServerClient();

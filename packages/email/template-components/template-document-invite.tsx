@@ -60,18 +60,6 @@ export const TemplateDocumentInvite = ({
               </Text>
               <div className="flex items-center gap-6">
                 <Img
-                  src={getAssetUrl('/static/file-text.png')}
-                  alt="Document Icon"
-                  className="my-auto h-4 w-auto pr-2 align-middle"
-                />
-                <div className="flex flex-col justify-center text-sm font-medium leading-5 text-zinc-600">
-                  <Text>
-                    <Trans>Document: {documentDetails?.documentName}</Trans>
-                  </Text>
-                </div>
-              </div>
-              <div className="flex items-center gap-6">
-                <Img
                   src={getAssetUrl('/static/user-round.png')}
                   alt="Document Icon"
                   className="my-auto h-4 w-auto pr-2 align-middle"
@@ -79,6 +67,18 @@ export const TemplateDocumentInvite = ({
                 <div className="flex flex-col text-sm font-medium leading-5 text-zinc-600">
                   <Text>
                     <Trans>Regarding: {documentDetails?.residentName}</Trans>
+                  </Text>
+                </div>
+              </div>
+              <div className="flex items-center gap-6">
+                <Img
+                  src={getAssetUrl('/static/file-text.png')}
+                  alt="Document Icon"
+                  className="my-auto h-4 w-auto pr-2 align-middle"
+                />
+                <div className="flex flex-col justify-center text-sm font-medium leading-5 text-zinc-600">
+                  <Text>
+                    <Trans>Document: {documentDetails?.documentName}</Trans>
                   </Text>
                 </div>
               </div>

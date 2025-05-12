@@ -223,6 +223,11 @@ export const completeDocumentWithToken = async ({
     false,
   );
 
+  await prisma.documentData.update({
+    where: { id: document.documentData.id },
+    data: { data: base64SignedPdf },
+  });
+
   const pendingRecipients = await prisma.recipient.findMany({
     select: {
       id: true,
@@ -244,7 +249,7 @@ export const completeDocumentWithToken = async ({
     // if there is a tie.
     orderBy: [{ signingOrder: { sort: 'asc', nulls: 'last' } }, { id: 'asc' }],
   });
-
+  console.log('pendingRecipients', pendingRecipients);
   if (pendingRecipients.length > 0) {
     await sendPendingEmail({ documentId, recipientId: recipient.id });
 
@@ -280,7 +285,7 @@ export const completeDocumentWithToken = async ({
       },
     },
   });
-
+  console.log('haveAllRecipientsSigned', haveAllRecipientsSigned);
   if (haveAllRecipientsSigned) {
     await jobs.triggerJob({
       name: 'internal.seal-document',
