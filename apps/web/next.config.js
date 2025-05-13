@@ -19,7 +19,7 @@ const FONT_CAVEAT_BYTES = fs.readFileSync(
 );
 
 const FONT_NOTO_SANS_BYTES = fs.readFileSync(
-  path.join(__dirname, '../../packages/assets/fonts/noto-sans.ttf'),
+  path.join(__dirname, '../../packages/assets/fonts/arial.ttf'),
 );
 
 /** @type {import('next').NextConfig} */
