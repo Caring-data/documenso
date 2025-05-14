@@ -156,11 +156,7 @@ export const SigningForm = ({
       timestamp: new Date().toISOString(),
     });
 
-    redirectUrl ? router.push(redirectUrl) : router.push(`/sign/${recipient.token}/complete`);
-
-    setTimeout(() => {
-      redirectUrl ? router.push(redirectUrl) : router.push(`/sign/${recipient.token}/complete`);
-    }, 10000);
+    window.location.href = redirectUrl ?? `/sign/${recipient.token}/complete`;
   };
 
   return (

@@ -156,7 +156,7 @@ export const RadioField = ({ field, onSignField, onUnsignField }: RadioFieldProp
       )}
 
       {!field.inserted && (
-        <RadioGroup onValueChange={(value) => handleSelectItem(value)} className="z-10">
+        <RadioGroup onValueChange={(value) => handleSelectItem(value)} className="z-10 space-y-3">
           {values?.map((item, index) => (
             <div key={index} className="flex items-center gap-x-1.5">
               <RadioGroupItem
@@ -175,7 +175,7 @@ export const RadioField = ({ field, onSignField, onUnsignField }: RadioFieldProp
       )}
 
       {field.inserted && (
-        <RadioGroup className="gap-y-1">
+        <RadioGroup className="gap-y-1 space-y-4">
           {values?.map((item, index) => (
             <div key={index} className="flex items-center gap-x-1.5">
               <RadioGroupItem

@@ -25,15 +25,20 @@ export const fetchWithLaravelAuth = async (
       credentials: 'omit',
     });
 
-    const data = await response.json();
+    const responseText = await response.text();
 
     if (!response.ok) {
-      const errorText = await response.text();
-      console.error(`Request error: ${response.status} - ${response.statusText}`, errorText);
+      console.error(`Request error: ${response.status} - ${response.statusText}`, responseText);
       throw new Error(`Request error: ${response.status} - ${response.statusText}`);
     }
 
-    return data;
+    try {
+      const data = JSON.parse(responseText);
+      return data;
+    } catch (parseError) {
+      console.error('Failed to parse JSON:', parseError, responseText);
+      throw new Error('Failed to parse response from Laravel API.');
+    }
   } catch (error: unknown) {
     if (error instanceof Error && error.name === 'AbortError') {
       console.error('⏱️ Request aborted due to timeout');

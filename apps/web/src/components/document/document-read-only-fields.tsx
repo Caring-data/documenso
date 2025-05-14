@@ -176,7 +176,7 @@ export const DocumentReadOnlyFields = ({
                       if (!values || values.length === 0) return null;
 
                       return (
-                        <RadioGroup className="gap-y-1 p-1">
+                        <RadioGroup className="gap-y-1 space-y-4 p-1">
                           {values.map((item, index) => {
                             const isChecked = item.value === field.customText;
 

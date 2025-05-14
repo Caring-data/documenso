@@ -31,7 +31,7 @@ export const storeSignedDocument = async (
       throw new Error('Environment variables for the Laravel API are not defined.');
     }
 
-    return await fetchWithLaravelAuth(
+    const response = await fetchWithLaravelAuth(
       url,
       {
         method: 'POST',
@@ -39,6 +39,17 @@ export const storeSignedDocument = async (
       },
       laravelToken,
     );
+
+    if (
+      !response ||
+      typeof response !== 'object' ||
+      response.message !== 'Signed document stored successfully'
+    ) {
+      console.error('Laravel API did not return expected success message:', response);
+      throw new Error('Could not store the signed document.');
+    }
+
+    return response;
   } catch (error) {
     console.error('Error storing signed document:', error);
     throw new Error('Could not store the signed document.');
