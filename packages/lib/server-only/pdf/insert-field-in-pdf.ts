@@ -229,9 +229,15 @@ export const insertFieldInPDF = async (pdf: PDFDocument, field: FieldWithSignatu
       }));
 
       const selected: string[] = fromCheckboxValue(field.customText);
+      const checkboxSize = 8;
+      const labelPadding = 4;
+      const fontSize = 10;
+      const totalOptions = values?.length ?? 1;
+      const optionHeight = fieldHeight / totalOptions;
+      const paddingTop = 8;
 
       for (const [index, item] of (values ?? []).entries()) {
-        const offsetY = index * 16;
+        const offsetY = paddingTop + index * optionHeight;
 
         const checkbox = pdf.getForm().createCheckBox(`checkbox.${field.secondaryId}.${index}`);
 
@@ -239,19 +245,26 @@ export const insertFieldInPDF = async (pdf: PDFDocument, field: FieldWithSignatu
           checkbox.check();
         }
 
-        page.drawText(item.value.includes('empty-value-') ? '' : item.value, {
-          x: fieldX + 16,
-          y: pageHeight - (fieldY + offsetY),
-          size: 12,
-          font,
-          rotate: degrees(pageRotationInDegrees),
-        });
+        const centeredCheckboxX = fieldX + 4;
+        const centeredCheckboxY =
+          pageHeight - (fieldY + offsetY + (optionHeight - checkboxSize) / 2);
 
         checkbox.addToPage(page, {
-          x: fieldX,
-          y: pageHeight - (fieldY + offsetY),
-          height: 8,
-          width: 8,
+          x: centeredCheckboxX,
+          y: centeredCheckboxY,
+          width: checkboxSize,
+          height: checkboxSize,
+        });
+
+        const textHeight = font.heightAtSize(fontSize);
+        const centeredTextY = centeredCheckboxY + (checkboxSize - textHeight) / 2;
+
+        page.drawText(item.value.includes('empty-value-') ? '' : item.value, {
+          x: centeredCheckboxX + checkboxSize + labelPadding,
+          y: centeredTextY + 1,
+          size: fontSize,
+          font,
+          rotate: degrees(pageRotationInDegrees),
         });
       }
     })
@@ -270,29 +283,41 @@ export const insertFieldInPDF = async (pdf: PDFDocument, field: FieldWithSignatu
       }));
 
       const selected = field.customText.split(',');
+      const radioSize = 8;
+      const labelPadding = 4;
+      const fontSize = 10;
+      const totalOptions = values?.length ?? 1;
+      const optionHeight = fieldHeight / totalOptions;
+      const paddingTop = 8;
+
+      const radioGroup = pdf.getForm().createRadioGroup(`radio.${field.secondaryId}`);
 
       for (const [index, item] of (values ?? []).entries()) {
-        const offsetY = index * 16;
+        const offsetY = paddingTop + index * optionHeight;
 
-        const radio = pdf.getForm().createRadioGroup(`radio.${field.secondaryId}.${index}`);
+        const centeredRadioX = fieldX + 4;
+        const centeredRadioY = pageHeight - (fieldY + offsetY + (optionHeight - radioSize) / 2);
+
+        radioGroup.addOptionToPage(item.value, page, {
+          x: centeredRadioX,
+          y: centeredRadioY,
+          width: radioSize,
+          height: radioSize,
+        });
+
+        const textHeight = font.heightAtSize(fontSize);
+        const centeredTextY = centeredRadioY + (radioSize - textHeight) / 2;
 
         page.drawText(item.value.includes('empty-value-') ? '' : item.value, {
-          x: fieldX + 16,
-          y: pageHeight - (fieldY + offsetY),
-          size: 12,
+          x: centeredRadioX + radioSize + labelPadding,
+          y: centeredTextY + 1,
+          size: fontSize,
           font,
           rotate: degrees(pageRotationInDegrees),
         });
 
-        radio.addOptionToPage(item.value, page, {
-          x: fieldX,
-          y: pageHeight - (fieldY + offsetY),
-          height: 8,
-          width: 8,
-        });
-
         if (selected.includes(item.value)) {
-          radio.select(item.value);
+          radioGroup.select(item.value);
         }
       }
     })

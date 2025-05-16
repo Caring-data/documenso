@@ -223,6 +223,11 @@ export const completeDocumentWithToken = async ({
     false,
   );
 
+  await prisma.documentData.update({
+    where: { id: document.documentData.id },
+    data: { data: base64SignedPdf },
+  });
+
   const pendingRecipients = await prisma.recipient.findMany({
     select: {
       id: true,

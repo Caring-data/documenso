@@ -14,15 +14,40 @@ export const fetchWithLaravelAuth = async (
     ...(options.headers || {}),
   };
 
-  const response = await fetch(url, { ...options, headers, credentials: 'omit' });
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 120_000);
 
-  const data = await response.json();
+  try {
+    const response = await fetch(url, {
+      ...options,
+      headers,
+      signal: controller.signal,
+      credentials: 'omit',
+    });
 
-  if (!response.ok) {
-    const errorText = await response.text();
-    console.error(`❌ Request error: ${response.status} - ${response.statusText}`, errorText);
-    throw new Error(`Request error: ${response.status} - ${response.statusText}`);
+    const responseText = await response.text();
+
+    if (!response.ok) {
+      console.error(`Request error: ${response.status} - ${response.statusText}`, responseText);
+      throw new Error(`Request error: ${response.status} - ${response.statusText}`);
+    }
+
+    try {
+      const data = JSON.parse(responseText);
+      return data;
+    } catch (parseError) {
+      console.error('Failed to parse JSON:', parseError, responseText);
+      throw new Error('Failed to parse response from Laravel API.');
+    }
+  } catch (error: unknown) {
+    if (error instanceof Error && error.name === 'AbortError') {
+      console.error('⏱️ Request aborted due to timeout');
+      throw new Error('Request to Laravel API timed out');
+    }
+
+    console.error('Error in fetchWithLaravelAuth:', error);
+    throw error;
+  } finally {
+    clearTimeout(timeout);
   }
-
-  return data;
 };

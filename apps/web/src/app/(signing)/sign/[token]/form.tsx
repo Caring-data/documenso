@@ -156,7 +156,7 @@ export const SigningForm = ({
       timestamp: new Date().toISOString(),
     });
 
-    redirectUrl ? router.push(redirectUrl) : router.push(`/sign/${recipient.token}/complete`);
+    window.location.href = redirectUrl ?? `/sign/${recipient.token}/complete`;
   };
 
   return (
