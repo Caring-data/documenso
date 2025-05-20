@@ -15,5 +15,6 @@ services:
       - '4443:4443'
     volumes:
       - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - /etc/Certs:/etc/Certs:ro
     depends_on:
       - documenso-next
