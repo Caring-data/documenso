@@ -14,6 +14,11 @@ module.exports = {
     fontFamily: {
       sans: ['Inter', 'sans-serif'],
       serif: ['Caveat', 'cursive'],
+      dancing: ['"Dancing Script"', 'cursive'],
+      greatVibes: ['"Great Vibes"', 'cursive'],
+      cookie: ['"Cookie"', 'cursive'],
+      monteCarlo: ['"Monte Carlo"', 'cursive'],
+      lato: ['"Lato"', 'sans-serif'],
     },
   },
 };

@@ -21,16 +21,15 @@ import { trpc } from '@documenso/trpc/react';
 import { FieldToolTip } from '@documenso/ui/components/field/field-tooltip';
 import { cn } from '@documenso/ui/lib/utils';
 import { Button } from '@documenso/ui/primitives/button';
-import { Card, CardContent } from '@documenso/ui/primitives/card';
 import { Input } from '@documenso/ui/primitives/input';
 import { Label } from '@documenso/ui/primitives/label';
 import { RadioGroup, RadioGroupItem } from '@documenso/ui/primitives/radio-group';
-import { SignaturePad } from '@documenso/ui/primitives/signature-pad';
 import { useToast } from '@documenso/ui/primitives/use-toast';
 
 import { AssistantConfirmationDialog } from './assistant/assistant-confirmation-dialog';
 import { useRequiredSigningContext } from './provider';
 import { SignDialog } from './sign-dialog';
+import { SignaturePadDialog } from './signature-pad/signature-pad-dialog';
 
 export type SigningFormProps = {
   document: DocumentAndSender;
@@ -335,38 +334,21 @@ export const SigningForm = ({
                       />
                     </div>
 
-                    <div>
-                      <Label htmlFor="Signature">
-                        <Trans>Signature</Trans>
-                      </Label>
-
-                      <Card className="mt-2" gradient degrees={-120}>
-                        <CardContent className="p-0">
-                          <SignaturePad
-                            className="h-44 w-full"
-                            disabled={isSubmitting}
-                            defaultValue={signature ?? undefined}
-                            onValidityChange={(isValid) => {
-                              setSignatureValid(isValid);
-                            }}
-                            onChange={(value) => {
-                              if (signatureValid) {
-                                setSignature(value);
-                              }
-                            }}
-                            allowTypedSignature={document.documentMeta?.typedSignatureEnabled}
-                          />
-                        </CardContent>
-                      </Card>
-
-                      {hasSignatureField && !signatureValid && (
-                        <div className="text-destructive mt-2 text-sm">
-                          <Trans>
-                            Signature is too small. Please provide a more complete signature.
-                          </Trans>
-                        </div>
-                      )}
-                    </div>
+                    {hasSignatureField && (
+                      <div>
+                        <Label htmlFor="Signature">
+                          <Trans>Signature</Trans>
+                        </Label>
+                        <SignaturePadDialog
+                          disabled={isSubmitting}
+                          value={signature ?? ''}
+                          onChange={(v) => setSignature(v ?? '')}
+                          typedSignatureEnabled={document.documentMeta?.typedSignatureEnabled}
+                          uploadSignatureEnabled={true}
+                          drawSignatureEnabled={true}
+                        />
+                      </div>
+                    )}
                   </div>
 
                   <div className="flex flex-col gap-4 md:flex-row">

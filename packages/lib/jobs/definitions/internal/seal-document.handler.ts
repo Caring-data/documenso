@@ -151,7 +151,6 @@ export const run = async ({
         useObjectStreams: false,
         addDefaultPage: false,
       });
-      console.log(`📦 Final PDF size: ${(finalPdfBytes.length / 1024 / 1024).toFixed(2)} MB`);
 
       const { name } = path.parse(document.title);
 

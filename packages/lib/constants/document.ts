@@ -17,6 +17,12 @@ export const DOCUMENT_STATUS: {
   },
 };
 
+export enum DocumentSignatureType {
+  DRAW = 'draw',
+  TYPE = 'type',
+  UPLOAD = 'upload',
+}
+
 type DocumentDistributionMethodTypeData = {
   value: DocumentDistributionMethod;
   description: MessageDescriptor;
