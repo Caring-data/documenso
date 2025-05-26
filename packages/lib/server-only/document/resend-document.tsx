@@ -27,6 +27,7 @@ export type ResendDocumentOptions = {
   documentId: number;
   userId: number;
   recipients: number[];
+  recipientEmail?: string;
   teamId?: number;
   requestMetadata: ApiRequestMetadata;
 };
@@ -35,6 +36,7 @@ export const resendDocument = async ({
   documentId,
   userId,
   recipients,
+  recipientEmail,
   teamId,
   requestMetadata,
 }: ResendDocumentOptions): Promise<void> => {
@@ -55,10 +57,14 @@ export const resendDocument = async ({
     include: {
       recipients: {
         where: {
-          id: {
-            in: recipients,
-          },
-          signingStatus: SigningStatus.NOT_SIGNED,
+          AND: [
+            recipientEmail
+              ? { email: recipientEmail }
+              : recipients
+                ? { id: { in: recipients } }
+                : {},
+            { signingStatus: SigningStatus.NOT_SIGNED },
+          ],
         },
       },
       documentMeta: true,
@@ -157,6 +163,9 @@ export const resendDocument = async ({
         selfSigner,
         isTeamInvite: isTeamDocument,
         teamName: document.team?.name,
+        recipientName: recipient.name,
+        documentDetails: document.documentDetails || {},
+        tokenExpiration: recipient.expired ? recipient.expired.toISOString() : undefined,
       });
 
       const branding = document.team?.teamGlobalSettings
