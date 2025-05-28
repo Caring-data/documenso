@@ -13,7 +13,7 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#: packages/email/template-components/template-document-pending.tsx:21
+#: packages/email/template-components/template-document-pending.tsx:33
 msgid "“{0}” has been signed"
 msgstr "“{0}” has been signed"
 
@@ -109,7 +109,7 @@ msgid "{0} of {1} row(s) selected."
 msgstr "{0} of {1} row(s) selected."
 
 #: packages/lib/jobs/definitions/emails/send-signing-email.handler.ts:123
-#: packages/lib/server-only/document/resend-document.tsx:136
+#: packages/lib/server-only/document/resend-document.tsx:142
 msgid "{0} on behalf of \"{1}\" has invited you to {recipientActionVerb} the document \"{2}\"."
 msgstr "{0} on behalf of \"{1}\" has invited you to {recipientActionVerb} the document \"{2}\"."
 
@@ -441,7 +441,7 @@ msgstr "7 days"
 msgid "A confirmation email has been sent, and it should arrive in your inbox shortly."
 msgstr "A confirmation email has been sent, and it should arrive in your inbox shortly."
 
-#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:187
+#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:199
 msgid "A copy of the completed document will be sent to your email shortly. You may also download it below."
 msgstr "A copy of the completed document will be sent to your email shortly. You may also download it below."
 
@@ -801,7 +801,7 @@ msgstr "All documents related to the electronic signing process will be provided
 msgid "All inserted signatures will be voided"
 msgstr "All inserted signatures will be voided"
 
-#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:137
+#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:143
 msgid "All parties have signed the document."
 msgstr "All parties have signed the document."
 
@@ -943,7 +943,7 @@ msgstr "An error occurred while moving the document."
 msgid "An error occurred while moving the template."
 msgstr "An error occurred while moving the template."
 
-#: apps/web/src/app/(signing)/sign/[token]/calendar-field.tsx:138
+#: apps/web/src/app/(signing)/sign/[token]/calendar-field.tsx:165
 #: apps/web/src/app/(signing)/sign/[token]/checkbox-field.tsx:151
 #: apps/web/src/app/(signing)/sign/[token]/date-field.tsx:154
 #: apps/web/src/app/(signing)/sign/[token]/dropdown-field.tsx:134
@@ -959,7 +959,7 @@ msgstr "An error occurred while removing the field."
 msgid "An error occurred while removing the selection."
 msgstr "An error occurred while removing the selection."
 
-#: apps/web/src/app/(signing)/sign/[token]/signature-field.tsx:191
+#: apps/web/src/app/(signing)/sign/[token]/signature-field.tsx:192
 msgid "An error occurred while removing the signature."
 msgstr "An error occurred while removing the signature."
 
@@ -971,7 +971,7 @@ msgstr "An error occurred while sending the document."
 msgid "An error occurred while sending your confirmation email"
 msgstr "An error occurred while sending your confirmation email"
 
-#: apps/web/src/app/(signing)/sign/[token]/calendar-field.tsx:91
+#: apps/web/src/app/(signing)/sign/[token]/calendar-field.tsx:118
 #: apps/web/src/app/(signing)/sign/[token]/checkbox-field.tsx:121
 #: apps/web/src/app/(signing)/sign/[token]/date-field.tsx:104
 #: apps/web/src/app/(signing)/sign/[token]/dropdown-field.tsx:102
@@ -984,7 +984,7 @@ msgstr "An error occurred while sending your confirmation email"
 msgid "An error occurred while signing as assistant."
 msgstr "An error occurred while signing as assistant."
 
-#: apps/web/src/app/(signing)/sign/[token]/calendar-field.tsx:92
+#: apps/web/src/app/(signing)/sign/[token]/calendar-field.tsx:119
 #: apps/web/src/app/(signing)/sign/[token]/checkbox-field.tsx:122
 #: apps/web/src/app/(signing)/sign/[token]/date-field.tsx:105
 #: apps/web/src/app/(signing)/sign/[token]/dropdown-field.tsx:103
@@ -993,7 +993,7 @@ msgstr "An error occurred while signing as assistant."
 #: apps/web/src/app/(signing)/sign/[token]/name-field.tsx:129
 #: apps/web/src/app/(signing)/sign/[token]/number-field.tsx:153
 #: apps/web/src/app/(signing)/sign/[token]/radio-field.tsx:104
-#: apps/web/src/app/(signing)/sign/[token]/signature-field.tsx:165
+#: apps/web/src/app/(signing)/sign/[token]/signature-field.tsx:166
 #: apps/web/src/app/(signing)/sign/[token]/text-field.tsx:175
 msgid "An error occurred while signing the document."
 msgstr "An error occurred while signing the document."
@@ -1321,7 +1321,7 @@ msgstr "By proceeding to use the electronic signature service provided by Docume
 msgid "By using the electronic signature feature, you are consenting to conduct transactions and receive disclosures electronically. You acknowledge that your electronic signature on documents is binding and that you accept the terms outlined in the documents you are signing."
 msgstr "By using the electronic signature feature, you are consenting to conduct transactions and receive disclosures electronically. You acknowledge that your electronic signature on documents is binding and that you accept the terms outlined in the documents you are signing."
 
-#: apps/web/src/app/(signing)/sign/[token]/calendar-field.tsx:181
+#: apps/web/src/app/(signing)/sign/[token]/calendar-field.tsx:214
 #: packages/ui/primitives/document-flow/add-fields.tsx:972
 #: packages/ui/primitives/document-flow/types.ts:54
 #: packages/ui/primitives/template-flow/add-template-fields.tsx:846
@@ -1355,7 +1355,7 @@ msgstr "Can prepare"
 #: apps/web/src/app/(signing)/sign/[token]/number-field.tsx:347
 #: apps/web/src/app/(signing)/sign/[token]/reject-document-dialog.tsx:158
 #: apps/web/src/app/(signing)/sign/[token]/sign-dialog.tsx:128
-#: apps/web/src/app/(signing)/sign/[token]/signature-field.tsx:283
+#: apps/web/src/app/(signing)/sign/[token]/signature-field.tsx:295
 #: apps/web/src/app/(signing)/sign/[token]/text-field.tsx:358
 #: apps/web/src/app/(teams)/t/[teamUrl]/settings/team-transfer-status.tsx:121
 #: apps/web/src/components/(dashboard)/settings/token/delete-token-dialog.tsx:176
@@ -1376,7 +1376,7 @@ msgstr "Can prepare"
 #: apps/web/src/components/forms/2fa/view-recovery-codes-dialog.tsx:163
 #: apps/web/src/components/templates/manage-public-template-dialog.tsx:448
 #: apps/web/src/components/templates/template-bulk-send-dialog.tsx:263
-#: packages/ui/primitives/document-flow/field-item-advanced-settings.tsx:341
+#: packages/ui/primitives/document-flow/field-item-advanced-settings.tsx:354
 #: packages/ui/primitives/document-flow/send-document-action-dialog.tsx:58
 msgid "Cancel"
 msgstr "Cancel"
@@ -1882,6 +1882,7 @@ msgstr "Date Format"
 
 #: packages/email/template-components/template-document-completed.tsx:28
 #: packages/email/template-components/template-document-invite.tsx:52
+#: packages/email/template-components/template-document-pending.tsx:30
 msgid "Dear"
 msgstr "Dear"
 
@@ -2148,7 +2149,7 @@ msgstr "Document completed"
 msgid "Document Completed - {0}"
 msgstr "Document Completed - {0}"
 
-#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:347
+#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:357
 msgid "Document Completed by all parties on"
 msgstr "Document Completed by all parties on"
 
@@ -2171,7 +2172,7 @@ msgid "Document created by <0>{0}</0>"
 msgstr "Document created by <0>{0}</0>"
 
 #: packages/email/templates/document-created-from-direct-template.tsx:32
-#: packages/lib/server-only/template/create-document-from-direct-template.ts:601
+#: packages/lib/server-only/template/create-document-from-direct-template.ts:598
 msgid "Document created from direct template"
 msgstr "Document created from direct template"
 
@@ -2229,7 +2230,7 @@ msgstr "Document ID"
 msgid "Document inbox"
 msgstr "Document inbox"
 
-#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:153
+#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:159
 msgid "Document is preparing..."
 msgstr "Document is preparing..."
 
@@ -2245,7 +2246,7 @@ msgstr "Document moved"
 msgid "Document moved to team"
 msgstr "Document moved to team"
 
-#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:174
+#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:180
 msgid "Document no longer available to sign"
 msgstr "Document no longer available to sign"
 
@@ -2327,7 +2328,8 @@ msgstr "Document visibility updated"
 msgid "Document will be permanently deleted"
 msgstr "Document will be permanently deleted"
 
-#: packages/email/template-components/template-document-invite.tsx:69
+#: packages/email/template-components/template-document-invite.tsx:81
+#: packages/email/template-components/template-document-pending.tsx:55
 msgid "Document: {0}"
 msgstr "Document: {0}"
 
@@ -2641,8 +2643,8 @@ msgstr "Enter your text here"
 #: apps/web/src/app/(dashboard)/templates/move-template-dialog.tsx:68
 #: apps/web/src/app/(dashboard)/templates/use-template-dialog.tsx:187
 #: apps/web/src/app/(signing)/sign/[token]/auto-sign.tsx:152
-#: apps/web/src/app/(signing)/sign/[token]/calendar-field.tsx:89
-#: apps/web/src/app/(signing)/sign/[token]/calendar-field.tsx:137
+#: apps/web/src/app/(signing)/sign/[token]/calendar-field.tsx:116
+#: apps/web/src/app/(signing)/sign/[token]/calendar-field.tsx:164
 #: apps/web/src/app/(signing)/sign/[token]/checkbox-field.tsx:119
 #: apps/web/src/app/(signing)/sign/[token]/checkbox-field.tsx:150
 #: apps/web/src/app/(signing)/sign/[token]/checkbox-field.tsx:208
@@ -2661,14 +2663,14 @@ msgstr "Enter your text here"
 #: apps/web/src/app/(signing)/sign/[token]/pre-signing/page.tsx:45
 #: apps/web/src/app/(signing)/sign/[token]/radio-field.tsx:101
 #: apps/web/src/app/(signing)/sign/[token]/radio-field.tsx:130
-#: apps/web/src/app/(signing)/sign/[token]/signature-field.tsx:130
-#: apps/web/src/app/(signing)/sign/[token]/signature-field.tsx:164
-#: apps/web/src/app/(signing)/sign/[token]/signature-field.tsx:190
+#: apps/web/src/app/(signing)/sign/[token]/signature-field.tsx:131
+#: apps/web/src/app/(signing)/sign/[token]/signature-field.tsx:165
+#: apps/web/src/app/(signing)/sign/[token]/signature-field.tsx:191
 #: apps/web/src/app/(signing)/sign/[token]/text-field.tsx:172
 #: apps/web/src/app/(signing)/sign/[token]/text-field.tsx:202
 #: apps/web/src/components/(dashboard)/layout/verify-email-banner.tsx:54
 #: apps/web/src/components/(dashboard)/settings/webhooks/create-webhook-dialog.tsx:101
-#: packages/ui/primitives/document-flow/field-item-advanced-settings.tsx:235
+#: packages/ui/primitives/document-flow/field-item-advanced-settings.tsx:241
 #: packages/ui/primitives/pdf-viewer.tsx:166
 msgid "Error"
 msgstr "Error"
@@ -2703,7 +2705,7 @@ msgstr "Failed to fetch document details"
 msgid "Failed to reseal document"
 msgstr "Failed to reseal document"
 
-#: packages/ui/primitives/document-flow/field-item-advanced-settings.tsx:236
+#: packages/ui/primitives/document-flow/field-item-advanced-settings.tsx:242
 msgid "Failed to save settings."
 msgstr "Failed to save settings."
 
@@ -3068,7 +3070,7 @@ msgstr "Invited At"
 msgid "Invoice"
 msgstr "Invoice"
 
-#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:320
+#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:330
 msgid "IP address"
 msgstr "IP address"
 
@@ -3351,6 +3353,10 @@ msgstr "Message <0>(Optional)</0>"
 msgid "Min"
 msgstr "Min"
 
+#: apps/web/src/app/(signing)/sign/[token]/calendar-field.tsx:128
+msgid "Missing Date"
+msgstr "Missing Date"
+
 #: apps/web/src/app/(dashboard)/documents/[id]/document-page-view-recipients.tsx:56
 #: apps/web/src/app/(dashboard)/templates/[id]/template-page-view-recipients.tsx:35
 msgid "Modify recipients"
@@ -3566,7 +3572,7 @@ msgstr "Number"
 msgid "Number format"
 msgstr "Number format"
 
-#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:359
+#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:372
 msgid "of"
 msgstr "of"
 
@@ -3651,7 +3657,7 @@ msgstr "Otherwise, the document will be created as a draft."
 msgid "Owner"
 msgstr "Owner"
 
-#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:359
+#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:372
 msgid "Page"
 msgstr "Page"
 
@@ -3756,13 +3762,13 @@ msgstr "Payment overdue"
 #: apps/web/src/app/(dashboard)/templates/[id]/template-page-view-documents-table.tsx:226
 #: apps/web/src/components/(teams)/tables/teams-member-page-data-table.tsx:82
 #: apps/web/src/components/(teams)/tables/user-settings-teams-page-data-table.tsx:77
-#: apps/web/src/components/document/document-read-only-fields.tsx:89
+#: apps/web/src/components/document/document-read-only-fields.tsx:94
 #: apps/web/src/components/formatter/document-status.tsx:22
 #: packages/lib/constants/document.ts:16
 msgid "Pending"
 msgstr "Pending"
 
-#: packages/email/templates/document-pending.tsx:20
+#: packages/email/templates/document-pending.tsx:21
 msgid "Pending Document"
 msgstr "Pending Document"
 
@@ -3913,6 +3919,10 @@ msgstr "Please provide a token from your authenticator, or a backup code."
 msgid "Please review the document before signing."
 msgstr "Please review the document before signing."
 
+#: apps/web/src/app/(signing)/sign/[token]/calendar-field.tsx:88
+msgid "Please select a date before signing."
+msgstr "Please select a date before signing."
+
 #: apps/web/src/app/(dashboard)/templates/use-template-dialog.tsx:503
 msgid "Please select a PDF file"
 msgstr "Please select a PDF file"
@@ -4022,7 +4032,6 @@ msgstr "Radio"
 msgid "Radio values"
 msgstr "Radio values"
 
-#: packages/ui/primitives/document-flow/field-items-advanced-settings/calendar-field.tsx:101
 #: packages/ui/primitives/document-flow/field-items-advanced-settings/checkbox-field.tsx:186
 #: packages/ui/primitives/document-flow/field-items-advanced-settings/dropdown-field.tsx:147
 #: packages/ui/primitives/document-flow/field-items-advanced-settings/initials-field.tsx:96
@@ -4032,7 +4041,7 @@ msgstr "Radio values"
 msgid "Read only"
 msgstr "Read only"
 
-#: apps/web/src/app/(signing)/sign/[token]/signing-field-container.tsx:145
+#: apps/web/src/app/(signing)/sign/[token]/signing-field-container.tsx:146
 msgid "Read only field"
 msgstr "Read only field"
 
@@ -4103,7 +4112,7 @@ msgstr "Recipient signing request email"
 msgid "Recipient updated"
 msgstr "Recipient updated"
 
-#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:230
+#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:242
 msgid "Recipient Verification"
 msgstr "Recipient Verification"
 
@@ -4139,7 +4148,8 @@ msgstr "Red"
 msgid "Redirect URL"
 msgstr "Redirect URL"
 
-#: packages/email/template-components/template-document-invite.tsx:81
+#: packages/email/template-components/template-document-invite.tsx:69
+#: packages/email/template-components/template-document-pending.tsx:43
 msgid "Regarding: {0}"
 msgstr "Regarding: {0}"
 
@@ -4168,26 +4178,26 @@ msgstr "Rejection reason: {reason}"
 msgid "Remembered your password? <0>Sign In</0>"
 msgstr "Remembered your password? <0>Sign In</0>"
 
-#: packages/lib/server-only/document/resend-document.tsx:206
+#: packages/lib/server-only/document/resend-document.tsx:215
 msgid "Reminder: {0}"
 msgstr "Reminder: {0}"
 
-#: packages/lib/server-only/document/resend-document.tsx:131
+#: packages/lib/server-only/document/resend-document.tsx:137
 msgid "Reminder: {0} invited you to {recipientActionVerb} a document"
 msgstr "Reminder: {0} invited you to {recipientActionVerb} a document"
 
-#: packages/lib/server-only/document/resend-document.tsx:120
+#: packages/lib/server-only/document/resend-document.tsx:126
 msgid "Reminder: Please {recipientActionVerb} this document"
 msgstr "Reminder: Please {recipientActionVerb} this document"
 
-#: packages/lib/server-only/document/resend-document.tsx:126
+#: packages/lib/server-only/document/resend-document.tsx:132
 msgid "Reminder: Please {recipientActionVerb} your document"
 msgstr "Reminder: Please {recipientActionVerb} your document"
 
 #: apps/web/src/app/(dashboard)/settings/public-profile/public-templates-data-table.tsx:188
 #: apps/web/src/app/(dashboard)/templates/template-direct-link-dialog.tsx:402
-#: apps/web/src/app/(signing)/sign/[token]/signing-field-container.tsx:157
-#: apps/web/src/app/(signing)/sign/[token]/signing-field-container.tsx:181
+#: apps/web/src/app/(signing)/sign/[token]/signing-field-container.tsx:161
+#: apps/web/src/app/(signing)/sign/[token]/signing-field-container.tsx:190
 #: apps/web/src/app/(teams)/t/[teamUrl]/settings/preferences/branding-preferences.tsx:250
 #: apps/web/src/app/(teams)/t/[teamUrl]/settings/team-email-dropdown.tsx:89
 #: apps/web/src/components/(teams)/dialogs/remove-team-email-dialog.tsx:159
@@ -4227,6 +4237,7 @@ msgstr "Request transfer"
 #: packages/ui/primitives/document-flow/field-items-advanced-settings/initials-field.tsx:86
 #: packages/ui/primitives/document-flow/field-items-advanced-settings/number-field.tsx:167
 #: packages/ui/primitives/document-flow/field-items-advanced-settings/radio-field.tsx:112
+#: packages/ui/primitives/document-flow/field-items-advanced-settings/signature-field.tsx:23
 #: packages/ui/primitives/document-flow/field-items-advanced-settings/text-field.tsx:151
 msgid "Required field"
 msgstr "Required field"
@@ -4340,7 +4351,7 @@ msgstr "Rows per page"
 #: apps/web/src/app/(signing)/sign/[token]/text-field.tsx:367
 #: apps/web/src/app/(teams)/t/[teamUrl]/settings/preferences/branding-preferences.tsx:312
 #: apps/web/src/app/(teams)/t/[teamUrl]/settings/preferences/document-preferences.tsx:305
-#: packages/ui/primitives/document-flow/field-item-advanced-settings.tsx:340
+#: packages/ui/primitives/document-flow/field-item-advanced-settings.tsx:353
 msgid "Save"
 msgstr "Save"
 
@@ -4506,7 +4517,7 @@ msgid "Sending..."
 msgstr "Sending..."
 
 #: apps/web/src/app/(dashboard)/documents/[id]/document-page-view-recipients.tsx:102
-#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:220
+#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:232
 msgid "Sent"
 msgstr "Sent"
 
@@ -4575,14 +4586,14 @@ msgstr "Show templates in your team public profile for your audience to sign and
 #: apps/web/src/app/(signing)/sign/[token]/auto-sign.tsx:229
 #: apps/web/src/app/(signing)/sign/[token]/document-action-auth-2fa.tsx:182
 #: apps/web/src/app/(signing)/sign/[token]/name-field.tsx:243
-#: apps/web/src/app/(signing)/sign/[token]/signature-field.tsx:291
+#: apps/web/src/app/(signing)/sign/[token]/signature-field.tsx:303
 #: apps/web/src/components/ui/user-profile-skeleton.tsx:75
 #: apps/web/src/components/ui/user-profile-timur.tsx:81
 #: packages/lib/constants/recipient-roles.ts:22
 msgid "Sign"
 msgstr "Sign"
 
-#: apps/web/src/app/(signing)/sign/[token]/signature-field.tsx:241
+#: apps/web/src/app/(signing)/sign/[token]/signature-field.tsx:253
 msgid "Sign as {0} <0>({1})</0>"
 msgstr "Sign as {0} <0>({1})</0>"
 
@@ -4648,11 +4659,11 @@ msgid "Sign Up with OIDC"
 msgstr "Sign Up with OIDC"
 
 #: apps/web/src/app/(dashboard)/admin/documents/[id]/recipient-item.tsx:88
-#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:194
+#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:206
 #: apps/web/src/app/(recipient)/d/[token]/sign-direct-template.tsx:345
 #: apps/web/src/app/(signing)/sign/[token]/form.tsx:340
-#: apps/web/src/app/(signing)/sign/[token]/signature-field.tsx:213
-#: apps/web/src/app/(signing)/sign/[token]/signature-field.tsx:249
+#: apps/web/src/app/(signing)/sign/[token]/signature-field.tsx:225
+#: apps/web/src/app/(signing)/sign/[token]/signature-field.tsx:261
 #: apps/web/src/app/embed/direct/[[...url]]/client.tsx:422
 #: apps/web/src/app/embed/sign/[[...url]]/client.tsx:424
 #: apps/web/src/components/forms/profile.tsx:123
@@ -4663,12 +4674,12 @@ msgstr "Sign Up with OIDC"
 msgid "Signature"
 msgstr "Signature"
 
-#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:180
+#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:192
 msgid "Signature Certificate"
 msgstr "Signature Certificate"
 
 #: apps/web/src/app/(signing)/sign/[token]/form.tsx:364
-#: apps/web/src/app/(signing)/sign/[token]/signature-field.tsx:266
+#: apps/web/src/app/(signing)/sign/[token]/signature-field.tsx:278
 #: apps/web/src/app/embed/direct/[[...url]]/client.tsx:448
 #: apps/web/src/app/embed/sign/[[...url]]/client.tsx:450
 msgid "Signature is too small. Please provide a more complete signature."
@@ -4678,13 +4689,13 @@ msgstr "Signature is too small. Please provide a more complete signature."
 msgid "Signatures Collected"
 msgstr "Signatures Collected"
 
-#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:241
+#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:254
 msgid "Signatures will appear once the document has been completed"
 msgstr "Signatures will appear once the document has been completed"
 
 #: apps/web/src/app/(dashboard)/documents/[id]/document-page-view-recipients.tsx:115
-#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:226
-#: apps/web/src/components/document/document-read-only-fields.tsx:84
+#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:238
+#: apps/web/src/components/document/document-read-only-fields.tsx:89
 #: packages/lib/constants/recipient-roles.ts:23
 msgid "Signed"
 msgstr "Signed"
@@ -4693,7 +4704,7 @@ msgstr "Signed"
 msgid "Signer"
 msgstr "Signer"
 
-#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:188
+#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:200
 msgid "Signer Events"
 msgstr "Signer Events"
 
@@ -4872,6 +4883,10 @@ msgstr "Stats"
 #: apps/web/src/components/(teams)/tables/team-billing-invoices-data-table.tsx:73
 msgid "Status"
 msgstr "Status"
+
+#: packages/email/template-components/template-document-pending.tsx:67
+msgid "Status: We're still waiting for other signers to sign this document.<0/>We'll notify you as soon as it's ready."
+msgstr "Status: We're still waiting for other signers to sign this document.<0/>We'll notify you as soon as it's ready."
 
 #: packages/ui/primitives/document-flow/document-flow-root.tsx:107
 msgid "Step <0>{step} of {maxStep}</0>"
@@ -5219,7 +5234,7 @@ msgstr "The direct link has been copied to your clipboard"
 msgid "The document has been successfully moved to the selected team."
 msgstr "The document has been successfully moved to the selected team."
 
-#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:203
+#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:216
 msgid "The document is being prepared. You'll receive a copy once it's ready."
 msgstr "The document is being prepared. You'll receive a copy once it's ready."
 
@@ -5462,7 +5477,7 @@ msgstr "This document could not be re-sent at this time. Please try again."
 msgid "This document has already been sent to this recipient. You can no longer edit this recipient."
 msgstr "This document has already been sent to this recipient. You can no longer edit this recipient."
 
-#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:222
+#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:235
 msgid "This document has been cancelled by the owner and is no longer available for others to sign."
 msgstr "This document has been cancelled by the owner and is no longer available for others to sign."
 
@@ -5517,6 +5532,10 @@ msgstr "This email will be sent to the recipient who has just signed the documen
 #: packages/ui/primitives/template-flow/add-template-placeholder-recipients.tsx:650
 msgid "This field cannot be modified or deleted. When you share this template's direct link or add it to your public profile, anyone who accesses it can input their name and email, and fill in the fields assigned to them."
 msgstr "This field cannot be modified or deleted. When you share this template's direct link or add it to your public profile, anyone who accesses it can input their name and email, and fill in the fields assigned to them."
+
+#: apps/web/src/app/(signing)/sign/[token]/calendar-field.tsx:129
+msgid "This field is required. Please select a date."
+msgstr "This field is required. Please select a date."
 
 #: packages/ui/primitives/template-flow/add-template-settings.tsx:279
 msgid "This is how the document will reach the recipients once the document is ready for signing."
@@ -5618,7 +5637,7 @@ msgstr "Time zone"
 msgid "Time Zone"
 msgstr "Time Zone"
 
-#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:191
+#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:203
 msgid "Timestamp"
 msgstr "Timestamp"
 
@@ -5799,7 +5818,7 @@ msgstr "Type"
 msgid "Type a command or search..."
 msgstr "Type a command or search..."
 
-#: apps/web/src/app/(signing)/sign/[token]/signature-field.tsx:131
+#: apps/web/src/app/(signing)/sign/[token]/signature-field.tsx:132
 msgid "Typed signatures are not allowed. Please draw your signature."
 msgstr "Typed signatures are not allowed. Please draw your signature."
 
@@ -5895,12 +5914,8 @@ msgstr "Unauthorized"
 msgid "Uncompleted"
 msgstr "Uncompleted"
 
-#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:262
-#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:272
-#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:284
-#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:294
-#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:323
-#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:355
+#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:333
+#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:368
 #: apps/web/src/app/(teams)/t/[teamUrl]/settings/billing/page.tsx:55
 msgid "Unknown"
 msgstr "Unknown"
@@ -6105,6 +6120,7 @@ msgstr "Users"
 msgid "Validation"
 msgstr "Validation"
 
+#: apps/web/src/app/(signing)/sign/[token]/calendar-field.tsx:87
 #: apps/web/src/app/(signing)/sign/[token]/initials-field.tsx:87
 msgid "Validation Error"
 msgstr "Validation Error"
@@ -6123,7 +6139,7 @@ msgstr "Verification Email Sent"
 msgid "Verification email sent successfully."
 msgstr "Verification email sent successfully."
 
-#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:247
+#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:259
 msgid "Verified"
 msgstr "Verified"
 
@@ -6231,7 +6247,7 @@ msgid "View teams"
 msgstr "View teams"
 
 #: apps/web/src/app/(dashboard)/documents/[id]/document-page-view-recipients.tsx:121
-#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:223
+#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:235
 #: packages/lib/constants/recipient-roles.ts:30
 msgid "Viewed"
 msgstr "Viewed"
@@ -6252,15 +6268,15 @@ msgstr "Viewing"
 msgid "Waiting"
 msgstr "Waiting"
 
-#: packages/email/templates/document-pending.tsx:48
+#: packages/email/templates/document-pending.tsx:49
 msgid "Waiting for others"
 msgstr "Waiting for others"
 
-#: packages/lib/server-only/document/send-pending-email.ts:106
+#: packages/lib/server-only/document/send-pending-email.ts:107
 msgid "Waiting for others to complete signing."
 msgstr "Waiting for others to complete signing."
 
-#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:164
+#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:170
 msgid "Waiting for others to sign"
 msgstr "Waiting for others to sign"
 
@@ -6508,10 +6524,6 @@ msgstr "We won't send anything to notify recipients."
 #: apps/web/src/app/(dashboard)/templates/empty-state.tsx:11
 msgid "We're all empty"
 msgstr "We're all empty"
-
-#: packages/email/template-components/template-document-pending.tsx:25
-msgid "We're still waiting for other signers to sign this document.<0/>We'll notify you as soon as it's ready."
-msgstr "We're still waiting for other signers to sign this document.<0/>We'll notify you as soon as it's ready."
 
 #: packages/email/templates/reset-password.tsx:65
 msgid "We've changed your password as you asked. You can now sign in with your new password."
@@ -6795,7 +6807,7 @@ msgid "You have declined the invitation from <0>{0}</0> to join their team."
 msgstr "You have declined the invitation from <0>{0}</0> to join their team."
 
 #: packages/lib/jobs/definitions/emails/send-signing-email.handler.ts:102
-#: packages/lib/server-only/document/resend-document.tsx:124
+#: packages/lib/server-only/document/resend-document.tsx:130
 msgid "You have initiated the document {0} that requires you to {recipientActionVerb} it."
 msgstr "You have initiated the document {0} that requires you to {recipientActionVerb} it."
 
@@ -6901,7 +6913,7 @@ msgstr "You will get notified & be able to set up your documenso public profile 
 msgid "You will now be required to enter a code from your authenticator app when signing in."
 msgstr "You will now be required to enter a code from your authenticator app when signing in."
 
-#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:213
+#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:226
 msgid "You will receive an Email copy of the signed document once everyone has signed."
 msgstr "You will receive an Email copy of the signed document once everyone has signed."
 
