@@ -1,4 +1,5 @@
 import { createNextRoute } from '@ts-rest/next';
+import { format } from 'date-fns';
 import { match } from 'ts-pattern';
 
 import { NEXT_PUBLIC_WEBAPP_URL } from '@documenso/lib/constants/app';
@@ -62,6 +63,12 @@ import {
 
 import { ApiContractV1 } from './contract';
 import { authenticatedMiddleware } from './middleware/authenticated';
+
+type AuditLogData = {
+  recipientEmail?: string;
+  emailType?: string;
+  isResending?: boolean;
+};
 
 export const ApiContractV1Implementation = createNextRoute(ApiContractV1, {
   getDocuments: authenticatedMiddleware(async (args, user, team) => {
@@ -144,6 +151,185 @@ export const ApiContractV1Implementation = createNextRoute(ApiContractV1, {
         },
       };
     }
+  }),
+
+  getSignedStatus: authenticatedMiddleware(async (args) => {
+    const { id: documentId } = args.params;
+
+    const document = await prisma.document.findUnique({
+      where: { id: Number(documentId) },
+      include: {
+        documentMeta: true,
+      },
+    });
+
+    if (!document) {
+      return {
+        status: 404,
+        body: {
+          message: 'Document not found',
+        },
+      };
+    }
+
+    const timezone = document.documentMeta?.timezone ?? 'America/Los_Angeles';
+
+    const auditLogs = await prisma.documentAuditLog.findMany({
+      where: {
+        documentId: Number(documentId),
+        type: {
+          in: [
+            'DOCUMENT_CREATED',
+            'EMAIL_SENT',
+            'DOCUMENT_OPENED',
+            'DOCUMENT_REJECTED',
+            'DOCUMENT_CANCELLED',
+            'DOCUMENT_RECIPIENT_COMPLETED',
+          ],
+        },
+      },
+      select: {
+        name: true,
+        email: true,
+        ipAddress: true,
+        type: true,
+        createdAt: true,
+        data: true,
+      },
+      orderBy: { createdAt: 'desc' },
+    });
+
+    const formatStatus = (type: string | null | undefined) => {
+      if (!type) return null;
+
+      return type
+        .toLowerCase()
+        .split('_')
+        .map((word, index) => (index === 0 ? word : word.charAt(0).toUpperCase() + word.slice(1)))
+        .join('');
+    };
+
+    const toCamelCase = (text: string): string => {
+      return text.toLowerCase().replace(/[_\s]+(.)?/g, (_, c) => (c ? c.toUpperCase() : ''));
+    };
+
+    const formatDateWithTimeZone = (
+      date: Date | string,
+      timezone = 'America/Los_Angeles',
+      formatOptions: Intl.DateTimeFormatOptions = {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+      },
+    ) => {
+      return new Intl.DateTimeFormat('en-US', {
+        ...formatOptions,
+        timeZone: timezone,
+      }).format(new Date(date));
+    };
+
+    const groupedByEmail = new Map<string, (typeof auditLogs)[number][]>();
+
+    auditLogs.forEach((log) => {
+      const data = log.data as AuditLogData;
+      const isEmailSent = log.type === 'EMAIL_SENT';
+
+      const effectiveEmail = isEmailSent ? data?.recipientEmail : log.email;
+
+      if (!effectiveEmail) return;
+
+      if (!groupedByEmail.has(effectiveEmail)) {
+        groupedByEmail.set(effectiveEmail, []);
+      }
+
+      groupedByEmail.get(effectiveEmail)!.push(log);
+    });
+
+    const result = Array.from(groupedByEmail.entries()).map(([email, logs]) => {
+      const sortedLogs = [...logs].sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
+
+      const documentSigned = logs.find((l) => l.type === 'DOCUMENT_RECIPIENT_COMPLETED');
+
+      const emailSent = logs
+        .filter((log) => {
+          const data = log.data as AuditLogData;
+          return log.type === 'EMAIL_SENT' && data?.emailType === 'SIGNING_REQUEST';
+        })
+        .sort((a, b) => a.createdAt.getTime() - b.createdAt.getTime())[0];
+
+      const resendEmailSent = logs
+        .filter(
+          (log) =>
+            log.type === 'EMAIL_SENT' &&
+            typeof log.data === 'object' &&
+            (log.data as AuditLogData)?.isResending === true,
+        )
+        .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())[0];
+
+      const latestEvent = sortedLogs.find((log) => {
+        if (log.type !== 'EMAIL_SENT') return true;
+
+        const data = log.data as AuditLogData;
+        return data?.emailType === 'SIGNING_REQUEST' || data?.isResending === true;
+      });
+
+      const history = sortedLogs
+        .filter((log) => {
+          const isEmailSent = log.type === 'EMAIL_SENT';
+          const isResend = (log.data as AuditLogData)?.isResending === true;
+          const isSigningRequest = (log.data as AuditLogData)?.emailType === 'SIGNING_REQUEST';
+
+          if (isEmailSent && !isResend && !isSigningRequest) {
+            return false;
+          }
+
+          return true;
+        })
+        .map((log) => {
+          const isResend = (log.data as AuditLogData)?.isResending === true;
+
+          let label = log.type;
+          if (log.type === 'EMAIL_SENT') {
+            label = isResend ? 'resendEmail' : 'emailSent';
+          } else {
+            label = toCamelCase(log.type);
+          }
+
+          return {
+            type: label,
+            timestamp: format(log.createdAt, 'MM/dd/yyyy'),
+            ipAddress: log.ipAddress ?? '',
+          };
+        })
+        .filter(Boolean);
+
+      const signatureStatus: 'signed' | 'notSigned' = documentSigned ? 'signed' : 'notSigned';
+
+      return {
+        email,
+        name: latestEvent?.name ?? null,
+        sendDate: emailSent ? formatDateWithTimeZone(emailSent.createdAt, timezone) : null,
+        resendDate: resendEmailSent
+          ? formatDateWithTimeZone(resendEmailSent.createdAt, timezone)
+          : null,
+        signatureDate: documentSigned
+          ? formatDateWithTimeZone(documentSigned.createdAt, timezone)
+          : null,
+        ipAddress: latestEvent?.ipAddress ?? null,
+        signatureStatus,
+        status: formatStatus(latestEvent?.type),
+        history,
+      };
+    });
+
+    return {
+      status: 200,
+      body: {
+        events: result,
+      },
+    };
   }),
 
   downloadSignedDocument: authenticatedMiddleware(async (args, user, team) => {
@@ -854,6 +1040,45 @@ export const ApiContractV1Implementation = createNextRoute(ApiContractV1, {
         status: 500,
         body: {
           message: 'An error has occured while resending the document',
+        },
+      };
+    }
+  }),
+
+  resendDocumentByEmail: authenticatedMiddleware(async (args, user, team, { metadata }) => {
+    const { id: documentId } = args.params;
+    const { recipientEmail } = args.body;
+
+    if (!recipientEmail) {
+      return {
+        status: 400,
+        body: {
+          message: 'Missing recipient email',
+        },
+      };
+    }
+
+    try {
+      await resendDocument({
+        userId: user.id,
+        documentId: Number(documentId),
+        recipients: [],
+        recipientEmail: recipientEmail,
+        teamId: team?.id,
+        requestMetadata: metadata,
+      });
+
+      return {
+        status: 200,
+        body: {
+          message: 'Document resend successfully initiated',
+        },
+      };
+    } catch (err) {
+      return {
+        status: 500,
+        body: {
+          message: 'An error occurred while resending the document',
         },
       };
     }

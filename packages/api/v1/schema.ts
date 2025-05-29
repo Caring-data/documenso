@@ -115,6 +115,12 @@ export const ZSuccessfulResendDocumentResponseSchema = z.object({
 
 export type TResendDocumentResponseSchema = z.infer<typeof ZSuccessfulResendDocumentResponseSchema>;
 
+export const ZResendDocumentByEmailSchema = z.object({
+  recipientEmail: z.string().email(),
+});
+
+export type TResendDocumentByEmailSchema = z.infer<typeof ZResendDocumentByEmailSchema>;
+
 export const ZUploadDocumentSuccessfulSchema = z.object({
   url: z.string(),
   key: z.string(),
@@ -594,6 +600,34 @@ export const ZTemplateWithDataSchema = ZTemplateSchema.extend({
     role: true,
   }).array(),
 });
+
+export const ZGetSignedStatusPathSchema = z.object({
+  id: z.string().uuid(),
+});
+
+export const ZGetSignedStatusResponseSchema = z.object({
+  events: z.array(
+    z.object({
+      email: z.string().nullable(),
+      name: z.string().nullable(),
+      ipAddress: z.string().nullable(),
+      sendDate: z.string().nullable(),
+      resendDate: z.string().nullable(),
+      signatureDate: z.string().nullable(),
+      signatureStatus: z.enum(['signed', 'notSigned']),
+      status: z.string().nullable(),
+      history: z.array(
+        z.object({
+          type: z.string(),
+          timestamp: z.string(),
+          ipAddress: z.string(),
+        }),
+      ),
+    }),
+  ),
+});
+
+export type TGetSignedStatusResponseSchema = z.infer<typeof ZGetSignedStatusResponseSchema>;
 
 export const ZSuccessfulGetTemplateResponseSchema = ZTemplateWithDataSchema;
 

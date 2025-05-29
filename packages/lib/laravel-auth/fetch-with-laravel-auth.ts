@@ -15,7 +15,7 @@ export const fetchWithLaravelAuth = async (
   };
 
   const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), 120_000);
+  const timeout = setTimeout(() => controller.abort(), 1_800_000);
 
   try {
     const response = await fetch(url, {

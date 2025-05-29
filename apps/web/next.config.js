@@ -29,7 +29,7 @@ const config = {
     outputFileTracingRoot: path.join(__dirname, '../../'),
     serverComponentsExternalPackages: ['@node-rs/bcrypt', '@documenso/pdf-sign', 'playwright'],
     serverActions: {
-      bodySizeLimit: '50mb',
+      bodySizeLimit: '200mb',
     },
     swcPlugins: [['@lingui/swc-plugin', {}]],
   },
