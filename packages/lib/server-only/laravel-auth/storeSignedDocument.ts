@@ -2,6 +2,7 @@ import type { Document, Recipient } from '@documenso/prisma/client';
 
 import { fetchWithLaravelAuth } from '../../laravel-auth/fetch-with-laravel-auth';
 import type { TDocumentDetails } from '../../types/document';
+import { createLog } from '../../utils/createLog';
 import { getLaravelToken } from './getLaravelToken';
 
 export const storeSignedDocument = async (
@@ -52,6 +53,24 @@ export const storeSignedDocument = async (
     return response;
   } catch (error) {
     console.error('Error storing signed document:', error);
+
+    const response =
+      typeof error === 'object' && error !== null && 'response' in error
+        ? error?.response
+        : undefined;
+
+    await createLog({
+      action: 'LARAVEL_STORE_SIGNED_DOCUMENT_ERROR',
+      message: 'Error while storing signed document to Laravel',
+      data: {
+        documentId,
+        recipientEmail: recipient?.email,
+        error: error instanceof Error ? error.message : String(error),
+        response,
+      },
+      userId: document.userId,
+    });
+
     throw new Error('Could not store the signed document.');
   }
 };
