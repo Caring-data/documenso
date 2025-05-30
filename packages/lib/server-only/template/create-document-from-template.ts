@@ -298,7 +298,9 @@ export const createDocumentFromTemplate = async ({
 
       for (const finalRecipient of finalRecipients) {
         const recipient = document.recipients.find(
-          (recipient) => recipient.email === finalRecipient.email,
+          (recipient) =>
+            recipient.email === finalRecipient.email &&
+            recipient.signingOrder === finalRecipient.signingOrder,
         );
         if (!recipient) continue;
 
