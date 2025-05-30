@@ -200,6 +200,7 @@ export const createDocumentFromTemplate = async ({
       initialData: parentDocumentData.initialData,
     },
   });
+
   try {
     return await prisma.$transaction(
       async (tx) => {
@@ -249,13 +250,13 @@ export const createDocumentFromTemplate = async ({
             recipients: {
               createMany: {
                 data: Object.values(finalRecipients)
-                  .filter((recipient) => !recipient.email.includes('recipient'))
+                  .filter((recipient) => recipient.email && !recipient.email.includes('recipient'))
                   .map((recipient) => {
                     const authOptions = ZRecipientAuthOptionsSchema.parse(recipient?.authOptions);
 
                     return {
                       //id: recipient.id,
-                      email: recipient.email,
+                      email: recipient.email ?? '',
                       name: recipient.name,
                       role: recipient.role,
                       authOptions: createRecipientAuthOptions({

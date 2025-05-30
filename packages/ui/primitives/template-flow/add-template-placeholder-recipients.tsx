@@ -100,7 +100,7 @@ export const AddTemplatePlaceholderRecipientsFormPartial = ({
       nativeId: recipient.id,
       formId: String(recipient.id),
       name: recipient.name,
-      email: recipient.email,
+      email: recipient.email ?? '',
       role: recipient.role,
       actionAuth: ZRecipientAuthOptionsSchema.parse(recipient.authOptions)?.actionAuth ?? undefined,
       signingOrder: recipient.signingOrder ?? index + 1,
@@ -546,7 +546,7 @@ export const AddTemplatePlaceholderRecipientsFormPartial = ({
                                         disabled={
                                           field.disabled ||
                                           isSubmitting ||
-                                          signers[index].email === user?.email ||
+                                          (signers[index].email ?? '') === (user?.email ?? '') ||
                                           isSignerDirectRecipient(signer)
                                         }
                                       />
