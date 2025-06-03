@@ -6,6 +6,7 @@ import { Trans } from '@lingui/macro';
 import { useLingui } from '@lingui/react';
 import { motion } from 'framer-motion';
 
+import { DocumentSignatureType } from '@documenso/lib/constants/document';
 import { parseMessageDescriptor } from '@documenso/lib/utils/i18n';
 import { cn } from '@documenso/ui/lib/utils';
 import { Button } from '@documenso/ui/primitives/button';
@@ -20,13 +21,14 @@ import {
 import { SigningDisclosure } from '~/components/general/signing-disclosure';
 
 import { useRecipientContext } from '../recipient-context';
+import type { SignaturePadValue } from './signature-pad';
 import { SignaturePad } from './signature-pad';
 import { SignatureRender } from './signature-render';
 
 export type SignaturePadDialogProps = Omit<HTMLAttributes<HTMLCanvasElement>, 'onChange'> & {
   disabled?: boolean;
-  value?: string;
-  onChange: (_value: string) => void;
+  value?: SignaturePadValue;
+  onChange: (value: SignaturePadValue) => void;
   dialogConfirmText?: MessageDescriptor | string;
   disableAnimation?: boolean;
   typedSignatureEnabled?: boolean;
@@ -49,12 +51,14 @@ export const SignaturePadDialog = ({
   const { recipient } = useRecipientContext();
 
   const [showSignatureModal, setShowSignatureModal] = useState(false);
-  const [signature, setSignature] = useState<string>(value ?? '');
   const [signature, setSignature] = useState<SignaturePadValue>({
-    type: DocumentSignatureType.TYPE,
-    value: value ?? '',
+    type: value?.type ?? DocumentSignatureType.TYPE,
+    value: value?.value ?? '',
+    font: value?.font ?? 'Dancing Script',
+    color: value?.color ?? 'black',
   });
 
+  console.log(signature);
   return (
     <div
       className={cn(
@@ -65,7 +69,7 @@ export const SignaturePadDialog = ({
           'pointer-events-none opacity-50': disabled,
         },
       )}
-    >q
+    >
       {value && (
         <div className="relative min-h-[130px] w-full md:min-h-[130px]">
           <SignatureRender
@@ -76,7 +80,6 @@ export const SignaturePadDialog = ({
           />
         </div>
       )}
-
       <motion.button
         data-testid="signature-pad-dialog-button"
         type="button"
@@ -128,7 +131,6 @@ export const SignaturePadDialog = ({
           </motion.svg>
         )}
       </motion.button>
-
       <Dialog open={showSignatureModal} onOpenChange={disabled ? undefined : setShowSignatureModal}>
         <DialogContent hideClose={false} className="p-6 pt-4" position="center">
           <DialogTitle>
@@ -139,10 +141,10 @@ export const SignaturePadDialog = ({
           </DialogTitle>
           <SignaturePad
             id="signature"
-            value={value}
+            value={signature}
             className={className}
             disabled={disabled}
-            onChange={({ value }) => setSignature(value)}
+            onChange={(sig) => setSignature(sig)}
             typedSignatureEnabled={typedSignatureEnabled}
             uploadSignatureEnabled={uploadSignatureEnabled}
             drawSignatureEnabled={drawSignatureEnabled}

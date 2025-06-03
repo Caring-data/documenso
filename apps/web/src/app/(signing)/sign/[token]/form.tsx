@@ -341,8 +341,8 @@ export const SigningForm = ({
                         </Label>
                         <SignaturePadDialog
                           disabled={isSubmitting}
-                          value={signature ?? ''}
-                          onChange={(v) => setSignature(v ?? '')}
+                          value={signature ?? undefined}
+                          onChange={(v) => setSignature(v)}
                           typedSignatureEnabled={document.documentMeta?.typedSignatureEnabled}
                           uploadSignatureEnabled={true}
                           drawSignatureEnabled={true}
