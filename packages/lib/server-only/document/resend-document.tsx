@@ -147,7 +147,7 @@ export const resendDocument = async ({
 
         const customEmailTemplate = {
           'signer.name': name,
-          'signer.email': email,
+          'signer.email': email ?? '',
           'document.name': document.title,
         };
 
@@ -210,7 +210,7 @@ export const resendDocument = async ({
             await sendEmail(
               {
                 name,
-                email: email,
+                email: email ?? '',
               },
               customEmail?.subject
                 ? renderCustomEmailTemplate(
@@ -228,7 +228,7 @@ export const resendDocument = async ({
                 metadata: requestMetadata,
                 data: {
                   emailType: recipientEmailType,
-                  recipientEmail: recipient.email,
+                  recipientEmail: recipient.email ?? '',
                   recipientName: recipient.name,
                   recipientRole: recipient.role,
                   recipientId: recipient.id,

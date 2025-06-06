@@ -8,5 +8,5 @@ export const extractInitials = (text: string) =>
     .join('');
 
 export const recipientAbbreviation = (recipient: Recipient) => {
-  return extractInitials(recipient.name) || recipient.email.slice(0, 1).toUpperCase();
+  return extractInitials(recipient.name) || recipient?.email?.slice(0, 1).toUpperCase();
 };

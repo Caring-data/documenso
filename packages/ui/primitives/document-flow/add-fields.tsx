@@ -348,7 +348,7 @@ export const AddFieldsFormPartial = ({
         pageY,
         pageWidth: fieldPageWidth,
         pageHeight: fieldPageHeight,
-        signerEmail: selectedSigner.email,
+        signerEmail: selectedSigner.email ?? '',
         fieldMeta: undefined,
       };
 
@@ -441,7 +441,7 @@ export const AddFieldsFormPartial = ({
         const newField: TAddFieldsFormSchema['fields'][0] = {
           ...structuredClone(lastActiveField),
           formId: nanoid(12),
-          signerEmail: selectedSigner?.email ?? lastActiveField.signerEmail,
+          signerEmail: selectedSigner?.email ?? lastActiveField.signerEmail ?? '',
           pageX: lastActiveField.pageX + 3,
           pageY: lastActiveField.pageY + 3,
         };
@@ -462,7 +462,7 @@ export const AddFieldsFormPartial = ({
         append({
           ...copiedField,
           formId: nanoid(12),
-          signerEmail: selectedSigner?.email ?? copiedField.signerEmail,
+          signerEmail: selectedSigner?.email ?? copiedField.signerEmail ?? '',
           pageX: copiedField.pageX + 3,
           pageY: copiedField.pageY + 3,
         });
@@ -703,7 +703,7 @@ export const AddFieldsFormPartial = ({
                   </PopoverTrigger>
 
                   <PopoverContent className="p-0" align="start">
-                    <Command value={selectedSigner?.email}>
+                    <Command value={selectedSigner?.email ?? undefined}>
                       <CommandInput />
 
                       <CommandEmpty>
@@ -759,7 +759,7 @@ export const AddFieldsFormPartial = ({
                                 )}
 
                                 {!recipient.name && (
-                                  <span title={recipient.email}>{recipient.email}</span>
+                                  <span title={recipient.email ?? ''}>{recipient.email}</span>
                                 )}
                               </span>
 

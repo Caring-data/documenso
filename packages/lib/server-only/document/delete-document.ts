@@ -240,7 +240,7 @@ const handleDocumentOwnerDelete = async ({
       await sendEmail(
         {
           name: recipient.name,
-          email: recipient.email,
+          email: recipient.email ?? '',
         },
         i18n._(msg`Document Cancelled`),
         html,

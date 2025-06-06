@@ -114,7 +114,7 @@ msgid "{0} of {1} row(s) selected."
 msgstr "{0} de {1} fila(s) seleccionada."
 
 #: packages/lib/jobs/definitions/emails/send-signing-email.handler.ts:123
-#: packages/lib/server-only/document/resend-document.tsx:142
+#: packages/lib/server-only/document/resend-document.tsx:144
 msgid "{0} on behalf of \"{1}\" has invited you to {recipientActionVerb} the document \"{2}\"."
 msgstr "{0} en nombre de \"{1}\" te ha invitado a {recipientActionVerb} el documento \"{2}\"."
 
@@ -446,7 +446,7 @@ msgstr "7 días"
 msgid "A confirmation email has been sent, and it should arrive in your inbox shortly."
 msgstr "Se ha enviado un correo electrónico de confirmación y debería llegar a tu bandeja de entrada en breve."
 
-#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:199
+#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:200
 msgid "A copy of the completed document will be sent to your email shortly. You may also download it below."
 msgstr ""
 
@@ -806,7 +806,7 @@ msgstr "Todos los documentos relacionados con el proceso de firma electrónica s
 msgid "All inserted signatures will be voided"
 msgstr "Todas las firmas insertadas serán anuladas"
 
-#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:143
+#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:144
 msgid "All parties have signed the document."
 msgstr ""
 
@@ -1329,7 +1329,7 @@ msgstr "Al utilizar la función de firma electrónica, usted está consintiendo 
 #: apps/web/src/app/(signing)/sign/[token]/calendar-field.tsx:214
 #: packages/ui/primitives/document-flow/add-fields.tsx:972
 #: packages/ui/primitives/document-flow/types.ts:54
-#: packages/ui/primitives/template-flow/add-template-fields.tsx:846
+#: packages/ui/primitives/template-flow/add-template-fields.tsx:848
 msgid "Calendar"
 msgstr ""
 
@@ -1872,7 +1872,7 @@ msgstr "Modo Oscuro"
 #: apps/web/src/app/(signing)/sign/[token]/date-field.tsx:176
 #: packages/ui/primitives/document-flow/add-fields.tsx:951
 #: packages/ui/primitives/document-flow/types.ts:53
-#: packages/ui/primitives/template-flow/add-template-fields.tsx:825
+#: packages/ui/primitives/template-flow/add-template-fields.tsx:827
 msgid "Date"
 msgstr "Fecha"
 
@@ -2133,7 +2133,7 @@ msgstr "Se actualizó la autenticación de acceso al documento"
 msgid "Document All"
 msgstr "Documentar Todo"
 
-#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:125
+#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:126
 msgid "Document Approved"
 msgstr "Documento Aprobado"
 
@@ -2235,7 +2235,7 @@ msgstr "ID del documento"
 msgid "Document inbox"
 msgstr "Bandeja de documentos"
 
-#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:159
+#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:160
 msgid "Document is preparing..."
 msgstr ""
 
@@ -2251,7 +2251,7 @@ msgstr "Documento movido"
 msgid "Document moved to team"
 msgstr "Documento movido al equipo"
 
-#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:180
+#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:181
 msgid "Document no longer available to sign"
 msgstr "El documento ya no está disponible para firmar"
 
@@ -2275,7 +2275,7 @@ msgstr "Preferencias del documento actualizadas"
 msgid "Document re-sent"
 msgstr "Documento reenviado"
 
-#: apps/web/src/app/(signing)/sign/[token]/rejected/page.tsx:82
+#: apps/web/src/app/(signing)/sign/[token]/rejected/page.tsx:84
 #: apps/web/src/app/embed/rejected.tsx:19
 msgid "Document Rejected"
 msgstr "Documento Rechazado"
@@ -2301,7 +2301,7 @@ msgstr "El proceso de firma del documento será cancelado"
 msgid "Document status"
 msgstr "Estado del documento"
 
-#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:123
+#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:124
 msgid "Document Successfully Signed"
 msgstr ""
 
@@ -2321,7 +2321,7 @@ msgstr "Documento actualizado"
 msgid "Document uploaded"
 msgstr "Documento subido"
 
-#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:124
+#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:125
 msgid "Document Viewed"
 msgstr "Documento visto"
 
@@ -2416,7 +2416,7 @@ msgid "Drag & drop your PDF here."
 msgstr "Arrastre y suelte su PDF aquí."
 
 #: packages/ui/primitives/document-flow/add-fields.tsx:1103
-#: packages/ui/primitives/template-flow/add-template-fields.tsx:977
+#: packages/ui/primitives/template-flow/add-template-fields.tsx:979
 msgid "Dropdown"
 msgstr "Menú desplegable"
 
@@ -2488,7 +2488,7 @@ msgstr "Divulgación de Firma Electrónica"
 #: packages/ui/primitives/document-flow/add-signers.tsx:511
 #: packages/ui/primitives/document-flow/add-signers.tsx:518
 #: packages/ui/primitives/document-flow/types.ts:55
-#: packages/ui/primitives/template-flow/add-template-fields.tsx:773
+#: packages/ui/primitives/template-flow/add-template-fields.tsx:775
 #: packages/ui/primitives/template-flow/add-template-placeholder-recipients.tsx:537
 #: packages/ui/primitives/template-flow/add-template-placeholder-recipients.tsx:544
 msgid "Email"
@@ -2581,7 +2581,7 @@ msgid "Enable Typed Signature"
 msgstr "Habilitar firma mecanografiada"
 
 #: packages/ui/primitives/document-flow/add-fields.tsx:819
-#: packages/ui/primitives/template-flow/add-template-fields.tsx:693
+#: packages/ui/primitives/template-flow/add-template-fields.tsx:695
 msgid "Enable Typed Signatures"
 msgstr "Habilitar firmas escritas"
 
@@ -3229,7 +3229,7 @@ msgid "Loading..."
 msgstr "Cargando..."
 
 #: apps/web/src/app/(recipient)/d/[token]/signing-auth-page.tsx:54
-#: apps/web/src/app/(signing)/sign/[token]/document-action-auth-account.tsx:75
+#: apps/web/src/app/(signing)/sign/[token]/document-action-auth-account.tsx:84
 #: apps/web/src/app/(signing)/sign/[token]/signing-auth-page.tsx:67
 msgid "Login"
 msgstr "Iniciar sesión"
@@ -3424,7 +3424,7 @@ msgstr "Mis plantillas"
 #: packages/ui/primitives/document-flow/add-signers.tsx:549
 #: packages/ui/primitives/document-flow/add-signers.tsx:555
 #: packages/ui/primitives/document-flow/types.ts:56
-#: packages/ui/primitives/template-flow/add-template-fields.tsx:799
+#: packages/ui/primitives/template-flow/add-template-fields.tsx:801
 #: packages/ui/primitives/template-flow/add-template-placeholder-recipients.tsx:572
 #: packages/ui/primitives/template-flow/add-template-placeholder-recipients.tsx:578
 msgid "Name"
@@ -3473,7 +3473,7 @@ msgstr "Siguiente campo"
 msgid "No active drafts"
 msgstr "No hay borradores activos"
 
-#: apps/web/src/app/(signing)/sign/[token]/rejected/page.tsx:98
+#: apps/web/src/app/(signing)/sign/[token]/rejected/page.tsx:100
 #: apps/web/src/app/embed/rejected.tsx:35
 msgid "No further action is required from you at this time."
 msgstr "No further action is required from you at this time."
@@ -3569,7 +3569,7 @@ msgstr "Nada que hacer"
 #: apps/web/src/app/(signing)/sign/[token]/number-field.tsx:290
 #: packages/ui/primitives/document-flow/add-fields.tsx:1024
 #: packages/ui/primitives/document-flow/types.ts:57
-#: packages/ui/primitives/template-flow/add-template-fields.tsx:898
+#: packages/ui/primitives/template-flow/add-template-fields.tsx:900
 msgid "Number"
 msgstr "Número"
 
@@ -4183,19 +4183,19 @@ msgstr "Razón del rechazo: {reason}"
 msgid "Remembered your password? <0>Sign In</0>"
 msgstr "¿Recordaste tu contraseña? <0>Iniciar sesión</0>"
 
-#: packages/lib/server-only/document/resend-document.tsx:215
+#: packages/lib/server-only/document/resend-document.tsx:217
 msgid "Reminder: {0}"
 msgstr "Recordatorio: {0}"
 
-#: packages/lib/server-only/document/resend-document.tsx:137
+#: packages/lib/server-only/document/resend-document.tsx:139
 msgid "Reminder: {0} invited you to {recipientActionVerb} a document"
 msgstr "Recordatorio: {0} te invitó a {recipientActionVerb} un documento"
 
-#: packages/lib/server-only/document/resend-document.tsx:126
+#: packages/lib/server-only/document/resend-document.tsx:128
 msgid "Reminder: Please {recipientActionVerb} this document"
 msgstr "Recordatorio: Por favor {recipientActionVerb} este documento"
 
-#: packages/lib/server-only/document/resend-document.tsx:132
+#: packages/lib/server-only/document/resend-document.tsx:134
 msgid "Reminder: Please {recipientActionVerb} your document"
 msgstr "Recordatorio: Por favor {recipientActionVerb} tu documento"
 
@@ -4360,7 +4360,7 @@ msgstr "Filas por página"
 msgid "Save"
 msgstr "Guardar"
 
-#: packages/ui/primitives/template-flow/add-template-fields.tsx:1010
+#: packages/ui/primitives/template-flow/add-template-fields.tsx:1012
 msgid "Save Template"
 msgstr "Guardar plantilla"
 
@@ -4675,7 +4675,7 @@ msgstr "Regístrate con OIDC"
 #: packages/ui/primitives/document-flow/add-fields.tsx:847
 #: packages/ui/primitives/document-flow/field-icon.tsx:54
 #: packages/ui/primitives/document-flow/types.ts:49
-#: packages/ui/primitives/template-flow/add-template-fields.tsx:721
+#: packages/ui/primitives/template-flow/add-template-fields.tsx:723
 msgid "Signature"
 msgstr "Firma"
 
@@ -4694,7 +4694,7 @@ msgstr "La firma es demasiado pequeña. Proporcione una firma más completa."
 msgid "Signatures Collected"
 msgstr "Firmas recolectadas"
 
-#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:254
+#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:255
 msgid "Signatures will appear once the document has been completed"
 msgstr "Las firmas aparecerán una vez que el documento se haya completado"
 
@@ -4800,7 +4800,7 @@ msgstr "Algunos firmantes no han sido asignados a un campo de firma. Asigne al m
 #: apps/web/src/app/(dashboard)/templates/template-direct-link-dialog.tsx:100
 #: apps/web/src/app/(dashboard)/templates/template-direct-link-dialog.tsx:123
 #: apps/web/src/app/(dashboard)/templates/template-direct-link-dialog.tsx:147
-#: apps/web/src/app/(recipient)/d/[token]/direct-template.tsx:118
+#: apps/web/src/app/(recipient)/d/[token]/direct-template.tsx:122
 #: apps/web/src/app/(recipient)/d/[token]/signing-auth-page.tsx:27
 #: apps/web/src/app/(signing)/sign/[token]/signing-auth-page.tsx:38
 #: apps/web/src/app/(teams)/t/[teamUrl]/layout-billing-banner.tsx:53
@@ -5175,7 +5175,7 @@ msgstr "Las plantillas te permiten generar documentos rápidamente con destinata
 #: apps/web/src/app/(signing)/sign/[token]/text-field.tsx:293
 #: packages/ui/primitives/document-flow/add-fields.tsx:998
 #: packages/ui/primitives/document-flow/types.ts:52
-#: packages/ui/primitives/template-flow/add-template-fields.tsx:872
+#: packages/ui/primitives/template-flow/add-template-fields.tsx:874
 msgid "Text"
 msgstr "Texto"
 
@@ -5239,7 +5239,7 @@ msgstr "El enlace directo ha sido copiado a tu portapapeles"
 msgid "The document has been successfully moved to the selected team."
 msgstr "El documento ha sido movido con éxito al equipo seleccionado."
 
-#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:216
+#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:217
 msgid "The document is being prepared. You'll receive a copy once it's ready."
 msgstr ""
 
@@ -5251,7 +5251,7 @@ msgstr "El documento ahora está completado, por favor sigue cualquier instrucci
 msgid "The document owner has been notified of this rejection. No further action is required from you at this time. The document owner may contact you with any questions regarding this rejection."
 msgstr "El propietario del documento ha sido notificado de este rechazo. No se requiere ninguna acción adicional de su parte en este momento. El propietario del documento puede contactarlo con cualquier pregunta relacionada con este rechazo."
 
-#: apps/web/src/app/(signing)/sign/[token]/rejected/page.tsx:91
+#: apps/web/src/app/(signing)/sign/[token]/rejected/page.tsx:93
 #: apps/web/src/app/embed/rejected.tsx:28
 msgid "The document owner has been notified of your decision. They may contact you with further instructions if necessary."
 msgstr "The document owner has been notified of your decision. They may contact you with further instructions if necessary."
@@ -5482,7 +5482,7 @@ msgstr "Este documento no se pudo reenviar en este momento. Por favor, inténtal
 msgid "This document has already been sent to this recipient. You can no longer edit this recipient."
 msgstr "Este documento ya ha sido enviado a este destinatario. Ya no puede editar a este destinatario."
 
-#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:235
+#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:236
 msgid "This document has been cancelled by the owner and is no longer available for others to sign."
 msgstr "Este documento ha sido cancelado por el propietario y ya no está disponible para que otros lo firmen."
 
@@ -5689,7 +5689,7 @@ msgid "To mark this document as viewed, you need to be logged in as <0>{0}</0>"
 msgstr "Para marcar este documento como visto, debes iniciar sesión como <0>{0}</0>"
 
 #: packages/ui/primitives/document-flow/add-fields.tsx:1118
-#: packages/ui/primitives/template-flow/add-template-fields.tsx:990
+#: packages/ui/primitives/template-flow/add-template-fields.tsx:992
 msgid "To proceed further, please set at least one value for the {0} field."
 msgstr "Para continuar, por favor establezca al menos un valor para el campo {0}."
 
@@ -6281,7 +6281,7 @@ msgstr "Esperando a otros"
 msgid "Waiting for others to complete signing."
 msgstr "Esperando a que otros completen la firma."
 
-#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:170
+#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:171
 msgid "Waiting for others to sign"
 msgstr "Esperando a que otros firmen"
 
@@ -6490,7 +6490,7 @@ msgstr "No pudimos configurar tu perfil público como público. Por favor, inté
 msgid "We were unable to setup two-factor authentication for your account. Please ensure that you have entered your code correctly and try again."
 msgstr "No pudimos configurar la autenticación de dos factores para tu cuenta. Asegúrate de haber ingresado correctamente tu código e inténtalo de nuevo."
 
-#: apps/web/src/app/(recipient)/d/[token]/direct-template.tsx:120
+#: apps/web/src/app/(recipient)/d/[token]/direct-template.tsx:124
 #: apps/web/src/app/embed/direct/[[...url]]/client.tsx:264
 #: apps/web/src/app/embed/sign/[[...url]]/client.tsx:170
 msgid "We were unable to submit this document at this time. Please try again later."
@@ -6812,7 +6812,7 @@ msgid "You have declined the invitation from <0>{0}</0> to join their team."
 msgstr "Has rechazado la invitación de <0>{0}</0> para unirte a su equipo."
 
 #: packages/lib/jobs/definitions/emails/send-signing-email.handler.ts:102
-#: packages/lib/server-only/document/resend-document.tsx:130
+#: packages/lib/server-only/document/resend-document.tsx:132
 msgid "You have initiated the document {0} that requires you to {recipientActionVerb} it."
 msgstr "Has iniciado el documento {0} que requiere que {recipientActionVerb}."
 
@@ -6841,7 +6841,7 @@ msgstr "Ha alcanzado su límite de documentos."
 msgid "You have rejected the document '{documentName}'"
 msgstr "Ha rechazado el documento '{documentName}'"
 
-#: apps/web/src/app/(signing)/sign/[token]/rejected/page.tsx:87
+#: apps/web/src/app/(signing)/sign/[token]/rejected/page.tsx:89
 #: apps/web/src/app/embed/rejected.tsx:24
 msgid "You have rejected this document"
 msgstr "You have rejected this document"
@@ -6918,7 +6918,7 @@ msgstr "Recibirás una notificación y podrás configurar tu perfil público de 
 msgid "You will now be required to enter a code from your authenticator app when signing in."
 msgstr "Ahora se te pedirá que ingreses un código de tu aplicación de autenticador al iniciar sesión."
 
-#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:226
+#: apps/web/src/app/(signing)/sign/[token]/complete/page.tsx:227
 msgid "You will receive an Email copy of the signed document once everyone has signed."
 msgstr "Recibirás una copia por correo electrónico del documento firmado una vez que todos hayan firmado."
 

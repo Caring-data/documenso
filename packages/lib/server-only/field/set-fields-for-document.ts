@@ -95,7 +95,7 @@ export const setFieldsForDocument = async ({
     const existing = existingFields.find((existingField) => existingField.id === field.id);
 
     const recipient = document.recipients.find(
-      (recipient) => recipient.email.toLowerCase() === field.signerEmail.toLowerCase(),
+      (recipient) => recipient.email?.toLowerCase() === field.signerEmail.toLowerCase(),
     );
 
     // Each field MUST have a recipient associated with it.
@@ -236,10 +236,7 @@ export const setFieldsForDocument = async ({
             },
             recipient: {
               connect: {
-                documentId_email: {
-                  documentId,
-                  email: fieldSignerEmail,
-                },
+                id: documentId,
               },
             },
           },

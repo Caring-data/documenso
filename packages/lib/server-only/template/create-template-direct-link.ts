@@ -67,7 +67,7 @@ export const createTemplateDirectLink = async ({
   if (
     !directRecipientId &&
     template.recipients.find(
-      (recipient) => recipient.email.toLowerCase() === DIRECT_TEMPLATE_RECIPIENT_EMAIL,
+      (recipient) => recipient.email?.toLowerCase() === DIRECT_TEMPLATE_RECIPIENT_EMAIL,
     )
   ) {
     throw new AppError(AppErrorCode.INVALID_BODY, {

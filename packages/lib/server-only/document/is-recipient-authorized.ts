@@ -82,7 +82,7 @@ export const isRecipientAuthorized = async ({
 
   return await match(authOptions)
     .with({ type: DocumentAuth.ACCOUNT }, async () => {
-      const recipientUser = await getUserByEmail(recipient.email);
+      const recipientUser = await getUserByEmail(recipient.email ?? '');
 
       if (!recipientUser) {
         return false;

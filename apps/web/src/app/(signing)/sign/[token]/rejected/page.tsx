@@ -61,6 +61,8 @@ export default async function RejectedSigningPage({ params: { token } }: Rejecte
   });
 
   if (!isDocumentAccessValid) {
+    if (!recipient.email) return notFound();
+
     return <SigningAuthPageView email={recipient.email} />;
   }
 

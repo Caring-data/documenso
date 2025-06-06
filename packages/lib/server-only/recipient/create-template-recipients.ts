@@ -106,7 +106,7 @@ export const createTemplateRecipients = async ({
           data: {
             templateId,
             name: recipient.name,
-            email: recipient.email,
+            email: recipient.email ?? '',
             role: recipient.role,
             signingOrder: recipient.signingOrder,
             token: nanoid(),

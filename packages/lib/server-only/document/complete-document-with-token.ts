@@ -173,7 +173,7 @@ export const completeDocumentWithToken = async ({
           },
           requestMetadata,
           data: {
-            recipientEmail: recipient.email,
+            recipientEmail: recipient.email ?? '',
             recipientName: recipient.name,
             recipientId: recipient.id,
             recipientRole: recipient.role,

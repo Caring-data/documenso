@@ -88,12 +88,12 @@ export const createDocumentRecipients = async ({
 
   const normalizedRecipients = recipientsToCreate.map((recipient) => ({
     ...recipient,
-    email: recipient.email.toLowerCase(),
+    email: recipient.email?.toLowerCase(),
   }));
 
   const duplicateRecipients = normalizedRecipients.filter((newRecipient) => {
     const existingRecipient = document.recipients.find(
-      (existingRecipient) => existingRecipient.email === newRecipient.email,
+      (existingRecipient) => existingRecipient?.email === newRecipient?.email,
     );
 
     return existingRecipient !== undefined;
@@ -101,7 +101,7 @@ export const createDocumentRecipients = async ({
 
   if (duplicateRecipients.length > 0) {
     throw new AppError(AppErrorCode.INVALID_REQUEST, {
-      message: `Duplicate recipient(s) found for ${duplicateRecipients.map((recipient) => recipient.email).join(', ')}`,
+      message: `Duplicate recipient(s) found for ${duplicateRecipients.map((recipient) => recipient?.email).join(', ')}`,
     });
   }
 
@@ -117,7 +117,7 @@ export const createDocumentRecipients = async ({
           data: {
             documentId,
             name: recipient.name,
-            email: recipient.email,
+            email: recipient.email ?? '',
             role: recipient.role,
             signingOrder: recipient.signingOrder,
             token: nanoid(),
@@ -135,7 +135,7 @@ export const createDocumentRecipients = async ({
             documentId: documentId,
             metadata: requestMetadata,
             data: {
-              recipientEmail: createdRecipient.email,
+              recipientEmail: createdRecipient.email ?? '',
               recipientName: createdRecipient.name,
               recipientId: createdRecipient.id,
               recipientRole: createdRecipient.role,

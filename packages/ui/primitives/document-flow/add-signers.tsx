@@ -94,7 +94,7 @@ export const AddSignersFormPartial = ({
                 nativeId: recipient.id,
                 formId: String(recipient.id),
                 name: recipient.name,
-                email: recipient.email,
+                email: recipient.email ?? undefined,
                 role: recipient.role,
                 signingOrder: recipient.signingOrder ?? index + 1,
                 actionAuth:

@@ -102,7 +102,7 @@ export const sendPendingEmail = async ({ documentId, recipientId }: SendPendingE
   await sendEmail(
     {
       name,
-      email: email,
+      email: email ?? '',
     },
     i18n._(msg`Waiting for others to complete signing.`),
     html,

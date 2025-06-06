@@ -477,7 +477,7 @@ export const createDocumentFromDirectTemplate = async ({
         },
         metadata: requestMetadata,
         data: {
-          recipientEmail: createdDirectRecipient.email,
+          recipientEmail: createdDirectRecipient.email ?? '',
           recipientId: createdDirectRecipient.id,
           recipientName: createdDirectRecipient.name,
           recipientRole: createdDirectRecipient.role,
@@ -495,7 +495,7 @@ export const createDocumentFromDirectTemplate = async ({
           },
           metadata: requestMetadata,
           data: {
-            recipientEmail: createdDirectRecipient.email,
+            recipientEmail: createdDirectRecipient.email ?? '',
             recipientId: createdDirectRecipient.id,
             recipientName: createdDirectRecipient.name,
             recipientRole: createdDirectRecipient.role,
@@ -541,7 +541,7 @@ export const createDocumentFromDirectTemplate = async ({
         },
         metadata: requestMetadata,
         data: {
-          recipientEmail: createdDirectRecipient.email,
+          recipientEmail: createdDirectRecipient.email ?? '',
           recipientId: createdDirectRecipient.id,
           recipientName: createdDirectRecipient.name,
           recipientRole: createdDirectRecipient.role,
@@ -593,7 +593,7 @@ export const createDocumentFromDirectTemplate = async ({
     await sendEmail(
       {
         name: templateOwner.name || '',
-        email: templateOwner.email,
+        email: templateOwner.email ?? '',
       },
       i18n._(msg`Document created from direct template`),
       html,

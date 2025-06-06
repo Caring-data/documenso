@@ -162,7 +162,7 @@ export const sendCompletedEmail = async ({ documentId, requestMetadata }: SendDo
     document.recipients.map(async (recipient) => {
       const customEmailTemplate = {
         'signer.name': recipient.name,
-        'signer.email': recipient.email,
+        'signer.email': recipient.email ?? '',
         'document.name': document.title,
       };
 
@@ -196,7 +196,7 @@ export const sendCompletedEmail = async ({ documentId, requestMetadata }: SendDo
         to: [
           {
             name: recipient.name,
-            address: recipient.email,
+            address: recipient.email ?? '',
           },
         ],
         from: {
@@ -225,7 +225,7 @@ export const sendCompletedEmail = async ({ documentId, requestMetadata }: SendDo
           requestMetadata,
           data: {
             emailType: 'DOCUMENT_COMPLETED',
-            recipientEmail: recipient.email,
+            recipientEmail: recipient.email ?? '',
             recipientName: recipient.name,
             recipientId: recipient.id,
             recipientRole: recipient.role,

@@ -118,7 +118,7 @@ export const createDocumentFields = async ({
             metadata: requestMetadata,
             data: {
               fieldId: createdField.secondaryId,
-              fieldRecipientEmail: field.recipientEmail,
+              fieldRecipientEmail: field.recipientEmail ?? '',
               fieldRecipientId: createdField.recipientId,
               fieldType: createdField.type,
             },

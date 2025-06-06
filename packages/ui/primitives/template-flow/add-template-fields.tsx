@@ -188,7 +188,7 @@ export const AddTemplateFieldsFormPartial = ({
     [
       append,
       lastActiveField,
-      selectedSigner?.email,
+      selectedSigner?.email ?? '',
       selectedSigner?.id,
       selectedSigner?.token,
       toast,
@@ -327,7 +327,7 @@ export const AddTemplateFieldsFormPartial = ({
         pageY,
         pageWidth: fieldPageWidth,
         pageHeight: fieldPageHeight,
-        signerEmail: selectedSigner.email,
+        signerEmail: selectedSigner.email ?? '',
         signerId: selectedSigner.id,
         signerToken: selectedSigner.token ?? '',
         fieldMeta: undefined,
@@ -605,7 +605,7 @@ export const AddTemplateFieldsFormPartial = ({
                   </PopoverTrigger>
 
                   <PopoverContent className="p-0" align="start">
-                    <Command value={selectedSigner?.email}>
+                    <Command value={selectedSigner?.email ?? undefined}>
                       <CommandInput />
 
                       <CommandEmpty>
@@ -658,7 +658,9 @@ export const AddTemplateFieldsFormPartial = ({
                                 )}
 
                                 {!recipient.name && (
-                                  <span title={recipient.email}>{recipient.email}</span>
+                                  <span title={recipient.email ?? undefined}>
+                                    {recipient.email}
+                                  </span>
                                 )}
                               </span>
                             </CommandItem>

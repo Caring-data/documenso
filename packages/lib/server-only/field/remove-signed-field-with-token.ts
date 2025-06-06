@@ -93,7 +93,7 @@ export const removeSignedFieldWithToken = async ({
           documentId: document.id,
           user: {
             name: recipient.name,
-            email: recipient.email,
+            email: recipient.email ?? '',
           },
           requestMetadata,
           data: {

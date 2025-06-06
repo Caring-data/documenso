@@ -33,7 +33,7 @@ type TBulkSendFormSchema = z.infer<typeof ZBulkSendFormSchema>;
 
 export type TemplateBulkSendDialogProps = {
   templateId: number;
-  recipients: Array<{ email: string; name?: string | null }>;
+  recipients: Array<{ email?: string | null; name?: string | null }>;
   trigger?: React.ReactNode;
   onSuccess?: () => void;
 };
