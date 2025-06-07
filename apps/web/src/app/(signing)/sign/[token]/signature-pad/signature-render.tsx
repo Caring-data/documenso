@@ -123,7 +123,7 @@ export const SignatureRender = ({ value, font, color, className }: SignatureRend
     } else {
       renderTypedSignature();
     }
-  }, [value]);
+  }, [value, font, color]);
 
   return (
     <canvas

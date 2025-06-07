@@ -51,14 +51,13 @@ export const SignaturePadDialog = ({
   const { recipient } = useRecipientContext();
 
   const [showSignatureModal, setShowSignatureModal] = useState(false);
-  const [signature, setSignature] = useState<SignaturePadValue>({
+  const [tempSignature, setTempSignature] = useState<SignaturePadValue>({
     type: value?.type ?? DocumentSignatureType.TYPE,
     value: value?.value ?? '',
     font: value?.font ?? 'Dancing Script',
     color: value?.color ?? 'black',
   });
 
-  console.log(signature);
   return (
     <div
       className={cn(
@@ -74,9 +73,9 @@ export const SignaturePadDialog = ({
         <div className="relative min-h-[130px] w-full md:min-h-[130px]">
           <SignatureRender
             className="h-full w-full"
-            value={value}
-            font={signature.font}
-            color={signature.color}
+            value={value.value}
+            font={value.font}
+            color={value.color}
           />
         </div>
       )}
@@ -85,7 +84,15 @@ export const SignaturePadDialog = ({
         type="button"
         disabled={disabled}
         className="absolute inset-0 flex items-center justify-center bg-transparent"
-        onClick={() => setShowSignatureModal(true)}
+        onClick={() => {
+          setTempSignature({
+            type: value?.type ?? DocumentSignatureType.TYPE,
+            value: value?.value ?? '',
+            font: value?.font ?? 'Dancing Script',
+            color: value?.color ?? 'black',
+          });
+          setShowSignatureModal(true);
+        }}
         whileHover="onHover"
       >
         {!value && !disableAnimation && (
@@ -141,10 +148,10 @@ export const SignaturePadDialog = ({
           </DialogTitle>
           <SignaturePad
             id="signature"
-            value={signature}
+            value={tempSignature}
             className={className}
             disabled={disabled}
-            onChange={(sig) => setSignature(sig)}
+            onChange={(sig) => setTempSignature(sig)}
             typedSignatureEnabled={typedSignatureEnabled}
             uploadSignatureEnabled={uploadSignatureEnabled}
             drawSignatureEnabled={drawSignatureEnabled}
@@ -159,9 +166,9 @@ export const SignaturePadDialog = ({
 
             <Button
               type="button"
-              disabled={!signature}
+              disabled={!tempSignature}
               onClick={() => {
-                onChange(signature);
+                onChange(tempSignature);
                 setShowSignatureModal(false);
               }}
             >

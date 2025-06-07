@@ -19,7 +19,6 @@ export const SignaturePadType = ({ className, value, onChange }: SignaturePadTyp
   const [selectedFont, setSelectedFont] = useState(value?.font || 'Dancing Script');
   const [selectedColor, setSelectedColor] = useState(value?.color || 'black');
   const [fontSize, setFontSize] = useState(40);
-  console.log('type', value);
   const editableRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -60,11 +59,6 @@ export const SignaturePadType = ({ className, value, onChange }: SignaturePadTyp
       editableRef.current.textContent = value.value;
     }
   }, [value]);
-
-  useEffect(() => {
-    if (value?.font) setSelectedFont(value.font);
-    if (value?.color) setSelectedColor(value.color);
-  }, [value?.font, value?.color]);
 
   return (
     <div
@@ -108,7 +102,20 @@ export const SignaturePadType = ({ className, value, onChange }: SignaturePadTyp
       </div>
 
       <div className="dark:bg-background absolute left-2 top-2 bg-neutral-50">
-        <Select value={selectedFont} onValueChange={(value) => setSelectedFont(value)}>
+        <Select
+          value={selectedFont}
+          onValueChange={(font) => {
+            setSelectedFont(font);
+            if (value?.value) {
+              onChange({
+                type: DocumentSignatureType.TYPE,
+                value: value.value,
+                font,
+                color: selectedColor,
+              });
+            }
+          }}
+        >
           <SelectTrigger className="h-auto w-auto border-none p-0.5">
             <p className="text-foreground px-2 text-sm">
               <Trans>Choose font</Trans>
@@ -127,7 +134,20 @@ export const SignaturePadType = ({ className, value, onChange }: SignaturePadTyp
         </Select>
       </div>
 
-      <SignaturePadColorPicker selectedColor={selectedColor} setSelectedColor={setSelectedColor} />
+      <SignaturePadColorPicker
+        selectedColor={selectedColor}
+        setSelectedColor={(color) => {
+          setSelectedColor(color);
+          if (value?.value) {
+            onChange({
+              type: DocumentSignatureType.TYPE,
+              value: value.value,
+              font: selectedFont,
+              color,
+            });
+          }
+        }}
+      />
     </div>
   );
 };
