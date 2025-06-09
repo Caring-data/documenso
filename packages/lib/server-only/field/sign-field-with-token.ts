@@ -260,7 +260,7 @@ export const signFieldWithToken = async ({
         },
         requestMetadata,
         data: {
-          recipientEmail: recipient.email,
+          recipientEmail: recipient.email ?? '',
           recipientId: recipient.id,
           recipientName: recipient.name,
           recipientRole: recipient.role,

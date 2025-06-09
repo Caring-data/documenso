@@ -138,6 +138,7 @@ export const ApiContractV1Implementation = createNextRoute(ApiContractV1, {
           ...document,
           recipients: recipients.map((recipient) => ({
             ...recipient,
+            email: recipient.email ?? '',
             signingUrl: `${NEXT_PUBLIC_WEBAPP_URL()}/sign/${recipient.token}`,
           })),
           fields: parsedMetaFields,
@@ -539,7 +540,7 @@ export const ApiContractV1Implementation = createNextRoute(ApiContractV1, {
           recipients: recipients.map((recipient) => ({
             recipientId: recipient.id,
             name: recipient.name,
-            email: recipient.email,
+            email: recipient.email ?? '',
             token: recipient.token,
             role: recipient.role,
             signingOrder: recipient.signingOrder,
@@ -600,7 +601,10 @@ export const ApiContractV1Implementation = createNextRoute(ApiContractV1, {
             ...field,
             fieldMeta: field.fieldMeta ? ZFieldMetaSchema.parse(field.fieldMeta) : null,
           })),
-          Recipient: template.recipients,
+          Recipient: template.recipients.map((recipient) => ({
+            ...recipient,
+            email: recipient.email ?? '',
+          })),
         },
       };
     } catch (err) {
@@ -629,7 +633,10 @@ export const ApiContractV1Implementation = createNextRoute(ApiContractV1, {
               ...field,
               fieldMeta: field.fieldMeta ? ZFieldMetaSchema.parse(field.fieldMeta) : null,
             })),
-            Recipient: template.recipients,
+            Recipient: template.recipients.map((recipient) => ({
+              ...recipient,
+              email: recipient.email ?? '',
+            })),
           })),
           totalPages,
         },
@@ -816,7 +823,7 @@ export const ApiContractV1Implementation = createNextRoute(ApiContractV1, {
         recipients: document.recipients.map((recipient) => ({
           recipientId: recipient.id,
           name: recipient.name,
-          email: recipient.email,
+          email: recipient.email ?? '',
           token: recipient.token,
           role: recipient.role,
           signingOrder: recipient.signingOrder,
@@ -931,7 +938,7 @@ export const ApiContractV1Implementation = createNextRoute(ApiContractV1, {
         recipients: document.recipients.map((recipient) => ({
           recipientId: recipient.id,
           name: recipient.name,
-          email: recipient.email,
+          email: recipient.email ?? '',
           token: recipient.token,
           role: recipient.role,
           signingOrder: recipient.signingOrder,
@@ -1002,6 +1009,7 @@ export const ApiContractV1Implementation = createNextRoute(ApiContractV1, {
           ...sentDocument,
           recipients: recipients.map((recipient) => ({
             ...recipient,
+            email: recipient.email ?? '',
             signingUrl: `${NEXT_PUBLIC_WEBAPP_URL()}/sign/${recipient.token}`,
           })),
         },
@@ -1136,7 +1144,7 @@ export const ApiContractV1Implementation = createNextRoute(ApiContractV1, {
         teamId: team?.id,
         recipients: [
           ...recipients.map(({ email, name }) => ({
-            email,
+            email: email ?? '',
             name,
             role,
           })),
@@ -1161,6 +1169,7 @@ export const ApiContractV1Implementation = createNextRoute(ApiContractV1, {
         status: 200,
         body: {
           ...newRecipient,
+          email: newRecipient.email ?? '',
           documentId: Number(documentId),
           signingUrl: `${NEXT_PUBLIC_WEBAPP_URL()}/sign/${newRecipient.token}`,
         },
@@ -1229,6 +1238,7 @@ export const ApiContractV1Implementation = createNextRoute(ApiContractV1, {
       status: 200,
       body: {
         ...updatedRecipient,
+        email: updatedRecipient.email ?? '',
         documentId: Number(documentId),
         signingUrl: `${NEXT_PUBLIC_WEBAPP_URL()}/sign/${updatedRecipient.token}`,
       },
@@ -1283,6 +1293,7 @@ export const ApiContractV1Implementation = createNextRoute(ApiContractV1, {
       status: 200,
       body: {
         ...deletedRecipient,
+        email: deletedRecipient.email ?? '',
         documentId: Number(documentId),
         signingUrl: '',
       },

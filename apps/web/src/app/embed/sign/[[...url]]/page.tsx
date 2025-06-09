@@ -82,7 +82,7 @@ export default async function EmbedSignDocumentPage({ params }: EmbedSignDocumen
   if (!isAccessAuthValid) {
     return (
       <EmbedAuthenticateView
-        email={user?.email || recipient.email}
+        email={user?.email ?? recipient.email ?? undefined}
         returnTo={`/embed/sign/${token}`}
       />
     );

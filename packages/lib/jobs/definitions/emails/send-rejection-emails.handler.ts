@@ -105,7 +105,7 @@ export const run = async ({
     await sendEmail(
       {
         name: recipient.name,
-        email: recipient.email,
+        email: recipient.email ?? '',
       },
       i18n._(msg`Document "${document.title}" - Rejection Confirmed`),
       html,
@@ -154,7 +154,7 @@ export const run = async ({
     await sendEmail(
       {
         name: documentOwner.name || '',
-        email: documentOwner.email,
+        email: documentOwner.email ?? '',
       },
       i18n._(msg`Document "${document.title}" - Rejected by ${recipient.name}`),
       html,

@@ -188,7 +188,7 @@ export const updateDocumentRecipients = async ({
               documentId: documentId,
               metadata: requestMetadata,
               data: {
-                recipientEmail: updatedRecipient.email,
+                recipientEmail: updatedRecipient.email ?? '',
                 recipientName: updatedRecipient.name,
                 recipientId: updatedRecipient.id,
                 recipientRole: updatedRecipient.role,

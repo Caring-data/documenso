@@ -90,7 +90,7 @@ export const deleteRecipient = async ({
           name: team ? '' : user.name,
         },
         data: {
-          recipientEmail: recipient.email,
+          recipientEmail: recipient.email ?? '',
           recipientName: recipient.name,
           recipientId: recipient.id,
           recipientRole: recipient.role,

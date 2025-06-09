@@ -1,5 +1,3 @@
-import type { NextApiRequest, NextApiResponse } from 'next';
-
 import { DOCUMENT_AUDIT_LOG_TYPE } from '@documenso/lib/types/document-audit-logs';
 import type { RequestMetadata } from '@documenso/lib/universal/extract-request-metadata';
 import { fieldsContainUnsignedRequiredField } from '@documenso/lib/utils/advanced-fields-helpers';
@@ -21,6 +19,7 @@ import {
   ZWebhookDocumentSchema,
   mapDocumentToWebhookDocumentPayload,
 } from '../../types/webhook-payload';
+import { createLog } from '../../utils/createLog';
 import { storeSignedDocument } from '../laravel-auth/storeSignedDocument';
 import { generateSignedPdf } from '../pdf/generate-signed-pdf';
 import { getIsRecipientsTurnToSign } from '../recipient/get-is-recipient-turn';
@@ -44,8 +43,6 @@ export type CompleteDocumentWithTokenOptions = GetDocumentOptions & {
   userId?: number;
   authOptions?: TRecipientActionAuth;
   requestMetadata?: RequestMetadata;
-  req: NextApiRequest;
-  res: NextApiResponse;
 };
 
 const getDocument = async ({ token, documentId }: GetDocumentOptions) => {
@@ -83,233 +80,246 @@ export const completeDocumentWithToken = async ({
   token,
   documentId,
   requestMetadata,
-  req,
-  res,
 }: CompleteDocumentWithTokenOptions) => {
-  const document = await getDocument({ token, documentId });
-  const rawDetails = document?.documentDetails;
+  try {
+    const document = await getDocument({ token, documentId });
+    const rawDetails = document?.documentDetails;
 
-  if (!rawDetails || typeof rawDetails !== 'object') {
-    throw new Error('Invalid or missing documentDetails');
-  }
-
-  const documentDetails: DocumentDetails = rawDetails;
-
-  if (document.status !== DocumentStatus.PENDING) {
-    throw new Error(`Document ${document.id} must be pending`);
-  }
-
-  if (document.recipients.length === 0) {
-    throw new Error(`Document ${document.id} has no recipient with token ${token}`);
-  }
-
-  const [recipient] = document.recipients;
-
-  if (recipient.signingStatus === SigningStatus.SIGNED) {
-    throw new Error(`Recipient ${recipient.id} has already signed`);
-  }
-
-  if (recipient.signingStatus === SigningStatus.REJECTED) {
-    throw new AppError(AppErrorCode.UNKNOWN_ERROR, {
-      message: 'Recipient has already rejected the document',
-      statusCode: 400,
-    });
-  }
-
-  if (document.documentMeta?.signingOrder === DocumentSigningOrder.SEQUENTIAL) {
-    const isRecipientsTurn = await getIsRecipientsTurnToSign({ token: recipient.token });
-
-    if (!isRecipientsTurn) {
-      throw new Error(
-        `Recipient ${recipient.id} attempted to complete the document before it was their turn`,
-      );
+    if (!rawDetails || typeof rawDetails !== 'object') {
+      throw new Error('Invalid or missing documentDetails');
     }
-  }
 
-  const fields = await prisma.field.findMany({
-    where: {
-      documentId: document.id,
-      recipientId: recipient.id,
-    },
-  });
+    const documentDetails: DocumentDetails = rawDetails;
 
-  if (fieldsContainUnsignedRequiredField(fields)) {
-    throw new Error(`Recipient ${recipient.id} has unsigned fields`);
-  }
+    if (document.status !== DocumentStatus.PENDING) {
+      throw new Error(`Document ${document.id} must be pending`);
+    }
 
-  // Document reauth for completing documents is currently not required.
+    if (document.recipients.length === 0) {
+      throw new Error(`Document ${document.id} has no recipient with token ${token}`);
+    }
 
-  // const { derivedRecipientActionAuth } = extractDocumentAuthMethods({
-  //   documentAuth: document.authOptions,
-  //   recipientAuth: recipient.authOptions,
-  // });
+    const [recipient] = document.recipients;
 
-  // const isValid = await isRecipientAuthorized({
-  //   type: 'ACTION',
-  //   document: document,
-  //   recipient: recipient,
-  //   userId,
-  //   authOptions,
-  // });
+    if (recipient.signingStatus === SigningStatus.SIGNED) {
+      throw new Error(`Recipient ${recipient.id} has already signed`);
+    }
 
-  // if (!isValid) {
-  //   throw new AppError(AppErrorCode.UNAUTHORIZED, 'Invalid authentication values');
-  // }
-
-  await prisma.$transaction(async (tx) => {
-    await tx.recipient.update({
-      where: {
-        id: recipient.id,
-      },
-      data: {
-        signingStatus: SigningStatus.SIGNED,
-        signedAt: new Date(),
-      },
-    });
-
-    await tx.documentAuditLog.create({
-      data: createDocumentAuditLogData({
-        type: DOCUMENT_AUDIT_LOG_TYPE.DOCUMENT_RECIPIENT_COMPLETED,
-        documentId: document.id,
-        user: {
-          name: recipient.name,
-          email: recipient.email,
-        },
-        requestMetadata,
-        data: {
-          recipientEmail: recipient.email,
-          recipientName: recipient.name,
-          recipientId: recipient.id,
-          recipientRole: recipient.role,
-        },
-      }),
-    });
-  });
-
-  await jobs.triggerJob({
-    name: 'send.recipient.signed.email',
-    payload: {
-      documentId: document.id,
-      recipientId: recipient.id,
-    },
-  });
-
-  const documentFields = await prisma.field.findMany({
-    where: {
-      documentId: document.id,
-    },
-    include: {
-      signature: true,
-    },
-  });
-
-  const signedPdfBuffer = await generateSignedPdf({
-    document: {
-      ...document,
-      documentData: { data: document.documentData.data },
-    },
-    fields: documentFields,
-    certificateData: null,
-  });
-
-  const base64SignedPdf = signedPdfBuffer.toString('base64');
-
-  await storeSignedDocument(
-    document,
-    base64SignedPdf,
-    documentDetails,
-    document.id,
-    recipient,
-    false,
-  );
-
-  await prisma.documentData.update({
-    where: { id: document.documentData.id },
-    data: { data: base64SignedPdf },
-  });
-
-  const pendingRecipients = await prisma.recipient.findMany({
-    select: {
-      id: true,
-      signingOrder: true,
-      name: true,
-      email: true,
-      role: true,
-    },
-    where: {
-      documentId: document.id,
-      signingStatus: {
-        not: SigningStatus.SIGNED,
-      },
-      role: {
-        not: RecipientRole.CC,
-      },
-    },
-    // Composite sort so our next recipient is always the one with the lowest signing order or id
-    // if there is a tie.
-    orderBy: [{ signingOrder: { sort: 'asc', nulls: 'last' } }, { id: 'asc' }],
-  });
-
-  if (pendingRecipients.length > 0) {
-    await sendPendingEmail({ documentId, recipientId: recipient.id });
-
-    if (document.documentMeta?.signingOrder === DocumentSigningOrder.SEQUENTIAL) {
-      const [nextRecipient] = pendingRecipients;
-
-      await prisma.$transaction(async (tx) => {
-        await tx.recipient.update({
-          where: { id: nextRecipient.id },
-          data: { sendStatus: SendStatus.SENT },
-        });
-
-        await jobs.triggerJob({
-          name: 'send.signing.requested.email',
-          payload: {
-            userId: document.userId,
-            documentId: document.id,
-            recipientId: nextRecipient.id,
-            requestMetadata,
-          },
-        });
+    if (recipient.signingStatus === SigningStatus.REJECTED) {
+      throw new AppError(AppErrorCode.UNKNOWN_ERROR, {
+        message: 'Recipient has already rejected the document',
+        statusCode: 400,
       });
     }
-  }
 
-  const haveAllRecipientsSigned = await prisma.document.findFirst({
-    where: {
-      id: document.id,
-      recipients: {
-        every: {
-          OR: [{ signingStatus: SigningStatus.SIGNED }, { role: RecipientRole.CC }],
-        },
+    if (document.documentMeta?.signingOrder === DocumentSigningOrder.SEQUENTIAL) {
+      const isRecipientsTurn = await getIsRecipientsTurnToSign({ token: recipient.token });
+
+      if (!isRecipientsTurn) {
+        throw new Error(
+          `Recipient ${recipient.id} attempted to complete the document before it was their turn`,
+        );
+      }
+    }
+
+    const fields = await prisma.field.findMany({
+      where: {
+        documentId: document.id,
+        recipientId: recipient.id,
       },
-    },
-  });
+    });
 
-  if (haveAllRecipientsSigned) {
+    if (fieldsContainUnsignedRequiredField(fields)) {
+      throw new Error(`Recipient ${recipient.id} has unsigned fields`);
+    }
+
+    // Document reauth for completing documents is currently not required.
+
+    // const { derivedRecipientActionAuth } = extractDocumentAuthMethods({
+    //   documentAuth: document.authOptions,
+    //   recipientAuth: recipient.authOptions,
+    // });
+
+    // const isValid = await isRecipientAuthorized({
+    //   type: 'ACTION',
+    //   document: document,
+    //   recipient: recipient,
+    //   userId,
+    //   authOptions,
+    // });
+
+    // if (!isValid) {
+    //   throw new AppError(AppErrorCode.UNAUTHORIZED, 'Invalid authentication values');
+    // }
+
+    await prisma.$transaction(async (tx) => {
+      await tx.recipient.update({
+        where: {
+          id: recipient.id,
+        },
+        data: {
+          signingStatus: SigningStatus.SIGNED,
+          signedAt: new Date(),
+        },
+      });
+
+      await tx.documentAuditLog.create({
+        data: createDocumentAuditLogData({
+          type: DOCUMENT_AUDIT_LOG_TYPE.DOCUMENT_RECIPIENT_COMPLETED,
+          documentId: document.id,
+          user: {
+            name: recipient.name,
+            email: recipient.email,
+          },
+          requestMetadata,
+          data: {
+            recipientEmail: recipient.email ?? '',
+            recipientName: recipient.name,
+            recipientId: recipient.id,
+            recipientRole: recipient.role,
+          },
+        }),
+      });
+    });
+
     await jobs.triggerJob({
-      name: 'internal.seal-document',
+      name: 'send.recipient.signed.email',
       payload: {
         documentId: document.id,
-        requestMetadata,
+        recipientId: recipient.id,
       },
     });
 
-    const updatedDocument = await prisma.document.findFirstOrThrow({
+    const documentFields = await prisma.field.findMany({
       where: {
-        id: document.id,
+        documentId: document.id,
       },
       include: {
-        documentMeta: true,
-        recipients: true,
+        signature: true,
       },
     });
 
-    await triggerWebhook({
-      event: WebhookTriggerEvents.DOCUMENT_SIGNED,
-      data: ZWebhookDocumentSchema.parse(mapDocumentToWebhookDocumentPayload(updatedDocument)),
-      userId: updatedDocument.userId,
-      teamId: updatedDocument.teamId ?? undefined,
+    const signedPdfBuffer = await generateSignedPdf({
+      document: {
+        ...document,
+        documentData: { data: document.documentData.data },
+      },
+      fields: documentFields,
+      certificateData: null,
     });
+
+    const base64SignedPdf = signedPdfBuffer.toString('base64');
+
+    await storeSignedDocument(
+      document,
+      base64SignedPdf,
+      documentDetails,
+      document.id,
+      recipient,
+      false,
+    );
+
+    await prisma.documentData.update({
+      where: { id: document.documentData.id },
+      data: { data: base64SignedPdf },
+    });
+
+    const pendingRecipients = await prisma.recipient.findMany({
+      select: {
+        id: true,
+        signingOrder: true,
+        name: true,
+        email: true,
+        role: true,
+      },
+      where: {
+        documentId: document.id,
+        signingStatus: {
+          not: SigningStatus.SIGNED,
+        },
+        role: {
+          not: RecipientRole.CC,
+        },
+      },
+      // Composite sort so our next recipient is always the one with the lowest signing order or id
+      // if there is a tie.
+      orderBy: [{ signingOrder: { sort: 'asc', nulls: 'last' } }, { id: 'asc' }],
+    });
+
+    if (pendingRecipients.length > 0) {
+      await sendPendingEmail({ documentId, recipientId: recipient.id });
+
+      if (document.documentMeta?.signingOrder === DocumentSigningOrder.SEQUENTIAL) {
+        const [nextRecipient] = pendingRecipients;
+
+        await prisma.$transaction(async (tx) => {
+          await tx.recipient.update({
+            where: { id: nextRecipient.id },
+            data: { sendStatus: SendStatus.SENT },
+          });
+
+          await jobs.triggerJob({
+            name: 'send.signing.requested.email',
+            payload: {
+              userId: document.userId,
+              documentId: document.id,
+              recipientId: nextRecipient.id,
+              requestMetadata,
+            },
+          });
+        });
+      }
+    }
+
+    const haveAllRecipientsSigned = await prisma.document.findFirst({
+      where: {
+        id: document.id,
+        recipients: {
+          every: {
+            OR: [{ signingStatus: SigningStatus.SIGNED }, { role: RecipientRole.CC }],
+          },
+        },
+      },
+    });
+
+    if (haveAllRecipientsSigned) {
+      await jobs.triggerJob({
+        name: 'internal.seal-document',
+        payload: {
+          documentId: document.id,
+          requestMetadata,
+        },
+      });
+
+      const updatedDocument = await prisma.document.findFirstOrThrow({
+        where: {
+          id: document.id,
+        },
+        include: {
+          documentMeta: true,
+          recipients: true,
+        },
+      });
+
+      await triggerWebhook({
+        event: WebhookTriggerEvents.DOCUMENT_SIGNED,
+        data: ZWebhookDocumentSchema.parse(mapDocumentToWebhookDocumentPayload(updatedDocument)),
+        userId: updatedDocument.userId,
+        teamId: updatedDocument.teamId ?? undefined,
+      });
+    }
+  } catch (error) {
+    await createLog({
+      action: 'COMPLETE_DOCUMENT_ERROR',
+      message: 'Error al completar el documento con token',
+      data: {
+        error: error instanceof Error ? error.message : String(error),
+        documentId,
+        token,
+      },
+      metadata: requestMetadata,
+    });
+
+    throw error;
   }
 };

@@ -73,18 +73,19 @@ export default async function CompletedSigningPage({
   });
 
   if (!isDocumentAccessValid) {
-    return <SigningAuthPageView email={recipient.email} />;
+    return <SigningAuthPageView email={recipient.email ?? ''} />;
   }
 
   const signatures = await getRecipientSignatures({ recipientId: recipient.id });
-  const isExistingUser = await getUserByEmail({ email: recipient.email })
+  const isExistingUser = await getUserByEmail({ email: recipient.email ?? '' })
     .then((u) => !!u)
     .catch(() => false);
 
   const recipientName =
-    recipient.name ||
-    fields.find((field) => field.type === FieldType.NAME)?.customText ||
-    recipient.email;
+    recipient.name ??
+    fields.find((field) => field.type === FieldType.NAME)?.customText ??
+    recipient.email ??
+    'Unnamed';
 
   const canSignUp = !isExistingUser && NEXT_PUBLIC_DISABLE_SIGNUP !== 'true';
 

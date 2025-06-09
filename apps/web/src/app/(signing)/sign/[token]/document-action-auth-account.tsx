@@ -71,7 +71,16 @@ export const DocumentActionAuthAccount = ({
           <Trans>Cancel</Trans>
         </Button>
 
-        <Button onClick={async () => handleChangeAccount(recipient.email)} loading={isSigningOut}>
+        <Button
+          onClick={async () => {
+            if (recipient.email) {
+              await handleChangeAccount(recipient.email);
+            } else {
+              console.warn('Recipient email is null');
+            }
+          }}
+          loading={isSigningOut}
+        >
           <Trans>Login</Trans>
         </Button>
       </DialogFooter>

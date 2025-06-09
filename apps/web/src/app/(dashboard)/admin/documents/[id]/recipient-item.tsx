@@ -56,7 +56,7 @@ export const RecipientItem = ({ recipient }: RecipientItemProps) => {
   const form = useForm<TAdminUpdateRecipientFormSchema>({
     defaultValues: {
       name: recipient.name,
-      email: recipient.email,
+      email: recipient.email ?? '',
     },
   });
 

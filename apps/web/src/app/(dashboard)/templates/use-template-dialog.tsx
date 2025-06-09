@@ -127,7 +127,7 @@ export function UseTemplateDialog({
       recipients: recipients
         .sort((a, b) => (a.signingOrder || 0) - (b.signingOrder || 0))
         .map((recipient) => {
-          const isRecipientEmailPlaceholder = recipient.email.match(
+          const isRecipientEmailPlaceholder = (recipient.email ?? '').match(
             TEMPLATE_RECIPIENT_EMAIL_PLACEHOLDER_REGEX,
           );
 
@@ -138,7 +138,7 @@ export function UseTemplateDialog({
           return {
             id: recipient.id,
             name: !isRecipientNamePlaceholder ? recipient.name : '',
-            email: !isRecipientEmailPlaceholder ? recipient.email : '',
+            email: !isRecipientEmailPlaceholder ? (recipient.email ?? undefined) : '',
             signingOrder: recipient.signingOrder ?? undefined,
           };
         }),

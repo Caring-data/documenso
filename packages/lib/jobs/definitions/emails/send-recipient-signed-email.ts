@@ -90,7 +90,7 @@ export const SEND_RECIPIENT_SIGNED_EMAIL_JOB_DEFINITION = {
     const template = createElement(DocumentRecipientSignedEmailTemplate, {
       documentName: document.title,
       recipientName,
-      recipientEmail,
+      recipientEmail: recipientEmail ?? undefined,
       assetBaseUrl,
       documentDetails: document.documentDetails || {},
     });

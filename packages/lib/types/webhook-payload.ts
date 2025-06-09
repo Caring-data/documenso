@@ -93,6 +93,10 @@ export const mapDocumentToWebhookDocumentPayload = (
 ): TWebhookDocument => {
   const { recipients, documentMeta, ...trimmedDocument } = document;
 
+  const validRecipients = recipients.filter(
+    (r): r is Recipient & { email: string } => r.email !== null,
+  );
+
   return {
     ...trimmedDocument,
     documentMeta: documentMeta
@@ -103,7 +107,7 @@ export const mapDocumentToWebhookDocumentPayload = (
           dateFormat: 'yyyy-MM-dd hh:mm a',
         }
       : null,
-    Recipient: recipients,
-    recipients,
+    Recipient: validRecipients,
+    recipients: validRecipients,
   };
 };

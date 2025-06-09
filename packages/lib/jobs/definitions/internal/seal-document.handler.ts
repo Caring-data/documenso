@@ -24,6 +24,7 @@ import {
 import { getFile } from '../../../universal/upload/get-file';
 import { putPdfFile } from '../../../universal/upload/put-file';
 import { fieldsContainUnsignedRequiredField } from '../../../utils/advanced-fields-helpers';
+import { createLog } from '../../../utils/createLog';
 import { createDocumentAuditLogData } from '../../../utils/document-audit-logs';
 import type { JobRunIO } from '../../client/_internal/job';
 import type { TSealDocumentJobDefinition } from './seal-document';
@@ -129,6 +130,17 @@ export const run = async ({
     }
   } catch (error) {
     console.error('Error generating certificate PDF:', error);
+
+    await createLog({
+      action: 'CERTIFICATE_PDF_ERROR',
+      message: 'Error generating certificate PDF during sealing process',
+      data: {
+        documentId,
+        error: error instanceof Error ? error.message : String(error),
+      },
+      metadata: requestMetadata,
+      userId: document.userId,
+    });
   }
 
   const newDataId = await io.runTask('decorate-and-sign-pdf', async () => {
@@ -164,6 +176,17 @@ export const run = async ({
       return documentData.id;
     } catch (error) {
       console.error('Critical error in PDF process:', error);
+      await createLog({
+        action: 'PDF_SIGNING_ERROR',
+        message: 'Critical error while processing or signing the PDF',
+        data: {
+          documentId,
+          error: error instanceof Error ? error.message : String(error),
+        },
+        metadata: requestMetadata,
+        userId: document.userId,
+      });
+
       throw error;
     }
   });
@@ -225,6 +248,17 @@ export const run = async ({
       );
     } catch (error) {
       console.error('Transaction error:', error);
+
+      await createLog({
+        action: 'SEAL_DOCUMENT_TRANSACTION_ERROR',
+        message: 'Transaction error when updating document status or data',
+        data: {
+          documentId,
+          error: error instanceof Error ? error.message : String(error),
+        },
+        metadata: requestMetadata,
+        userId: document.userId,
+      });
     }
   });
 
@@ -292,6 +326,17 @@ export const run = async ({
       );
     } catch (error) {
       console.error('Error when sending the signed document to Laravel:', error);
+
+      await createLog({
+        action: 'LARAVEL_SUBMISSION_ERROR',
+        message: 'Error when submitting signed document to Laravel',
+        data: {
+          documentId,
+          error: error instanceof Error ? error.message : String(error),
+        },
+        metadata: requestMetadata,
+        userId: updatedDocument.userId,
+      });
     }
   });
 };

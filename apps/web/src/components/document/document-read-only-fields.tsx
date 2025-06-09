@@ -66,7 +66,7 @@ export const DocumentReadOnlyFields = ({
                   trigger={
                     <Avatar className="dark:border-foreground h-8 w-8 border-2 border-solid border-gray-200/50 transition-colors hover:border-gray-200">
                       <AvatarFallback className="bg-neutral-50 text-xs text-gray-400">
-                        {extractInitials(field.recipient.name || field.recipient.email)}
+                        {extractInitials(field.recipient.name || (field.recipient.email ?? ''))}
                       </AvatarFallback>
                     </Avatar>
                   }

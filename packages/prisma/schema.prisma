@@ -73,6 +73,7 @@ model User {
   siteSettings       SiteSettings[]
   passkeys           Passkey[]
   avatarImage        AvatarImage?           @relation(fields: [avatarImageId], references: [id], onDelete: SetNull)
+  Log                Log[]
 
   @@index([email])
 }
@@ -442,7 +443,7 @@ model Recipient {
   id                Int           @id @default(autoincrement())
   documentId        Int?
   templateId        Int?
-  email             String        @db.VarChar(255)
+  email             String?       @db.VarChar(255)
   name              String        @default("") @db.VarChar(255)
   token             String
   documentDeletedAt DateTime?
@@ -460,8 +461,6 @@ model Recipient {
   fields            Field[]
   signatures        Signature[]
 
-  @@unique([documentId, email])
-  @@unique([templateId, email])
   @@index([documentId])
   @@index([templateId])
   @@index([token])
@@ -794,4 +793,15 @@ model AvatarImage {
 
   team Team[]
   user User[]
+}
+
+model Log {
+  id        String   @id @default(cuid())
+  action    String
+  message   String?
+  data      Json?
+  metaData  Json?
+  userId    Int?
+  user      User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  createdAt DateTime @default(now())
 }

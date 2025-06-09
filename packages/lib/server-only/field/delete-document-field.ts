@@ -112,7 +112,7 @@ export const deleteDocumentField = async ({
         metadata: requestMetadata,
         data: {
           fieldId: deletedField.secondaryId,
-          fieldRecipientEmail: recipient.email,
+          fieldRecipientEmail: recipient.email ?? '',
           fieldRecipientId: deletedField.recipientId,
           fieldType: deletedField.type,
         },

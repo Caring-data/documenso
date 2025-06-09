@@ -180,10 +180,7 @@ export const setFieldsForTemplate = async ({
           },
           recipient: {
             connect: {
-              templateId_email: {
-                templateId,
-                email: field.signerEmail.toLowerCase(),
-              },
+              id: templateId,
             },
           },
         },

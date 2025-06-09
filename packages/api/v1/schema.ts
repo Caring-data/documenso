@@ -292,10 +292,9 @@ export const ZGenerateDocumentFromTemplateMutationSchema = z.object({
     )
     .describe('The information of the recipients to create the document with.')
     .refine((recipients) => {
-      const emails = recipients.map((signer) => signer.email);
-
-      return new Set(emails).size === emails.length;
-    }, 'Recipients must have unique emails'),
+      const keyPairs = recipients.map((r) => `${r.email}-${r.signingOrder ?? 'null'}`);
+      return new Set(keyPairs).size === recipients.length;
+    }, 'Recipients must have unique email and signing order combination'),
   meta: z
     .object({
       subject: z.string(),
