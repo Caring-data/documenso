@@ -28,10 +28,9 @@ export async function findFieldCoordinatesFromPdf({
     const page = await pdf.getPage(pageIndex + 1);
     const viewport = page.getViewport({ scale: 1 });
     const content = await page.getTextContent();
-    console.log('📍 Buscando en página', page, fieldName);
+
     for (const item of content.items) {
       if ('str' in item && item.str.includes(`__${fieldName}__`)) {
-        console.log('✅ Encontrado __signature1__ en página', page, '->', item);
         const x = item.transform[4];
         const y = viewport.height - item.transform[5];
 
