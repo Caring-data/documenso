@@ -136,7 +136,7 @@ export const updateDocumentFields = async ({
               metadata: requestMetadata,
               data: {
                 fieldId: updatedField.secondaryId,
-                fieldRecipientEmail: recipientEmail,
+                fieldRecipientEmail: recipientEmail ?? '',
                 fieldRecipientId: updatedField.recipientId,
                 fieldType: updatedField.type,
                 changes,

@@ -59,13 +59,14 @@ export async function GET(_request: Request, { params: { slug } }: SharePageOpen
       return sender.signature || null;
     });
 
-  const signatureName = match(recipientOrSender)
-    .with({ signatures: P.array(P._) }, (recipient) => {
-      return recipient.name || recipient.email;
-    })
-    .otherwise((sender) => {
-      return sender.name || sender.email;
-    });
+  const signatureName =
+    match(recipientOrSender)
+      .with({ signatures: P.array(P._) }, (recipient) => {
+        return recipient.name || recipient.email;
+      })
+      .otherwise((sender) => {
+        return sender.name || sender.email;
+      }) ?? 'Anonymous';
 
   return new ImageResponse(
     (

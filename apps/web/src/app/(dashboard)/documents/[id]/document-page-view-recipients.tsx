@@ -75,8 +75,8 @@ export const DocumentPageViewRecipients = ({
         {recipients.map((recipient) => (
           <li key={recipient.id} className="flex items-center justify-between px-4 py-2.5 text-sm">
             <AvatarWithText
-              avatarFallback={recipient.email.slice(0, 1).toUpperCase()}
-              primaryText={<p className="text-muted-foreground text-sm">{recipient.email}</p>}
+              avatarFallback={recipient?.email ? recipient?.email.slice(0, 1).toUpperCase() : ''}
+              primaryText={<p className="text-muted-foreground text-sm">{recipient?.email}</p>}
               secondaryText={
                 <p className="text-muted-foreground/70 text-xs">
                   {_(RECIPIENT_ROLES_DESCRIPTION[recipient.role].roleName)}

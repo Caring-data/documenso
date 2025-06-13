@@ -137,7 +137,7 @@ export const updateRecipient = async ({
           data: {
             changes,
             recipientId,
-            recipientEmail: persisted.email,
+            recipientEmail: persisted.email ?? '',
             recipientName: persisted.name,
             recipientRole: persisted.role,
           },

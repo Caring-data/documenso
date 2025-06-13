@@ -113,7 +113,7 @@ export const deleteDocumentRecipient = async ({
         documentId: document.id,
         metadata: requestMetadata,
         data: {
-          recipientEmail: recipientToDelete.email,
+          recipientEmail: recipientToDelete.email ?? '',
           recipientName: recipientToDelete.name,
           recipientId: recipientToDelete.id,
           recipientRole: recipientToDelete.role,
@@ -159,7 +159,7 @@ export const deleteDocumentRecipient = async ({
     await sendEmail(
       {
         name: recipientToDelete.name,
-        email: recipientToDelete.email,
+        email: recipientToDelete.email ?? '',
       },
       i18n._(msg`You have been removed from a document`),
       html,

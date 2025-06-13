@@ -95,6 +95,10 @@ export const DirectTemplatePageView = ({
         directTemplateExternalId = decodeURIComponent(directTemplateExternalId);
       }
 
+      if (!recipient.email) {
+        throw new Error('Recipient email is required.');
+      }
+
       const { token } = await createDocumentFromDirectTemplate({
         directTemplateToken,
         directTemplateExternalId,

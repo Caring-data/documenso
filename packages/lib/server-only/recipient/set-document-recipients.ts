@@ -171,7 +171,7 @@ export const setDocumentRecipients = async ({
           },
           update: {
             name: recipient.name,
-            email: recipient.email,
+            email: recipient.email ?? '',
             role: recipient.role,
             signingOrder: recipient.signingOrder,
             documentId,
@@ -182,7 +182,7 @@ export const setDocumentRecipients = async ({
           },
           create: {
             name: recipient.name,
-            email: recipient.email,
+            email: recipient.email ?? '',
             role: recipient.role,
             signingOrder: recipient.signingOrder,
             token: nanoid(),
@@ -210,7 +210,7 @@ export const setDocumentRecipients = async ({
         }
 
         const baseAuditLog = {
-          recipientEmail: upsertedRecipient.email,
+          recipientEmail: upsertedRecipient.email ?? '',
           recipientName: upsertedRecipient.name,
           recipientId,
           recipientRole: upsertedRecipient.role,
@@ -273,7 +273,7 @@ export const setDocumentRecipients = async ({
             documentId: documentId,
             metadata: requestMetadata,
             data: {
-              recipientEmail: recipient.email,
+              recipientEmail: recipient.email ?? '',
               recipientName: recipient.name,
               recipientId: recipient.id,
               recipientRole: recipient.role,
@@ -329,7 +329,7 @@ export const setDocumentRecipients = async ({
         await sendEmail(
           {
             name: recipient.name,
-            email: recipient.email,
+            email: recipient.email ?? '',
           },
           i18n._(msg`You have been removed from a document`),
           html,

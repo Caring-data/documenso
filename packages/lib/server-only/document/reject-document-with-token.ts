@@ -73,7 +73,7 @@ export async function rejectDocumentWithToken({
           email: recipient.email,
         },
         data: {
-          recipientEmail: recipient.email,
+          recipientEmail: recipient.email ?? '',
           recipientName: recipient.name,
           recipientId: recipient.id,
           recipientRole: recipient.role,

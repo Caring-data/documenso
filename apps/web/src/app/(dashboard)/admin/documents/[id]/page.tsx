@@ -78,7 +78,7 @@ export default async function AdminDocumentDetailsPage({ params }: AdminDocument
                 <div className="flex items-center gap-x-4">
                   <h4 className="font-semibold">{recipient.name}</h4>
                   <Badge size="small" variant="neutral">
-                    {recipient.email}
+                    {recipient.email ?? ''}
                   </Badge>
                 </div>
               </AccordionTrigger>

@@ -94,6 +94,10 @@ export default async function SigningPage({ params: { token } }: SigningPageProp
   let recipientHasAccount: boolean | null = null;
 
   if (!isDocumentAccessValid) {
+    if (!recipient.email) {
+      return notFound();
+    }
+
     recipientHasAccount = await getUserByEmail({ email: recipient?.email })
       .then((user) => !!user)
       .catch(() => false);

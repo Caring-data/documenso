@@ -9,7 +9,7 @@ export const getRecipientByEmail = async ({ documentId, email }: GetRecipientByE
   const recipient = await prisma.recipient.findFirst({
     where: {
       documentId,
-      email: email.toLowerCase(),
+      email: email?.toLowerCase(),
     },
   });
 

@@ -100,7 +100,7 @@ export const DocumentRecipientLinkCopyDialog = ({
           {recipients.map((recipient) => (
             <li key={recipient.id} className="flex items-center justify-between px-4 py-3 text-sm">
               <AvatarWithText
-                avatarFallback={recipient.email.slice(0, 1).toUpperCase()}
+                avatarFallback={(recipient.email ?? '?').slice(0, 1).toUpperCase()}
                 primaryText={<p className="text-muted-foreground text-sm">{recipient.email}</p>}
                 secondaryText={
                   <p className="text-muted-foreground/70 text-xs">

@@ -135,6 +135,7 @@ export const ZSetFieldsForTemplateRequestSchema = z.object({
       formId: z.string().min(1),
       nativeId: z.number().optional(),
       type: z.nativeEnum(FieldType),
+      signerId: z.number(),
       signerEmail: z.string().min(1),
       pageNumber: z.number().min(1),
       pageX: z.number().min(0),

@@ -222,7 +222,7 @@ export const AddSubjectFormPartial = ({
                         className="flex items-center justify-between px-4 py-3 text-sm"
                       >
                         <AvatarWithText
-                          avatarFallback={recipient.email.slice(0, 1).toUpperCase()}
+                          avatarFallback={(recipient?.email ?? '?').slice(0, 1).toUpperCase()}
                           primaryText={
                             <p className="text-muted-foreground text-sm">{recipient.email}</p>
                           }
