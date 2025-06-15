@@ -448,7 +448,7 @@ export const fieldRouter = router({
   signFieldWithToken: procedure
     .input(ZSignFieldWithTokenMutationSchema)
     .mutation(async ({ input, ctx }) => {
-      const { token, fieldId, value, isBase64, authOptions } = input;
+      const { token, fieldId, value, isBase64, authOptions, typedSignatureSettings } = input;
 
       return await signFieldWithToken({
         token,
@@ -458,6 +458,7 @@ export const fieldRouter = router({
         userId: ctx.user?.id,
         authOptions,
         requestMetadata: extractNextApiRequestMetadata(ctx.req),
+        typedSignatureSettings,
       });
     }),
 

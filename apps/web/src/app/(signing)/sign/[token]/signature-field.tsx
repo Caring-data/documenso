@@ -33,6 +33,7 @@ import { SigningDisclosure } from '~/components/general/signing-disclosure';
 import { useRequiredDocumentAuthContext } from './document-auth-provider';
 import { useRequiredSigningContext } from './provider';
 import { useRecipientContext } from './recipient-context';
+import type { SignaturePadValue } from './signature-pad';
 import { SignaturePad } from './signature-pad';
 import { SigningFieldContainer } from './signing-field-container';
 
@@ -76,17 +77,13 @@ export const SignatureField = ({
     mutateAsync: removeSignedFieldWithToken,
     isPending: isRemoveSignedFieldWithTokenLoading,
   } = trpc.field.removeSignedFieldWithToken.useMutation(DO_NOT_INVALIDATE_QUERY_ON_MUTATION);
-  console.log('field', field);
-  console.log('providedSignature', providedSignature);
-  console.log('signatureValid', signatureValid);
 
   const { signature } = field;
-  console.log('signature', signature);
 
   const isLoading = isSignFieldWithTokenLoading || isRemoveSignedFieldWithTokenLoading || isPending;
 
   const [showSignatureModal, setShowSignatureModal] = useState(false);
-  const [localSignature, setLocalSignature] = useState<string | null>(null);
+  const [localSignature, setLocalSignature] = useState<SignaturePadValue | null>(providedSignature);
 
   const state = useMemo<SignatureFieldState>(() => {
     if (!field.inserted) {
@@ -112,11 +109,10 @@ export const SignatureField = ({
    * When the user clicks the sign button in the dialog where they enter their signature.
    */
   const onDialogSignClick = () => {
-    setShowSignatureModal(false);
+    if (!localSignature?.value) return;
     setProvidedSignature(localSignature);
-    if (!localSignature) {
-      return;
-    }
+    setSignatureValid(true);
+    setShowSignatureModal(false);
 
     void executeActionAuthProcedure({
       onReauthFormSubmit: async (authOptions) => await onSign(authOptions, localSignature),
@@ -124,9 +120,13 @@ export const SignatureField = ({
     });
   };
 
-  const onSign = async (authOptions?: TRecipientActionAuth, signature?: string) => {
+  const onSign = async (
+    authOptions?: TRecipientActionAuth,
+    signature?: string | SignaturePadValue,
+  ) => {
     try {
-      const value = signature || providedSignature;
+      const rawSignature = signature || providedSignature;
+      const value = typeof rawSignature === 'string' ? rawSignature : (rawSignature?.value ?? '');
 
       if (!value || (signature && !signatureValid)) {
         setShowSignatureModal(true);
@@ -145,12 +145,21 @@ export const SignatureField = ({
         return;
       }
 
+      const typedSignatureSettings =
+        typeof rawSignature === 'object' && isTypedSignature
+          ? {
+              font: rawSignature?.font,
+              color: rawSignature?.color,
+            }
+          : undefined;
+
       const payload: TSignFieldWithTokenMutationSchema = {
         token: recipient.token,
         fieldId: field.id,
         value,
         isBase64: !isTypedSignature,
         authOptions,
+        typedSignatureSettings,
       };
 
       if (onSignField) {
@@ -206,6 +215,9 @@ export const SignatureField = ({
 
   const isRequired = field?.fieldMeta?.required === true;
 
+  const isTypedSignatureSettings = (value: unknown): value is { font?: string; color?: string } =>
+    typeof value === 'object' && value !== null && ('font' in value || 'color' in value);
+
   return (
     <SigningFieldContainer
       field={field}
@@ -222,7 +234,6 @@ export const SignatureField = ({
 
       {state === 'empty' && (
         <p
-          // className="group-hover:text-primary font-signature text-muted-foreground flex items-center justify-center text-[0.5rem] duration-200 group-hover:text-yellow-300 sm:text-xl"
           className={cn(
             'group-hover:text-primary font-signature text-muted-foreground flex items-center justify-center text-[0.5rem] duration-200 sm:text-xl',
             {
@@ -245,17 +256,18 @@ export const SignatureField = ({
         </div>
       )}
 
-      {state === 'signed-text' && (
+      {state === 'signed-text' && isTypedSignatureSettings(signature?.typedSignatureSettings) && (
         <div ref={containerRef} className="flex h-full w-full items-center justify-center p-2">
           <p
             ref={signatureRef}
-            // className="font-signature text-muted-foreground dark:text-background"
             className={cn(
               'w-full overflow-hidden break-all text-center text-sm leading-tight duration-200 sm:text-2xl',
-              signature?.font ? `font-[${signature.font}]` : 'font-signature',
+              signature?.typedSignatureSettings?.font
+                ? `font-[${signature.typedSignatureSettings.font}]`
+                : 'font-signature',
             )}
             style={{
-              color: signature?.color || 'black',
+              color: signature?.typedSignatureSettings?.color || 'black',
             }}
           >
             {signature?.typedSignature}
@@ -273,9 +285,9 @@ export const SignatureField = ({
           </DialogTitle>
           <SignaturePad
             id="signature"
-            value={providedSignature ?? undefined}
+            value={localSignature ?? undefined}
             onChange={(sig) => {
-              setLocalSignature(sig.value);
+              setLocalSignature(sig);
               setSignatureValid(Boolean(sig.value));
             }}
             typedSignatureEnabled={typedSignatureEnabled}

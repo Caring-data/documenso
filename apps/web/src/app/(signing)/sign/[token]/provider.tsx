@@ -46,7 +46,9 @@ export const SigningProvider = ({
 }: SigningProviderProps) => {
   const [fullName, setFullName] = useState(initialFullName || '');
   const [email, setEmail] = useState(initialEmail || '');
-  const [signature, setSignature] = useState<SignaturePadValue | null>(initialSignature || null);
+  //const [signature, setSignature] = useState<SignaturePadValue | null>(initialSignature || null);
+  const [signature, setSignature] = useState<SignaturePadValue | null>(null);
+
   const [signatureValid, setSignatureValid] = useState(true);
 
   useEffect(() => {

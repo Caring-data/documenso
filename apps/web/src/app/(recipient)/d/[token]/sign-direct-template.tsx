@@ -18,6 +18,7 @@ import type { TTemplate } from '@documenso/lib/types/template';
 import { sortFieldsByPosition, validateFieldsInserted } from '@documenso/lib/utils/fields';
 import type { Field, Recipient, Signature } from '@documenso/prisma/client';
 import { FieldType } from '@documenso/prisma/client';
+import type { SignatureWithSettings } from '@documenso/prisma/types/field-with-signature';
 import type {
   TRemovedSignedFieldWithTokenMutationSchema,
   TSignFieldWithTokenMutationSchema,
@@ -35,7 +36,6 @@ import type { DocumentFlowStep } from '@documenso/ui/primitives/document-flow/ty
 import { ElementVisible } from '@documenso/ui/primitives/element-visible';
 import { Input } from '@documenso/ui/primitives/input';
 import { Label } from '@documenso/ui/primitives/label';
-import { SignaturePad } from '@documenso/ui/primitives/signature-pad';
 import { useStep } from '@documenso/ui/primitives/stepper';
 
 import { CalendarField } from '~/app/(signing)/sign/[token]/calendar-field';
@@ -51,6 +51,7 @@ import { RadioField } from '~/app/(signing)/sign/[token]/radio-field';
 import { RecipientProvider } from '~/app/(signing)/sign/[token]/recipient-context';
 import { SignDialog } from '~/app/(signing)/sign/[token]/sign-dialog';
 import { SignatureField } from '~/app/(signing)/sign/[token]/signature-field';
+import { SignaturePad } from '~/app/(signing)/sign/[token]/signature-pad';
 import { TextField } from '~/app/(signing)/sign/[token]/text-field';
 
 export type SignDirectTemplateFormProps = {
@@ -63,7 +64,7 @@ export type SignDirectTemplateFormProps = {
 
 export type DirectTemplateLocalField = Field & {
   signedValue?: TSignFieldWithTokenMutationSchema;
-  signature?: Signature;
+  signature?: SignatureWithSettings;
 };
 
 export const SignDirectTemplateForm = ({
@@ -104,6 +105,7 @@ export const SignDirectTemplateForm = ({
             fieldId: 1,
             signatureImageAsBase64: value.value.startsWith('data:') ? value.value : null,
             typedSignature: value.value.startsWith('data:') ? null : value.value,
+            typedSignatureSettings: value.typedSignatureSettings ?? null,
           } satisfies Signature;
         }
 
@@ -350,11 +352,10 @@ export const SignDirectTemplateForm = ({
                   <SignaturePad
                     className="h-44 w-full"
                     disabled={isSubmitting}
-                    defaultValue={signature ?? undefined}
+                    defaultValue={signature?.value ?? undefined}
                     onChange={(value) => {
                       setSignature(value);
                     }}
-                    allowTypedSignature={template.templateMeta?.typedSignatureEnabled}
                   />
                 </CardContent>
               </Card>
