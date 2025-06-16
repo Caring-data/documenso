@@ -27,12 +27,12 @@ import { Input } from '@documenso/ui/primitives/input';
 import { Label } from '@documenso/ui/primitives/label';
 import { LazyPDFViewer } from '@documenso/ui/primitives/lazy-pdf-viewer';
 import { RadioGroup, RadioGroupItem } from '@documenso/ui/primitives/radio-group';
-import { SignaturePad } from '@documenso/ui/primitives/signature-pad';
 import { useToast } from '@documenso/ui/primitives/use-toast';
 
 import { useRequiredSigningContext } from '~/app/(signing)/sign/[token]/provider';
 import { RecipientProvider } from '~/app/(signing)/sign/[token]/recipient-context';
 import { RejectDocumentDialog } from '~/app/(signing)/sign/[token]/reject-document-dialog';
+import { SignaturePad } from '~/app/(signing)/sign/[token]/signature-pad';
 import { Logo } from '~/components/branding/logo';
 
 import { EmbedClientLoading } from '../../client-loading';
@@ -254,8 +254,15 @@ export const EmbedSignDocumentClientPage = ({
           fieldId: 1,
           recipientId: 1,
           created: new Date(),
-          signatureImageAsBase64: signature?.startsWith('data:') ? signature : null,
-          typedSignature: signature?.startsWith('data:') ? null : signature,
+          signatureImageAsBase64: signature?.value?.startsWith('data:') ? signature.value : null,
+          typedSignature: signature?.value?.startsWith('data:') ? null : (signature?.value ?? null),
+          typedSignatureSettings:
+            signature?.type === 'type'
+              ? {
+                  font: signature.font,
+                  color: signature.color,
+                }
+              : null,
         }}
       />
     );
@@ -429,14 +436,14 @@ export const EmbedSignDocumentClientPage = ({
                             <SignaturePad
                               className="h-44 w-full"
                               disabled={isThrottled || isSubmitting}
-                              defaultValue={signature ?? undefined}
+                              value={signature ?? undefined}
                               onChange={(value) => {
                                 setSignature(value);
                               }}
                               onValidityChange={(isValid) => {
                                 setSignatureValid(isValid);
                               }}
-                              allowTypedSignature={Boolean(
+                              typedSignatureEnabled={Boolean(
                                 metadata &&
                                   'typedSignatureEnabled' in metadata &&
                                   metadata.typedSignatureEnabled,

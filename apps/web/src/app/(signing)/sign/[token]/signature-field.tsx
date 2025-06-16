@@ -29,6 +29,7 @@ import {
 import { useToast } from '@documenso/ui/primitives/use-toast';
 
 import { SigningDisclosure } from '~/components/general/signing-disclosure';
+import { isTypedSignatureSettings } from '~/helpers/signature';
 
 import { useRequiredDocumentAuthContext } from './document-auth-provider';
 import { useRequiredSigningContext } from './provider';
@@ -215,9 +216,6 @@ export const SignatureField = ({
 
   const isRequired = field?.fieldMeta?.required === true;
 
-  const isTypedSignatureSettings = (value: unknown): value is { font?: string; color?: string } =>
-    typeof value === 'object' && value !== null && ('font' in value || 'color' in value);
-
   return (
     <SigningFieldContainer
       field={field}
@@ -260,14 +258,10 @@ export const SignatureField = ({
         <div ref={containerRef} className="flex h-full w-full items-center justify-center p-2">
           <p
             ref={signatureRef}
-            className={cn(
-              'w-full overflow-hidden break-all text-center text-sm leading-tight duration-200 sm:text-2xl',
-              signature?.typedSignatureSettings?.font
-                ? `font-[${signature.typedSignatureSettings.font}]`
-                : 'font-signature',
-            )}
+            className="w-full overflow-hidden break-all text-center text-sm leading-tight duration-200 sm:text-2xl"
             style={{
               color: signature?.typedSignatureSettings?.color || 'black',
+              fontFamily: signature?.typedSignatureSettings?.font || 'Dancing Script',
             }}
           >
             {signature?.typedSignature}

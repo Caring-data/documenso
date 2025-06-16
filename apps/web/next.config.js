@@ -22,6 +22,26 @@ const FONT_NOTO_SANS_BYTES = fs.readFileSync(
   path.join(__dirname, '../../packages/assets/fonts/arial.ttf'),
 );
 
+const FONT_DANCING_SCRIPT_BYTES = fs.readFileSync(
+  path.join(__dirname, '../../packages/assets/fonts/dancing-script.ttf'),
+);
+
+const FONT_GREAT_VIBES_BYTES = fs.readFileSync(
+  path.join(__dirname, '../../packages/assets/fonts/great-vibes-regular.ttf'),
+);
+
+const FONT_COOKIE_BYTES = fs.readFileSync(
+  path.join(__dirname, '../../packages/assets/fonts/cookie-regular.ttf'),
+);
+
+const FONT_MONTE_CARLO_BYTES = fs.readFileSync(
+  path.join(__dirname, '../../packages/assets/fonts/monte-carlo-regular.ttf'),
+);
+
+const FONT_LATO_BYTES = fs.readFileSync(
+  path.join(__dirname, '../../packages/assets/fonts/lato-regular.ttf'),
+);
+
 /** @type {import('next').NextConfig} */
 const config = {
   output: process.env.DOCKER_OUTPUT ? 'standalone' : undefined,
@@ -48,6 +68,11 @@ const config = {
     NEXT_PUBLIC_PROJECT: 'web',
     FONT_CAVEAT_URI: `data:font/ttf;base64,${FONT_CAVEAT_BYTES.toString('base64')}`,
     FONT_NOTO_SANS_URI: `data:font/ttf;base64,${FONT_NOTO_SANS_BYTES.toString('base64')}`,
+    FONT_DANCING_SCRIPT_URI: `data:font/ttf;base64,${FONT_DANCING_SCRIPT_BYTES.toString('base64')}`,
+    FONT_GREAT_VIBES_URI: `data:font/ttf;base64,${FONT_GREAT_VIBES_BYTES.toString('base64')}`,
+    FONT_COOKIE_URI: `data:font/ttf;base64,${FONT_COOKIE_BYTES.toString('base64')}`,
+    FONT_MONTE_CARLO_URI: `data:font/ttf;base64,${FONT_MONTE_CARLO_BYTES.toString('base64')}`,
+    FONT_LATO_URI: `data:font/ttf;base64,${FONT_LATO_BYTES.toString('base64')}`,
   },
   modularizeImports: {
     'lucide-react': {

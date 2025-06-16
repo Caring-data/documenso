@@ -96,7 +96,7 @@ export const SignaturePadType = ({ className, value, onChange }: SignaturePadTyp
             fontFamily: selectedFont,
             fontSize: `${fontSize}px`,
           }}
-          className="font-signature w-full px-4 text-center text-black focus:outline-none dark:text-white"
+          className="w-full px-4 text-center text-black focus:outline-none dark:text-white"
           onInput={handleInput}
         />
       </div>

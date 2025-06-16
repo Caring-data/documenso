@@ -43,7 +43,7 @@ msgid "\"{placeholderEmail}\" on behalf of \"{0}\" has invited you to sign \"exa
 msgstr "\"{placeholderEmail}\" en nombre de \"{0}\" te ha invitado a firmar \"documento de ejemplo\"."
 
 #: apps/web/src/app/(signing)/sign/[token]/form.tsx:270
-#: apps/web/src/app/embed/sign/[[...url]]/client.tsx:373
+#: apps/web/src/app/embed/sign/[[...url]]/client.tsx:380
 msgid "(You)"
 msgstr ""
 
@@ -585,7 +585,7 @@ msgstr "Aceptación y Consentimiento"
 msgid "Accepted team invitation"
 msgstr "Invitación de equipo aceptada"
 
-#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:107
+#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:109
 msgid "Account Authentication"
 msgstr "Autenticación de Cuenta"
 
@@ -602,7 +602,7 @@ msgstr "Cuenta deshabilitada"
 msgid "Account enabled"
 msgstr "Cuenta habilitada"
 
-#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:98
+#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:100
 msgid "Account Re-Authentication"
 msgstr "Re-autenticación de Cuenta"
 
@@ -964,7 +964,7 @@ msgstr "Ocurrió un error mientras se eliminaba el campo."
 msgid "An error occurred while removing the selection."
 msgstr ""
 
-#: apps/web/src/app/(signing)/sign/[token]/signature-field.tsx:210
+#: apps/web/src/app/(signing)/sign/[token]/signature-field.tsx:211
 msgid "An error occurred while removing the signature."
 msgstr "Ocurrió un error al eliminar la firma."
 
@@ -998,7 +998,7 @@ msgstr ""
 #: apps/web/src/app/(signing)/sign/[token]/name-field.tsx:129
 #: apps/web/src/app/(signing)/sign/[token]/number-field.tsx:153
 #: apps/web/src/app/(signing)/sign/[token]/radio-field.tsx:104
-#: apps/web/src/app/(signing)/sign/[token]/signature-field.tsx:184
+#: apps/web/src/app/(signing)/sign/[token]/signature-field.tsx:185
 #: apps/web/src/app/(signing)/sign/[token]/text-field.tsx:175
 msgid "An error occurred while signing the document."
 msgstr "Ocurrió un error al firmar el documento."
@@ -1154,7 +1154,7 @@ msgstr ""
 msgid "Assist Document"
 msgstr ""
 
-#: apps/web/src/app/embed/sign/[[...url]]/client.tsx:300
+#: apps/web/src/app/embed/sign/[[...url]]/client.tsx:307
 msgid "Assist with signing"
 msgstr ""
 
@@ -1362,7 +1362,7 @@ msgstr ""
 #: apps/web/src/app/(signing)/sign/[token]/number-field.tsx:347
 #: apps/web/src/app/(signing)/sign/[token]/reject-document-dialog.tsx:158
 #: apps/web/src/app/(signing)/sign/[token]/sign-dialog.tsx:128
-#: apps/web/src/app/(signing)/sign/[token]/signature-field.tsx:301
+#: apps/web/src/app/(signing)/sign/[token]/signature-field.tsx:295
 #: apps/web/src/app/(signing)/sign/[token]/signature-pad/signature-pad-dialog.tsx:163
 #: apps/web/src/app/(signing)/sign/[token]/text-field.tsx:358
 #: apps/web/src/app/(teams)/t/[teamUrl]/settings/team-transfer-status.tsx:121
@@ -1505,8 +1505,8 @@ msgstr "Haga clic para copiar el enlace de firma para enviar al destinatario"
 
 #: apps/web/src/app/(recipient)/d/[token]/sign-direct-template.tsx:183
 #: apps/web/src/app/(signing)/sign/[token]/form.tsx:173
-#: apps/web/src/app/embed/direct/[[...url]]/client.tsx:481
-#: apps/web/src/app/embed/sign/[[...url]]/client.tsx:487
+#: apps/web/src/app/embed/direct/[[...url]]/client.tsx:489
+#: apps/web/src/app/embed/sign/[[...url]]/client.tsx:494
 msgid "Click to insert field"
 msgstr "Haga clic para insertar campo"
 
@@ -1525,8 +1525,8 @@ msgid "Close"
 msgstr "Cerrar"
 
 #: apps/web/src/app/(signing)/sign/[token]/sign-dialog.tsx:61
-#: apps/web/src/app/embed/direct/[[...url]]/client.tsx:471
-#: apps/web/src/app/embed/sign/[[...url]]/client.tsx:477
+#: apps/web/src/app/embed/direct/[[...url]]/client.tsx:479
+#: apps/web/src/app/embed/sign/[[...url]]/client.tsx:484
 #: apps/web/src/components/forms/v2/signup.tsx:538
 msgid "Complete"
 msgstr "Completo"
@@ -2162,7 +2162,7 @@ msgstr "Documento completado"
 msgid "Document Completed - {0}"
 msgstr ""
 
-#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:357
+#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:373
 msgid "Document Completed by all parties on"
 msgstr ""
 
@@ -2479,12 +2479,12 @@ msgstr "Divulgación de Firma Electrónica"
 #: apps/web/src/app/(dashboard)/admin/users/data-table-users.tsx:71
 #: apps/web/src/app/(dashboard)/templates/use-template-dialog.tsx:277
 #: apps/web/src/app/(dashboard)/templates/use-template-dialog.tsx:284
-#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:101
-#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:108
+#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:103
+#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:110
 #: apps/web/src/app/(recipient)/d/[token]/configure-direct-template.tsx:119
 #: apps/web/src/app/(signing)/sign/[token]/email-field.tsx:133
-#: apps/web/src/app/embed/direct/[[...url]]/client.tsx:407
-#: apps/web/src/app/embed/sign/[[...url]]/client.tsx:410
+#: apps/web/src/app/embed/direct/[[...url]]/client.tsx:415
+#: apps/web/src/app/embed/sign/[[...url]]/client.tsx:417
 #: apps/web/src/components/(teams)/dialogs/add-team-email-dialog.tsx:169
 #: apps/web/src/components/(teams)/dialogs/update-team-email-dialog.tsx:153
 #: apps/web/src/components/forms/forgot-password.tsx:81
@@ -2676,9 +2676,9 @@ msgstr "Ingresa tu texto aquí"
 #: apps/web/src/app/(signing)/sign/[token]/pre-signing/page.tsx:45
 #: apps/web/src/app/(signing)/sign/[token]/radio-field.tsx:101
 #: apps/web/src/app/(signing)/sign/[token]/radio-field.tsx:130
-#: apps/web/src/app/(signing)/sign/[token]/signature-field.tsx:140
-#: apps/web/src/app/(signing)/sign/[token]/signature-field.tsx:183
-#: apps/web/src/app/(signing)/sign/[token]/signature-field.tsx:209
+#: apps/web/src/app/(signing)/sign/[token]/signature-field.tsx:141
+#: apps/web/src/app/(signing)/sign/[token]/signature-field.tsx:184
+#: apps/web/src/app/(signing)/sign/[token]/signature-field.tsx:210
 #: apps/web/src/app/(signing)/sign/[token]/text-field.tsx:172
 #: apps/web/src/app/(signing)/sign/[token]/text-field.tsx:202
 #: apps/web/src/components/(dashboard)/layout/verify-email-banner.tsx:54
@@ -2823,8 +2823,8 @@ msgstr "Firma gratuita"
 #: apps/web/src/app/(recipient)/d/[token]/sign-direct-template.tsx:335
 #: apps/web/src/app/(signing)/sign/[token]/form.tsx:325
 #: apps/web/src/app/(signing)/sign/[token]/name-field.tsx:212
-#: apps/web/src/app/embed/direct/[[...url]]/client.tsx:392
-#: apps/web/src/app/embed/sign/[[...url]]/client.tsx:395
+#: apps/web/src/app/embed/direct/[[...url]]/client.tsx:400
+#: apps/web/src/app/embed/sign/[[...url]]/client.tsx:402
 #: apps/web/src/components/forms/profile.tsx:101
 #: apps/web/src/components/forms/v2/signup.tsx:316
 msgid "Full Name"
@@ -2888,7 +2888,7 @@ msgstr "Verde"
 msgid "Having an assistant as the last signer means they will be unable to take any action as there are no subsequent signers to assist."
 msgstr ""
 
-#: apps/web/src/app/embed/sign/[[...url]]/client.tsx:325
+#: apps/web/src/app/embed/sign/[[...url]]/client.tsx:332
 msgid "Help complete the document for other signers."
 msgstr ""
 
@@ -2958,7 +2958,7 @@ msgstr ""
 msgid "I am required to receive a copy of this document"
 msgstr "Se me requiere recibir una copia de este documento"
 
-#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:39
+#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:41
 msgid "I am the owner of this document"
 msgstr "Soy el propietario de este documento"
 
@@ -3084,7 +3084,7 @@ msgstr "Invitado el"
 msgid "Invoice"
 msgstr "Factura"
 
-#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:330
+#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:346
 msgid "IP address"
 msgstr ""
 
@@ -3468,8 +3468,8 @@ msgstr "Nuevo propietario del equipo"
 msgid "New Template"
 msgstr "Nueva plantilla"
 
-#: apps/web/src/app/embed/direct/[[...url]]/client.tsx:462
-#: apps/web/src/app/embed/sign/[[...url]]/client.tsx:466
+#: apps/web/src/app/embed/direct/[[...url]]/client.tsx:470
+#: apps/web/src/app/embed/sign/[[...url]]/client.tsx:473
 #: apps/web/src/components/forms/v2/signup.tsx:525
 msgid "Next"
 msgstr "Siguiente"
@@ -3586,7 +3586,7 @@ msgstr "Número"
 msgid "Number format"
 msgstr "Formato de número"
 
-#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:372
+#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:388
 msgid "of"
 msgstr ""
 
@@ -3671,7 +3671,7 @@ msgstr "De lo contrario, el documento se creará como un borrador."
 msgid "Owner"
 msgstr "Propietario"
 
-#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:372
+#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:388
 msgid "Page"
 msgstr ""
 
@@ -3707,7 +3707,7 @@ msgstr "La clave de acceso ha sido actualizada"
 msgid "Passkey name"
 msgstr "Nombre de clave de acceso"
 
-#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:100
+#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:102
 msgid "Passkey Re-Authentication"
 msgstr "Re-autenticación de Passkey"
 
@@ -3776,7 +3776,7 @@ msgstr "Pago atrasado"
 #: apps/web/src/app/(dashboard)/templates/[id]/template-page-view-documents-table.tsx:226
 #: apps/web/src/components/(teams)/tables/teams-member-page-data-table.tsx:82
 #: apps/web/src/components/(teams)/tables/user-settings-teams-page-data-table.tsx:77
-#: apps/web/src/components/document/document-read-only-fields.tsx:94
+#: apps/web/src/components/document/document-read-only-fields.tsx:96
 #: apps/web/src/components/formatter/document-status.tsx:22
 #: packages/lib/constants/document.ts:16
 msgid "Pending"
@@ -4126,7 +4126,7 @@ msgstr "Correo electrónico de solicitud de firma de destinatario"
 msgid "Recipient updated"
 msgstr "Destinatario actualizado"
 
-#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:242
+#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:244
 msgid "Recipient Verification"
 msgstr ""
 
@@ -4532,7 +4532,7 @@ msgid "Sending..."
 msgstr "Enviando..."
 
 #: apps/web/src/app/(dashboard)/documents/[id]/document-page-view-recipients.tsx:102
-#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:232
+#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:234
 msgid "Sent"
 msgstr "Enviado"
 
@@ -4601,7 +4601,7 @@ msgstr "Mostrar plantillas en el perfil público de tu equipo para que tu audien
 #: apps/web/src/app/(signing)/sign/[token]/auto-sign.tsx:229
 #: apps/web/src/app/(signing)/sign/[token]/document-action-auth-2fa.tsx:182
 #: apps/web/src/app/(signing)/sign/[token]/name-field.tsx:243
-#: apps/web/src/app/(signing)/sign/[token]/signature-field.tsx:309
+#: apps/web/src/app/(signing)/sign/[token]/signature-field.tsx:303
 #: apps/web/src/app/(signing)/sign/[token]/signature-pad/signature-pad-dialog.tsx:178
 #: apps/web/src/components/ui/user-profile-skeleton.tsx:75
 #: apps/web/src/components/ui/user-profile-timur.tsx:81
@@ -4609,7 +4609,7 @@ msgstr "Mostrar plantillas en el perfil público de tu equipo para que tu audien
 msgid "Sign"
 msgstr "Firmar"
 
-#: apps/web/src/app/(signing)/sign/[token]/signature-field.tsx:281
+#: apps/web/src/app/(signing)/sign/[token]/signature-field.tsx:275
 #: apps/web/src/app/(signing)/sign/[token]/signature-pad/signature-pad-dialog.tsx:144
 msgid "Sign as {0} <0>({1})</0>"
 msgstr "Firmar como {0} <0>({1})</0>"
@@ -4618,8 +4618,8 @@ msgstr "Firmar como {0} <0>({1})</0>"
 msgid "Sign as<0>{0} <1>({1})</1></0>"
 msgstr "Firmar como<0>{0} <1>({1})</1></0>"
 
-#: apps/web/src/app/embed/direct/[[...url]]/client.tsx:360
-#: apps/web/src/app/embed/sign/[[...url]]/client.tsx:302
+#: apps/web/src/app/embed/direct/[[...url]]/client.tsx:368
+#: apps/web/src/app/embed/sign/[[...url]]/client.tsx:309
 msgid "Sign document"
 msgstr "Firmar documento"
 
@@ -4652,8 +4652,8 @@ msgstr "Inicia sesión en tu cuenta"
 msgid "Sign Out"
 msgstr "Cerrar sesión"
 
-#: apps/web/src/app/embed/direct/[[...url]]/client.tsx:381
-#: apps/web/src/app/embed/sign/[[...url]]/client.tsx:327
+#: apps/web/src/app/embed/direct/[[...url]]/client.tsx:389
+#: apps/web/src/app/embed/sign/[[...url]]/client.tsx:334
 msgid "Sign the document to complete the process."
 msgstr "Firma el documento para completar el proceso."
 
@@ -4676,12 +4676,12 @@ msgid "Sign Up with OIDC"
 msgstr "Regístrate con OIDC"
 
 #: apps/web/src/app/(dashboard)/admin/documents/[id]/recipient-item.tsx:88
-#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:206
+#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:208
 #: apps/web/src/app/(recipient)/d/[token]/sign-direct-template.tsx:347
 #: apps/web/src/app/(signing)/sign/[token]/form.tsx:340
-#: apps/web/src/app/(signing)/sign/[token]/signature-field.tsx:245
-#: apps/web/src/app/embed/direct/[[...url]]/client.tsx:422
-#: apps/web/src/app/embed/sign/[[...url]]/client.tsx:424
+#: apps/web/src/app/(signing)/sign/[token]/signature-field.tsx:243
+#: apps/web/src/app/embed/direct/[[...url]]/client.tsx:430
+#: apps/web/src/app/embed/sign/[[...url]]/client.tsx:431
 #: apps/web/src/components/forms/profile.tsx:123
 #: packages/ui/primitives/document-flow/add-fields.tsx:847
 #: packages/ui/primitives/document-flow/field-icon.tsx:54
@@ -4690,7 +4690,7 @@ msgstr "Regístrate con OIDC"
 msgid "Signature"
 msgstr "Firma"
 
-#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:192
+#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:194
 msgid "Signature Certificate"
 msgstr ""
 
@@ -4698,8 +4698,8 @@ msgstr ""
 msgid "Signature is too small"
 msgstr ""
 
-#: apps/web/src/app/embed/direct/[[...url]]/client.tsx:448
-#: apps/web/src/app/embed/sign/[[...url]]/client.tsx:450
+#: apps/web/src/app/embed/direct/[[...url]]/client.tsx:456
+#: apps/web/src/app/embed/sign/[[...url]]/client.tsx:457
 msgid "Signature is too small. Please provide a more complete signature."
 msgstr "La firma es demasiado pequeña. Proporcione una firma más completa."
 
@@ -4712,8 +4712,8 @@ msgid "Signatures will appear once the document has been completed"
 msgstr "Las firmas aparecerán una vez que el documento se haya completado"
 
 #: apps/web/src/app/(dashboard)/documents/[id]/document-page-view-recipients.tsx:115
-#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:238
-#: apps/web/src/components/document/document-read-only-fields.tsx:89
+#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:240
+#: apps/web/src/components/document/document-read-only-fields.tsx:91
 #: packages/lib/constants/recipient-roles.ts:23
 msgid "Signed"
 msgstr "Firmado"
@@ -4722,7 +4722,7 @@ msgstr "Firmado"
 msgid "Signer"
 msgstr "Firmante"
 
-#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:200
+#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:202
 msgid "Signer Events"
 msgstr "Eventos del Firmante"
 
@@ -4738,7 +4738,7 @@ msgstr "Los firmantes deben tener correos electrónicos únicos"
 msgid "Signing"
 msgstr "Firmando"
 
-#: apps/web/src/app/embed/sign/[[...url]]/client.tsx:340
+#: apps/web/src/app/embed/sign/[[...url]]/client.tsx:347
 msgid "Signing for"
 msgstr ""
 
@@ -4820,7 +4820,7 @@ msgstr "Algunos firmantes no han sido asignados a un campo de firma. Asigne al m
 #: apps/web/src/app/(teams)/t/[teamUrl]/settings/preferences/branding-preferences.tsx:107
 #: apps/web/src/app/(teams)/t/[teamUrl]/settings/team-email-dropdown.tsx:39
 #: apps/web/src/app/(unauthenticated)/verify-email/[token]/page.tsx:61
-#: apps/web/src/app/embed/direct/[[...url]]/client.tsx:262
+#: apps/web/src/app/embed/direct/[[...url]]/client.tsx:263
 #: apps/web/src/app/embed/sign/[[...url]]/client.tsx:168
 #: apps/web/src/components/(teams)/dialogs/create-team-checkout-dialog.tsx:50
 #: apps/web/src/components/(teams)/dialogs/create-team-checkout-dialog.tsx:99
@@ -5655,7 +5655,7 @@ msgstr "Zona horaria"
 msgid "Time Zone"
 msgstr "Zona horaria"
 
-#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:203
+#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:205
 msgid "Timestamp"
 msgstr ""
 
@@ -5823,7 +5823,7 @@ msgstr "Autenticación de dos factores habilitada"
 msgid "Two-factor authentication has been disabled for your account. You will no longer be required to enter a code from your authenticator app when signing in."
 msgstr "La autenticación de dos factores ha sido desactivada para tu cuenta. Ya no se te pedirá ingresar un código de tu aplicación de autenticador al iniciar sesión."
 
-#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:99
+#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:101
 msgid "Two-Factor Re-Authentication"
 msgstr "Re-autenticación de Doble Factor"
 
@@ -5836,7 +5836,7 @@ msgstr "Tipo"
 msgid "Type a command or search..."
 msgstr "Escribe un comando o busca..."
 
-#: apps/web/src/app/(signing)/sign/[token]/signature-field.tsx:141
+#: apps/web/src/app/(signing)/sign/[token]/signature-field.tsx:142
 msgid "Typed signatures are not allowed. Please draw your signature."
 msgstr "No se permiten firmas mecanografiadas. Por favor, dibuje su firma."
 
@@ -5932,8 +5932,8 @@ msgstr "No autorizado"
 msgid "Uncompleted"
 msgstr "Incompleto"
 
-#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:333
-#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:368
+#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:349
+#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:384
 #: apps/web/src/app/(teams)/t/[teamUrl]/settings/billing/page.tsx:55
 msgid "Unknown"
 msgstr "Desconocido"
@@ -6158,7 +6158,7 @@ msgstr "Correo Electrónico de Verificación Enviado"
 msgid "Verification email sent successfully."
 msgstr "Correo electrónico de verificación enviado con éxito."
 
-#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:259
+#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:261
 msgid "Verified"
 msgstr ""
 
@@ -6266,7 +6266,7 @@ msgid "View teams"
 msgstr "Ver equipos"
 
 #: apps/web/src/app/(dashboard)/documents/[id]/document-page-view-recipients.tsx:121
-#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:235
+#: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:237
 #: packages/lib/constants/recipient-roles.ts:30
 msgid "Viewed"
 msgstr "Visto"
@@ -6505,7 +6505,7 @@ msgid "We were unable to setup two-factor authentication for your account. Pleas
 msgstr "No pudimos configurar la autenticación de dos factores para tu cuenta. Asegúrate de haber ingresado correctamente tu código e inténtalo de nuevo."
 
 #: apps/web/src/app/(recipient)/d/[token]/direct-template.tsx:124
-#: apps/web/src/app/embed/direct/[[...url]]/client.tsx:264
+#: apps/web/src/app/embed/direct/[[...url]]/client.tsx:265
 #: apps/web/src/app/embed/sign/[[...url]]/client.tsx:170
 msgid "We were unable to submit this document at this time. Please try again later."
 msgstr "No pudimos enviar este documento en este momento. Por favor, inténtalo de nuevo más tarde."

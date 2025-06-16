@@ -2,6 +2,8 @@
 
 import { createContext, useContext, useEffect, useState } from 'react';
 
+import { DocumentSignatureType } from '@documenso/lib/constants/document';
+
 import type { SignaturePadValue } from './signature-pad';
 
 export type SigningContextValue = {
@@ -46,14 +48,18 @@ export const SigningProvider = ({
 }: SigningProviderProps) => {
   const [fullName, setFullName] = useState(initialFullName || '');
   const [email, setEmail] = useState(initialEmail || '');
-  //const [signature, setSignature] = useState<SignaturePadValue | null>(initialSignature || null);
   const [signature, setSignature] = useState<SignaturePadValue | null>(null);
 
   const [signatureValid, setSignatureValid] = useState(true);
 
   useEffect(() => {
     if (initialSignature) {
-      setSignature(initialSignature);
+      const isBase64Image = initialSignature.startsWith('data:image');
+
+      setSignature({
+        type: isBase64Image ? DocumentSignatureType.DRAW : DocumentSignatureType.TYPE,
+        value: initialSignature,
+      });
     }
   }, [initialSignature]);
 
