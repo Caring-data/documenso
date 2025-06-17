@@ -50,7 +50,9 @@ export const storeSignedDocument = async (
       throw new Error('Could not store the signed document.');
     }
 
-    return response;
+    const { fileUrl } = response;
+
+    return { fileUrl };
   } catch (error) {
     console.error('Error storing signed document:', error);
 

@@ -8,6 +8,7 @@ import { TemplateDocumentCompleted } from '../template-components/template-docum
 import { TemplateFooter } from '../template-components/template-footer';
 
 export type DocumentCompletedEmailTemplateProps = Partial<TemplateDocumentCompletedProps> & {
+  downloadLink?: string;
   customBody?: string;
   recipientName?: string;
   documentDetails?: {

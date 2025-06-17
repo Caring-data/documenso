@@ -129,6 +129,7 @@ export const ZDocumentManySchema = DocumentSchema.pick({
   formKey: true,
   residentId: true,
   activityStatus: true,
+  documentUrl: true,
 }).extend({
   user: UserSchema.pick({
     id: true,

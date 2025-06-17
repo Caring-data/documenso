@@ -347,6 +347,8 @@ model Document {
   documentDetails Json?
   activityStatus  EntityStatus @default(ACTIVE)
 
+  documentUrl String? @db.VarChar(2048)
+
   auditLogs DocumentAuditLog[]
 
   @@unique([documentDataId])

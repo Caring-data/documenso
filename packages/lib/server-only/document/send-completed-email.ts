@@ -166,7 +166,8 @@ export const sendCompletedEmail = async ({ documentId, requestMetadata }: SendDo
         'document.name': document.title,
       };
 
-      const downloadLink = `${NEXT_PUBLIC_WEBAPP_URL()}/sign/${recipient.token}/complete`;
+      const downloadPageLink = `${NEXT_PUBLIC_WEBAPP_URL()}/sign/${recipient.token}/complete`;
+      const downloadLink = document?.documentUrl ? document?.documentUrl : downloadPageLink;
 
       const template = createElement(DocumentCompletedEmailTemplate, {
         assetBaseUrl,

@@ -619,7 +619,7 @@ msgstr "Reconnaissance"
 msgid "Action"
 msgstr "Action"
 
-#: apps/web/src/app/(dashboard)/documents/data-table.tsx:90
+#: apps/web/src/app/(dashboard)/documents/data-table.tsx:91
 #: apps/web/src/app/(dashboard)/templates/[id]/template-page-view-documents-table.tsx:186
 #: apps/web/src/app/(dashboard)/templates/data-table-templates.tsx:135
 #: apps/web/src/components/(teams)/tables/team-member-invites-data-table.tsx:130
@@ -1560,7 +1560,7 @@ msgstr "Compléter la visualisation"
 msgid "Completed"
 msgstr "Terminé"
 
-#: packages/email/templates/document-completed.tsx:32
+#: packages/email/templates/document-completed.tsx:33
 #: packages/email/templates/document-self-signed.tsx:19
 msgid "Completed Document"
 msgstr "Document complété"
@@ -2158,7 +2158,7 @@ msgid "Document completed"
 msgstr "Document terminé"
 
 #: packages/lib/server-only/document/send-completed-email.ts:128
-#: packages/lib/server-only/document/send-completed-email.ts:209
+#: packages/lib/server-only/document/send-completed-email.ts:210
 msgid "Document Completed - {0}"
 msgstr ""
 
@@ -2786,7 +2786,7 @@ msgstr "Le fichier ne peut pas dépasser {APP_DOCUMENT_UPLOAD_SIZE_LIMIT} Mo"
 msgid "File size exceeds the limit of {APP_DOCUMENT_UPLOAD_SIZE_LIMIT} MB"
 msgstr "La taille du fichier dépasse la limite de {APP_DOCUMENT_UPLOAD_SIZE_LIMIT} MB"
 
-#: packages/email/templates/document-completed.tsx:59
+#: packages/email/templates/document-completed.tsx:60
 msgid "Final Document Available for Download"
 msgstr ""
 
@@ -4097,7 +4097,7 @@ msgstr "Activité récente"
 msgid "Recent documents"
 msgstr "Documents récents"
 
-#: apps/web/src/app/(dashboard)/documents/data-table.tsx:74
+#: apps/web/src/app/(dashboard)/documents/data-table.tsx:75
 #: apps/web/src/app/(dashboard)/templates/[id]/template-page-view-documents-table.tsx:125
 #: apps/web/src/app/(dashboard)/templates/template-direct-link-dialog.tsx:252
 #: packages/lib/utils/document-audit-logs.ts:358
@@ -4521,7 +4521,7 @@ msgstr "Envoyer l'e-mail de demande de signature de destinataire"
 msgid "Send reminder"
 msgstr "Envoyer un rappel"
 
-#: apps/web/src/app/(dashboard)/documents/data-table.tsx:70
+#: apps/web/src/app/(dashboard)/documents/data-table.tsx:71
 msgid "Sender"
 msgstr "Expéditeur"
 
@@ -4897,7 +4897,7 @@ msgstr "Statistiques"
 
 #: apps/web/src/app/(dashboard)/admin/documents/document-results.tsx:81
 #: apps/web/src/app/(dashboard)/admin/subscriptions/page.tsx:32
-#: apps/web/src/app/(dashboard)/documents/data-table.tsx:84
+#: apps/web/src/app/(dashboard)/documents/data-table.tsx:85
 #: apps/web/src/app/(dashboard)/templates/[id]/template-page-view-documents-table.tsx:135
 #: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/audit-log/page.tsx:94
 #: apps/web/src/components/(teams)/tables/team-billing-invoices-data-table.tsx:73
