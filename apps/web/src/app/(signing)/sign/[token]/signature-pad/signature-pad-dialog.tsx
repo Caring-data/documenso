@@ -52,7 +52,7 @@ export const SignaturePadDialog = ({
 
   const [showSignatureModal, setShowSignatureModal] = useState(false);
   const [tempSignature, setTempSignature] = useState<SignaturePadValue>({
-    type: value?.type ?? DocumentSignatureType.TYPE,
+    type: value?.type ?? DocumentSignatureType.DRAW,
     value: value?.value ?? '',
     font: value?.font ?? 'Dancing Script',
     color: value?.color ?? 'black',
@@ -86,7 +86,7 @@ export const SignaturePadDialog = ({
         className="absolute inset-0 flex items-center justify-center bg-transparent"
         onClick={() => {
           setTempSignature({
-            type: value?.type ?? DocumentSignatureType.TYPE,
+            type: value?.type ?? DocumentSignatureType.DRAW,
             value: value?.value ?? '',
             font: value?.font ?? 'Dancing Script',
             color: value?.color ?? 'black',

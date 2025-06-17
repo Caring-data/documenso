@@ -23,7 +23,7 @@ const FONT_NOTO_SANS_BYTES = fs.readFileSync(
 );
 
 const FONT_DANCING_SCRIPT_BYTES = fs.readFileSync(
-  path.join(__dirname, '../../packages/assets/fonts/dancing-script.ttf'),
+  path.join(__dirname, '../../packages/assets/fonts/dancing-script-regular.ttf'),
 );
 
 const FONT_GREAT_VIBES_BYTES = fs.readFileSync(
