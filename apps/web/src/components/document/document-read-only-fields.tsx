@@ -32,6 +32,8 @@ import { Label } from '@documenso/ui/primitives/label';
 import { PopoverHover } from '@documenso/ui/primitives/popover';
 import { RadioGroup, RadioGroupItem } from '@documenso/ui/primitives/radio-group';
 
+import { isTypedSignatureSettings } from '~/helpers/signature';
+
 export type DocumentReadOnlyFieldsProps = {
   fields: DocumentField[];
   documentMeta?: DocumentMeta;
@@ -112,21 +114,34 @@ export const DocumentReadOnlyFields = ({
               <div className="text-muted-foreground dark:text-background/70 break-all text-[10px] sm:text-sm">
                 {field.recipient.signingStatus === SigningStatus.SIGNED &&
                   match(field)
-                    .with({ type: FieldType.SIGNATURE }, (field) =>
-                      field.signature?.signatureImageAsBase64 ? (
-                        <div className="flex h-full w-full items-center justify-center">
-                          <img
-                            src={field.signature.signatureImageAsBase64}
-                            alt="Signature"
-                            className="h-auto max-h-[65%] w-auto max-w-[65%] object-contain dark:invert"
-                          />
-                        </div>
-                      ) : (
-                        <p className="font-signature text-muted-foreground sm:text-md text-sm duration-200 md:text-2xl">
+                    .with({ type: FieldType.SIGNATURE }, (field) => {
+                      const typedSettings = field.signature?.typedSignatureSettings;
+                      const hasTypedSettings = isTypedSignatureSettings(typedSettings);
+
+                      if (field.signature?.signatureImageAsBase64) {
+                        return (
+                          <div className="flex h-full w-full items-center justify-center">
+                            <img
+                              src={field.signature.signatureImageAsBase64}
+                              alt="Signature"
+                              className="h-auto max-h-[65%] w-auto max-w-[65%] object-contain dark:invert"
+                            />
+                          </div>
+                        );
+                      }
+
+                      return (
+                        <p
+                          className="sm:text-md break-words text-center text-sm duration-200 md:text-2xl"
+                          style={{
+                            color: hasTypedSettings ? typedSettings.color : 'black',
+                            fontFamily: hasTypedSettings ? typedSettings.font : 'Dancing Script',
+                          }}
+                        >
                           {field.signature?.typedSignature}
                         </p>
-                      ),
-                    )
+                      );
+                    })
                     .with(
                       {
                         type: P.union(

@@ -27,6 +27,8 @@ import {
   TableRow,
 } from '@documenso/ui/primitives/table';
 
+import { isTypedSignatureSettings } from '~/helpers/signature';
+
 import '../../../certificate-print.css';
 
 type SigningCertificateProps = {
@@ -318,11 +320,25 @@ export default async function SigningCertificate({ searchParams }: SigningCertif
                                 />
                               )}
 
-                              {signature.signature?.typedSignature && (
-                                <p className="font-signature text-center text-sm print:text-xs">
-                                  {signature.signature?.typedSignature}
-                                </p>
-                              )}
+                              {signature.signature?.typedSignature &&
+                                (() => {
+                                  const settings = signature.signature.typedSignatureSettings;
+                                  const hasSettings = isTypedSignatureSettings(settings);
+
+                                  return (
+                                    <p
+                                      className="text-center text-sm print:text-xs"
+                                      style={{
+                                        fontFamily: hasSettings
+                                          ? settings.font || 'Dancing Script'
+                                          : 'Dancing Script',
+                                        color: hasSettings ? settings.color || 'black' : 'black',
+                                      }}
+                                    >
+                                      {signature.signature.typedSignature}
+                                    </p>
+                                  );
+                                })()}
                             </div>
 
                             <p className="mt-2 flex h-4 flex-col justify-center self-stretch">

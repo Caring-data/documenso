@@ -9,6 +9,7 @@ import { animate, motion, useMotionTemplate, useMotionValue, useTransform } from
 import { P, match } from 'ts-pattern';
 
 import type { Signature } from '@documenso/prisma/client';
+import { isTypedSignatureSettings } from '@documenso/web/src/helpers/signature';
 
 import { cn } from '../lib/utils';
 import { Card, CardContent } from '../primitives/card';
@@ -185,18 +186,25 @@ const SigningCardContent = ({ className, name, signature }: SigningCardContentPr
               className="h-full max-w-[100%] dark:invert"
             />
           ))
-          .with({ typedSignature: P.string }, (signature) => (
-            <span
-              className="text-muted-foreground/60 group-hover:text-primary/80 break-all font-semibold duration-300"
-              style={{
-                fontSize: `max(min(4rem, ${(100 / signature.typedSignature.length / 2).toFixed(
-                  4,
-                )}cqw), 1.875rem)`,
-              }}
-            >
-              {signature.typedSignature}
-            </span>
-          ))
+          .with({ typedSignature: P.string }, (signature) => {
+            const settings = signature.typedSignatureSettings;
+            const hasSettings = isTypedSignatureSettings(settings);
+
+            return (
+              <span
+                className="text-muted-foreground/60 group-hover:text-primary/80 break-all font-semibold duration-300"
+                style={{
+                  fontSize: `max(min(4rem, ${(100 / signature.typedSignature.length / 2).toFixed(
+                    4,
+                  )}cqw), 1.875rem)`,
+                  fontFamily: hasSettings ? (settings.font ?? 'Dancing Script') : 'Dancing Script',
+                  color: hasSettings ? (settings.color ?? 'black') : 'black',
+                }}
+              >
+                {signature.typedSignature}
+              </span>
+            );
+          })
           .otherwise(() => (
             <span
               className="text-muted-foreground/60 group-hover:text-primary/80 break-all font-semibold duration-300"

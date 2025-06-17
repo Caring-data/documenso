@@ -15,7 +15,7 @@ const DialogClose = DialogPrimitive.Close;
 
 const DialogPortal = ({
   children,
-  position = 'start',
+  position = 'center',
   ...props
 }: DialogPrimitive.DialogPortalProps & { position?: 'start' | 'end' | 'center' }) => (
   <DialogPrimitive.Portal {...props}>
