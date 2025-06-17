@@ -1,6 +1,6 @@
 import { Trans } from '@lingui/macro';
 
-import { Button, Section, Text } from '../components';
+import { Button, Img, Section, Text } from '../components';
 
 export interface TemplateDocumentCompletedProps {
   downloadLink: string;
@@ -19,7 +19,12 @@ export const TemplateDocumentCompleted = ({
   downloadLink,
   recipientName,
   documentDetails,
+  assetBaseUrl,
 }: TemplateDocumentCompletedProps) => {
+  const getAssetUrl = (path: string) => {
+    return new URL(path, assetBaseUrl).toString();
+  };
+
   return (
     <>
       <Section>
@@ -29,16 +34,37 @@ export const TemplateDocumentCompleted = ({
           </Text>
           <Text className="text-sm font-medium leading-5 text-zinc-600">
             <Trans>
-              We are pleased to inform you that all required signatures have been completed, and the
-              document{' '}
-              <span className="text-brand-accent font-medium">{documentDetails?.documentName}</span>{' '}
-              is now ready for download.
+              We are pleased to inform you that all required signatures have been completed. The
+              following document is now ready for download:
             </Trans>
           </Text>
+          <div className="flex items-center gap-6">
+            <Img
+              src={getAssetUrl('/static/user-round.png')}
+              alt="Document Icon"
+              className="my-auto h-4 w-auto pr-2 align-middle"
+            />
+            <div className="flex flex-col text-sm font-medium leading-5 text-zinc-600">
+              <Text>
+                <Trans>Regarding: {documentDetails?.residentName}</Trans>
+              </Text>
+            </div>
+          </div>
+          <div className="flex items-center gap-6">
+            <Img
+              src={getAssetUrl('/static/file-text.png')}
+              alt="Document Icon"
+              className="my-auto h-4 w-auto pr-2 align-middle"
+            />
+            <div className="flex flex-col justify-center text-sm font-medium leading-5 text-zinc-600">
+              <Text>
+                <Trans>Document: {documentDetails?.documentName}</Trans>
+              </Text>
+            </div>
+          </div>
+
           <Text className="text-sm font-medium leading-5 text-zinc-600">
-            <Trans>
-              You can access the final copy of the document by clicking the button below
-            </Trans>
+            <Trans>You can download the final copy by clicking the button below</Trans>
           </Text>
         </Section>
 
