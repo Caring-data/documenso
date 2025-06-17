@@ -1893,7 +1893,7 @@ msgstr "Fecha de creación"
 msgid "Date Format"
 msgstr "Formato de fecha"
 
-#: packages/email/template-components/template-document-completed.tsx:28
+#: packages/email/template-components/template-document-completed.tsx:33
 #: packages/email/template-components/template-document-invite.tsx:52
 #: packages/email/template-components/template-document-pending.tsx:30
 msgid "Dear"
@@ -2341,6 +2341,7 @@ msgstr "Visibilidad del documento actualizada"
 msgid "Document will be permanently deleted"
 msgstr "El documento será eliminado permanentemente"
 
+#: packages/email/template-components/template-document-completed.tsx:61
 #: packages/email/template-components/template-document-invite.tsx:81
 #: packages/email/template-components/template-document-pending.tsx:55
 msgid "Document: {0}"
@@ -2385,7 +2386,7 @@ msgstr "¿No tienes una cuenta? <0>Regístrate</0>"
 #: apps/web/src/components/(teams)/tables/team-billing-invoices-data-table.tsx:110
 #: apps/web/src/components/forms/2fa/enable-authenticator-app-dialog.tsx:185
 #: apps/web/src/components/forms/2fa/view-recovery-codes-dialog.tsx:107
-#: packages/email/template-components/template-document-completed.tsx:50
+#: packages/email/template-components/template-document-completed.tsx:76
 msgid "Download"
 msgstr "Descargar"
 
@@ -4163,6 +4164,7 @@ msgstr "Rojo"
 msgid "Redirect URL"
 msgstr "URL de redirección"
 
+#: packages/email/template-components/template-document-completed.tsx:49
 #: packages/email/template-components/template-document-invite.tsx:69
 #: packages/email/template-components/template-document-pending.tsx:43
 msgid "Regarding: {0}"
@@ -6321,8 +6323,8 @@ msgstr "¿Quieres tu propio perfil público?"
 msgid "Warning: Assistant as last signer"
 msgstr ""
 
-#: packages/email/template-components/template-document-completed.tsx:31
-msgid "We are pleased to inform you that all required signatures have been completed, and the document <0>{0}</0> is now ready for download."
+#: packages/email/template-components/template-document-completed.tsx:36
+msgid "We are pleased to inform you that all required signatures have been completed. The following document is now ready for download:"
 msgstr ""
 
 #: apps/web/src/app/(dashboard)/settings/billing/billing-portal-button.tsx:41
@@ -6706,10 +6708,6 @@ msgstr "No estás autorizado para habilitar a este usuario."
 msgid "You are not authorized to view this page."
 msgstr "No estás autorizado para ver esta página."
 
-#: packages/email/template-components/template-document-completed.tsx:39
-msgid "You can access the final copy of the document by clicking the button below"
-msgstr ""
-
 #: packages/email/template-components/template-confirmation-email.tsx:38
 msgid "You can also copy and paste this link into your browser: {confirmationLink} (link expires in 1 hour)"
 msgstr "También puedes copiar y pegar este enlace en tu navegador: {confirmationLink} (el enlace expira en 1 hora)"
@@ -6729,6 +6727,10 @@ msgstr "¡Puedes reclamar tu perfil más tarde yendo a la configuración de tu p
 #: apps/web/src/components/document/document-recipient-link-copy-dialog.tsx:87
 msgid "You can copy and share these links to recipients so they can action the document."
 msgstr "Puede copiar y compartir estos enlaces con los destinatarios para que puedan gestionar el documento."
+
+#: packages/email/template-components/template-document-completed.tsx:67
+msgid "You can download the final copy by clicking the button below"
+msgstr ""
 
 #: packages/email/templates/confirm-team-email.tsx:106
 msgid "You can revoke access at any time in your team settings on Documenso <0>here.</0>"
