@@ -262,18 +262,6 @@ export const run = async ({
     }
   });
 
-  await io.runTask('send-completed-email', async () => {
-    let shouldSendCompletedEmail = sendEmail && !isResealing;
-
-    if (isResealing && documentStatus !== DocumentStatus.COMPLETED) {
-      shouldSendCompletedEmail = sendEmail;
-    }
-
-    if (shouldSendCompletedEmail) {
-      await sendCompletedEmail({ documentId, requestMetadata });
-    }
-  });
-
   const updatedDocument = await prisma.document.findFirstOrThrow({
     where: {
       id: document.id,
@@ -316,7 +304,7 @@ export const run = async ({
         return;
       }
 
-      await storeSignedDocument(
+      const { fileUrl } = await storeSignedDocument(
         updatedDocument,
         base64Data,
         documentDetails,
@@ -324,6 +312,13 @@ export const run = async ({
         mainRecipient,
         true,
       );
+
+      if (fileUrl) {
+        await prisma.document.update({
+          where: { id: document.id },
+          data: { documentUrl: fileUrl },
+        });
+      }
     } catch (error) {
       console.error('Error when sending the signed document to Laravel:', error);
 
@@ -337,6 +332,18 @@ export const run = async ({
         metadata: requestMetadata,
         userId: updatedDocument.userId,
       });
+    }
+  });
+
+  await io.runTask('send-completed-email', async () => {
+    let shouldSendCompletedEmail = sendEmail && !isResealing;
+
+    if (isResealing && documentStatus !== DocumentStatus.COMPLETED) {
+      shouldSendCompletedEmail = sendEmail;
+    }
+
+    if (shouldSendCompletedEmail) {
+      await sendCompletedEmail({ documentId, requestMetadata });
     }
   });
 };

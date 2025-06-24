@@ -60,6 +60,7 @@ export const DocumentsDataTable = ({
             authOptions: row.original.authOptions ?? null,
             formValues: row.original.formValues ?? {},
             documentDetails: row.original.documentDetails ?? null,
+            documentUrl: row.original.documentUrl ?? null,
           };
 
           return <DataTableTitle row={normalizedRow} teamUrl={team?.url} />;
@@ -96,6 +97,7 @@ export const DocumentsDataTable = ({
             authOptions: row.original.authOptions ?? null,
             formValues: row.original.formValues ?? {},
             documentDetails: row.original.documentDetails ?? null,
+            documentUrl: row.original.documentUrl ?? null,
           };
 
           return (
@@ -110,7 +112,7 @@ export const DocumentsDataTable = ({
         },
       },
     ] satisfies DataTableColumnDef<(typeof results)['data'][number]>[];
-  }, [team]);
+  }, [team, _, i18n]);
 
   const onPaginationChange = (page: number, perPage: number) => {
     startTransition(() => {
