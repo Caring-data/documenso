@@ -64,6 +64,12 @@ const loadImageOntoCanvas = (
   return imageData;
 };
 
+const isValidImageSource = (source: string) => {
+  return (
+    /^data:image\/(png|jpeg|jpg|gif|bmp);base64,/.test(source) || /^https?:\/\/[^\s]+$/.test(source)
+  );
+};
+
 export type SignaturePadUploadProps = {
   className?: string;
   value: string;
@@ -103,7 +109,7 @@ export const SignaturePadUpload = ({
       $el.current.height = $el.current.clientHeight * SIGNATURE_CANVAS_DPI;
     }
 
-    if ($el.current && value) {
+    if ($el.current && value && isValidImageSource(value)) {
       const ctx = $el.current.getContext('2d');
 
       const { width, height } = $el.current;
