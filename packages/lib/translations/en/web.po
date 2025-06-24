@@ -1880,7 +1880,7 @@ msgstr "Date created"
 msgid "Date Format"
 msgstr "Date Format"
 
-#: packages/email/template-components/template-document-completed.tsx:28
+#: packages/email/template-components/template-document-completed.tsx:33
 #: packages/email/template-components/template-document-invite.tsx:52
 #: packages/email/template-components/template-document-pending.tsx:30
 msgid "Dear"
@@ -2328,6 +2328,7 @@ msgstr "Document visibility updated"
 msgid "Document will be permanently deleted"
 msgstr "Document will be permanently deleted"
 
+#: packages/email/template-components/template-document-completed.tsx:61
 #: packages/email/template-components/template-document-invite.tsx:81
 #: packages/email/template-components/template-document-pending.tsx:55
 msgid "Document: {0}"
@@ -2372,7 +2373,7 @@ msgstr "Don't have an account? <0>Sign up</0>"
 #: apps/web/src/components/(teams)/tables/team-billing-invoices-data-table.tsx:110
 #: apps/web/src/components/forms/2fa/enable-authenticator-app-dialog.tsx:185
 #: apps/web/src/components/forms/2fa/view-recovery-codes-dialog.tsx:107
-#: packages/email/template-components/template-document-completed.tsx:50
+#: packages/email/template-components/template-document-completed.tsx:76
 msgid "Download"
 msgstr "Download"
 
@@ -4148,6 +4149,7 @@ msgstr "Red"
 msgid "Redirect URL"
 msgstr "Redirect URL"
 
+#: packages/email/template-components/template-document-completed.tsx:49
 #: packages/email/template-components/template-document-invite.tsx:69
 #: packages/email/template-components/template-document-pending.tsx:43
 msgid "Regarding: {0}"
@@ -6302,9 +6304,9 @@ msgstr "Want your own public profile?"
 msgid "Warning: Assistant as last signer"
 msgstr "Warning: Assistant as last signer"
 
-#: packages/email/template-components/template-document-completed.tsx:31
-msgid "We are pleased to inform you that all required signatures have been completed, and the document <0>{0}</0> is now ready for download."
-msgstr "We are pleased to inform you that all required signatures have been completed, and the document <0>{0}</0> is now ready for download."
+#: packages/email/template-components/template-document-completed.tsx:36
+msgid "We are pleased to inform you that all required signatures have been completed. The following document is now ready for download:"
+msgstr "We are pleased to inform you that all required signatures have been completed. The following document is now ready for download:"
 
 #: apps/web/src/app/(dashboard)/settings/billing/billing-portal-button.tsx:41
 #: apps/web/src/app/(teams)/t/[teamUrl]/layout-billing-banner.tsx:55
@@ -6687,10 +6689,6 @@ msgstr "You are not authorized to enable this user."
 msgid "You are not authorized to view this page."
 msgstr "You are not authorized to view this page."
 
-#: packages/email/template-components/template-document-completed.tsx:39
-msgid "You can access the final copy of the document by clicking the button below"
-msgstr "You can access the final copy of the document by clicking the button below"
-
 #: packages/email/template-components/template-confirmation-email.tsx:38
 msgid "You can also copy and paste this link into your browser: {confirmationLink} (link expires in 1 hour)"
 msgstr "You can also copy and paste this link into your browser: {confirmationLink} (link expires in 1 hour)"
@@ -6710,6 +6708,10 @@ msgstr "You can claim your profile later on by going to your profile settings!"
 #: apps/web/src/components/document/document-recipient-link-copy-dialog.tsx:87
 msgid "You can copy and share these links to recipients so they can action the document."
 msgstr "You can copy and share these links to recipients so they can action the document."
+
+#: packages/email/template-components/template-document-completed.tsx:67
+msgid "You can download the final copy by clicking the button below"
+msgstr "You can download the final copy by clicking the button below"
 
 #: packages/email/templates/confirm-team-email.tsx:106
 msgid "You can revoke access at any time in your team settings on Documenso <0>here.</0>"
