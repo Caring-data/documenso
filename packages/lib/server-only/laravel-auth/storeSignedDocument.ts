@@ -1,9 +1,8 @@
 import type { Document, Recipient } from '@documenso/prisma/client';
 
-import { fetchWithLaravelAuth } from '../../laravel-auth/fetch-with-laravel-auth';
 import type { TDocumentDetails } from '../../types/document';
 import { createLog } from '../../utils/createLog';
-import { getLaravelToken } from './getLaravelToken';
+import { generateLaravelToken } from './getLaravelToken';
 
 export const storeSignedDocument = async (
   document: Document,
@@ -14,7 +13,12 @@ export const storeSignedDocument = async (
   allSigned: boolean = false,
 ) => {
   try {
-    const laravelToken = await getLaravelToken();
+    const token = generateLaravelToken();
+
+    const apiUrl = process.env.NEXT_PRIVATE_LARAVEL_API_URL;
+    if (!apiUrl) throw new Error('Laravel API URL is not defined');
+
+    const url = `${apiUrl}/external/store-signed-document`;
 
     const formData = {
       clientName: String(documentDetails?.companyName || ''),
@@ -25,34 +29,25 @@ export const storeSignedDocument = async (
       recipient: allSigned ? 'AllRecipientsSigned' : recipient?.email,
     };
 
-    const apiUrl = process.env.NEXT_PRIVATE_LARAVEL_API_URL;
-    const url = `${apiUrl}/residents/electronic-signature/store-signed-document`;
-
-    if (!apiUrl) {
-      throw new Error('Environment variables for the Laravel API are not defined.');
-    }
-
-    const response = await fetchWithLaravelAuth(
-      url,
-      {
-        method: 'POST',
-        body: JSON.stringify(formData),
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'X-TOKEN': token,
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
       },
-      laravelToken,
-    );
+      body: JSON.stringify(formData),
+    });
 
-    if (
-      !response ||
-      typeof response !== 'object' ||
-      response.message !== 'Signed document stored successfully'
-    ) {
-      console.error('Laravel API did not return expected success message:', response);
-      throw new Error('Could not store the signed document.');
+    const data = await response.json();
+
+    const EXPECTED_SUCCESS_MESSAGE = 'Signed document stored successfully';
+
+    if (!response.ok || data?.message !== EXPECTED_SUCCESS_MESSAGE) {
+      throw new Error('Laravel rejected the request');
     }
 
-    const { fileUrl } = response;
-
-    return { fileUrl };
+    return { fileUrl: data.fileUrl };
   } catch (error) {
     console.error('Error storing signed document:', error);
 
