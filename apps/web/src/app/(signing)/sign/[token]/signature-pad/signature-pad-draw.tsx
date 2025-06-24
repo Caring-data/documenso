@@ -17,6 +17,11 @@ import { getSvgPathFromStroke } from './helper';
 import { Point } from './point';
 import { SignaturePadColorPicker } from './signature-pad-color-picker';
 
+const isValidImageSource = (source: string): boolean => {
+  const urlPattern = /^(https?:\/\/|data:image\/)/;
+  return urlPattern.test(source);
+};
+
 const checkSignatureValidity = (element: RefObject<HTMLCanvasElement>) => {
   if (!element.current) {
     return false;
@@ -268,7 +273,7 @@ export const SignaturePadDraw = ({
         $imageData.current = defaultImageData;
       };
 
-      img.src = value;
+      img.src = isValidImageSource(value) ? value : '';
     }
   });
 
