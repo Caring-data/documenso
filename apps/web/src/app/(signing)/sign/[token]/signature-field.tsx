@@ -19,16 +19,23 @@ import type {
 } from '@documenso/trpc/server/field-router/schema';
 import { cn } from '@documenso/ui/lib/utils';
 import { Button } from '@documenso/ui/primitives/button';
-import { Dialog, DialogContent, DialogFooter, DialogTitle } from '@documenso/ui/primitives/dialog';
-import { Label } from '@documenso/ui/primitives/label';
-import { SignaturePad } from '@documenso/ui/primitives/signature-pad';
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogFooter,
+  DialogTitle,
+} from '@documenso/ui/primitives/dialog';
 import { useToast } from '@documenso/ui/primitives/use-toast';
 
 import { SigningDisclosure } from '~/components/general/signing-disclosure';
+import { isTypedSignatureSettings } from '~/helpers/signature';
 
 import { useRequiredDocumentAuthContext } from './document-auth-provider';
 import { useRequiredSigningContext } from './provider';
 import { useRecipientContext } from './recipient-context';
+import type { SignaturePadValue } from './signature-pad';
+import { SignaturePad } from './signature-pad';
 import { SigningFieldContainer } from './signing-field-container';
 
 type SignatureFieldState = 'empty' | 'signed-image' | 'signed-text';
@@ -77,7 +84,7 @@ export const SignatureField = ({
   const isLoading = isSignFieldWithTokenLoading || isRemoveSignedFieldWithTokenLoading || isPending;
 
   const [showSignatureModal, setShowSignatureModal] = useState(false);
-  const [localSignature, setLocalSignature] = useState<string | null>(null);
+  const [localSignature, setLocalSignature] = useState<SignaturePadValue | null>(providedSignature);
 
   const state = useMemo<SignatureFieldState>(() => {
     if (!field.inserted) {
@@ -103,11 +110,10 @@ export const SignatureField = ({
    * When the user clicks the sign button in the dialog where they enter their signature.
    */
   const onDialogSignClick = () => {
-    setShowSignatureModal(false);
+    if (!localSignature?.value) return;
     setProvidedSignature(localSignature);
-    if (!localSignature) {
-      return;
-    }
+    setSignatureValid(true);
+    setShowSignatureModal(false);
 
     void executeActionAuthProcedure({
       onReauthFormSubmit: async (authOptions) => await onSign(authOptions, localSignature),
@@ -115,9 +121,13 @@ export const SignatureField = ({
     });
   };
 
-  const onSign = async (authOptions?: TRecipientActionAuth, signature?: string) => {
+  const onSign = async (
+    authOptions?: TRecipientActionAuth,
+    signature?: string | SignaturePadValue,
+  ) => {
     try {
-      const value = signature || providedSignature;
+      const rawSignature = signature || providedSignature;
+      const value = typeof rawSignature === 'string' ? rawSignature : (rawSignature?.value ?? '');
 
       if (!value || (signature && !signatureValid)) {
         setShowSignatureModal(true);
@@ -136,12 +146,21 @@ export const SignatureField = ({
         return;
       }
 
+      const typedSignatureSettings =
+        typeof rawSignature === 'object' && isTypedSignature
+          ? {
+              font: rawSignature?.font,
+              color: rawSignature?.color,
+            }
+          : undefined;
+
       const payload: TSignFieldWithTokenMutationSchema = {
         token: recipient.token,
         fieldId: field.id,
         value,
         isBase64: !isTypedSignature,
         authOptions,
+        typedSignatureSettings,
       };
 
       if (onSignField) {
@@ -213,7 +232,6 @@ export const SignatureField = ({
 
       {state === 'empty' && (
         <p
-          // className="group-hover:text-primary font-signature text-muted-foreground flex items-center justify-center text-[0.5rem] duration-200 group-hover:text-yellow-300 sm:text-xl"
           className={cn(
             'group-hover:text-primary font-signature text-muted-foreground flex items-center justify-center text-[0.5rem] duration-200 sm:text-xl',
             {
@@ -236,11 +254,15 @@ export const SignatureField = ({
         </div>
       )}
 
-      {state === 'signed-text' && (
+      {state === 'signed-text' && isTypedSignatureSettings(signature?.typedSignatureSettings) && (
         <div ref={containerRef} className="flex h-full w-full items-center justify-center p-2">
           <p
             ref={signatureRef}
-            className="font-signature text-muted-foreground dark:text-background w-full overflow-hidden break-all text-center text-sm leading-tight duration-200 sm:text-2xl"
+            className="w-full overflow-hidden break-all text-center text-sm leading-tight duration-200 sm:text-2xl"
+            style={{
+              color: signature?.typedSignatureSettings?.color || 'black',
+              fontFamily: signature?.typedSignatureSettings?.font || 'Dancing Script',
+            }}
           >
             {signature?.typedSignature}
           </p>
@@ -248,61 +270,38 @@ export const SignatureField = ({
       )}
 
       <Dialog open={showSignatureModal} onOpenChange={setShowSignatureModal}>
-        <DialogContent>
+        <DialogContent hideClose={false} className="p-6 pt-4" position="center">
           <DialogTitle>
             <Trans>
               Sign as {recipient.name}{' '}
               <div className="text-muted-foreground mb-2 h-5">({recipient.email})</div>
             </Trans>
           </DialogTitle>
-
-          <div className="">
-            <Label htmlFor="signature">
-              <Trans>Signature</Trans>
-            </Label>
-
-            <div className="border-border mt-2 rounded-md border">
-              <SignaturePad
-                id="signature"
-                className="h-44 w-full"
-                onChange={(value) => setLocalSignature(value)}
-                allowTypedSignature={typedSignatureEnabled}
-                onValidityChange={(isValid) => {
-                  setSignatureValid(isValid);
-                }}
-              />
-            </div>
-
-            {!signatureValid && (
-              <div className="text-destructive mt-2 text-sm">
-                <Trans>Signature is too small. Please provide a more complete signature.</Trans>
-              </div>
-            )}
-          </div>
-
+          <SignaturePad
+            id="signature"
+            value={localSignature ?? undefined}
+            onChange={(sig) => {
+              setLocalSignature(sig);
+              setSignatureValid(Boolean(sig.value));
+            }}
+            typedSignatureEnabled={typedSignatureEnabled}
+            uploadSignatureEnabled={true}
+            drawSignatureEnabled={true}
+          />
           <SigningDisclosure />
           <DialogFooter>
-            <div className="flex w-full flex-1 flex-nowrap gap-4">
-              <Button
-                type="button"
-                className="dark:bg-muted dark:hover:bg-muted/80 flex-1 bg-black/5 hover:bg-black/10"
-                variant="secondary"
-                onClick={() => {
-                  setShowSignatureModal(false);
-                  setLocalSignature(null);
-                }}
-              >
+            <DialogClose asChild>
+              <Button type="button" variant="ghost">
                 <Trans>Cancel</Trans>
               </Button>
-              <Button
-                type="button"
-                className="flex-1"
-                disabled={!localSignature || !signatureValid}
-                onClick={() => onDialogSignClick()}
-              >
-                <Trans>Sign</Trans>
-              </Button>
-            </div>
+            </DialogClose>
+            <Button
+              type="button"
+              disabled={!localSignature || !signatureValid}
+              onClick={() => onDialogSignClick()}
+            >
+              <Trans>Sign</Trans>
+            </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>

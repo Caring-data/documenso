@@ -14,6 +14,7 @@ import { fromCheckboxValue } from '@documenso/lib/universal/field-checkbox';
 import { FieldType } from '@documenso/prisma/client';
 import { isSignatureFieldType } from '@documenso/prisma/guards/is-signature-field';
 import type { FieldWithSignature } from '@documenso/prisma/types/field-with-signature';
+import { isTypedSignatureSettings } from '@documenso/web/src/helpers/signature';
 
 import {
   ZCalendarFieldMeta,
@@ -26,6 +27,8 @@ import {
   ZRadioFieldMeta,
   ZTextFieldMeta,
 } from '../../types/field-meta';
+import type { ColorName, FontName } from './typography-config';
+import { SUPPORTED_COLOR_NAMES, SUPPORTED_FONT_NAMES, loadFonts } from './typography-config';
 
 export const insertFieldInPDF = async (pdf: PDFDocument, field: FieldWithSignature) => {
   const fontCaveat = await fetch(process.env.FONT_CAVEAT_URI).then(async (res) =>
@@ -35,6 +38,8 @@ export const insertFieldInPDF = async (pdf: PDFDocument, field: FieldWithSignatu
   const fontNoto = await fetch(process.env.FONT_NOTO_SANS_URI).then(async (res) =>
     res.arrayBuffer(),
   );
+
+  const { fontBytesMap, colorMap } = await loadFonts();
 
   const isSignatureField = isSignatureFieldType(field.type);
   const isDebugMode =
@@ -116,8 +121,25 @@ export const insertFieldInPDF = async (pdf: PDFDocument, field: FieldWithSignatu
     });
   }
 
+  function getSafeFont(font: unknown): FontName {
+    return SUPPORTED_FONT_NAMES.includes(font as FontName) ? (font as FontName) : 'Dancing Script';
+  }
+
+  function getSafeColor(color: unknown): ColorName {
+    return SUPPORTED_COLOR_NAMES.includes(color as ColorName) ? (color as ColorName) : 'black';
+  }
+
+  const typedSettings = field.signature?.typedSignatureSettings;
+  const isTyped = isTypedSignatureSettings(typedSettings);
+
+  const selectedFont: FontName = getSafeFont(isTyped ? typedSettings.font : undefined);
+  const selectedColorName: ColorName = getSafeColor(isTyped ? typedSettings.color : undefined);
+
+  const fontBytes = fontBytesMap[selectedFont];
+  const color = colorMap[selectedColorName];
+
   const font = await pdf.embedFont(
-    isSignatureField ? fontCaveat : fontNoto,
+    isSignatureField ? fontBytes : fontNoto,
     isSignatureField ? { features: { calt: false } } : undefined,
   );
 
@@ -209,6 +231,7 @@ export const insertFieldInPDF = async (pdf: PDFDocument, field: FieldWithSignatu
             y: textY,
             size: fontSize,
             font,
+            color,
             rotate: degrees(pageRotationInDegrees),
           });
         }

@@ -1,1 +1,26 @@
 @import '@documenso/ui/styles/theme.css';
+
+@font-face {
+  font-family: 'Dancing Script';
+  src: url('/fonts/dancing-script-regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Great Vibes';
+  src: url('/fonts/great-vibes-regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Cookie';
+  src: url('/fonts/cookie-regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Monte Carlo';
+  src: url('/fonts/monte-carlo-regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Lato';
+  src: url('/fonts/lato-regular.ttf') format('truetype');
+}
