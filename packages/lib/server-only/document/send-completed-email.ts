@@ -2,8 +2,8 @@ import { createElement } from 'react';
 
 import { msg } from '@lingui/macro';
 
-import { mailer } from '@documenso/email/mailer';
 import { DocumentCompletedEmailTemplate } from '@documenso/email/templates/document-completed';
+import { sendEmail } from '@documenso/email/transports/notifyService';
 import { prisma } from '@documenso/prisma';
 import { DocumentSource } from '@documenso/prisma/client';
 
@@ -114,27 +114,14 @@ export const sendCompletedEmail = async ({ documentId, requestMetadata }: SendDo
       }),
     ]);
 
-    await mailer.sendMail({
-      to: [
-        {
-          name: owner.name || '',
-          address: owner.email,
-        },
-      ],
-      from: {
-        name: process.env.NEXT_PRIVATE_SMTP_FROM_NAME || 'Documenso',
-        address: process.env.NEXT_PRIVATE_SMTP_FROM_ADDRESS || 'noreply@documenso.com',
+    await sendEmail(
+      {
+        name: owner.name || '',
+        email: owner.email,
       },
-      subject: i18n._(msg`Document Completed - ${documentDetails?.documentName || ''}`),
+      i18n._(msg`Document Completed - ${documentDetails?.documentName || ''}`),
       html,
-      text,
-      attachments: [
-        {
-          filename: document.title.endsWith('.pdf') ? document.title : document.title + '.pdf',
-          content: Buffer.from(completedDocument),
-        },
-      ],
-    });
+    );
 
     await prisma.documentAuditLog.create({
       data: createDocumentAuditLogData({
@@ -193,30 +180,16 @@ export const sendCompletedEmail = async ({ documentId, requestMetadata }: SendDo
         }),
       ]);
 
-      await mailer.sendMail({
-        to: [
-          {
-            name: recipient.name,
-            address: recipient.email ?? '',
-          },
-        ],
-        from: {
-          name: process.env.NEXT_PRIVATE_SMTP_FROM_NAME || 'Documenso',
-          address: process.env.NEXT_PRIVATE_SMTP_FROM_ADDRESS || 'noreply@documenso.com',
+      await sendEmail(
+        {
+          name: recipient.name,
+          email: recipient.email ?? '',
         },
-        subject:
-          isDirectTemplate && document.documentMeta?.subject
-            ? renderCustomEmailTemplate(document.documentMeta.subject, customEmailTemplate)
-            : i18n._(msg`Document Completed - ${documentDetails?.documentName || ''}`),
+        isDirectTemplate && document.documentMeta?.subject
+          ? renderCustomEmailTemplate(document.documentMeta.subject, customEmailTemplate)
+          : i18n._(msg`Document Completed - ${documentDetails?.documentName || ''}`),
         html,
-        text,
-        attachments: [
-          {
-            filename: document.title.endsWith('.pdf') ? document.title : document.title + '.pdf',
-            content: Buffer.from(completedDocument),
-          },
-        ],
-      });
+      );
 
       await prisma.documentAuditLog.create({
         data: createDocumentAuditLogData({
