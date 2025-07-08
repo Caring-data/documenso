@@ -790,7 +790,7 @@ msgstr "Po przesłaniu dokumentu zostanie automatycznie wygenerowany i dodany do
 msgid "All"
 msgstr "Wszystko"
 
-#: apps/web/src/components/(dashboard)/common/command-menu.tsx:43
+#: apps/web/src/components/(dashboard)/common/command-menu.tsx:42
 msgid "All documents"
 msgstr "Wszystkie dokumenty"
 
@@ -822,7 +822,7 @@ msgstr "Wszystkie podpisy zostały unieważnione."
 msgid "All signing links have been copied to your clipboard."
 msgstr "Wszystkie linki do podpisania zostały skopiowane do schowka."
 
-#: apps/web/src/components/(dashboard)/common/command-menu.tsx:58
+#: apps/web/src/components/(dashboard)/common/command-menu.tsx:57
 msgid "All templates"
 msgstr "Wszystkie szablony"
 
@@ -1028,7 +1028,7 @@ msgstr "Wystąpił błąd podczas przesyłania dokumentu."
 #: apps/web/src/app/(dashboard)/admin/site-settings/banner-form.tsx:81
 #: apps/web/src/app/(dashboard)/settings/profile/delete-account-dialog.tsx:55
 #: apps/web/src/app/(teams)/t/[teamUrl]/settings/team-transfer-status.tsx:54
-#: apps/web/src/components/(dashboard)/common/command-menu.tsx:306
+#: apps/web/src/components/(dashboard)/common/command-menu.tsx:301
 #: apps/web/src/components/(dashboard)/settings/token/delete-token-dialog.tsx:97
 #: apps/web/src/components/(dashboard)/settings/webhooks/delete-webhook-dialog.tsx:88
 #: apps/web/src/components/(teams)/dialogs/add-team-email-dialog.tsx:100
@@ -1478,7 +1478,7 @@ msgstr "Wyczyść plik"
 msgid "Clear filters"
 msgstr "Wyczyść filtry"
 
-#: apps/web/src/app/(signing)/sign/[token]/signature-pad/signature-pad-draw.tsx:300
+#: apps/web/src/app/(signing)/sign/[token]/signature-pad/signature-pad-draw.tsx:305
 #: packages/ui/primitives/signature-pad/signature-pad.tsx:578
 msgid "Clear Signature"
 msgstr "Wyczyść podpis"
@@ -1565,7 +1565,7 @@ msgstr "Zakończone"
 msgid "Completed Document"
 msgstr "Dokument zakończony"
 
-#: apps/web/src/components/(dashboard)/common/command-menu.tsx:49
+#: apps/web/src/components/(dashboard)/common/command-menu.tsx:48
 msgid "Completed documents"
 msgstr "Dokumenty zakończone"
 
@@ -1872,7 +1872,7 @@ msgstr "Aktualni odbiorcy:"
 msgid "Daily"
 msgstr "Codziennie"
 
-#: apps/web/src/components/(dashboard)/common/command-menu.tsx:270
+#: apps/web/src/components/(dashboard)/common/command-menu.tsx:265
 msgid "Dark Mode"
 msgstr "Tryb ciemny"
 
@@ -2356,7 +2356,7 @@ msgstr ""
 #: apps/web/src/app/(dashboard)/documents/documents-page-view.tsx:131
 #: apps/web/src/app/(profile)/p/[url]/page.tsx:166
 #: apps/web/src/app/not-found.tsx:21
-#: apps/web/src/components/(dashboard)/common/command-menu.tsx:210
+#: apps/web/src/components/(dashboard)/common/command-menu.tsx:205
 #: apps/web/src/components/(dashboard)/layout/desktop-nav.tsx:18
 #: apps/web/src/components/(dashboard)/layout/mobile-navigation.tsx:35
 #: apps/web/src/components/ui/user-profile-timur.tsx:60
@@ -2412,7 +2412,7 @@ msgstr "Pobierz szablon CSV"
 msgid "Draft"
 msgstr "Szkic"
 
-#: apps/web/src/components/(dashboard)/common/command-menu.tsx:47
+#: apps/web/src/components/(dashboard)/common/command-menu.tsx:46
 msgid "Draft documents"
 msgstr "Dokumenty szkiców"
 
@@ -2988,7 +2988,7 @@ msgstr "Jeśli Twoja aplikacja uwierzytelniająca nie obsługuje kodów QR, moż
 msgid "Inbox"
 msgstr "Skrzynka odbiorcza"
 
-#: apps/web/src/components/(dashboard)/common/command-menu.tsx:53
+#: apps/web/src/components/(dashboard)/common/command-menu.tsx:52
 msgid "Inbox documents"
 msgstr "Skrzynka odbiorcza dokumentów"
 
@@ -3187,7 +3187,7 @@ msgstr "Opuszczaj zespół"
 msgid "Legality of Electronic Signatures"
 msgstr "Legalność podpisów elektronicznych"
 
-#: apps/web/src/components/(dashboard)/common/command-menu.tsx:269
+#: apps/web/src/components/(dashboard)/common/command-menu.tsx:264
 msgid "Light Mode"
 msgstr "Jasny tryb"
 
@@ -3532,7 +3532,7 @@ msgstr "Brak ograniczeń"
 msgid "No results found"
 msgstr "Nie znaleziono wyników"
 
-#: apps/web/src/components/(dashboard)/common/command-menu.tsx:205
+#: apps/web/src/components/(dashboard)/common/command-menu.tsx:200
 msgid "No results found."
 msgstr "Brak wyników."
 
@@ -3725,7 +3725,7 @@ msgstr "Klucze dostępu pozwalają na logowanie i uwierzytelnianie przy użyciu 
 msgid "Passkeys are not supported on this browser"
 msgstr "Klucze dostępu nie są obsługiwane w tej przeglądarce"
 
-#: apps/web/src/components/(dashboard)/common/command-menu.tsx:71
+#: apps/web/src/components/(dashboard)/common/command-menu.tsx:70
 #: apps/web/src/components/forms/password.tsx:128
 #: apps/web/src/components/forms/reset-password.tsx:115
 #: apps/web/src/components/forms/signin.tsx:353
@@ -3787,7 +3787,7 @@ msgstr "Oczekujące"
 msgid "Pending Document"
 msgstr "Dokument oczekujący"
 
-#: apps/web/src/components/(dashboard)/common/command-menu.tsx:52
+#: apps/web/src/components/(dashboard)/common/command-menu.tsx:51
 msgid "Pending documents"
 msgstr "Oczekujące Dokumenty"
 
@@ -3971,7 +3971,7 @@ msgstr "Wpisz <0>{0}</0>, aby potwierdzić."
 msgid "Pre-formatted CSV template with example data."
 msgstr "Wstępnie sformatowany szablon CSV z przykładowymi danymi."
 
-#: apps/web/src/components/(dashboard)/common/command-menu.tsx:219
+#: apps/web/src/components/(dashboard)/common/command-menu.tsx:214
 #: apps/web/src/components/(teams)/settings/layout/desktop-nav.tsx:58
 #: apps/web/src/components/(teams)/settings/layout/mobile-nav.tsx:67
 msgid "Preferences"
@@ -3995,7 +3995,7 @@ msgid "Private templates can only be modified and viewed by you."
 msgstr "Prywatne szablony mogą być modyfikowane i przeglądane tylko przez Ciebie."
 
 #: apps/web/src/app/(dashboard)/settings/profile/page.tsx:28
-#: apps/web/src/components/(dashboard)/common/command-menu.tsx:70
+#: apps/web/src/components/(dashboard)/common/command-menu.tsx:69
 #: apps/web/src/components/(dashboard)/settings/layout/desktop-nav.tsx:36
 #: apps/web/src/components/(dashboard)/settings/layout/mobile-nav.tsx:39
 msgid "Profile"
@@ -4543,8 +4543,8 @@ msgid "Set a password"
 msgstr "Ustaw hasło"
 
 #: apps/web/src/app/(dashboard)/settings/layout.tsx:20
-#: apps/web/src/components/(dashboard)/common/command-menu.tsx:66
-#: apps/web/src/components/(dashboard)/common/command-menu.tsx:216
+#: apps/web/src/components/(dashboard)/common/command-menu.tsx:65
+#: apps/web/src/components/(dashboard)/common/command-menu.tsx:211
 #: apps/web/src/components/(dashboard)/layout/mobile-navigation.tsx:47
 msgid "Settings"
 msgstr "Ustawienia"
@@ -4696,7 +4696,7 @@ msgstr "Podpis"
 msgid "Signature Certificate"
 msgstr ""
 
-#: apps/web/src/app/(signing)/sign/[token]/signature-pad/signature-pad-draw.tsx:307
+#: apps/web/src/app/(signing)/sign/[token]/signature-pad/signature-pad-draw.tsx:312
 msgid "Signature is too small"
 msgstr ""
 
@@ -4986,7 +4986,7 @@ msgstr "Podsumowanie:"
 msgid "System Requirements"
 msgstr "Wymagania systemowe"
 
-#: apps/web/src/components/(dashboard)/common/command-menu.tsx:271
+#: apps/web/src/components/(dashboard)/common/command-menu.tsx:266
 msgid "System Theme"
 msgstr "Motyw systemowy"
 
@@ -5176,7 +5176,7 @@ msgstr "Tytuł szablonu"
 
 #: apps/web/src/app/(dashboard)/templates/[id]/template-page-view.tsx:87
 #: apps/web/src/app/(dashboard)/templates/templates-page-view.tsx:55
-#: apps/web/src/components/(dashboard)/common/command-menu.tsx:213
+#: apps/web/src/components/(dashboard)/common/command-menu.tsx:208
 #: apps/web/src/components/(dashboard)/layout/desktop-nav.tsx:22
 #: apps/web/src/components/(dashboard)/layout/mobile-navigation.tsx:39
 msgid "Templates"
@@ -5834,7 +5834,7 @@ msgstr "Ponowna autoryzacja za pomocą dwuetapowej weryfikacji"
 msgid "Type"
 msgstr "Typ"
 
-#: apps/web/src/components/(dashboard)/common/command-menu.tsx:191
+#: apps/web/src/components/(dashboard)/common/command-menu.tsx:186
 msgid "Type a command or search..."
 msgstr "Wpisz polecenie lub wyszukaj..."
 
@@ -5846,7 +5846,7 @@ msgstr "Podpisy pisane nie są dozwolone. Proszę narysować swój podpis."
 msgid "Uh oh! Looks like you're missing a token"
 msgstr "Ups! Wygląda na to, że brakuje Ci tokenu"
 
-#: apps/web/src/components/(dashboard)/common/command-menu.tsx:308
+#: apps/web/src/components/(dashboard)/common/command-menu.tsx:303
 msgid "Unable to change the language at this time. Please try again later."
 msgstr "Nie można zmienić języka w tej chwili. Spróbuj ponownie później."
 
@@ -6049,7 +6049,7 @@ msgstr "Prześlij CSV"
 msgid "Upload custom document"
 msgstr "Prześlij niestandardowy dokument"
 
-#: apps/web/src/app/(signing)/sign/[token]/signature-pad/signature-pad-upload.tsx:156
+#: apps/web/src/app/(signing)/sign/[token]/signature-pad/signature-pad-upload.tsx:162
 #: packages/ui/primitives/signature-pad/signature-pad.tsx:529
 msgid "Upload Signature"
 msgstr "Prześlij podpis"
@@ -7010,7 +7010,7 @@ msgstr "Twój dokument został pomyślnie załadowany. Zostaniesz przekierowany 
 msgid "Your document preferences have been updated"
 msgstr "Preferencje dokumentu zostały zaktualizowane"
 
-#: apps/web/src/components/(dashboard)/common/command-menu.tsx:228
+#: apps/web/src/components/(dashboard)/common/command-menu.tsx:223
 msgid "Your documents"
 msgstr "Twoje dokumenty"
 
