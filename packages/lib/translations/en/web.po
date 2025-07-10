@@ -2152,8 +2152,8 @@ msgstr "Document Cancelled"
 msgid "Document completed"
 msgstr "Document completed"
 
-#: packages/lib/server-only/document/send-completed-email.ts:128
-#: packages/lib/server-only/document/send-completed-email.ts:210
+#: packages/lib/server-only/document/send-completed-email.ts:122
+#: packages/lib/server-only/document/send-completed-email.ts:190
 msgid "Document Completed - {0}"
 msgstr "Document Completed - {0}"
 
