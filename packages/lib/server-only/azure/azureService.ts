@@ -76,7 +76,7 @@ export class AzureService {
    */
   async uploadBase64(base64String: string, fileName: string, folder?: string): Promise<string> {
     try {
-      const file = base64ToFile(base64String, fileName);
+      const file = base64ToBuffer(base64String);
       return await this.uploadFile(file, fileName, folder);
     } catch (error) {
       console.error('Error uploading base64 file to Azure Blob Storage:', error);
