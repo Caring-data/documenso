@@ -35,9 +35,9 @@ export class AzureService {
    * @param base64String Base64 string with data URL
    * @returns string | null - MIME type or null
    */
-  private extractMimeTypeFromBase64(base64String: string): string | null {
+  private extractMimeTypeFromBase64(base64String: string): string | undefined {
     const mimeMatch = base64String.match(/^data:([^;]+);base64,/);
-    return mimeMatch ? mimeMatch[1] : null;
+    return mimeMatch ? mimeMatch[1] : undefined;
   }
 
   /**

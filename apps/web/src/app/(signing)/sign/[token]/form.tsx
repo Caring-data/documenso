@@ -60,7 +60,7 @@ export const SigningForm = ({
 
   const assistantSignersId = useId();
 
-  const { fullName, signature, setFullName, setSignature, signatureValid, setSignatureValid } =
+  const { fullName, signature, setFullName, setSignature, signatureValid } =
     useRequiredSigningContext();
 
   const [validateUninsertedFields, setValidateUninsertedFields] = useState(false);
