@@ -2157,8 +2157,8 @@ msgstr "Documento Annullato"
 msgid "Document completed"
 msgstr "Documento completato"
 
-#: packages/lib/server-only/document/send-completed-email.ts:128
-#: packages/lib/server-only/document/send-completed-email.ts:210
+#: packages/lib/server-only/document/send-completed-email.ts:122
+#: packages/lib/server-only/document/send-completed-email.ts:190
 msgid "Document Completed - {0}"
 msgstr ""
 

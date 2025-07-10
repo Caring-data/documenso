@@ -22,5 +22,12 @@ declare namespace NodeJS {
 
     NEXT_PRIVATE_LARAVEL_API_URL?: string;
     NEXT_PRIVATE_LARAVEL_ENCRYPTION_KEY?: string;
+
+    AZURE_STORAGE_ACCOUNT_NAME: string;
+    AZURE_STORAGE_ACCOUNT_KEY: string;
+    AZURE_STORAGE_CONNECTION_STRING: string;
+    AZURE_STORAGE_CONTAINER_NAME: string;
+    AZURE_STORAGE_URL: string;
+    FOLDER_FILE: string;
   }
 }

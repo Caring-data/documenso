@@ -2,6 +2,7 @@ import type { Document, Recipient } from '@documenso/prisma/client';
 
 import type { TDocumentDetails } from '../../types/document';
 import { createLog } from '../../utils/createLog';
+import { AzureService } from '../azure/azureService';
 import { generateLaravelToken } from './getLaravelToken';
 
 export const storeSignedDocument = async (
@@ -13,6 +14,14 @@ export const storeSignedDocument = async (
   allSigned: boolean = false,
 ) => {
   try {
+    const residentId = String(document.residentId ?? '');
+    const documentKey = String(document.formKey ?? '');
+
+    const azureService = new AzureService();
+    const basePath = process.env.FOLDER_FILE;
+    const folderPath = `${basePath}/documenso/residents/${residentId}`;
+    const pdfUrl = await azureService.uploadBase64(base64Data, `${documentKey}.pdf`, folderPath);
+
     const token = generateLaravelToken();
 
     const apiUrl = process.env.NEXT_PRIVATE_LARAVEL_API_URL;
@@ -23,9 +32,9 @@ export const storeSignedDocument = async (
     const formData = {
       clientName: String(documentDetails?.companyName || ''),
       documensoId: String(documentId),
-      documentKey: String(document.formKey || ''),
-      residentId: String(document.residentId || ''),
-      base64File: base64Data,
+      documentKey: documentKey,
+      residentId: residentId,
+      fileUrl: pdfUrl,
       recipient: allSigned ? 'AllRecipientsSigned' : recipient?.email,
     };
 

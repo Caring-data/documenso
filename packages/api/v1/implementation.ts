@@ -7,6 +7,7 @@ import { DATE_FORMATS, DEFAULT_DOCUMENT_DATE_FORMAT } from '@documenso/lib/const
 import '@documenso/lib/constants/time-zones';
 import { DEFAULT_DOCUMENT_TIME_ZONE, TIME_ZONES } from '@documenso/lib/constants/time-zones';
 import { AppError } from '@documenso/lib/errors/app-error';
+import { AzureService } from '@documenso/lib/server-only/azure/azureService';
 import { createDocumentData } from '@documenso/lib/server-only/document-data/create-document-data';
 import { upsertDocumentMeta } from '@documenso/lib/server-only/document-meta/upsert-document-meta';
 import { createDocument } from '@documenso/lib/server-only/document/create-document';
@@ -1920,6 +1921,21 @@ export const ApiContractV1Implementation = createNextRoute(ApiContractV1, {
         id: member.id,
         email: member.user.email,
         role: member.role,
+      },
+    };
+  }),
+
+  azureUploadContract: authenticatedMiddleware(async (args) => {
+    const { fileName, fileContentBase64, residentId } = args.body;
+
+    const azureService = new AzureService();
+    const basePath = process.env.FOLDER_FILE;
+    const folderPath = `${basePath}/documenso/residents/${residentId}`;
+    const url = await azureService.uploadBase64(fileContentBase64, fileName, folderPath);
+    return {
+      status: 200,
+      body: {
+        url,
       },
     };
   }),
