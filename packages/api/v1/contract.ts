@@ -2,6 +2,7 @@ import { initContract } from '@ts-rest/core';
 
 import {
   ZAuthorizationHeadersSchema,
+  ZCreateAzureUploadContract,
   ZCreateDocumentFromTemplateMutationResponseSchema,
   ZCreateDocumentFromTemplateMutationSchema,
   ZCreateDocumentMutationResponseSchema,
@@ -25,6 +26,7 @@ import {
   ZResendDocumentByEmailSchema,
   ZResendDocumentForSigningMutationSchema,
   ZSendDocumentForSigningMutationSchema,
+  ZSuccessAzureUploadContractSchema,
   ZSuccessfulDeleteTemplateResponseSchema,
   ZSuccessfulDocumentResponseSchema,
   ZSuccessfulFieldCreationResponseSchema,
@@ -379,6 +381,18 @@ export const ApiContractV1 = c.router(
         500: ZUnsuccessfulResponseSchema,
       },
       summary: 'Remove a member from a team',
+    },
+
+    azureUploadContract: {
+      method: 'POST',
+      path: '/api/v1/azure',
+      body: ZCreateAzureUploadContract,
+      responses: {
+        200: ZSuccessAzureUploadContractSchema,
+        400: ZUnsuccessfulResponseSchema,
+        404: ZUnsuccessfulResponseSchema,
+      },
+      summary: 'Upload a file to Azure Blob Storage',
     },
   },
   {
