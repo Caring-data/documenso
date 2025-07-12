@@ -37,7 +37,7 @@ msgstr "\"{documentTitle}\" has been successfully deleted"
 msgid "\"{placeholderEmail}\" on behalf of \"{0}\" has invited you to sign \"example document\"."
 msgstr "\"{placeholderEmail}\" on behalf of \"{0}\" has invited you to sign \"example document\"."
 
-#: apps/web/src/app/(signing)/sign/[token]/form.tsx:289
+#: apps/web/src/app/(signing)/sign/[token]/form.tsx:270
 #: apps/web/src/app/embed/sign/[[...url]]/client.tsx:380
 msgid "(You)"
 msgstr "(You)"
@@ -1088,7 +1088,7 @@ msgstr "App Version"
 msgid "Approve"
 msgstr "Approve"
 
-#: apps/web/src/app/(signing)/sign/[token]/form.tsx:201
+#: apps/web/src/app/(signing)/sign/[token]/form.tsx:182
 #: packages/email/template-components/template-document-invite.tsx:118
 msgid "Approve Document"
 msgstr "Approve Document"
@@ -1144,7 +1144,7 @@ msgstr "Are you sure?"
 msgid "Assist"
 msgstr "Assist"
 
-#: apps/web/src/app/(signing)/sign/[token]/form.tsx:202
+#: apps/web/src/app/(signing)/sign/[token]/form.tsx:183
 #: packages/email/template-components/template-document-invite.tsx:120
 msgid "Assist Document"
 msgstr "Assist Document"
@@ -1351,8 +1351,8 @@ msgstr "Can prepare"
 #: apps/web/src/app/(signing)/sign/[token]/document-action-auth-account.tsx:71
 #: apps/web/src/app/(signing)/sign/[token]/document-action-auth-passkey.tsx:164
 #: apps/web/src/app/(signing)/sign/[token]/document-action-auth-passkey.tsx:189
-#: apps/web/src/app/(signing)/sign/[token]/form.tsx:224
-#: apps/web/src/app/(signing)/sign/[token]/form.tsx:382
+#: apps/web/src/app/(signing)/sign/[token]/form.tsx:205
+#: apps/web/src/app/(signing)/sign/[token]/form.tsx:363
 #: apps/web/src/app/(signing)/sign/[token]/name-field.tsx:234
 #: apps/web/src/app/(signing)/sign/[token]/number-field.tsx:347
 #: apps/web/src/app/(signing)/sign/[token]/reject-document-dialog.tsx:158
@@ -1499,7 +1499,7 @@ msgid "Click to copy signing link for sending to recipient"
 msgstr "Click to copy signing link for sending to recipient"
 
 #: apps/web/src/app/(recipient)/d/[token]/sign-direct-template.tsx:183
-#: apps/web/src/app/(signing)/sign/[token]/form.tsx:192
+#: apps/web/src/app/(signing)/sign/[token]/form.tsx:173
 #: apps/web/src/app/embed/direct/[[...url]]/client.tsx:489
 #: apps/web/src/app/embed/sign/[[...url]]/client.tsx:494
 msgid "Click to insert field"
@@ -1538,7 +1538,7 @@ msgstr "Complete Document"
 msgid "Complete Signing"
 msgstr "Complete Signing"
 
-#: apps/web/src/app/(signing)/sign/[token]/form.tsx:243
+#: apps/web/src/app/(signing)/sign/[token]/form.tsx:224
 msgid "Complete the fields for the following signers. Once reviewed, they will inform you if any modifications are needed."
 msgstr "Complete the fields for the following signers. Once reviewed, they will inform you if any modifications are needed."
 
@@ -1633,7 +1633,7 @@ msgid "Content"
 msgstr "Content"
 
 #: apps/web/src/app/(dashboard)/settings/security/passkeys/create-passkey-dialog.tsx:252
-#: apps/web/src/app/(signing)/sign/[token]/form.tsx:315
+#: apps/web/src/app/(signing)/sign/[token]/form.tsx:296
 #: apps/web/src/app/(unauthenticated)/team/invite/[token]/page.tsx:135
 #: apps/web/src/app/(unauthenticated)/team/verify/email/[token]/page.tsx:69
 #: apps/web/src/app/(unauthenticated)/team/verify/email/[token]/page.tsx:143
@@ -2817,7 +2817,7 @@ msgid "Free Signature"
 msgstr "Free Signature"
 
 #: apps/web/src/app/(recipient)/d/[token]/sign-direct-template.tsx:335
-#: apps/web/src/app/(signing)/sign/[token]/form.tsx:344
+#: apps/web/src/app/(signing)/sign/[token]/form.tsx:325
 #: apps/web/src/app/(signing)/sign/[token]/name-field.tsx:212
 #: apps/web/src/app/embed/direct/[[...url]]/client.tsx:400
 #: apps/web/src/app/embed/sign/[[...url]]/client.tsx:402
@@ -3881,7 +3881,7 @@ msgstr "Please enter a meaningful name for your token. This will help you identi
 msgid "Please enter a valid name."
 msgstr "Please enter a valid name."
 
-#: apps/web/src/app/(signing)/sign/[token]/form.tsx:208
+#: apps/web/src/app/(signing)/sign/[token]/form.tsx:189
 msgid "Please mark as viewed to complete"
 msgstr "Please mark as viewed to complete"
 
@@ -3925,7 +3925,7 @@ msgstr "Please provide a token from the authenticator, or a backup code. If you 
 msgid "Please provide a token from your authenticator, or a backup code."
 msgstr "Please provide a token from your authenticator, or a backup code."
 
-#: apps/web/src/app/(signing)/sign/[token]/form.tsx:332
+#: apps/web/src/app/(signing)/sign/[token]/form.tsx:313
 msgid "Please review the document before signing."
 msgstr "Please review the document before signing."
 
@@ -4620,7 +4620,7 @@ msgstr "Sign as<0>{0} <1>({1})</1></0>"
 msgid "Sign document"
 msgstr "Sign document"
 
-#: apps/web/src/app/(signing)/sign/[token]/form.tsx:200
+#: apps/web/src/app/(signing)/sign/[token]/form.tsx:181
 msgid "Sign Document"
 msgstr "Sign Document"
 
@@ -4675,7 +4675,7 @@ msgstr "Sign Up with OIDC"
 #: apps/web/src/app/(dashboard)/admin/documents/[id]/recipient-item.tsx:88
 #: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/certificate/page.tsx:208
 #: apps/web/src/app/(recipient)/d/[token]/sign-direct-template.tsx:347
-#: apps/web/src/app/(signing)/sign/[token]/form.tsx:359
+#: apps/web/src/app/(signing)/sign/[token]/form.tsx:340
 #: apps/web/src/app/(signing)/sign/[token]/signature-field.tsx:243
 #: apps/web/src/app/embed/direct/[[...url]]/client.tsx:430
 #: apps/web/src/app/embed/sign/[[...url]]/client.tsx:431
@@ -4916,7 +4916,7 @@ msgstr "Subject <0>(Optional)</0>"
 msgid "Submit"
 msgstr "Submit"
 
-#: apps/web/src/app/(signing)/sign/[token]/form.tsx:315
+#: apps/web/src/app/(signing)/sign/[token]/form.tsx:296
 msgid "Submitting..."
 msgstr "Submitting..."
 
@@ -6225,7 +6225,7 @@ msgstr "View Codes"
 msgid "View document"
 msgstr "View document"
 
-#: apps/web/src/app/(signing)/sign/[token]/form.tsx:199
+#: apps/web/src/app/(signing)/sign/[token]/form.tsx:180
 #: packages/email/template-components/template-document-invite.tsx:117
 #: packages/email/template-components/template-document-rejected.tsx:40
 #: packages/ui/primitives/document-flow/add-subject.tsx:90
