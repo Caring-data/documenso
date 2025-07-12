@@ -14,6 +14,7 @@ import { sendCompletedEmail } from '../../../server-only/document/send-completed
 import PostHogServerClient from '../../../server-only/feature-flags/get-post-hog-server-client';
 import { getCertificatePdf } from '../../../server-only/htmltopdf/get-certificate-pdf';
 import { storeSignedDocument } from '../../../server-only/laravel-auth/storeSignedDocument';
+import { compressPdfBuffer } from '../../../server-only/pdf/compressPdf';
 import { triggerWebhook } from '../../../server-only/webhooks/trigger/trigger-webhook';
 import type { TDocumentDetails } from '../../../types/document';
 import { DOCUMENT_AUDIT_LOG_TYPE } from '../../../types/document-audit-logs';
@@ -164,12 +165,14 @@ export const run = async ({
         addDefaultPage: false,
       });
 
+      const compressedPdf = await compressPdfBuffer(Buffer.from(finalPdfBytes), 'medium');
+
       const { name } = path.parse(document.title);
 
       const documentData = await putPdfFile({
         name: `${name}_signed.pdf`,
         type: 'application/pdf',
-        arrayBuffer: async () => Promise.resolve(finalPdfBytes),
+        arrayBuffer: async () => Promise.resolve(compressedPdf),
       });
 
       return documentData.id;
