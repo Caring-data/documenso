@@ -15,6 +15,8 @@ RUN apk add --no-cache \
     ca-certificates \
     ttf-freefont
 
+RUN apk add --no-cache ghostscript
+
 WORKDIR /app
 
 ###########################

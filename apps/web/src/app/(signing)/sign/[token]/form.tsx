@@ -143,19 +143,24 @@ export const SigningForm = ({
   };
 
   const completeDocument = async (authOptions?: TRecipientActionAuth) => {
+    const redirectTimer = setTimeout(() => {
+      window.location.href = redirectUrl ?? `/sign/${recipient.token}/complete`;
+    }, 20000);
+
     await completeDocumentWithToken({
       token: recipient.token,
       documentId: document.id,
       authOptions,
     });
 
+    clearTimeout(redirectTimer);
+    window.location.href = redirectUrl ?? `/sign/${recipient.token}/complete`;
+
     analytics.capture('App: Recipient has completed signing', {
       signerId: recipient.id,
       documentId: document.id,
       timestamp: new Date().toISOString(),
     });
-
-    window.location.href = redirectUrl ?? `/sign/${recipient.token}/complete`;
   };
 
   return (
