@@ -1,32 +1,45 @@
 import { BlobServiceClient, StorageSharedKeyCredential } from '@azure/storage-blob';
 import { v4 as uuidv4 } from 'uuid';
 
+const MIME_TYPES: Record<string, string> = {
+  pdf: 'application/pdf',
+  doc: 'application/msword',
+  docx: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+
+  jpg: 'image/jpeg',
+  jpeg: 'image/jpeg',
+  svg: 'image/svg+xml',
+};
+
 export class AzureService {
   private blobServiceClient: BlobServiceClient;
   private containerName: string;
+
   constructor() {
-    // Option 1: Using connection string (recommended)
     const connectionString = process.env.AZURE_STORAGE_CONNECTION_STRING;
     this.containerName = process.env.AZURE_STORAGE_CONTAINER_NAME!;
-    console.log('connectionString', connectionString);
+
+    if (!this.containerName) {
+      throw new Error('AZURE_STORAGE_CONTAINER_NAME environment variable is required');
+    }
+
     if (connectionString) {
-      // Use connection string if available
       this.blobServiceClient = BlobServiceClient.fromConnectionString(connectionString);
     } else {
-      // Fallback to account name and key
-      const accountName = process.env.AZURE_STORAGE_ACCOUNT_NAME!;
-      const accountKey = process.env.AZURE_STORAGE_ACCOUNT_KEY!;
+      const accountName = process.env.AZURE_STORAGE_ACCOUNT_NAME;
+      const accountKey = process.env.AZURE_STORAGE_ACCOUNT_KEY;
+
       if (!accountName || !accountKey) {
-        throw new Error('Azure Storage credentials are not configured properly');
+        throw new Error(
+          'Azure Storage credentials are not configured properly. Provide either AZURE_STORAGE_CONNECTION_STRING or both AZURE_STORAGE_ACCOUNT_NAME and AZURE_STORAGE_ACCOUNT_KEY',
+        );
       }
+
       const credential = new StorageSharedKeyCredential(accountName, accountKey);
       this.blobServiceClient = new BlobServiceClient(
         `https://${accountName}.blob.core.windows.net`,
         credential,
       );
-    }
-    if (!this.containerName) {
-      throw new Error('Azure Storage container name is not configured');
     }
   }
 
@@ -45,12 +58,18 @@ export class AzureService {
    * @param extension File extension
    * @returns string | null - MIME type or null
    */
-  private getMimeType(extension: string): string | null {
-    const mimeTypes: { [key: string]: string } = {
-      pdf: 'application/pdf',
-    };
+  private getMimeType(extension: string): string {
+    return MIME_TYPES[extension.toLowerCase()] || 'application/octet-stream';
+  }
 
-    return mimeTypes[extension.toLowerCase()] || null;
+  private generateUniqueFileName(fileName: string): string {
+    const fileExtension = fileName.split('.').pop() || '';
+    return `${uuidv4()}.${fileExtension}`;
+  }
+
+  private buildBlobPath(fileName: string, folder?: string): string {
+    const uniqueFileName = this.generateUniqueFileName(fileName);
+    return folder ? `${folder}/${uniqueFileName}` : uniqueFileName;
   }
 
   /**
@@ -72,20 +91,20 @@ export class AzureService {
       // Create container if it doesn't exist
       await containerClient.createIfNotExists();
 
-      const fileExtension = fileName.split('.').pop() || '';
-      const uniqueFileName = `${uuidv4()}.${fileExtension}`;
-      const blobName = folder ? `${folder}/${uniqueFileName}` : uniqueFileName;
+      const blobPath = this.buildBlobPath(fileName, folder);
+      const blockBlobClient = containerClient.getBlockBlobClient(blobPath);
 
-      const blockBlobClient = containerClient.getBlockBlobClient(blobName);
+      const fileExtension = fileName.split('.').pop() || '';
+      const contentType = mimeType || this.getMimeType(fileExtension);
 
       const uploadResponse = await blockBlobClient.uploadData(buffer, {
         blobHTTPHeaders: {
-          blobContentType:
-            mimeType || this.getMimeType(fileExtension) || 'application/octet-stream',
+          blobContentType: contentType,
         },
       });
 
-      console.log('File uploaded successfully:', uploadResponse.requestId);
+      console.log(`File uploaded successfully. RequestId: ${uploadResponse.requestId}`);
+
       return blockBlobClient.url;
     } catch (error) {
       console.error('Error uploading file to Azure Blob Storage:', error);
@@ -102,8 +121,9 @@ export class AzureService {
    */
   async uploadBase64(base64String: string, fileName: string, folder?: string): Promise<string> {
     try {
-      const buffer = base64ToBuffer(base64String);
+      const buffer = this.base64ToBuffer(base64String);
       const mimeType = this.extractMimeTypeFromBase64(base64String);
+
       return await this.uploadFile(buffer, fileName, folder, mimeType);
     } catch (error) {
       console.error('Error uploading base64 file to Azure Blob Storage:', error);
@@ -112,36 +132,19 @@ export class AzureService {
   }
 
   /**
-   * Upload buffer directly to Azure Blob Storage (alias for uploadFile)
-   * @param buffer Buffer data
-   * @param fileName Name of the file with extension
-   * @param folder Optional folder path
-   * @param mimeType Optional MIME type
-   * @returns Promise<string> - URL of the uploaded file
+   * Convert base64 string to Buffer
+   * @param base64String Base64 encoded string
+   * @returns Buffer
    */
-  async uploadBuffer(
-    buffer: Buffer,
-    fileName: string,
-    folder?: string,
-    mimeType?: string,
-  ): Promise<string> {
-    return this.uploadFile(buffer, fileName, folder, mimeType);
-  }
-}
-
-/**
- * Convert base64 string to Buffer
- * @param base64String Base64 encoded string
- * @returns Buffer
- */
-export function base64ToBuffer(base64String: string): Buffer {
-  try {
-    // Remove data URL prefix if it exists
-    const base64Data = base64String.replace(/^data:[^;]+;base64,/, '');
-    return Buffer.from(base64Data, 'base64');
-  } catch (error) {
-    console.error('Error converting base64 to buffer:', error);
-    throw new Error(`Error converting base64 to buffer: ${error}`);
+  private base64ToBuffer(base64String: string): Buffer {
+    try {
+      // Remove data URL prefix if it exists
+      const base64Data = base64String.replace(/^data:[^;]+;base64,/, '');
+      return Buffer.from(base64Data, 'base64');
+    } catch (error) {
+      console.error('Error converting base64 to buffer:', error);
+      throw new Error(`Error converting base64 to buffer: ${error}`);
+    }
   }
 }
 

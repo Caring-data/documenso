@@ -89,8 +89,6 @@ export const completeDocumentWithToken = async ({
       throw new Error('Invalid or missing documentDetails');
     }
 
-    const documentDetails: DocumentDetails = rawDetails;
-
     if (document.status !== DocumentStatus.PENDING) {
       throw new Error(`Document ${document.id} must be pending`);
     }
