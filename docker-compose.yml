@@ -1,8 +1,18 @@
 services:
-  documenso-next:
+  documenso_blue:
     build: .
+    container_name: documenso_blue
     ports:
-      - '3002:3002'
+      - '3001:3002'
+    env_file:
+      - .env
+    restart: always
+
+  documenso_green:
+    build: .
+    container_name: documenso_green
+    ports:
+      - '3003:3002'
     env_file:
       - .env
     restart: always
@@ -17,4 +27,5 @@ services:
       - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
       - /etc/Certs:/etc/Certs:ro
     depends_on:
-      - documenso-next
+      - documenso_blue
+      - documenso_green
