@@ -8,6 +8,9 @@ pipeline {
         NGINX_CONTAINER_NAME = "nginx_documento_next"
         BLUE_CONTAINER = "documenso_blue"
         GREEN_CONTAINER = "documenso_green"
+        HEALTH_CHECK_INTERVAL = "15"
+        MAX_HEALTH_ATTEMPTS = "30"
+        WARM_UP_TIME = "30"
     }
 
     stages {
@@ -72,12 +75,20 @@ pipeline {
                     // Wait until the new container is healthy
                     waitForHealth(newContainer)
 
+                    echo "⏳ Waiting ${WARM_UP_TIME} seconds for application warm-up..."
+                    sh "sleep ${WARM_UP_TIME}"
+
+                    verifyContainerReadiness(newContainer)
+
                     // Update Nginx configuration to use the new container
                     sh "sed -i 's/${activeContainer}/${newContainer}/g' docker/nginx/default.conf"
                     sh "docker compose up -d --no-deps ${NGINX_CONTAINER_NAME}"
 
                     // Wait a bit for nginx to reload
-                    sh "sleep 50"
+                    echo "⏳ Waiting for nginx to reload configuration..."
+                    sh "sleep 10"
+
+                    verifyNginxHealth()
 
                     // Stop the previous container
                     sh "docker compose stop ${activeContainer} || true"
@@ -98,21 +109,35 @@ pipeline {
 def waitForHealth(container) {
     sh """
     attempt=1
-    max_attempts=50
+    max_attempts=\${MAX_HEALTH_ATTEMPTS}
+    interval=\${HEALTH_CHECK_INTERVAL}
+
+    echo "🔍 Checking health of ${container}..."
+    echo "Max attempts: \$max_attempts, Interval: \$interval seconds"
+
     while [ \$attempt -le \$max_attempts ]; do
-        if docker inspect --format='{{.State.Health.Status}}' \${WORKSPACE##*/}_${container}_1 2>/dev/null | grep -q healthy; then
-            echo "${container} is healthy"
+         if docker inspect --format='{{.State.Health.Status}}' \${WORKSPACE##*/}_${container}_1 2>/dev/null | grep -q healthy; then
+            echo "✅ ${container} is healthy (format 1)"
             break
         elif docker inspect --format='{{.State.Health.Status}}' ${container} 2>/dev/null | grep -q healthy; then
-            echo "${container} is healthy"
+            echo "✅ ${container} is healthy (format 2)"
+            break
+        elif docker inspect --format='{{.State.Health.Status}}' documenso_development_${container}_1 2>/dev/null | grep -q healthy; then
+            echo "✅ ${container} is healthy (format 3)"
             break
         fi
-        echo "Waiting for ${container} to be healthy (attempt \$attempt/\$max_attempts)"
-        sleep 50
+
+         current_status=\$(docker inspect --format='{{.State.Health.Status}}' \${WORKSPACE##*/}_${container}_1 2>/dev/null || echo "unknown")
+        echo "⏳ Waiting for ${container} to be healthy (attempt \$attempt/\$max_attempts) - Current status: \$current_status"
+
+        sleep \$interval
         attempt=\$((attempt + 1))
     done
+
     if [ \$attempt -gt \$max_attempts ]; then
-        echo "${container} did not become healthy in time"
+        echo "❌ ${container} did not become healthy in time"
+        echo "🔍 Container logs for debugging:"
+        docker logs ${container} --tail 50 || docker logs \${WORKSPACE##*/}_${container}_1 --tail 50 || true
         exit 1
     fi
     """
