@@ -89,8 +89,6 @@ export const completeDocumentWithToken = async ({
       throw new Error('Invalid or missing documentDetails');
     }
 
-    const documentDetails: DocumentDetails = rawDetails;
-
     if (document.status !== DocumentStatus.PENDING) {
       throw new Error(`Document ${document.id} must be pending`);
     }
@@ -133,25 +131,6 @@ export const completeDocumentWithToken = async ({
       throw new Error(`Recipient ${recipient.id} has unsigned fields`);
     }
 
-    // Document reauth for completing documents is currently not required.
-
-    // const { derivedRecipientActionAuth } = extractDocumentAuthMethods({
-    //   documentAuth: document.authOptions,
-    //   recipientAuth: recipient.authOptions,
-    // });
-
-    // const isValid = await isRecipientAuthorized({
-    //   type: 'ACTION',
-    //   document: document,
-    //   recipient: recipient,
-    //   userId,
-    //   authOptions,
-    // });
-
-    // if (!isValid) {
-    //   throw new AppError(AppErrorCode.UNAUTHORIZED, 'Invalid authentication values');
-    // }
-
     await prisma.$transaction(async (tx) => {
       await tx.recipient.update({
         where: {
@@ -181,6 +160,72 @@ export const completeDocumentWithToken = async ({
         }),
       });
     });
+
+    await jobs.triggerJob({
+      name: 'document.complete.processing',
+      payload: {
+        documentId: document.id,
+        recipientId: recipient.id,
+        requestMetadata,
+      },
+    });
+
+    return { success: true, documentId: document.id, recipientId: recipient.id };
+  } catch (error) {
+    await createLog({
+      action: 'COMPLETE_DOCUMENT_ERROR',
+      message: 'Error al completar el documento con token',
+      data: {
+        error: error instanceof Error ? error.message : String(error),
+        documentId,
+        token,
+      },
+      metadata: requestMetadata,
+    });
+
+    throw error;
+  }
+};
+
+export const processDocumentCompletion = async ({
+  documentId,
+  recipientId,
+  requestMetadata,
+}: {
+  documentId: number;
+  recipientId: number;
+  requestMetadata?: RequestMetadata;
+}) => {
+  try {
+    const document = await prisma.document.findFirstOrThrow({
+      where: { id: documentId },
+      include: {
+        documentMeta: true,
+        recipients: true,
+        documentData: true,
+        team: {
+          select: {
+            teamGlobalSettings: {
+              select: {
+                includeSigningCertificate: true,
+              },
+            },
+          },
+        },
+      },
+    });
+
+    const recipient = document.recipients.find((r) => r.id === recipientId);
+    if (!recipient) {
+      throw new Error(`Recipient ${recipientId} not found`);
+    }
+
+    const rawDetails = document?.documentDetails;
+    if (!rawDetails || typeof rawDetails !== 'object') {
+      throw new Error('Invalid or missing documentDetails');
+    }
+
+    const documentDetails: DocumentDetails = rawDetails;
 
     await jobs.triggerJob({
       name: 'send.recipient.signed.email',
@@ -310,12 +355,12 @@ export const completeDocumentWithToken = async ({
     }
   } catch (error) {
     await createLog({
-      action: 'COMPLETE_DOCUMENT_ERROR',
-      message: 'Error al completar el documento con token',
+      action: 'PROCESS_DOCUMENT_COMPLETION_ERROR',
+      message: 'Error al procesar la finalización del documento',
       data: {
         error: error instanceof Error ? error.message : String(error),
         documentId,
-        token,
+        recipientId,
       },
       metadata: requestMetadata,
     });

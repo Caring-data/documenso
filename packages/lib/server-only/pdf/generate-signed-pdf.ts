@@ -3,6 +3,7 @@ import { PDFDocument } from 'pdf-lib';
 import type { Document, Field } from '@documenso/prisma/client';
 import { signPdf } from '@documenso/signing';
 
+import { compressPdfBuffer } from './compressPdf';
 import { flattenAnnotations } from './flatten-annotations';
 import { flattenForm } from './flatten-form';
 import { insertFieldInPDF } from './insert-field-in-pdf';
@@ -48,6 +49,10 @@ export const generateSignedPdf = async ({
 
   flattenForm(pdfDoc);
 
-  const pdfBytes = await pdfDoc.save();
-  return signPdf({ pdf: Buffer.from(pdfBytes) });
+  const signedPdfBytes = await pdfDoc.save();
+  const signedPdf = await signPdf({ pdf: Buffer.from(signedPdfBytes) });
+
+  const compressedPdf = await compressPdfBuffer(signedPdf, 'medium');
+
+  return compressedPdf;
 };

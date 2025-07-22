@@ -180,6 +180,20 @@ services:
       - key: NEXT_PRIVATE_LARAVEL_PASSWORD
         sync: false
 
+      # Azure
+      - key: AZURE_STORAGE_ACCOUNT_NAME
+        sync: false
+      - key: AZURE_STORAGE_ACCOUNT_KEY
+        sync: false
+      - key: AZURE_STORAGE_CONNECTION_STRING
+        sync: false
+      - key: AZURE_STORAGE_CONTAINER_NAME
+        sync: false
+      - key: AZURE_STORAGE_URL
+        sync: false
+      - key: FOLDER_FILE
+        sync: false
+
 databases:
   - name: documenso-db
     plan: free

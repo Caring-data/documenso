@@ -682,3 +682,13 @@ export const ZSuccessfulRemoveTeamMemberResponseSchema = z.object({
   email: z.string().email(),
   role: z.nativeEnum(TeamMemberRole),
 });
+
+export const ZCreateAzureUploadContract = z.object({
+  fileName: z.string(),
+  fileContentBase64: z.string(),
+  residentId: z.string(),
+});
+
+export const ZSuccessAzureUploadContractSchema = z.object({
+  url: z.string(),
+});
