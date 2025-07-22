@@ -5,9 +5,7 @@ pipeline {
         PROJECT_NAME = "documenso"
         REPO_URL = "https://github.com/Caring-data/documenso"
         CONTAINER_NAME = "documenso_container"
-        NGINX_CONTAINER_NAME = "nginx_documento_next"
-        BLUE_CONTAINER = "documenso_blue"
-        GREEN_CONTAINER = "documenso_green"
+        NGINX_CONTAINER_NAME = "nginx_next"
     }
 
     stages {
@@ -45,73 +43,16 @@ pipeline {
                 script {
                     sh 'cd ${JENKINS_HOME}/workspace/documenso_production'
 
-                     // Build the Docker images for blue and green environments
-                    sh "docker compose build ${BLUE_CONTAINER} ${GREEN_CONTAINER}"
-
-                    def activeContainer = sh(
-                        script: "grep -oP 'server \\K(${BLUE_CONTAINER}|${GREEN_CONTAINER})' docker/nginx/default.conf | head -1 || echo '${BLUE_CONTAINER}'", 
-                        returnStdout: true
-                    ).trim()
-
-                     // If no active container found, default to blue
-                    if (activeContainer == '') {
-                        activeContainer = BLUE_CONTAINER
-                    }
-
-                    def newContainer = (activeContainer == BLUE_CONTAINER) ? GREEN_CONTAINER : BLUE_CONTAINER
-
-                    echo "Active container: ${activeContainer}"
-                    echo "Deploying to: ${newContainer}"
-
-                    // Deploy the new container
-                    sh "docker compose up -d --no-deps ${newContainer}"
-                    echo "🚀 Deploying to **${newContainer == BLUE_CONTAINER ? 'BLUE 🔵' : 'GREEN 🟢'}** environment! 🚀"
-
-                    // Wait until the new container is healthy
-                    waitForHealth(newContainer)
-
-                    // Update Nginx configuration to use the new container
-                    sh "sed -i 's/${activeContainer}/${newContainer}/g' docker/nginx/default.conf"
-                    sh "docker compose up -d --no-deps ${NGINX_CONTAINER_NAME}"
-
-                    // Wait a bit for nginx to reload
-                    sh "sleep 50"
-
-                    // Stop the previous container
-                    sh "docker compose stop ${activeContainer} || true"
-
-                    // Remove the previous container
-                    sh "docker compose rm -f ${activeContainer} || true"
-
-                    // Delete containers and images not used
-                    sh "docker system prune -f --volumes"
-
-                    echo "✅ Deployment completed successfully to ${newContainer}!"
+                    // Stop and remove any existing containers (if they exist)
+                    sh """
+                        docker compose down || true
+                    """
+                    // Build and start both services using docker-compose
+                    sh """
+                        docker compose up -d --build
+                    """
                 }
             }
         }
     }
-}
-
-def waitForHealth(container) {
-    sh """
-    attempt=1
-    max_attempts=50
-    while [ \$attempt -le \$max_attempts ]; do
-        if docker inspect --format='{{.State.Health.Status}}' \${WORKSPACE##*/}_${container}_1 2>/dev/null | grep -q healthy; then
-            echo "${container} is healthy"
-            break
-        elif docker inspect --format='{{.State.Health.Status}}' ${container} 2>/dev/null | grep -q healthy; then
-            echo "${container} is healthy"
-            break
-        fi
-        echo "Waiting for ${container} to be healthy (attempt \$attempt/\$max_attempts)"
-        sleep 50
-        attempt=\$((attempt + 1))
-    done
-    if [ \$attempt -gt \$max_attempts ]; then
-        echo "${container} did not become healthy in time"
-        exit 1
-    fi
-    """
 }
