@@ -25,6 +25,12 @@ export type UpdateTemplateOptions = {
   meta?: Partial<Omit<TemplateMeta, 'id' | 'templateId'>>;
 };
 
+export type UpdateTemplateDataOptions = {
+  id: string;
+  initialData: string;
+  data: string;
+};
+
 export const updateTemplate = async ({
   userId,
   teamId,
@@ -32,6 +38,8 @@ export const updateTemplate = async ({
   meta = {},
   data = {},
 }: UpdateTemplateOptions) => {
+  console.log('updateTemplate', { userId, teamId, templateId, meta, data });
+
   const template = await prisma.template.findFirstOrThrow({
     where: {
       id: templateId,
@@ -55,6 +63,8 @@ export const updateTemplate = async ({
       templateMeta: true,
     },
   });
+
+  console.log('template', template);
 
   if (Object.values(data).length === 0 && Object.keys(meta).length === 0) {
     return template;
@@ -120,5 +130,12 @@ export const updateTemplate = async ({
         },
       },
     },
+  });
+};
+
+export const updateDocumentData = async ({ id, initialData, data }: UpdateTemplateDataOptions) => {
+  return await prisma.documentData.update({
+    where: { id },
+    data: { initialData, data },
   });
 };

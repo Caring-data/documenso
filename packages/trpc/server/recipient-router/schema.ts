@@ -204,6 +204,34 @@ export const ZSetTemplateRecipientsRequestSchema = z
     { message: 'Recipients must have unique emails', path: ['recipients__root'] },
   );
 
+export const ZSetTemplateRecipientsTemplateRequestSchema = z
+  .object({
+    templateId: z.number(),
+    recipients: z.array(
+      z.object({
+        nativeId: z.number().optional(),
+        email: z.string().toLowerCase().email().min(1),
+        name: z.string(),
+        role: z.nativeEnum(RecipientRole),
+        signingOrder: z.number().optional(),
+        actionAuth: ZRecipientActionAuthTypesSchema.optional().nullable(),
+      }),
+    ),
+  })
+  .refine(
+    (schema) => {
+      const emails = schema.recipients.map((recipient) => recipient.email);
+
+      return new Set(emails).size === emails.length;
+    },
+    // Dirty hack to handle errors when .root is populated for an array type
+    { message: 'Recipients must have unique emails', path: ['recipients__root'] },
+  );
+
+export const ZSetTemplateRecipientsTemplateResponseSchema = z.object({
+  recipients: ZRecipientLiteSchema.array(),
+});
+
 export const ZSetTemplateRecipientsResponseSchema = z.object({
   recipients: ZRecipientLiteSchema.array(),
 });

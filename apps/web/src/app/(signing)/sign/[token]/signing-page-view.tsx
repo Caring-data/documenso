@@ -38,11 +38,13 @@ import { DropdownField } from './dropdown-field';
 import { EmailField } from './email-field';
 import { SigningForm } from './form';
 import { InitialsField } from './initials-field';
+import { LocationField } from './location-field';
 import { NameField } from './name-field';
 import { NumberField } from './number-field';
 import { RadioField } from './radio-field';
 import { RecipientProvider } from './recipient-context';
 import { RejectDocumentDialog } from './reject-document-dialog';
+import { ResidentField } from './resident-field';
 import { SignatureField } from './signature-field';
 import { TextField } from './text-field';
 
@@ -238,6 +240,34 @@ export const SigningPageView = ({
                   };
                   return <DropdownField key={field.id} field={fieldWithMeta} />;
                 })
+                .with(FieldType.RESIDENT_FIRST_NAME, () => (
+                  <ResidentField key={field.id} field={field} />
+                ))
+                .with(FieldType.RESIDENT_LAST_NAME, () => (
+                  <ResidentField key={field.id} field={field} />
+                ))
+                .with(FieldType.RESIDENT_DOB, () => <ResidentField key={field.id} field={field} />)
+                .with(FieldType.RESIDENT_GENDER_IDENTITY, () => (
+                  <ResidentField key={field.id} field={field} />
+                ))
+                .with(FieldType.RESIDENT_LOCATION_NAME, () => (
+                  <LocationField key={field.id} field={field} />
+                ))
+                .with(FieldType.RESIDENT_LOCATION_STATE, () => (
+                  <LocationField key={field.id} field={field} />
+                ))
+                .with(FieldType.RESIDENT_LOCATION_ADDRESS, () => (
+                  <LocationField key={field.id} field={field} />
+                ))
+                .with(FieldType.RESIDENT_LOCATION_CITY, () => (
+                  <LocationField key={field.id} field={field} />
+                ))
+                .with(FieldType.RESIDENT_LOCATION_ZIP_CODE, () => (
+                  <LocationField key={field.id} field={field} />
+                ))
+                .with(FieldType.RESIDENT_LOCATION_COUNTRY, () => (
+                  <LocationField key={field.id} field={field} />
+                ))
                 .otherwise(() => null),
             )}
         </ElementVisible>

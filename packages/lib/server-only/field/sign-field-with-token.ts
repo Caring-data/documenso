@@ -18,6 +18,7 @@ import { DOCUMENT_AUDIT_LOG_TYPE } from '../../types/document-audit-logs';
 import type { TRecipientActionAuth } from '../../types/document-auth';
 import {
   ZCheckboxFieldMeta,
+  ZDateFieldMeta,
   ZDropdownFieldMeta,
   ZNumberFieldMeta,
   ZRadioFieldMeta,
@@ -176,6 +177,37 @@ export const signFieldWithToken = async ({
     }
   }
 
+  // RESIDENT field types validation
+  if (
+    (field.type === FieldType.RESIDENT_FIRST_NAME ||
+      field.type === FieldType.RESIDENT_LAST_NAME ||
+      field.type === FieldType.RESIDENT_GENDER_IDENTITY ||
+      field.type === FieldType.RESIDENT_LOCATION_NAME ||
+      field.type === FieldType.RESIDENT_LOCATION_STATE ||
+      field.type === FieldType.RESIDENT_LOCATION_ADDRESS ||
+      field.type === FieldType.RESIDENT_LOCATION_CITY ||
+      field.type === FieldType.RESIDENT_LOCATION_ZIP_CODE ||
+      field.type === FieldType.RESIDENT_LOCATION_COUNTRY) &&
+    field.fieldMeta
+  ) {
+    const textFieldParsedMeta = ZTextFieldMeta.parse(field.fieldMeta);
+    const errors = validateTextField(value, textFieldParsedMeta, true);
+
+    if (errors.length > 0) {
+      throw new Error(errors.join(', '));
+    }
+  }
+
+  if (field.type === FieldType.RESIDENT_DOB && field.fieldMeta) {
+    // RESIDENT_DOB is treated as a date field but can be validated similarly to text for basic requirements
+    const dateFieldParsedMeta = ZDateFieldMeta.parse(field.fieldMeta);
+
+    // Basic validation for required fields
+    if (dateFieldParsedMeta.required && !value) {
+      throw new Error('Date of birth is required');
+    }
+  }
+
   const derivedRecipientActionAuth = await validateFieldAuth({
     documentAuthOptions: document.authOptions,
     recipient,
@@ -284,6 +316,16 @@ export const signFieldWithToken = async ({
               FieldType.NAME,
               FieldType.TEXT,
               FieldType.INITIALS,
+              FieldType.RESIDENT_FIRST_NAME,
+              FieldType.RESIDENT_LAST_NAME,
+              FieldType.RESIDENT_DOB,
+              FieldType.RESIDENT_GENDER_IDENTITY,
+              FieldType.RESIDENT_LOCATION_NAME,
+              FieldType.RESIDENT_LOCATION_STATE,
+              FieldType.RESIDENT_LOCATION_ADDRESS,
+              FieldType.RESIDENT_LOCATION_CITY,
+              FieldType.RESIDENT_LOCATION_ZIP_CODE,
+              FieldType.RESIDENT_LOCATION_COUNTRY,
               (type) => ({
                 type,
                 data: updatedField.customText,

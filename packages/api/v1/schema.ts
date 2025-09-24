@@ -28,6 +28,8 @@ import { TemplateSchema } from '@documenso/prisma/generated/zod';
 
 extendZodWithOpenApi(z);
 
+export const ZAnyResponseSchema = z.any();
+
 export const ZNoBodyMutationSchema = null;
 
 /**
@@ -191,6 +193,19 @@ export const ZCreateTemplateMutationSchema = z.object({
   templateId: z.number().optional(),
 });
 
+export const ZCreateEmbebedTemplateMutationSchema = z.object({
+  title: z.string().min(1).trim(),
+  type: z.nativeEnum(DocumentDataType),
+  data: z.string().min(1),
+  key: z.string().min(1).trim(),
+  externalId: z.string().nullish(),
+  meta: z.object({}).optional(),
+});
+
+export type TCreateEmbebedTemplateMutationSchema = z.infer<
+  typeof ZCreateEmbebedTemplateMutationSchema
+>;
+
 export const ZCreateDocumentMutationResponseSchema = z.object({
   uploadUrl: z.string().min(1),
   documentId: z.number(),
@@ -250,6 +265,10 @@ export type TCreateDocumentFromTemplateMutationSchema = z.infer<
 >;
 
 export const ZCreateTemplateResponseSchema = TemplateSchema;
+
+export const ZCreateEmbebedTemplateResponseSchema = TemplateSchema.extend({
+  templateMeta: z.object({}).optional(),
+});
 
 export const ZCreateDocumentFromTemplateMutationResponseSchema = z.object({
   documentId: z.number(),
@@ -501,6 +520,7 @@ export type TAuthorizationHeadersSchema = z.infer<typeof ZAuthorizationHeadersSc
 
 export const ZUnsuccessfulResponseSchema = z.object({
   message: z.string(),
+  error: z.any().nullish(),
 });
 
 export type TUnsuccessfulResponseSchema = z.infer<typeof ZUnsuccessfulResponseSchema>;
@@ -631,6 +651,15 @@ export type TGetSignedStatusResponseSchema = z.infer<typeof ZGetSignedStatusResp
 export const ZSuccessfulGetTemplateResponseSchema = ZTemplateWithDataSchema;
 
 export const ZSuccessfulDeleteTemplateResponseSchema = ZTemplateSchema;
+
+export const ZReplaceEmbebedTemplateMutationSchema = z.object({
+  title: z.string().min(1).trim(),
+  data: z.string().min(1),
+});
+
+export const ZSuccessfulReplaceEmbebedTemplateResponseSchema = z.object({
+  message: z.string(),
+});
 
 export const ZSuccessfulGetTemplatesResponseSchema = z.object({
   templates: ZTemplateWithDataSchema.omit({
