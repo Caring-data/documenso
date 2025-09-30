@@ -27,7 +27,7 @@ export const storeSignedDocument = async (
     const apiUrl = process.env.NEXT_PRIVATE_LARAVEL_API_URL;
     if (!apiUrl) throw new Error('Laravel API URL is not defined');
 
-    const url = `${apiUrl}/external/store-signed-document`;
+    const url = `${apiUrl}/store-signed-document`;
 
     const formData = {
       clientName: String(documentDetails?.companyName || ''),
