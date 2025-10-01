@@ -92,8 +92,6 @@ export const DocumentInviteEmailTemplate = ({
                   </div>
                 )}
 
-                {/*  {customBody && <div dangerouslySetInnerHTML={{ __html: customBody }} />} */}
-
                 <TemplateDocumentInvite
                   inviterName={inviterName}
                   inviterEmail={inviterEmail}
@@ -108,6 +106,7 @@ export const DocumentInviteEmailTemplate = ({
                   recipientName={recipientName}
                   documentDetails={documentDetails}
                   tokenExpiration={tokenExpiration}
+                  customBody={customBody}
                 />
               </Section>
             </Container>

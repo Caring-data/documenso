@@ -301,9 +301,9 @@ export const createDocumentFromTemplate = async ({
         const fieldsToCreate: Omit<Field, 'id' | 'secondaryId' | 'templateId'>[] = [];
         const variableCounters: Record<string, number> = {};
         const skipCoordinateSearchKeys = [
-          'signed_admission_agreement',
-          'hospice_agreement',
-          'home_health_agreement',
+          'admission-agreement',
+          'hospice-certificate',
+          'home-health-agreement',
         ];
 
         const shouldSkipCoordinateSearch =
