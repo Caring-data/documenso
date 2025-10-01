@@ -24,45 +24,51 @@ import type { DocumentFlowStep } from '@documenso/ui/primitives/document-flow/ty
 import { Stepper } from '@documenso/ui/primitives/stepper';
 import { useToast } from '@documenso/ui/primitives/use-toast';
 
-import type { TAddTemplateFieldsFormSchema } from './(components)/template-flow/add-template-fields.types';
-import type { TAddTemplatePlacholderRecipientsFormSchema } from './(components)/template-flow/add-template-placeholder-recipients.types';
-import type { TAddTemplateSettingsFormSchema } from './(components)/template-flow/add-template-settings.types';
+// Shared loading component
+const LoadingSpinner = () => (
+  <div className="flex h-full items-center justify-center p-8">
+    <div className="text-center">
+      <div className="border-primary mx-auto mb-3 h-8 w-8 animate-spin rounded-full border-2 border-t-transparent"></div>
+      <p className="text-muted-foreground text-sm">Loading...</p>
+    </div>
+  </div>
+);
 
+// Dynamic imports - unified loading
 const LazyPDFViewer = dynamic(
-  async () =>
-    import('@documenso/ui/primitives/lazy-pdf-viewer').then((mod) => ({
-      default: mod.LazyPDFViewer,
-    })),
+  async () => import('@documenso/ui/primitives/lazy-pdf-viewer').then((mod) => mod.LazyPDFViewer),
   {
     ssr: false,
     loading: () => (
-      <div className="flex h-96 items-center justify-center">Cargando documento...</div>
+      <div className="bg-muted/20 flex h-96 items-center justify-center rounded-lg">
+        <LoadingSpinner />
+      </div>
     ),
   },
 );
 
 const AddTemplateFieldsFormPartial = dynamic(
   async () =>
-    import('./(components)/template-flow/add-template-fields').then((mod) => ({
-      default: mod.AddTemplateFieldsFormPartial,
-    })),
-  { loading: () => <div>Cargando formulario...</div> },
+    import('./(components)/template-flow/add-template-fields').then(
+      (mod) => mod.AddTemplateFieldsFormPartial,
+    ),
+  { loading: LoadingSpinner },
 );
 
 const AddTemplatePlaceholderRecipientsFormPartial = dynamic(
   async () =>
-    import('./(components)/template-flow/add-template-placeholder-recipients').then((mod) => ({
-      default: mod.AddTemplatePlaceholderRecipientsFormPartial,
-    })),
-  { loading: () => <div>Cargando formulario...</div> },
+    import('./(components)/template-flow/add-template-placeholder-recipients').then(
+      (mod) => mod.AddTemplatePlaceholderRecipientsFormPartial,
+    ),
+  { loading: LoadingSpinner },
 );
 
 const AddTemplateSettingsFormPartial = dynamic(
   async () =>
-    import('./(components)/template-flow/add-template-settings').then((mod) => ({
-      default: mod.AddTemplateSettingsFormPartial,
-    })),
-  { loading: () => <div>Cargando formulario...</div> },
+    import('./(components)/template-flow/add-template-settings').then(
+      (mod) => mod.AddTemplateSettingsFormPartial,
+    ),
+  { loading: LoadingSpinner },
 );
 
 export type EmbedTemplateClientPageProps = {
@@ -73,13 +79,7 @@ export type EmbedTemplateClientPageProps = {
 };
 
 type EditTemplateStep = 'settings' | 'signers' | 'fields';
-
 const EDIT_TEMPLATE_STEPS: readonly EditTemplateStep[] = ['settings', 'signers', 'fields'] as const;
-
-// const DATE_FORMAT_CONFIG = {
-//   en: 'MM/dd/yyyy hh:mm a',
-//   es: 'dd/MM/yyyy hh:mm a',
-// } as const;
 
 export const EmbedTemplateClientPage = ({
   templateId,
@@ -88,38 +88,44 @@ export const EmbedTemplateClientPage = ({
   initialTemplate,
 }: EmbedTemplateClientPageProps) => {
   const { _ } = useLingui();
-
   const { toast } = useToast();
 
+  // Unified state management
   const [hasDocumentLoaded, setHasDocumentLoaded] = useState(false);
   const [step, setStep] = useState<EditTemplateStep>('settings');
+  const [isProcessing, setIsProcessing] = useState(false);
 
   const utils = trpc.useUtils();
 
+  // Unified query configuration
   const {
     data: template,
     refetch: refetchTemplate,
     isLoading: isTemplateLoading,
-    error: templateError,
+    isError: isTemplateError,
   } = trpc.template.getTemplateByExternalId.useQuery(
     { externalId },
     {
       initialData: initialTemplate,
       ...SKIP_QUERY_BATCH_META,
       staleTime: 5 * 60 * 1000,
+      gcTime: 10 * 60 * 1000,
       refetchOnWindowFocus: false,
-      retry: 2,
+      refetchOnReconnect: true,
+      retry: 3,
+      retryDelay: (attemptIndex) => Math.min(1000 * Math.pow(2, attemptIndex), 10000),
     },
   );
 
   const {
     data: defaultFormTemplateConfig,
     isLoading: isConfigLoading,
-    error: configError,
+    isError: isConfigError,
   } = useGetDefaultFormTemplateConfig({
     templateId: template?.externalId || '',
   });
 
+  // Hooks
   const updateFormTemplateSettings = useUpdateFormTemplateSettings({
     externalId: template?.externalId || '',
   });
@@ -128,19 +134,47 @@ export const EmbedTemplateClientPage = ({
     externalId: template?.externalId || '',
   });
 
-  const { timezone: defaultTimezone } = defaultFormTemplateConfig || {};
+  // Unified mutations
+  const { mutateAsync: updateTemplateSettings } =
+    trpc.template.updateTemplateByExternalId.useMutation({
+      ...DO_NOT_INVALIDATE_QUERY_ON_MUTATION,
+      onSuccess: (newData) => {
+        utils.template.getTemplateById.setData({ templateId }, (oldData) => ({
+          ...(oldData || initialTemplate),
+          ...newData,
+        }));
+      },
+    });
 
-  const templateData = useMemo(() => {
-    if (!template) return { recipients: [], fields: [], templateDocumentData: documentData };
+  const { mutateAsync: setRecipients } = trpc.recipient.setTemplateRecipientsTemplate.useMutation({
+    ...DO_NOT_INVALIDATE_QUERY_ON_MUTATION,
+    onSuccess: (newData) => {
+      utils.template.getTemplateById.setData({ templateId }, (oldData) => ({
+        ...(oldData || initialTemplate),
+        ...newData,
+      }));
+    },
+  });
 
-    return {
-      recipients: template.recipients || [],
-      fields: template.fields || [],
-      templateDocumentData: template.templateDocumentData || documentData,
-    };
-  }, [template, documentData]);
+  const { mutateAsync: addTemplateFieldsForm } = trpc.field.addTemplateFieldsForm.useMutation({
+    ...DO_NOT_INVALIDATE_QUERY_ON_MUTATION,
+    onSuccess: (newData) => {
+      utils.template.getTemplateById.setData({ templateId }, (oldData) => ({
+        ...(oldData || initialTemplate),
+        ...newData,
+      }));
+    },
+  });
 
-  console.log(templateData);
+  // Memoized values
+  const templateData = useMemo(
+    () => ({
+      recipients: template?.recipients || [],
+      fields: template?.fields || [],
+      templateDocumentData: template?.templateDocumentData || documentData,
+    }),
+    [template, documentData],
+  );
 
   const documentFlow = useMemo(
     (): Record<EditTemplateStep, DocumentFlowStep> => ({
@@ -163,178 +197,12 @@ export const EmbedTemplateClientPage = ({
     [],
   );
 
-  const { mutateAsync: updateTemplateSettings } =
-    trpc.template.updateTemplateByExternalId.useMutation({
-      ...DO_NOT_INVALIDATE_QUERY_ON_MUTATION,
-      onSuccess: (newData) => {
-        utils.template.getTemplateById.setData(
-          {
-            templateId: templateId,
-          },
-          (oldData) => ({ ...(oldData || initialTemplate), ...newData }),
-        );
-      },
-    });
-
-  const { mutateAsync: setRecipients } = trpc.recipient.setTemplateRecipientsTemplate.useMutation({
-    ...DO_NOT_INVALIDATE_QUERY_ON_MUTATION,
-    onSuccess: (newData) => {
-      utils.template.getTemplateById.setData(
-        {
-          templateId: templateId,
-        },
-        (oldData) => ({ ...(oldData || initialTemplate), ...newData }),
-      );
-    },
-  });
-
-  const { mutateAsync: addTemplateFieldsForm } = trpc.field.addTemplateFieldsForm.useMutation({
-    ...DO_NOT_INVALIDATE_QUERY_ON_MUTATION,
-    onSuccess: (newData) => {
-      utils.template.getTemplateById.setData(
-        {
-          templateId: templateId,
-        },
-        (oldData) => ({ ...(oldData || initialTemplate), ...newData }),
-      );
-    },
-  });
-
   const currentDocumentFlow = useMemo(() => documentFlow[step], [documentFlow, step]);
+  const isLoading = isTemplateLoading || isConfigLoading;
+  const hasError = isTemplateError || isConfigError;
 
-  const onAddSettingsFormSubmit = useCallback(
-    async (data: TAddTemplateSettingsFormSchema) => {
-      try {
-        const requestData = {
-          data: {
-            title: data.title,
-            externalId: data.externalId,
-            visibility: data.visibility,
-            globalAccessAuth: data.globalAccessAuth,
-            globalActionAuth: data.globalActionAuth,
-          },
-          meta: {
-            ...data.meta,
-            language: isValidLanguageCode(data.meta.language) ? data.meta.language : undefined,
-          },
-        };
-
-        await updateFormTemplateSettings.mutateAsync({
-          requestData: {
-            defaultLanguage: data.meta.language,
-            defaultTimezone: data.meta.timezone,
-            defaultEmailSubject: data.meta.subject,
-            defaultEmailMessage: data.meta.message,
-          },
-        });
-
-        await updateTemplateSettings({
-          templateId: templateId,
-          data: requestData.data,
-          meta: requestData.meta,
-        });
-
-        toast({
-          title: _(msg`Success`),
-          description: _(msg`Template settings updated successfully.`),
-          variant: 'default',
-        });
-
-        setStep('signers');
-      } catch (error) {
-        console.error('Error updating template settings:', error);
-        toast({
-          title: _(msg`Error`),
-          description: _(msg`An error occurred while updating the document settings.`),
-          variant: 'destructive',
-        });
-      }
-    },
-    [updateFormTemplateSettings, updateTemplateSettings, templateId, toast, _, setStep],
-  );
-
-  const onAddTemplatePlaceholderFormSubmit = useCallback(
-    async (data: TAddTemplatePlacholderRecipientsFormSchema) => {
-      console.log(data);
-      try {
-        await updateTemplateSettings({
-          templateId: templateId,
-          meta: {
-            signingOrder: data.signingOrder,
-          },
-        });
-
-        const recipients = await setRecipients({
-          templateId: templateId,
-          recipients: data.signers,
-        });
-
-        const recipientsData = recipients.recipients.map((recipient) => ({
-          email: recipient.email,
-          name: recipient.name,
-          role: recipient.role,
-          signingOrder: recipient.signingOrder,
-          documensoSignerId: recipient.id,
-        }));
-
-        await updateFormTemplateRecipients.mutateAsync({
-          requestData: recipientsData,
-        });
-
-        toast({
-          title: _(msg`Success`),
-          description: _(msg`Template recipients updated successfully.`),
-          variant: 'default',
-        });
-
-        setStep('fields');
-      } catch (error) {
-        console.error('Error processing placeholder form:', error);
-      }
-    },
-    [_, setRecipients, templateId, toast, updateFormTemplateRecipients, updateTemplateSettings],
-  );
-
-  const handleFieldsFormSubmit = useCallback(async (data: TAddTemplateFieldsFormSchema) => {
-    try {
-      await addTemplateFieldsForm({
-        templateId: template.id,
-        fields: data.fields,
-      });
-
-      await updateTemplateSettings({
-        templateId: template.id,
-        meta: {
-          typedSignatureEnabled: data.typedSignatureEnabled,
-        },
-      });
-
-      for (let i = 0; i < localStorage.length; i++) {
-        const key = localStorage.key(i);
-        if (key && key.startsWith('field_')) {
-          localStorage.removeItem(key);
-        }
-      }
-
-      toast({
-        title: _(msg`Template saved`),
-        description: _(msg`Your templates has been saved successfully.`),
-        duration: 5000,
-      });
-    } catch (error) {
-      console.error(error);
-
-      toast({
-        title: _(msg`Error`),
-        description: _(msg`An error occurred while adding fields.`),
-        variant: 'destructive',
-      });
-    }
-  }, []);
-
-  const handleDocumentLoad = useCallback(() => {
-    setHasDocumentLoaded(true);
-  }, []);
+  // Unified event handlers
+  const handleDocumentLoad = useCallback(() => setHasDocumentLoaded(true), []);
 
   const handleStepChange = useCallback((stepIndex: number) => {
     if (stepIndex >= 1 && stepIndex <= EDIT_TEMPLATE_STEPS.length) {
@@ -342,63 +210,171 @@ export const EmbedTemplateClientPage = ({
     }
   }, []);
 
-  useEffect(() => {
-    if (hasDocumentLoaded && typeof window !== 'undefined' && window.parent) {
-      try {
-        window.parent.postMessage(
-          {
-            action: 'document-ready',
-            data: null,
-          },
-          '*',
-        );
-      } catch (error) {
-        console.warn('Could not send message to parent window:', error);
+  const postMessage = useCallback((action: string, data?: unknown) => {
+    try {
+      if (typeof window !== 'undefined' && window.parent) {
+        window.parent.postMessage({ action, data }, '*');
+      }
+    } catch (error) {
+      console.warn('Could not send message to parent window:', error);
+    }
+  }, []);
+
+  // Unified form handlers with shared error handling pattern
+  const createFormHandler = useCallback(
+    (handler: (data: unknown) => Promise<void>, nextStep?: EditTemplateStep) => {
+      return async (data: unknown) => {
+        if (isProcessing) return;
+
+        setIsProcessing(true);
+        try {
+          await handler(data);
+          if (nextStep) setStep(nextStep);
+        } catch (error) {
+          console.error('Form submission error:', error);
+          toast({
+            title: _(msg`Error`),
+            description: _(msg`An error occurred while processing the form.`),
+            variant: 'destructive',
+          });
+        } finally {
+          setIsProcessing(false);
+        }
+      };
+    },
+    [isProcessing, toast, _],
+  );
+
+  // Form handlers
+  const onAddSettingsFormSubmit = createFormHandler(async (data) => {
+    const requestData = {
+      data: {
+        title: data.title,
+        externalId: data.externalId,
+        visibility: data.visibility,
+        globalAccessAuth: data.globalAccessAuth,
+        globalActionAuth: data.globalActionAuth,
+      },
+      meta: {
+        ...data.meta,
+        language: isValidLanguageCode(data.meta.language) ? data.meta.language : undefined,
+      },
+    };
+
+    await Promise.all([
+      updateFormTemplateSettings.mutateAsync({
+        requestData: {
+          defaultLanguage: data.meta.language,
+          defaultTimezone: data.meta.timezone,
+          defaultEmailSubject: data.meta.subject,
+          defaultEmailMessage: data.meta.message,
+        },
+      }),
+      updateTemplateSettings({
+        templateId,
+        data: requestData.data,
+        meta: requestData.meta,
+      }),
+    ]);
+  }, 'signers');
+
+  const onAddTemplatePlaceholderFormSubmit = createFormHandler(async (data) => {
+    const [, recipients] = await Promise.all([
+      updateTemplateSettings({
+        templateId,
+        meta: { signingOrder: data.signingOrder },
+      }),
+      setRecipients({
+        templateId,
+        recipients: data.signers,
+      }),
+    ]);
+
+    const recipientsData = recipients.recipients.map((recipient) => ({
+      email: recipient.email,
+      name: recipient.name,
+      role: recipient.role,
+      signingOrder: recipient.signingOrder,
+      documensoSignerId: recipient.id,
+    }));
+
+    await updateFormTemplateRecipients.mutateAsync({
+      requestData: recipientsData,
+    });
+  }, 'fields');
+
+  const handleFieldsFormSubmit = createFormHandler(async (data) => {
+    await Promise.all([
+      addTemplateFieldsForm({
+        templateId: template?.id,
+        fields: data.fields,
+      }),
+      updateTemplateSettings({
+        templateId: template?.id,
+        meta: { typedSignatureEnabled: data.typedSignatureEnabled },
+      }),
+    ]);
+
+    // Cleanup localStorage
+    for (let i = localStorage.length - 1; i >= 0; i--) {
+      const key = localStorage.key(i);
+      if (key?.startsWith('field_')) {
+        localStorage.removeItem(key);
       }
     }
-  }, [hasDocumentLoaded]);
+
+    toast({
+      title: _(msg`Template saved`),
+      description: _(msg`Your template has been saved successfully.`),
+      duration: 5000,
+    });
+
+    postMessage('template-completed', null);
+  });
+
+  // Effects
+  useEffect(() => {
+    if (hasDocumentLoaded) postMessage('template-ready', null);
+  }, [hasDocumentLoaded, postMessage]);
 
   useEffect(() => {
     if (step === 'settings') return;
-
-    const timeoutId = setTimeout(() => {
-      void refetchTemplate();
-    }, 100);
-
+    const timeoutId = setTimeout(() => void refetchTemplate(), 100);
     return () => clearTimeout(timeoutId);
   }, [step, refetchTemplate]);
 
-  if (templateError || configError) {
-    const error = templateError || configError;
+  // Unified error handling
+  if (hasError) {
     return (
-      <div className="flex min-h-screen items-center justify-center">
+      <div className="flex min-h-screen items-center justify-center p-4">
         <div className="text-center">
-          <h2 className="mb-2 text-xl font-semibold text-red-600">Error cargando template</h2>
-          <p className="text-gray-600">{error?.message || 'Error desconocido'}</p>
+          <div className="bg-destructive/10 mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full">
+            <div className="bg-destructive/20 text-destructive h-6 w-6 rounded-full">⚠</div>
+          </div>
+          <h2 className="text-destructive mb-2 text-lg font-semibold">Error loading template</h2>
+          <p className="text-muted-foreground mb-4 text-sm">Please try again later</p>
           <button
             onClick={async () => refetchTemplate()}
-            className="mt-4 rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700"
+            className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-md px-4 py-2 text-sm"
           >
-            Reintentar
+            Retry
           </button>
         </div>
       </div>
     );
   }
 
-  if (!template || !defaultFormTemplateConfig) {
+  if (isLoading || !template || !defaultFormTemplateConfig) {
     return (
       <div className="flex min-h-screen items-center justify-center">
-        <div className="text-center">
-          <h2 className="mb-2 text-xl font-semibold text-red-600">Template no encontrado</h2>
-          <p className="text-gray-600">No se pudo cargar la configuración del template</p>
-        </div>
+        <LoadingSpinner />
       </div>
     );
   }
 
   return (
     <div className="flex min-h-screen">
+      {/* PDF Viewer */}
       <div className="min-w-0 flex-1 p-4 lg:p-6">
         <div className="mx-auto max-w-2xl">
           <Card className="relative rounded-xl shadow-lg before:rounded-xl" gradient>
@@ -415,68 +391,71 @@ export const EmbedTemplateClientPage = ({
         </div>
       </div>
 
+      {/* Form Section */}
       <div className="bg-background fixed right-0 top-0 z-50 h-screen w-full max-w-md overflow-y-auto border-l shadow-xl lg:max-w-lg xl:max-w-xl 2xl:max-w-2xl">
         <div className="flex h-full flex-col p-4 lg:p-6">
           <DocumentFlowFormContainer
             className="flex flex-1 flex-col"
             onSubmit={(e) => e.preventDefault()}
           >
-            {isTemplateLoading || isConfigLoading ? (
-              <div className="flex flex-1 items-center justify-center">
-                <div className="text-center">
-                  <div className="mx-auto mb-2 h-8 w-8 animate-spin rounded-full border-b-2 border-blue-600"></div>
-                  <p>Cargando template...</p>
-                </div>
-              </div>
-            ) : (
-              <Stepper
-                currentStep={currentDocumentFlow.stepIndex}
-                setCurrentStep={handleStepChange}
-              >
-                <AddTemplateSettingsFormPartial
-                  key={`settings-${templateData.recipients.length}`}
-                  template={{
-                    ...template,
-                    templateMeta: {
-                      ...template.templateMeta,
-                      timezone: template.templateMeta?.timezone || defaultTimezone,
-                    },
-                  }}
-                  documentFlow={documentFlow.settings}
-                  recipients={templateData.recipients}
-                  fields={templateData.fields}
-                  onSubmit={onAddSettingsFormSubmit}
-                  isDocumentPdfLoaded={hasDocumentLoaded}
-                />
+            <Stepper currentStep={currentDocumentFlow.stepIndex} setCurrentStep={handleStepChange}>
+              <AddTemplateSettingsFormPartial
+                key={`settings-${templateData.recipients.length}`}
+                template={{
+                  ...template,
+                  templateMeta: {
+                    ...template.templateMeta,
+                    timezone: template.templateMeta?.timezone || defaultFormTemplateConfig.timezone,
+                  },
+                }}
+                documentFlow={documentFlow.settings}
+                recipients={templateData.recipients}
+                fields={templateData.fields}
+                onSubmit={onAddSettingsFormSubmit}
+                isDocumentPdfLoaded={hasDocumentLoaded}
+                disabled={isProcessing}
+              />
 
-                <AddTemplatePlaceholderRecipientsFormPartial
-                  key={`signers-${templateData.recipients.length}`}
-                  documentFlow={documentFlow.signers}
-                  recipients={templateData.recipients}
-                  fields={templateData.fields}
-                  signingOrder={template?.templateMeta?.signingOrder}
-                  isDocumentPdfLoaded={hasDocumentLoaded}
-                  onSubmit={onAddTemplatePlaceholderFormSubmit}
-                />
+              <AddTemplatePlaceholderRecipientsFormPartial
+                key={`signers-${templateData.recipients.length}`}
+                documentFlow={documentFlow.signers}
+                recipients={templateData.recipients}
+                fields={templateData.fields}
+                signingOrder={template?.templateMeta?.signingOrder}
+                isDocumentPdfLoaded={hasDocumentLoaded}
+                onSubmit={onAddTemplatePlaceholderFormSubmit}
+                disabled={isProcessing}
+              />
 
-                <AddTemplateFieldsFormPartial
-                  key={`fields-${templateData.fields.length}`}
-                  documentFlow={documentFlow.fields}
-                  recipients={templateData.recipients}
-                  fields={templateData.fields}
-                  onSubmit={handleFieldsFormSubmit}
-                  typedSignatureEnabled={template?.templateMeta?.typedSignatureEnabled}
-                />
-              </Stepper>
-            )}
+              <AddTemplateFieldsFormPartial
+                key={`fields-${templateData.fields.length}`}
+                documentFlow={documentFlow.fields}
+                recipients={templateData.recipients}
+                fields={templateData.fields}
+                onSubmit={handleFieldsFormSubmit}
+                typedSignatureEnabled={template?.templateMeta?.typedSignatureEnabled}
+                disabled={isProcessing}
+              />
+            </Stepper>
           </DocumentFlowFormContainer>
         </div>
       </div>
 
+      {/* Spacer */}
       <div
         className="w-full max-w-md flex-shrink-0 lg:max-w-lg xl:max-w-xl 2xl:max-w-2xl"
         aria-hidden="true"
       />
+
+      {/* Processing overlay */}
+      {isProcessing && (
+        <div className="bg-background/80 fixed inset-0 z-[60] flex items-center justify-center backdrop-blur-sm">
+          <div className="bg-background flex items-center gap-3 rounded-lg p-4 shadow-lg">
+            <div className="border-primary h-5 w-5 animate-spin rounded-full border-2 border-t-transparent"></div>
+            <span className="text-sm font-medium">Processing...</span>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
