@@ -10,12 +10,10 @@ import { useForm } from 'react-hook-form';
 
 import { SUPPORTED_LANGUAGES } from '@documenso/lib/constants/i18n';
 import { DEFAULT_DOCUMENT_TIME_ZONE, TIME_ZONES } from '@documenso/lib/constants/time-zones';
-import { ZDocumentEmailSettingsSchema } from '@documenso/lib/types/document-email';
 import type { TTemplate } from '@documenso/lib/types/template';
 import { extractDocumentAuthMethods } from '@documenso/lib/utils/document-auth';
 import { DocumentVisibility } from '@documenso/prisma/client';
 import { DocumentDistributionMethod, type Field, type Recipient } from '@documenso/prisma/client';
-import { DocumentEmailCheckboxes } from '@documenso/ui/components/document/document-email-checkboxes';
 import { Combobox } from '@documenso/ui/primitives/combobox';
 import {
   DocumentFlowFormContainerActions,
@@ -92,7 +90,15 @@ export const AddTemplateSettingsFormPartial = ({
         dateFormat: templateLanguage === 'en' ? 'MM/dd/yyyy hh:mm a' : 'dd/MM/yyyy hh:mm a',
         distributionMethod: DocumentDistributionMethod.EMAIL,
         redirectUrl: '',
-        emailSettings: ZDocumentEmailSettingsSchema.parse(template?.templateMeta?.emailSettings),
+        emailSettings: {
+          recipientSigningRequest: true,
+          recipientRemoved: false,
+          recipientSigned: false,
+          documentPending: true,
+          documentCompleted: true,
+          documentDeleted: false,
+          ownerDocumentCompleted: false,
+        },
       },
     },
   });
@@ -191,11 +197,9 @@ export const AddTemplateSettingsFormPartial = ({
             {distributionMethod === DocumentDistributionMethod.EMAIL && (
               <>
                 <Separator className="my-4" />
-
                 <Label className="my-4 text-lg font-medium">
                   <Trans>Email Options</Trans>
                 </Label>
-
                 <FormField
                   control={form.control}
                   name="meta.subject"
@@ -215,7 +219,6 @@ export const AddTemplateSettingsFormPartial = ({
                     </FormItem>
                   )}
                 />
-
                 <FormField
                   control={form.control}
                   name="meta.message"
@@ -234,12 +237,6 @@ export const AddTemplateSettingsFormPartial = ({
                       <FormMessage />
                     </FormItem>
                   )}
-                />
-
-                <DocumentEmailCheckboxes
-                  value={emailSettings}
-                  onChange={(value) => form.setValue('meta.emailSettings', value)}
-                  className="hidden"
                 />
               </>
             )}

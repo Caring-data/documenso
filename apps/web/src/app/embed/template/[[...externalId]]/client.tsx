@@ -15,6 +15,7 @@ import {
 import { useSetTemplateRecipientsTemplate } from '@documenso/lib/server-only/recipient/use-set-template-recipients-template';
 import { useGetDefaultFormTemplateConfig } from '@documenso/lib/server-only/template/get-default-form-template-config';
 import { useUpdateFormTemplateSettings } from '@documenso/lib/server-only/template/update-form-template-settings';
+import type { TAddTemplateSettingsFormSchema } from '@documenso/lib/types/add-template-settings-form';
 import type { TTemplate } from '@documenso/lib/types/template';
 import { type DocumentData } from '@documenso/prisma/client';
 import { trpc } from '@documenso/trpc/react';
@@ -246,37 +247,40 @@ export const EmbedTemplateClientPage = ({
   );
 
   // Form handlers
-  const onAddSettingsFormSubmit = createFormHandler(async (data) => {
-    const requestData = {
-      data: {
-        title: data.title,
-        externalId: data.externalId,
-        visibility: data.visibility,
-        globalAccessAuth: data.globalAccessAuth,
-        globalActionAuth: data.globalActionAuth,
-      },
-      meta: {
-        ...data.meta,
-        language: isValidLanguageCode(data.meta.language) ? data.meta.language : undefined,
-      },
-    };
-
-    await Promise.all([
-      updateFormTemplateSettings.mutateAsync({
-        requestData: {
-          defaultLanguage: data.meta.language,
-          defaultTimezone: data.meta.timezone,
-          defaultEmailSubject: data.meta.subject,
-          defaultEmailMessage: data.meta.message,
+  const onAddSettingsFormSubmit = createFormHandler(
+    async (data: TAddTemplateSettingsFormSchema) => {
+      const requestData = {
+        data: {
+          title: data.title,
+          externalId: data.externalId,
+          visibility: data.visibility,
+          globalAccessAuth: data.globalAccessAuth,
+          globalActionAuth: data.globalActionAuth,
         },
-      }),
-      updateTemplateSettings({
-        templateId,
-        data: requestData.data,
-        meta: requestData.meta,
-      }),
-    ]);
-  }, 'signers');
+        meta: {
+          ...data.meta,
+          language: isValidLanguageCode(data.meta.language) ? data.meta.language : undefined,
+        },
+      };
+
+      await Promise.all([
+        updateFormTemplateSettings.mutateAsync({
+          requestData: {
+            defaultLanguage: data.meta.language,
+            defaultTimezone: data.meta.timezone,
+            defaultEmailSubject: data.meta.subject,
+            defaultEmailMessage: data.meta.message,
+          },
+        }),
+        updateTemplateSettings({
+          templateId,
+          data: requestData.data,
+          meta: requestData.meta,
+        }),
+      ]);
+    },
+    'signers',
+  );
 
   const onAddTemplatePlaceholderFormSubmit = createFormHandler(async (data) => {
     const [, recipients] = await Promise.all([
