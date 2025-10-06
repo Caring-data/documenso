@@ -8,6 +8,7 @@ import { usePathname } from 'next/navigation';
 import { Loader } from 'lucide-react';
 import { match } from 'ts-pattern';
 
+import { useGetResidentInfo } from '@documenso/lib/client-only/hooks/use-get-resident-info';
 import { WEBAPP_BASE_URL } from '@documenso/lib/constants/app';
 import { DEFAULT_DOCUMENT_DATE_FORMAT } from '@documenso/lib/constants/date-formats';
 import { PDF_VIEWER_PAGE_SELECTOR } from '@documenso/lib/constants/pdf-viewer';
@@ -25,6 +26,7 @@ import type { Field } from '@documenso/prisma/client';
 import { FieldType, RecipientRole } from '@documenso/prisma/client';
 import type { FieldWithSignatureAndFieldMeta } from '@documenso/prisma/types/field-with-signature-and-fieldmeta';
 import type { RecipientWithFields } from '@documenso/prisma/types/recipient-with-fields';
+import { trpc } from '@documenso/trpc/react';
 import { Card, CardContent } from '@documenso/ui/primitives/card';
 import { ElementVisible } from '@documenso/ui/primitives/element-visible';
 import { LazyPDFViewer } from '@documenso/ui/primitives/lazy-pdf-viewer';
@@ -83,6 +85,12 @@ export const SigningPageView = ({
 
   const { documentData, documentMeta } = document;
   const [selectedSignerId, setSelectedSignerId] = useState<number | null>(allRecipients?.[0]?.id);
+
+  const { data: residentId } = trpc.template.getResidentInfo.useQuery({ token: extractedToken });
+
+  const { data: residentInfo } = useGetResidentInfo({
+    residentId: residentId?.residentId || '',
+  });
 
   useEffect(() => {
     if (!hasVisitedPreSignPage && extractedToken) {
@@ -241,32 +249,34 @@ export const SigningPageView = ({
                   return <DropdownField key={field.id} field={fieldWithMeta} />;
                 })
                 .with(FieldType.RESIDENT_FIRST_NAME, () => (
-                  <ResidentField key={field.id} field={field} />
+                  <ResidentField key={field.id} field={field} residentInfo={residentInfo} />
                 ))
                 .with(FieldType.RESIDENT_LAST_NAME, () => (
-                  <ResidentField key={field.id} field={field} />
+                  <ResidentField key={field.id} field={field} residentInfo={residentInfo} />
                 ))
-                .with(FieldType.RESIDENT_DOB, () => <ResidentField key={field.id} field={field} />)
+                .with(FieldType.RESIDENT_DOB, () => (
+                  <ResidentField key={field.id} field={field} residentInfo={residentInfo} />
+                ))
                 .with(FieldType.RESIDENT_GENDER_IDENTITY, () => (
-                  <ResidentField key={field.id} field={field} />
+                  <ResidentField key={field.id} field={field} residentInfo={residentInfo} />
                 ))
                 .with(FieldType.RESIDENT_LOCATION_NAME, () => (
-                  <LocationField key={field.id} field={field} />
+                  <LocationField key={field.id} field={field} residentInfo={residentInfo} />
                 ))
                 .with(FieldType.RESIDENT_LOCATION_STATE, () => (
-                  <LocationField key={field.id} field={field} />
+                  <LocationField key={field.id} field={field} residentInfo={residentInfo} />
                 ))
                 .with(FieldType.RESIDENT_LOCATION_ADDRESS, () => (
-                  <LocationField key={field.id} field={field} />
+                  <LocationField key={field.id} field={field} residentInfo={residentInfo} />
                 ))
                 .with(FieldType.RESIDENT_LOCATION_CITY, () => (
-                  <LocationField key={field.id} field={field} />
+                  <LocationField key={field.id} field={field} residentInfo={residentInfo} />
                 ))
                 .with(FieldType.RESIDENT_LOCATION_ZIP_CODE, () => (
-                  <LocationField key={field.id} field={field} />
+                  <LocationField key={field.id} field={field} residentInfo={residentInfo} />
                 ))
                 .with(FieldType.RESIDENT_LOCATION_COUNTRY, () => (
-                  <LocationField key={field.id} field={field} />
+                  <LocationField key={field.id} field={field} residentInfo={residentInfo} />
                 ))
                 .otherwise(() => null),
             )}

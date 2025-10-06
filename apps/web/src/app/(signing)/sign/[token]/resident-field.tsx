@@ -34,6 +34,7 @@ export type ResidentFieldProps = {
   field: FieldWithSignature;
   onSignField?: (value: TSignFieldWithTokenMutationSchema) => Promise<void> | void;
   onUnsignField?: (value: TRemovedSignedFieldWithTokenMutationSchema) => Promise<void> | void;
+  residentInfo?: Record<string, unknown>;
 };
 
 // Helper function to get field label based on type
@@ -52,7 +53,38 @@ const getFieldLabel = (fieldType: FieldType): string => {
   }
 };
 
-export const ResidentField = ({ field, onSignField, onUnsignField }: ResidentFieldProps) => {
+// Helper function to extract the correct value from resident info
+const getResidentValue = (fieldType: FieldType, residentInfo?: Record<string, unknown>): string => {
+  if (!residentInfo || !residentInfo.resident) return '';
+
+  const resident = residentInfo.resident as Record<string, unknown>;
+
+  switch (fieldType) {
+    case FieldType.RESIDENT_FIRST_NAME:
+      return (resident.first_name as string) || '';
+    case FieldType.RESIDENT_LAST_NAME:
+      return (resident.last_name as string) || '';
+    case FieldType.RESIDENT_DOB: {
+      // Format date from ISO string to YYYY-MM-DD for input[type="date"]
+      const dob = resident.dob as string;
+      if (dob) {
+        return new Date(dob).toISOString().split('T')[0];
+      }
+      return '';
+    }
+    case FieldType.RESIDENT_GENDER_IDENTITY:
+      return (resident.gender_identity as string) || '';
+    default:
+      return '';
+  }
+};
+
+export const ResidentField = ({
+  field,
+  onSignField,
+  onUnsignField,
+  residentInfo,
+}: ResidentFieldProps) => {
   const router = useRouter();
 
   const { _ } = useLingui();
@@ -85,10 +117,16 @@ export const ResidentField = ({ field, onSignField, onUnsignField }: ResidentFie
   const [localValue, setLocalValue] = useState('');
 
   const fieldLabel = getFieldLabel(field.type);
+  const residentValue = getResidentValue(field.type, residentInfo);
 
   const onPreSign = () => {
-    // For resident fields, we always want to show the modal to enter the value
-    if (!field.inserted && !isAssistantMode) {
+    // If we have resident info, auto-fill and proceed
+    if (residentValue && !isAssistantMode) {
+      return true;
+    }
+
+    // If no resident info and not assistant mode, show modal
+    if (!residentValue && !isAssistantMode) {
       setShowFieldModal(true);
       return false;
     }
@@ -110,7 +148,8 @@ export const ResidentField = ({ field, onSignField, onUnsignField }: ResidentFie
 
   const onSign = async (authOptions?: TRecipientActionAuth, value?: string) => {
     try {
-      const fieldValue = value || localValue || '';
+      // Priority: provided value > resident value > local value
+      const fieldValue = value || residentValue || localValue || '';
 
       if (!fieldValue && !isAssistantMode) {
         setShowFieldModal(true);

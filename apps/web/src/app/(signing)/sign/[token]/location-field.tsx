@@ -34,6 +34,7 @@ export type LocationFieldProps = {
   field: FieldWithSignature;
   onSignField?: (value: TSignFieldWithTokenMutationSchema) => Promise<void> | void;
   onUnsignField?: (value: TRemovedSignedFieldWithTokenMutationSchema) => Promise<void> | void;
+  residentInfo?: Record<string, unknown>;
 };
 
 // Helper function to get field label based on location field type
@@ -56,7 +57,38 @@ const getLocationFieldLabel = (fieldType: FieldType): string => {
   }
 };
 
-export const LocationField = ({ field, onSignField, onUnsignField }: LocationFieldProps) => {
+// Helper function to extract the correct value from location info
+const getLocationValue = (fieldType: FieldType, residentInfo?: Record<string, unknown>): string => {
+  if (!residentInfo || typeof residentInfo.location !== 'object' || !residentInfo.location) {
+    return '';
+  }
+
+  const location = residentInfo.location;
+
+  switch (fieldType) {
+    case FieldType.RESIDENT_LOCATION_NAME:
+      return typeof location.name === 'string' ? location.name : '';
+    case FieldType.RESIDENT_LOCATION_STATE:
+      return typeof location.state === 'string' ? location.state : '';
+    case FieldType.RESIDENT_LOCATION_ADDRESS:
+      return typeof location.address === 'string' ? location.address : '';
+    case FieldType.RESIDENT_LOCATION_CITY:
+      return typeof location.city === 'string' ? location.city : '';
+    case FieldType.RESIDENT_LOCATION_ZIP_CODE:
+      return typeof location.zip === 'string' ? location.zip : '';
+    case FieldType.RESIDENT_LOCATION_COUNTRY:
+      return typeof location.country === 'string' ? location.country : '';
+    default:
+      return '';
+  }
+};
+
+export const LocationField = ({
+  field,
+  onSignField,
+  onUnsignField,
+  residentInfo,
+}: LocationFieldProps) => {
   const router = useRouter();
 
   const { _ } = useLingui();
@@ -86,10 +118,16 @@ export const LocationField = ({ field, onSignField, onUnsignField }: LocationFie
   const [localValue, setLocalValue] = useState('');
 
   const fieldLabel = getLocationFieldLabel(field.type);
+  const locationValue = getLocationValue(field.type, residentInfo);
 
   const onPreSign = () => {
-    // For location fields, we always want to show the modal to enter the value
-    if (!field.inserted && !isAssistantMode) {
+    // If we have location info, auto-fill and proceed
+    if (locationValue && !isAssistantMode) {
+      return true;
+    }
+
+    // If no location info and not assistant mode, show modal
+    if (!locationValue && !isAssistantMode) {
       setShowLocationModal(true);
       return false;
     }
@@ -111,7 +149,8 @@ export const LocationField = ({ field, onSignField, onUnsignField }: LocationFie
 
   const onSign = async (authOptions?: TRecipientActionAuth, value?: string) => {
     try {
-      const fieldValue = value || localValue || '';
+      // Priority: provided value > location value > local value
+      const fieldValue = value || locationValue || localValue || '';
 
       if (!fieldValue && !isAssistantMode) {
         setShowLocationModal(true);

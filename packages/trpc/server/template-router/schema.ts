@@ -227,6 +227,14 @@ export const ZGetTemplateByIdRequestSchema = z.object({
   templateId: z.number(),
 });
 
+export const ZGetResidentRequestSchema = z.object({
+  token: z.string(),
+});
+
+export const ZGetResidentResponseSchema = z.object({
+  residentId: z.string(),
+});
+
 export const ZGetTemplateByExternalIdRequestSchema = z.object({
   externalId: z.string(),
 });

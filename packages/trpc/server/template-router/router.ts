@@ -3,6 +3,7 @@ import { TRPCError } from '@trpc/server';
 import { AppError } from '@documenso/lib/errors/app-error';
 import { jobs } from '@documenso/lib/jobs/client';
 import { getDocumentWithDetailsById } from '@documenso/lib/server-only/document/get-document-with-details-by-id';
+import { getResidentInfo } from '@documenso/lib/server-only/document/get-resident-info';
 import { sendDocument } from '@documenso/lib/server-only/document/send-document';
 import {
   ZCreateDocumentFromDirectTemplateResponseSchema,
@@ -42,6 +43,8 @@ import {
   ZDuplicateTemplateResponseSchema,
   ZFindTemplatesRequestSchema,
   ZFindTemplatesResponseSchema,
+  ZGetResidentRequestSchema,
+  ZGetResidentResponseSchema,
   ZGetTemplateByExternalIdRequestSchema,
   ZGetTemplateByExternalIdResponseSchema,
   ZGetTemplateByIdRequestSchema,
@@ -127,6 +130,25 @@ export const templateRouter = router({
         userId: ctx.user.id,
         teamId,
       });
+    }),
+
+  /**
+   * @public
+   */
+  getResidentInfo: maybeAuthenticatedProcedure
+    .meta({
+      openapi: {
+        method: 'GET',
+        path: '/template/resident/{token}',
+        summary: 'Get resident',
+        tags: ['Template'],
+      },
+    })
+    .input(ZGetResidentRequestSchema)
+    .output(ZGetResidentResponseSchema)
+    .query(async ({ input }) => {
+      const { token } = input;
+      return await getResidentInfo({ token });
     }),
 
   /**
