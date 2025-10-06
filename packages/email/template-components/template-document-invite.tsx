@@ -14,7 +14,6 @@ export interface TemplateDocumentInviteProps {
   assetBaseUrl: string;
   role: RecipientRole;
   selfSigner: boolean;
-  isTeamInvite: boolean;
   teamName?: string;
   includeSenderDetails?: boolean;
   recipientName?: string;

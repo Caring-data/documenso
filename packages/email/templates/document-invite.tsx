@@ -100,7 +100,6 @@ export const DocumentInviteEmailTemplate = ({
                   assetBaseUrl={assetBaseUrl}
                   role={role}
                   selfSigner={selfSigner}
-                  isTeamInvite={isTeamInvite}
                   teamName={teamName}
                   includeSenderDetails={includeSenderDetails}
                   recipientName={recipientName}
