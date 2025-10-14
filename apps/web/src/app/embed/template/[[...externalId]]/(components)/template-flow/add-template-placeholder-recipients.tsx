@@ -378,7 +378,7 @@ export const AddTemplatePlaceholderRecipientsFormPartial = ({
                                   >
                                     {index === 0 && (
                                       <FormLabel required className="block sm:hidden">
-                                        <Trans>Email</Trans>
+                                        <Trans id="email_label">Email</Trans>
                                       </FormLabel>
                                     )}
 
@@ -474,7 +474,7 @@ export const AddTemplatePlaceholderRecipientsFormPartial = ({
                 onClick={onAddPlaceholderRecipient}
               >
                 <Plus className="-ml-1 mr-2 h-5 w-5" />
-                <Trans>Add Recipient</Trans>
+                <Trans id="add_recipient">Add Recipient</Trans>
               </Button>
             </div>
           </Form>
