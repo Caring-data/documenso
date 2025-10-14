@@ -50,6 +50,15 @@ export const SigningForm = ({
   allRecipients = [],
   setSelectedSignerId,
 }: SigningFormProps) => {
+  // console.log({
+  //   recipient,
+  //   fields,
+  //   redirectUrl,
+  //   isRecipientsTurn,
+  //   allRecipients,
+  //   setSelectedSignerId,
+  // });
+
   const { _ } = useLingui();
   const { toast } = useToast();
 

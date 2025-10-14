@@ -3,6 +3,7 @@ import { TRPCError } from '@trpc/server';
 import { AppError } from '@documenso/lib/errors/app-error';
 import { jobs } from '@documenso/lib/jobs/client';
 import { getDocumentWithDetailsById } from '@documenso/lib/server-only/document/get-document-with-details-by-id';
+import { getResidentInfo } from '@documenso/lib/server-only/document/get-resident-info';
 import { sendDocument } from '@documenso/lib/server-only/document/send-document';
 import {
   ZCreateDocumentFromDirectTemplateResponseSchema,
@@ -18,10 +19,12 @@ import { deleteTemplate } from '@documenso/lib/server-only/template/delete-templ
 import { deleteTemplateDirectLink } from '@documenso/lib/server-only/template/delete-template-direct-link';
 import { duplicateTemplate } from '@documenso/lib/server-only/template/duplicate-template';
 import { findTemplates } from '@documenso/lib/server-only/template/find-templates';
+import { getTemplateByExternalId } from '@documenso/lib/server-only/template/get-template-by-external-id';
 import { getTemplateById } from '@documenso/lib/server-only/template/get-template-by-id';
 import { moveTemplateToTeam } from '@documenso/lib/server-only/template/move-template-to-team';
 import { toggleTemplateDirectLink } from '@documenso/lib/server-only/template/toggle-template-direct-link';
 import { updateTemplate } from '@documenso/lib/server-only/template/update-template';
+import { updateTemplateByExternalId } from '@documenso/lib/server-only/template/update-template-by-external-id';
 import type { Document } from '@documenso/prisma/client';
 
 import { ZGenericSuccessResponse, ZSuccessResponseSchema } from '../document-router/schema';
@@ -40,12 +43,18 @@ import {
   ZDuplicateTemplateResponseSchema,
   ZFindTemplatesRequestSchema,
   ZFindTemplatesResponseSchema,
+  ZGetResidentRequestSchema,
+  ZGetResidentResponseSchema,
+  ZGetTemplateByExternalIdRequestSchema,
+  ZGetTemplateByExternalIdResponseSchema,
   ZGetTemplateByIdRequestSchema,
   ZGetTemplateByIdResponseSchema,
   ZMoveTemplateToTeamRequestSchema,
   ZMoveTemplateToTeamResponseSchema,
   ZToggleTemplateDirectLinkRequestSchema,
   ZToggleTemplateDirectLinkResponseSchema,
+  ZUpdateTemplateByExternalIdRequestSchema,
+  ZUpdateTemplateByExternalIdResponseSchema,
   ZUpdateTemplateRequestSchema,
   ZUpdateTemplateResponseSchema,
 } from './schema';
@@ -79,6 +88,28 @@ export const templateRouter = router({
   /**
    * @public
    */
+  getTemplateByExternalId: authenticatedProcedure
+    .meta({
+      openapi: {
+        method: 'GET',
+        path: '/template/external/{externalId}',
+        summary: 'Get template by external id',
+        tags: ['Template'],
+      },
+    })
+    .input(ZGetTemplateByExternalIdRequestSchema)
+    .output(ZGetTemplateByExternalIdResponseSchema)
+    .query(async ({ input }) => {
+      const { externalId } = input;
+
+      return await getTemplateByExternalId({
+        externalId,
+      });
+    }),
+
+  /**
+   * @public
+   */
   getTemplateById: authenticatedProcedure
     .meta({
       openapi: {
@@ -99,6 +130,25 @@ export const templateRouter = router({
         userId: ctx.user.id,
         teamId,
       });
+    }),
+
+  /**
+   * @public
+   */
+  getResidentInfo: maybeAuthenticatedProcedure
+    .meta({
+      openapi: {
+        method: 'GET',
+        path: '/template/resident/{token}',
+        summary: 'Get resident',
+        tags: ['Template'],
+      },
+    })
+    .input(ZGetResidentRequestSchema)
+    .output(ZGetResidentResponseSchema)
+    .query(async ({ input }) => {
+      const { token } = input;
+      return await getResidentInfo({ token });
     }),
 
   /**
@@ -153,6 +203,30 @@ export const templateRouter = router({
       return await updateTemplate({
         userId,
         teamId,
+        templateId,
+        data,
+        meta,
+      });
+    }),
+
+  /**
+   * @public
+   */
+  updateTemplateByExternalId: authenticatedProcedure
+    .meta({
+      openapi: {
+        method: 'POST',
+        path: '/template/update-by-external-id',
+        summary: 'Update template by external id',
+        tags: ['Template'],
+      },
+    })
+    .input(ZUpdateTemplateByExternalIdRequestSchema)
+    .output(ZUpdateTemplateByExternalIdResponseSchema)
+    .mutation(async ({ input }) => {
+      const { templateId, data, meta } = input;
+
+      return await updateTemplateByExternalId({
         templateId,
         data,
         meta,

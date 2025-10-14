@@ -32,9 +32,19 @@ import { deleteTeamMembers } from '@documenso/lib/server-only/team/delete-team-m
 import { createDocumentFromTemplate } from '@documenso/lib/server-only/template/create-document-from-template';
 import { createDocumentFromTemplateLegacy } from '@documenso/lib/server-only/template/create-document-from-template-legacy';
 import { createTemplate } from '@documenso/lib/server-only/template/create-template';
-import { deleteTemplate } from '@documenso/lib/server-only/template/delete-template';
+import {
+  deleteTemplate,
+  forceDeleteTemplate,
+} from '@documenso/lib/server-only/template/delete-template';
 import { findTemplates } from '@documenso/lib/server-only/template/find-templates';
-import { getTemplateById } from '@documenso/lib/server-only/template/get-template-by-id';
+import {
+  getDocumentDataById,
+  getTemplateById,
+} from '@documenso/lib/server-only/template/get-template-by-id';
+import {
+  updateDocumentData,
+  updateTemplate,
+} from '@documenso/lib/server-only/template/update-template';
 import { extractDerivedDocumentEmailSettings } from '@documenso/lib/types/document-email';
 import {
   ZCheckboxFieldMeta,
@@ -584,6 +594,94 @@ export const ApiContractV1Implementation = createNextRoute(ApiContractV1, {
     }
   }),
 
+  deleteEmbebedTemplate: authenticatedMiddleware(async (args, user, team) => {
+    const { id: templateId } = args.params;
+
+    try {
+      const template = await getTemplateById({
+        id: Number(templateId),
+        userId: user.id,
+        teamId: team?.id,
+      });
+
+      if (!template) {
+        return {
+          status: 404,
+          body: {
+            message: `${templateId} - Template not found`,
+          },
+        };
+      }
+
+      await forceDeleteTemplate({
+        id: Number(templateId),
+        userId: user.id,
+        teamId: team?.id,
+      });
+
+      return {
+        status: 200,
+        body: {
+          message: `${templateId} - Template deleted successfully`,
+        },
+      };
+    } catch (err) {
+      console.error(err);
+      return {
+        status: 404,
+        body: {
+          message: `${templateId} - Failed to delete template`,
+        },
+      };
+    }
+  }),
+
+  replaceEmbebedTemplate: authenticatedMiddleware(async (args, user, team) => {
+    const { id: templateId } = args.params;
+    const { body } = args;
+
+    try {
+      const template = await getTemplateById({
+        id: Number(templateId),
+        userId: user.id,
+        teamId: team?.id,
+      });
+
+      const documentData = await getDocumentDataById({
+        id: template.templateDocumentDataId,
+      });
+
+      await updateTemplate({
+        templateId: Number(templateId),
+        userId: user.id,
+        teamId: team?.id,
+        data: {
+          title: body.title,
+        },
+      });
+
+      await updateDocumentData({
+        id: documentData.id,
+        initialData: body.data,
+        data: body.data,
+      });
+
+      return {
+        status: 200,
+        body: {
+          message: `${templateId} - Template replaced successfully`,
+        },
+      };
+    } catch (error) {
+      return {
+        status: 404,
+        body: {
+          message: `${templateId} - Failed to replace template`,
+        },
+      };
+    }
+  }),
+
   getTemplate: authenticatedMiddleware(async (args, user, team) => {
     const { id: templateId } = args.params;
 
@@ -734,6 +832,40 @@ export const ApiContractV1Implementation = createNextRoute(ApiContractV1, {
           });
         }
       }
+
+      return {
+        status: 200,
+        body: createdTemplate,
+      };
+    } catch (err) {
+      return {
+        status: 404,
+        body: {
+          message: 'Template not found',
+        },
+      };
+    }
+  }),
+
+  createEmbebedTemplate: authenticatedMiddleware(async (args, user, team, { metadata }) => {
+    const { body } = args;
+    const { title, type, data, key, externalId } = body;
+
+    try {
+      const fileName = title.endsWith('.pdf') ? title : `${title}.pdf`;
+      const { id: templateDocumentDataId } = await createDocumentData({
+        type,
+        data,
+      });
+
+      const createdTemplate = await createTemplate({
+        userId: user.id,
+        teamId: team?.id,
+        title: fileName,
+        formKey: key,
+        templateDocumentDataId,
+        externalId,
+      });
 
       return {
         status: 200,

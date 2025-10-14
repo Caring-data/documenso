@@ -51,7 +51,9 @@ export type SignatureFieldProps = {
     | 'Radio'
     | 'Dropdown'
     | 'Number'
-    | 'Checkbox';
+    | 'Checkbox'
+    | 'Resident'
+    | 'Location';
   tooltipText?: string | null;
 };
 
@@ -166,20 +168,22 @@ export const SigningFieldContainer = ({
             </Tooltip>
           )}
 
-        {type === 'Checkbox' && field.inserted && !loading && !readOnlyField && (
-          <button
-            className="dark:bg-background absolute -bottom-10 flex items-center justify-evenly rounded-md border bg-gray-900 opacity-0 group-hover:opacity-100"
-            onClick={() => void onClearCheckBoxValues(type)}
-          >
-            <span className="dark:text-muted-foreground/50 dark:hover:text-muted-foreground dark:hover:bg-foreground/10 rounded-md p-1 text-gray-400 transition-colors hover:bg-white/10 hover:text-gray-100">
-              <X className="h-4 w-4" />
-            </span>
-          </button>
-        )}
+        {type === 'Checkbox' ||
+          (type === 'Resident' && field.inserted && !loading && !readOnlyField && (
+            <button
+              className="dark:bg-background absolute -bottom-10 flex items-center justify-evenly rounded-md border bg-gray-900 opacity-0 group-hover:opacity-100"
+              onClick={() => void onClearCheckBoxValues(type)}
+            >
+              <span className="dark:text-muted-foreground/50 dark:hover:text-muted-foreground dark:hover:bg-foreground/10 rounded-md p-1 text-gray-400 transition-colors hover:bg-white/10 hover:text-gray-100">
+                <X className="h-4 w-4" />
+              </span>
+            </button>
+          ))}
 
         {type !== 'Date' &&
           type !== 'Calendar' &&
           type !== 'Checkbox' &&
+          type !== 'Resident' &&
           field.inserted &&
           !loading &&
           !readOnlyField && (

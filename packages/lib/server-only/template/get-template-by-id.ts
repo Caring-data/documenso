@@ -9,6 +9,10 @@ export type GetTemplateByIdOptions = {
   teamId?: number;
 };
 
+export type GetDocumentDataByIdOptions = {
+  id: string;
+};
+
 export const getTemplateById = async ({ id, userId, teamId }: GetTemplateByIdOptions) => {
   const template = await prisma.template.findFirst({
     where: {
@@ -54,4 +58,20 @@ export const getTemplateById = async ({ id, userId, teamId }: GetTemplateByIdOpt
   }
 
   return template;
+};
+
+export const getDocumentDataById = async ({ id }: GetDocumentDataByIdOptions) => {
+  const documentData = await prisma.documentData.findFirst({
+    where: {
+      id,
+    },
+  });
+
+  if (!documentData) {
+    throw new AppError(AppErrorCode.NOT_FOUND, {
+      message: 'Document data not found',
+    });
+  }
+
+  return documentData;
 };

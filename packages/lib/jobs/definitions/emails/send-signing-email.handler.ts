@@ -1,23 +1,12 @@
 import { createElement } from 'react';
 
-import { msg } from '@lingui/macro';
-
 import DocumentInviteEmailTemplate from '@documenso/email/templates/document-invite';
 import { sendEmail } from '@documenso/email/transports/notifyService';
 import { prisma } from '@documenso/prisma';
-import {
-  DocumentSource,
-  DocumentStatus,
-  RecipientRole,
-  SendStatus,
-} from '@documenso/prisma/client';
+import { DocumentStatus, RecipientRole, SendStatus } from '@documenso/prisma/client';
 
-import { getI18nInstance } from '../../../client-only/providers/i18n.server';
 import { NEXT_PUBLIC_WEBAPP_URL, WEBAPP_BASE_URL } from '../../../constants/app';
-import {
-  RECIPIENT_ROLES_DESCRIPTION,
-  RECIPIENT_ROLE_TO_EMAIL_TYPE,
-} from '../../../constants/recipient-roles';
+import { RECIPIENT_ROLE_TO_EMAIL_TYPE } from '../../../constants/recipient-roles';
 import { DOCUMENT_AUDIT_LOG_TYPE } from '../../../types/document-audit-logs';
 import { extractDerivedDocumentEmailSettings } from '../../../types/document-email';
 import { createDocumentAuditLogData } from '../../../utils/document-audit-logs';
@@ -80,7 +69,6 @@ export const run = async ({
   }
 
   const customEmail = document?.documentMeta;
-  const isDirectTemplate = document.source === DocumentSource.TEMPLATE_DIRECT_LINK;
   const isTeamDocument = document.teamId !== null;
 
   const recipientEmailType = RECIPIENT_ROLE_TO_EMAIL_TYPE[recipient.role];
@@ -88,43 +76,7 @@ export const run = async ({
   const { email, name } = recipient;
   const selfSigner = email === user.email;
 
-  const i18n = await getI18nInstance(documentMeta?.language);
-
-  const recipientActionVerb = i18n
-    ._(RECIPIENT_ROLES_DESCRIPTION[recipient.role].actionVerb)
-    .toLowerCase();
-
-  let emailMessage = customEmail?.message || '';
-  let emailSubject = i18n._(msg`Please ${recipientActionVerb} this document`);
-
-  if (selfSigner) {
-    emailMessage = i18n._(
-      msg`You have initiated the document ${`"${document.title}"`} that requires you to ${recipientActionVerb} it.`,
-    );
-    emailSubject = i18n._(msg`Please ${recipientActionVerb} your document`);
-  }
-
-  if (isDirectTemplate) {
-    emailMessage = i18n._(
-      msg`A document was created by your direct template that requires you to ${recipientActionVerb} it.`,
-    );
-    emailSubject = i18n._(
-      msg`Please ${recipientActionVerb} this document created by your direct template`,
-    );
-  }
-
-  if (isTeamDocument && team) {
-    emailSubject = i18n._(msg`${team.name} invited you to ${recipientActionVerb} a document`);
-    emailMessage = customEmail?.message ?? '';
-
-    if (!emailMessage) {
-      emailMessage = i18n._(
-        team.teamGlobalSettings?.includeSenderDetails
-          ? msg`${user.name} on behalf of "${team.name}" has invited you to ${recipientActionVerb} the document "${document.title}".`
-          : msg`${team.name} has invited you to ${recipientActionVerb} the document "${document.title}".`,
-      );
-    }
-  }
+  const emailMessage = customEmail?.message || '';
 
   const customEmailTemplate = {
     'signer.name': name,

@@ -175,10 +175,6 @@ services:
         sync: false
       - key: NEXT_PRIVATE_LARAVEL_ENCRYPTION_KEY
         sync: false
-      - key: NEXT_PRIVATE_LARAVEL_USERNAME
-        sync: false
-      - key: NEXT_PRIVATE_LARAVEL_PASSWORD
-        sync: false
 
       # Azure
       - key: AZURE_STORAGE_ACCOUNT_NAME

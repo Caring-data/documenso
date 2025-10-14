@@ -7,6 +7,8 @@ import {
   ZCreateDocumentFromTemplateMutationSchema,
   ZCreateDocumentMutationResponseSchema,
   ZCreateDocumentMutationSchema,
+  ZCreateEmbebedTemplateMutationSchema,
+  ZCreateEmbebedTemplateResponseSchema,
   ZCreateFieldMutationSchema,
   ZCreateRecipientMutationSchema,
   ZCreateTemplateMutationSchema,
@@ -23,6 +25,7 @@ import {
   ZGetTemplatesQuerySchema,
   ZInviteTeamMemberMutationSchema,
   ZNoBodyMutationSchema,
+  ZReplaceEmbebedTemplateMutationSchema,
   ZResendDocumentByEmailSchema,
   ZResendDocumentForSigningMutationSchema,
   ZSendDocumentForSigningMutationSchema,
@@ -37,6 +40,7 @@ import {
   ZSuccessfulInviteTeamMemberResponseSchema,
   ZSuccessfulRecipientResponseSchema,
   ZSuccessfulRemoveTeamMemberResponseSchema,
+  ZSuccessfulReplaceEmbebedTemplateResponseSchema,
   ZSuccessfulResendDocumentResponseSchema,
   ZSuccessfulResponseSchema,
   ZSuccessfulSigningResponseSchema,
@@ -120,6 +124,26 @@ export const ApiContractV1 = c.router(
       summary: 'Delete a template',
     },
 
+    deleteEmbebedTemplate: {
+      method: 'DELETE',
+      path: '/api/v1/templates/embed/:id',
+      body: ZNoBodyMutationSchema,
+      responses: {
+        200: ZSuccessfulDeleteTemplateResponseSchema,
+      },
+      summary: 'Delete an embedded template',
+    },
+
+    replaceEmbebedTemplate: {
+      method: 'PUT',
+      path: '/api/v1/templates/embed/:id',
+      body: ZReplaceEmbebedTemplateMutationSchema,
+      responses: {
+        200: ZSuccessfulReplaceEmbebedTemplateResponseSchema,
+      },
+      summary: 'Replace an embedded template',
+    },
+
     getTemplate: {
       method: 'GET',
       path: '/api/v1/templates/:id',
@@ -155,6 +179,17 @@ export const ApiContractV1 = c.router(
       summary: 'Create a new template',
       deprecated: true,
       description: ``,
+    },
+
+    createEmbebedTemplate: {
+      method: 'POST',
+      path: '/api/v1/templates/embed',
+      body: ZCreateEmbebedTemplateMutationSchema,
+      responses: {
+        200: ZCreateEmbebedTemplateResponseSchema,
+      },
+      summary: 'Create a new template for embedding',
+      description: 'Create a new template for embedding',
     },
 
     createDocumentFromTemplate: {
