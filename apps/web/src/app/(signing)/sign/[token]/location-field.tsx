@@ -63,7 +63,7 @@ const getLocationValue = (fieldType: FieldType, residentInfo?: Record<string, un
     return '';
   }
 
-  const location = residentInfo.location;
+  const location = residentInfo.location as Record<string, unknown>;
 
   switch (fieldType) {
     case FieldType.RESIDENT_LOCATION_NAME:

@@ -8,7 +8,7 @@ export type CreateTemplateOptions = TCreateTemplateMutationSchema & {
   userId: number;
   teamId?: number;
   formKey?: string;
-  externalId?: string;
+  externalId?: string | null;
 };
 
 export const ZCreateTemplateResponseSchema = TemplateSchema;

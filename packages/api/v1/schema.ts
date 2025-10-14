@@ -652,6 +652,10 @@ export const ZSuccessfulGetTemplateResponseSchema = ZTemplateWithDataSchema;
 
 export const ZSuccessfulDeleteTemplateResponseSchema = ZTemplateSchema;
 
+export const ZSuccessfulDeleteEmbebedTemplateResponseSchema = z.object({
+  message: z.string(),
+});
+
 export const ZReplaceEmbebedTemplateMutationSchema = z.object({
   title: z.string().min(1).trim(),
   data: z.string().min(1),

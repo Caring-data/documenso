@@ -18,6 +18,16 @@ msgstr ""
 "X-Crowdin-File: web.po\n"
 "X-Crowdin-File-ID: 8\n"
 
+#. js-lingui-explicit-id
+#: apps/web/src/app/embed/template/[[...externalId]]/(components)/template-flow/add-template-placeholder-recipients.tsx:381
+msgid "email_label"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: apps/web/src/app/embed/template/[[...externalId]]/(components)/template-flow/add-template-placeholder-recipients.tsx:477
+msgid "add_recipient"
+msgstr ""
+
 #: packages/email/template-components/template-document-pending.tsx:33
 msgid "“{0}” has been signed"
 msgstr ""
@@ -93,14 +103,6 @@ msgstr "{0}"
 msgid "{0} direct signing templates"
 msgstr "{0} plantillas de firma directa"
 
-#: packages/lib/jobs/definitions/emails/send-signing-email.handler.ts:124
-msgid "{0} has invited you to {recipientActionVerb} the document \"{1}\"."
-msgstr "{0} te ha invitado a {recipientActionVerb} el documento \"{1}\"."
-
-#: packages/lib/jobs/definitions/emails/send-signing-email.handler.ts:117
-msgid "{0} invited you to {recipientActionVerb} a document"
-msgstr "{0} te invitó a {recipientActionVerb} un documento"
-
 #: packages/email/templates/team-join.tsx:61
 msgid "{0} joined the team {teamName} on Documenso"
 msgstr "{0} se unió al equipo {teamName} en Documenso"
@@ -113,7 +115,6 @@ msgstr "{0} dejó el equipo {teamName} en Documenso"
 msgid "{0} of {1} row(s) selected."
 msgstr "{0} de {1} fila(s) seleccionada."
 
-#: packages/lib/jobs/definitions/emails/send-signing-email.handler.ts:123
 #: packages/lib/server-only/document/resend-document.tsx:144
 msgid "{0} on behalf of \"{1}\" has invited you to {recipientActionVerb} the document \"{2}\"."
 msgstr "{0} en nombre de \"{1}\" te ha invitado a {recipientActionVerb} el documento \"{2}\"."
@@ -126,10 +127,10 @@ msgstr "{0} Destinatario(s)"
 msgid "{charactersRemaining, plural, one {1 character remaining} other {{charactersRemaining} characters remaining}}"
 msgstr "{charactersRemaining, plural, one {1 carácter restante} other {{charactersRemaining} caracteres restantes}}"
 
-#: apps/web/src/app/(signing)/sign/[token]/location-field.tsx:198
-#: apps/web/src/app/(signing)/sign/[token]/location-field.tsx:233
-#: apps/web/src/app/(signing)/sign/[token]/resident-field.tsx:197
-#: apps/web/src/app/(signing)/sign/[token]/resident-field.tsx:232
+#: apps/web/src/app/(signing)/sign/[token]/location-field.tsx:237
+#: apps/web/src/app/(signing)/sign/[token]/location-field.tsx:272
+#: apps/web/src/app/(signing)/sign/[token]/resident-field.tsx:236
+#: apps/web/src/app/(signing)/sign/[token]/resident-field.tsx:271
 msgid "{fieldLabel}"
 msgstr ""
 
@@ -335,7 +336,7 @@ msgstr "{visibleRows, plural, one {Mostrando # resultado.} other {Mostrando # re
 msgid "<0>\"{0}\"</0>is no longer available to sign"
 msgstr "<0>\"{0}\"</0> ya no está disponible para firmar"
 
-#: packages/email/template-components/template-document-invite.tsx:63
+#: packages/email/template-components/template-document-invite.tsx:62
 msgid "<0>{0}</0> from <1>{1}</1> has requested your electronic signature on the following document:"
 msgstr ""
 
@@ -461,10 +462,6 @@ msgstr ""
 msgid "A device capable of accessing, opening, and reading documents"
 msgstr "Un dispositivo capaz de acceder, abrir y leer documentos"
 
-#: packages/lib/jobs/definitions/emails/send-signing-email.handler.ts:109
-msgid "A document was created by your direct template that requires you to {recipientActionVerb} it."
-msgstr "Se creó un documento a partir de tu plantilla directa que requiere que {recipientActionVerb}."
-
 #: apps/web/src/app/(dashboard)/templates/use-template-dialog.tsx:230
 msgid "A draft document will be created"
 msgstr "Se creará un documento borrador"
@@ -572,7 +569,7 @@ msgstr "Aceptar"
 msgid "Accept invitation to join a team on Documenso"
 msgstr "Aceptar invitación para unirse a un equipo en Documenso"
 
-#: packages/email/template-components/template-document-invite.tsx:128
+#: packages/email/template-components/template-document-invite.tsx:127
 msgid "Accept Invite and Sign"
 msgstr ""
 
@@ -661,12 +658,12 @@ msgstr "Agregue una URL para redirigir al usuario una vez que se firme el docume
 
 #: apps/web/src/app/(dashboard)/documents/[id]/edit-document.tsx:153
 #: apps/web/src/app/(dashboard)/templates/[id]/edit/edit-template.tsx:87
-#: apps/web/src/app/embed/template/[[...externalId]]/client.tsx:194
+#: apps/web/src/app/embed/template/[[...externalId]]/client.tsx:195
 msgid "Add all relevant fields for each recipient."
 msgstr "Agrega todos los campos relevantes para cada destinatario."
 
 #: apps/web/src/app/(dashboard)/templates/[id]/edit/edit-template.tsx:82
-#: apps/web/src/app/embed/template/[[...externalId]]/client.tsx:189
+#: apps/web/src/app/embed/template/[[...externalId]]/client.tsx:190
 msgid "Add all relevant placeholders for each recipient."
 msgstr "Agrega todos los marcadores de posición relevantes para cada destinatario."
 
@@ -701,7 +698,7 @@ msgstr "Agregar correo electrónico"
 
 #: apps/web/src/app/(dashboard)/documents/[id]/edit-document.tsx:152
 #: apps/web/src/app/(dashboard)/templates/[id]/edit/edit-template.tsx:86
-#: apps/web/src/app/embed/template/[[...externalId]]/client.tsx:193
+#: apps/web/src/app/embed/template/[[...externalId]]/client.tsx:194
 msgid "Add Fields"
 msgstr "Agregar Campos"
 
@@ -727,7 +724,7 @@ msgid "Add Placeholder Recipient"
 msgstr "Agregar destinatario de marcador de posición"
 
 #: apps/web/src/app/(dashboard)/templates/[id]/edit/edit-template.tsx:81
-#: apps/web/src/app/embed/template/[[...externalId]]/client.tsx:188
+#: apps/web/src/app/embed/template/[[...externalId]]/client.tsx:189
 msgid "Add Placeholders"
 msgstr "Agregar Marcadores de posición"
 
@@ -964,7 +961,7 @@ msgstr "Ocurrió un error al mover el documento."
 msgid "An error occurred while moving the template."
 msgstr "Ocurrió un error al mover la plantilla."
 
-#: apps/web/src/app/embed/template/[[...externalId]]/client.tsx:238
+#: apps/web/src/app/embed/template/[[...externalId]]/client.tsx:239
 msgid "An error occurred while processing the form."
 msgstr ""
 
@@ -974,10 +971,10 @@ msgstr ""
 #: apps/web/src/app/(signing)/sign/[token]/dropdown-field.tsx:134
 #: apps/web/src/app/(signing)/sign/[token]/email-field.tsx:117
 #: apps/web/src/app/(signing)/sign/[token]/initials-field.tsx:151
-#: apps/web/src/app/(signing)/sign/[token]/location-field.tsx:176
+#: apps/web/src/app/(signing)/sign/[token]/location-field.tsx:215
 #: apps/web/src/app/(signing)/sign/[token]/name-field.tsx:155
 #: apps/web/src/app/(signing)/sign/[token]/number-field.tsx:202
-#: apps/web/src/app/(signing)/sign/[token]/resident-field.tsx:175
+#: apps/web/src/app/(signing)/sign/[token]/resident-field.tsx:214
 #: apps/web/src/app/(signing)/sign/[token]/text-field.tsx:203
 msgid "An error occurred while removing the field."
 msgstr "Ocurrió un error mientras se eliminaba el campo."
@@ -1004,11 +1001,11 @@ msgstr "Ocurrió un error al enviar tu correo electrónico de confirmación"
 #: apps/web/src/app/(signing)/sign/[token]/dropdown-field.tsx:102
 #: apps/web/src/app/(signing)/sign/[token]/email-field.tsx:90
 #: apps/web/src/app/(signing)/sign/[token]/initials-field.tsx:124
-#: apps/web/src/app/(signing)/sign/[token]/location-field.tsx:149
+#: apps/web/src/app/(signing)/sign/[token]/location-field.tsx:188
 #: apps/web/src/app/(signing)/sign/[token]/name-field.tsx:128
 #: apps/web/src/app/(signing)/sign/[token]/number-field.tsx:152
 #: apps/web/src/app/(signing)/sign/[token]/radio-field.tsx:103
-#: apps/web/src/app/(signing)/sign/[token]/resident-field.tsx:148
+#: apps/web/src/app/(signing)/sign/[token]/resident-field.tsx:187
 #: apps/web/src/app/(signing)/sign/[token]/text-field.tsx:174
 msgid "An error occurred while signing as assistant."
 msgstr ""
@@ -1019,11 +1016,11 @@ msgstr ""
 #: apps/web/src/app/(signing)/sign/[token]/dropdown-field.tsx:103
 #: apps/web/src/app/(signing)/sign/[token]/email-field.tsx:91
 #: apps/web/src/app/(signing)/sign/[token]/initials-field.tsx:125
-#: apps/web/src/app/(signing)/sign/[token]/location-field.tsx:150
+#: apps/web/src/app/(signing)/sign/[token]/location-field.tsx:189
 #: apps/web/src/app/(signing)/sign/[token]/name-field.tsx:129
 #: apps/web/src/app/(signing)/sign/[token]/number-field.tsx:153
 #: apps/web/src/app/(signing)/sign/[token]/radio-field.tsx:104
-#: apps/web/src/app/(signing)/sign/[token]/resident-field.tsx:149
+#: apps/web/src/app/(signing)/sign/[token]/resident-field.tsx:188
 #: apps/web/src/app/(signing)/sign/[token]/signature-field.tsx:185
 #: apps/web/src/app/(signing)/sign/[token]/text-field.tsx:175
 msgid "An error occurred while signing the document."
@@ -1120,7 +1117,7 @@ msgid "Approve"
 msgstr "Aprobar"
 
 #: apps/web/src/app/(signing)/sign/[token]/form.tsx:191
-#: packages/email/template-components/template-document-invite.tsx:130
+#: packages/email/template-components/template-document-invite.tsx:129
 msgid "Approve Document"
 msgstr "Aprobar Documento"
 
@@ -1176,7 +1173,7 @@ msgid "Assist"
 msgstr ""
 
 #: apps/web/src/app/(signing)/sign/[token]/form.tsx:192
-#: packages/email/template-components/template-document-invite.tsx:132
+#: packages/email/template-components/template-document-invite.tsx:131
 msgid "Assist Document"
 msgstr ""
 
@@ -1385,11 +1382,11 @@ msgstr ""
 #: apps/web/src/app/(signing)/sign/[token]/document-action-auth-passkey.tsx:189
 #: apps/web/src/app/(signing)/sign/[token]/form.tsx:214
 #: apps/web/src/app/(signing)/sign/[token]/form.tsx:372
-#: apps/web/src/app/(signing)/sign/[token]/location-field.tsx:257
+#: apps/web/src/app/(signing)/sign/[token]/location-field.tsx:296
 #: apps/web/src/app/(signing)/sign/[token]/name-field.tsx:234
 #: apps/web/src/app/(signing)/sign/[token]/number-field.tsx:347
 #: apps/web/src/app/(signing)/sign/[token]/reject-document-dialog.tsx:158
-#: apps/web/src/app/(signing)/sign/[token]/resident-field.tsx:256
+#: apps/web/src/app/(signing)/sign/[token]/resident-field.tsx:295
 #: apps/web/src/app/(signing)/sign/[token]/sign-dialog.tsx:128
 #: apps/web/src/app/(signing)/sign/[token]/signature-field.tsx:295
 #: apps/web/src/app/(signing)/sign/[token]/signature-pad/signature-pad-dialog.tsx:163
@@ -1615,7 +1612,7 @@ msgid "Configure general settings for the document."
 msgstr "Configurar ajustes generales para el documento."
 
 #: apps/web/src/app/(dashboard)/templates/[id]/edit/edit-template.tsx:77
-#: apps/web/src/app/embed/template/[[...externalId]]/client.tsx:184
+#: apps/web/src/app/embed/template/[[...externalId]]/client.tsx:185
 msgid "Configure general settings for the template."
 msgstr "Configurar ajustes generales para la plantilla."
 
@@ -1684,15 +1681,15 @@ msgstr "Contenido"
 msgid "Continue"
 msgstr "Continuar"
 
-#: packages/email/template-components/template-document-invite.tsx:114
+#: packages/email/template-components/template-document-invite.tsx:113
 msgid "Continue by approving the document."
 msgstr "Continúa aprobando el documento."
 
-#: packages/email/template-components/template-document-invite.tsx:117
+#: packages/email/template-components/template-document-invite.tsx:116
 msgid "Continue by assisting with the document."
 msgstr ""
 
-#: packages/email/template-components/template-document-invite.tsx:113
+#: packages/email/template-components/template-document-invite.tsx:112
 msgid "Continue by viewing the document."
 msgstr "Continúa viendo el documento."
 
@@ -1938,7 +1935,7 @@ msgid "Date of Birth"
 msgstr ""
 
 #: packages/email/template-components/template-document-completed.tsx:33
-#: packages/email/template-components/template-document-invite.tsx:54
+#: packages/email/template-components/template-document-invite.tsx:53
 #: packages/email/template-components/template-document-pending.tsx:30
 msgid "Dear"
 msgstr ""
@@ -2229,7 +2226,7 @@ msgid "Document created by <0>{0}</0>"
 msgstr "Documento creado por <0>{0}</0>"
 
 #: packages/email/templates/document-created-from-direct-template.tsx:32
-#: packages/lib/server-only/template/create-document-from-direct-template.ts:598
+#: packages/lib/server-only/template/create-document-from-direct-template.ts:608
 msgid "Document created from direct template"
 msgstr "Documento creado a partir de plantilla directa"
 
@@ -2386,7 +2383,7 @@ msgid "Document will be permanently deleted"
 msgstr "El documento será eliminado permanentemente"
 
 #: packages/email/template-components/template-document-completed.tsx:61
-#: packages/email/template-components/template-document-invite.tsx:91
+#: packages/email/template-components/template-document-invite.tsx:90
 #: packages/email/template-components/template-document-pending.tsx:55
 msgid "Document: {0}"
 msgstr ""
@@ -2719,8 +2716,8 @@ msgstr "Ingresa tu texto aquí"
 #: apps/web/src/app/(signing)/sign/[token]/email-field.tsx:116
 #: apps/web/src/app/(signing)/sign/[token]/initials-field.tsx:122
 #: apps/web/src/app/(signing)/sign/[token]/initials-field.tsx:150
-#: apps/web/src/app/(signing)/sign/[token]/location-field.tsx:147
-#: apps/web/src/app/(signing)/sign/[token]/location-field.tsx:175
+#: apps/web/src/app/(signing)/sign/[token]/location-field.tsx:186
+#: apps/web/src/app/(signing)/sign/[token]/location-field.tsx:214
 #: apps/web/src/app/(signing)/sign/[token]/name-field.tsx:126
 #: apps/web/src/app/(signing)/sign/[token]/name-field.tsx:154
 #: apps/web/src/app/(signing)/sign/[token]/number-field.tsx:150
@@ -2728,14 +2725,14 @@ msgstr "Ingresa tu texto aquí"
 #: apps/web/src/app/(signing)/sign/[token]/pre-signing/page.tsx:45
 #: apps/web/src/app/(signing)/sign/[token]/radio-field.tsx:101
 #: apps/web/src/app/(signing)/sign/[token]/radio-field.tsx:130
-#: apps/web/src/app/(signing)/sign/[token]/resident-field.tsx:146
-#: apps/web/src/app/(signing)/sign/[token]/resident-field.tsx:174
+#: apps/web/src/app/(signing)/sign/[token]/resident-field.tsx:185
+#: apps/web/src/app/(signing)/sign/[token]/resident-field.tsx:213
 #: apps/web/src/app/(signing)/sign/[token]/signature-field.tsx:141
 #: apps/web/src/app/(signing)/sign/[token]/signature-field.tsx:184
 #: apps/web/src/app/(signing)/sign/[token]/signature-field.tsx:210
 #: apps/web/src/app/(signing)/sign/[token]/text-field.tsx:172
 #: apps/web/src/app/(signing)/sign/[token]/text-field.tsx:202
-#: apps/web/src/app/embed/template/[[...externalId]]/client.tsx:237
+#: apps/web/src/app/embed/template/[[...externalId]]/client.tsx:238
 #: apps/web/src/components/(dashboard)/layout/verify-email-banner.tsx:54
 #: apps/web/src/components/(dashboard)/settings/webhooks/create-webhook-dialog.tsx:101
 #: packages/ui/primitives/document-flow/field-item-advanced-settings.tsx:241
@@ -2896,7 +2893,7 @@ msgstr ""
 #: apps/web/src/app/(dashboard)/documents/[id]/edit-document.tsx:142
 #: apps/web/src/app/(dashboard)/templates/[id]/edit/edit-template.tsx:76
 #: apps/web/src/app/(recipient)/d/[token]/direct-template.tsx:62
-#: apps/web/src/app/embed/template/[[...externalId]]/client.tsx:183
+#: apps/web/src/app/embed/template/[[...externalId]]/client.tsx:184
 #: apps/web/src/components/(teams)/settings/layout/desktop-nav.tsx:44
 #: apps/web/src/components/(teams)/settings/layout/mobile-nav.tsx:52
 msgid "General"
@@ -3914,18 +3911,6 @@ msgstr "Marcador de posición"
 msgid "Please {action} your document {documentName}"
 msgstr "Por favor {action} tu documento {documentName}"
 
-#: packages/lib/jobs/definitions/emails/send-signing-email.handler.ts:98
-msgid "Please {recipientActionVerb} this document"
-msgstr "Por favor {recipientActionVerb} este documento"
-
-#: packages/lib/jobs/definitions/emails/send-signing-email.handler.ts:112
-msgid "Please {recipientActionVerb} this document created by your direct template"
-msgstr "Por favor {recipientActionVerb} este documento creado a partir de tu plantilla directa"
-
-#: packages/lib/jobs/definitions/emails/send-signing-email.handler.ts:104
-msgid "Please {recipientActionVerb} your document"
-msgstr "Por favor {recipientActionVerb} tu documento"
-
 #: apps/web/src/components/(teams)/dialogs/invite-team-member-dialog.tsx:212
 msgid "Please check the CSV file and make sure it is according to our format"
 msgstr "Por favor, revisa el archivo CSV y asegúrate de que esté de acuerdo con nuestro formato"
@@ -4185,7 +4170,7 @@ msgstr "Campo de solo lectura"
 msgid "Ready"
 msgstr "Listo"
 
-#: packages/email/template-components/template-document-invite.tsx:98
+#: packages/email/template-components/template-document-invite.tsx:97
 msgid "Ready to get started?<0/>Click the button and log into your Caring Data account to accept the invite and sign the document."
 msgstr ""
 
@@ -4286,7 +4271,7 @@ msgid "Redirect URL"
 msgstr "URL de redirección"
 
 #: packages/email/template-components/template-document-completed.tsx:49
-#: packages/email/template-components/template-document-invite.tsx:79
+#: packages/email/template-components/template-document-invite.tsx:78
 #: packages/email/template-components/template-document-pending.tsx:43
 msgid "Regarding: {0}"
 msgstr ""
@@ -4724,9 +4709,9 @@ msgstr "Mostrar plantillas en el perfil público de tu equipo para que tu audien
 #: apps/web/src/app/(profile)/p/[url]/page.tsx:192
 #: apps/web/src/app/(signing)/sign/[token]/auto-sign.tsx:229
 #: apps/web/src/app/(signing)/sign/[token]/document-action-auth-2fa.tsx:182
-#: apps/web/src/app/(signing)/sign/[token]/location-field.tsx:266
+#: apps/web/src/app/(signing)/sign/[token]/location-field.tsx:305
 #: apps/web/src/app/(signing)/sign/[token]/name-field.tsx:243
-#: apps/web/src/app/(signing)/sign/[token]/resident-field.tsx:265
+#: apps/web/src/app/(signing)/sign/[token]/resident-field.tsx:304
 #: apps/web/src/app/(signing)/sign/[token]/signature-field.tsx:303
 #: apps/web/src/app/(signing)/sign/[token]/signature-pad/signature-pad-dialog.tsx:178
 #: apps/web/src/components/ui/user-profile-skeleton.tsx:75
@@ -4740,9 +4725,9 @@ msgstr "Firmar"
 msgid "Sign as {0} <0>({1})</0>"
 msgstr "Firmar como {0} <0>({1})</0>"
 
-#: apps/web/src/app/(signing)/sign/[token]/location-field.tsx:223
+#: apps/web/src/app/(signing)/sign/[token]/location-field.tsx:262
 #: apps/web/src/app/(signing)/sign/[token]/name-field.tsx:202
-#: apps/web/src/app/(signing)/sign/[token]/resident-field.tsx:222
+#: apps/web/src/app/(signing)/sign/[token]/resident-field.tsx:261
 msgid "Sign as<0>{0} <1>({1})</1></0>"
 msgstr "Firmar como<0>{0} <1>({1})</1></0>"
 
@@ -5299,7 +5284,7 @@ msgid "Template not found or already associated with a team."
 msgstr "Plantilla no encontrada o ya asociada con un equipo."
 
 #: apps/web/src/app/(dashboard)/templates/[id]/edit/edit-template.tsx:216
-#: apps/web/src/app/embed/template/[[...externalId]]/client.tsx:331
+#: apps/web/src/app/embed/template/[[...externalId]]/client.tsx:334
 msgid "Template saved"
 msgstr "Plantilla guardada"
 
@@ -5704,7 +5689,7 @@ msgstr "Este enlace es inválido o ha expirado. Por favor, contacta a tu equipo 
 msgid "This link is invalid or has expired. Please contact your team to resend a verification."
 msgstr "Este enlace es inválido o ha expirado. Por favor, contacta a tu equipo para reenviar una verificación."
 
-#: packages/email/template-components/template-document-invite.tsx:137
+#: packages/email/template-components/template-document-invite.tsx:136
 msgid "This link is valid until {0}"
 msgstr ""
 
@@ -6367,7 +6352,7 @@ msgid "View document"
 msgstr "Ver documento"
 
 #: apps/web/src/app/(signing)/sign/[token]/form.tsx:189
-#: packages/email/template-components/template-document-invite.tsx:129
+#: packages/email/template-components/template-document-invite.tsx:128
 #: packages/email/template-components/template-document-rejected.tsx:40
 #: packages/ui/primitives/document-flow/add-subject.tsx:90
 #: packages/ui/primitives/document-flow/add-subject.tsx:91
@@ -6966,7 +6951,6 @@ msgstr "Se te ha solicitado asumir la propiedad del equipo {0} en Documenso"
 msgid "You have declined the invitation from <0>{0}</0> to join their team."
 msgstr "Has rechazado la invitación de <0>{0}</0> para unirte a su equipo."
 
-#: packages/lib/jobs/definitions/emails/send-signing-email.handler.ts:102
 #: packages/lib/server-only/document/resend-document.tsx:132
 msgid "You have initiated the document {0} that requires you to {recipientActionVerb} it."
 msgstr "Has iniciado el documento {0} que requiere que {recipientActionVerb}."
@@ -7230,7 +7214,7 @@ msgstr "Tu equipo ha sido actualizado con éxito."
 msgid "Your template has been duplicated successfully."
 msgstr "Tu plantilla ha sido duplicada con éxito."
 
-#: apps/web/src/app/embed/template/[[...externalId]]/client.tsx:332
+#: apps/web/src/app/embed/template/[[...externalId]]/client.tsx:335
 msgid "Your template has been saved successfully."
 msgstr ""
 

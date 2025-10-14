@@ -15,7 +15,6 @@ import {
 import { useSetTemplateRecipientsTemplate } from '@documenso/lib/server-only/recipient/use-set-template-recipients-template';
 import { useGetDefaultFormTemplateConfig } from '@documenso/lib/server-only/template/get-default-form-template-config';
 import { useUpdateFormTemplateSettings } from '@documenso/lib/server-only/template/update-form-template-settings';
-import type { TAddTemplateSettingsFormSchema } from '@documenso/lib/types/add-template-settings-form';
 import type { TTemplate } from '@documenso/lib/types/template';
 import { type DocumentData } from '@documenso/prisma/client';
 import { trpc } from '@documenso/trpc/react';
@@ -24,6 +23,8 @@ import { DocumentFlowFormContainer } from '@documenso/ui/primitives/document-flo
 import type { DocumentFlowStep } from '@documenso/ui/primitives/document-flow/types';
 import { Stepper } from '@documenso/ui/primitives/stepper';
 import { useToast } from '@documenso/ui/primitives/use-toast';
+
+import type { TAddTemplateSettingsFormSchema } from './(components)/template-flow/add-template-settings.types';
 
 // Shared loading component
 const LoadingSpinner = () => (
@@ -247,42 +248,43 @@ export const EmbedTemplateClientPage = ({
   );
 
   // Form handlers
-  const onAddSettingsFormSubmit = createFormHandler(
-    async (data: TAddTemplateSettingsFormSchema) => {
-      const requestData = {
-        data: {
-          title: data.title,
-          externalId: data.externalId,
-          visibility: data.visibility,
-          globalAccessAuth: data.globalAccessAuth,
-          globalActionAuth: data.globalActionAuth,
-        },
-        meta: {
-          ...data.meta,
-          language: isValidLanguageCode(data.meta.language) ? data.meta.language : undefined,
-        },
-      };
+  const onAddSettingsFormSubmit = createFormHandler(async (data) => {
+    const typedData = data as TAddTemplateSettingsFormSchema;
+    const requestData = {
+      data: {
+        title: typedData.title,
+        externalId: typedData.externalId,
+        visibility: typedData.visibility,
+        globalAccessAuth: typedData.globalAccessAuth,
+        globalActionAuth: typedData.globalActionAuth,
+      },
+      meta: {
+        ...typedData.meta,
+        language: isValidLanguageCode(typedData.meta.language)
+          ? typedData.meta.language
+          : undefined,
+      },
+    };
 
-      await Promise.all([
-        updateFormTemplateSettings.mutateAsync({
-          requestData: {
-            defaultLanguage: data.meta.language,
-            defaultTimezone: data.meta.timezone,
-            defaultEmailSubject: data.meta.subject,
-            defaultEmailMessage: data.meta.message,
-          },
-        }),
-        updateTemplateSettings({
-          templateId,
-          data: requestData.data,
-          meta: requestData.meta,
-        }),
-      ]);
-    },
-    'signers',
-  );
+    await Promise.all([
+      updateFormTemplateSettings.mutateAsync({
+        requestData: {
+          defaultLanguage: typedData.meta.language,
+          defaultTimezone: typedData.meta.timezone,
+          defaultEmailSubject: typedData.meta.subject,
+          defaultEmailMessage: typedData.meta.message,
+        },
+      }),
+      updateTemplateSettings({
+        templateId,
+        data: requestData.data,
+        meta: requestData.meta,
+      }),
+    ]);
+  }, 'signers');
 
-  const onAddTemplatePlaceholderFormSubmit = createFormHandler(async (data) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const onAddTemplatePlaceholderFormSubmit = createFormHandler(async (data: any) => {
     const [, recipients] = await Promise.all([
       updateTemplateSettings({
         templateId,
@@ -307,7 +309,8 @@ export const EmbedTemplateClientPage = ({
     });
   }, 'fields');
 
-  const handleFieldsFormSubmit = createFormHandler(async (data) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const handleFieldsFormSubmit = createFormHandler(async (data: any) => {
     await Promise.all([
       addTemplateFieldsForm({
         templateId: template?.id,
@@ -407,6 +410,7 @@ export const EmbedTemplateClientPage = ({
                 key={`settings-${templateData.recipients.length}`}
                 template={{
                   ...template,
+                  // @ts-expect-error - timezone override for template meta
                   templateMeta: {
                     ...template.templateMeta,
                     timezone: template.templateMeta?.timezone || defaultFormTemplateConfig.timezone,
@@ -417,7 +421,6 @@ export const EmbedTemplateClientPage = ({
                 fields={templateData.fields}
                 onSubmit={onAddSettingsFormSubmit}
                 isDocumentPdfLoaded={hasDocumentLoaded}
-                disabled={isProcessing}
               />
 
               <AddTemplatePlaceholderRecipientsFormPartial
@@ -428,7 +431,6 @@ export const EmbedTemplateClientPage = ({
                 signingOrder={template?.templateMeta?.signingOrder}
                 isDocumentPdfLoaded={hasDocumentLoaded}
                 onSubmit={onAddTemplatePlaceholderFormSubmit}
-                disabled={isProcessing}
               />
 
               <AddTemplateFieldsFormPartial
@@ -438,7 +440,6 @@ export const EmbedTemplateClientPage = ({
                 fields={templateData.fields}
                 onSubmit={handleFieldsFormSubmit}
                 typedSignatureEnabled={template?.templateMeta?.typedSignatureEnabled}
-                disabled={isProcessing}
               />
             </Stepper>
           </DocumentFlowFormContainer>
