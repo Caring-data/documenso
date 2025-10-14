@@ -658,12 +658,12 @@ msgstr "Dodaj URL, aby przekierować użytkownika po podpisaniu dokumentu"
 
 #: apps/web/src/app/(dashboard)/documents/[id]/edit-document.tsx:153
 #: apps/web/src/app/(dashboard)/templates/[id]/edit/edit-template.tsx:87
-#: apps/web/src/app/embed/template/[[...externalId]]/client.tsx:194
+#: apps/web/src/app/embed/template/[[...externalId]]/client.tsx:195
 msgid "Add all relevant fields for each recipient."
 msgstr "Dodaj wszystkie istotne pola dla każdego odbiorcy."
 
 #: apps/web/src/app/(dashboard)/templates/[id]/edit/edit-template.tsx:82
-#: apps/web/src/app/embed/template/[[...externalId]]/client.tsx:189
+#: apps/web/src/app/embed/template/[[...externalId]]/client.tsx:190
 msgid "Add all relevant placeholders for each recipient."
 msgstr "Dodaj wszystkie odpowiednie symbole zastępcze dla każdego odbiorcy."
 
@@ -698,7 +698,7 @@ msgstr "Dodaj adres e-mail"
 
 #: apps/web/src/app/(dashboard)/documents/[id]/edit-document.tsx:152
 #: apps/web/src/app/(dashboard)/templates/[id]/edit/edit-template.tsx:86
-#: apps/web/src/app/embed/template/[[...externalId]]/client.tsx:193
+#: apps/web/src/app/embed/template/[[...externalId]]/client.tsx:194
 msgid "Add Fields"
 msgstr "Dodaj pola"
 
@@ -724,7 +724,7 @@ msgid "Add Placeholder Recipient"
 msgstr "Dodaj odbiorcę zastępczego"
 
 #: apps/web/src/app/(dashboard)/templates/[id]/edit/edit-template.tsx:81
-#: apps/web/src/app/embed/template/[[...externalId]]/client.tsx:188
+#: apps/web/src/app/embed/template/[[...externalId]]/client.tsx:189
 msgid "Add Placeholders"
 msgstr "Dodaj znaczniki"
 
@@ -961,7 +961,7 @@ msgstr "Wystąpił błąd podczas przenoszenia dokumentu."
 msgid "An error occurred while moving the template."
 msgstr "Wystąpił błąd podczas przenoszenia szablonu."
 
-#: apps/web/src/app/embed/template/[[...externalId]]/client.tsx:238
+#: apps/web/src/app/embed/template/[[...externalId]]/client.tsx:239
 msgid "An error occurred while processing the form."
 msgstr ""
 
@@ -1612,7 +1612,7 @@ msgid "Configure general settings for the document."
 msgstr "Skonfiguruj ogólne ustawienia dokumentu."
 
 #: apps/web/src/app/(dashboard)/templates/[id]/edit/edit-template.tsx:77
-#: apps/web/src/app/embed/template/[[...externalId]]/client.tsx:184
+#: apps/web/src/app/embed/template/[[...externalId]]/client.tsx:185
 msgid "Configure general settings for the template."
 msgstr "Skonfiguruj ogólne ustawienia szablonu."
 
@@ -2226,7 +2226,7 @@ msgid "Document created by <0>{0}</0>"
 msgstr "Dokument utworzony przez <0>{0}</0>"
 
 #: packages/email/templates/document-created-from-direct-template.tsx:32
-#: packages/lib/server-only/template/create-document-from-direct-template.ts:598
+#: packages/lib/server-only/template/create-document-from-direct-template.ts:608
 msgid "Document created from direct template"
 msgstr "Dokument utworzony z bezpośredniego szablonu"
 
@@ -2732,7 +2732,7 @@ msgstr "Wprowadź swój tekst tutaj"
 #: apps/web/src/app/(signing)/sign/[token]/signature-field.tsx:210
 #: apps/web/src/app/(signing)/sign/[token]/text-field.tsx:172
 #: apps/web/src/app/(signing)/sign/[token]/text-field.tsx:202
-#: apps/web/src/app/embed/template/[[...externalId]]/client.tsx:237
+#: apps/web/src/app/embed/template/[[...externalId]]/client.tsx:238
 #: apps/web/src/components/(dashboard)/layout/verify-email-banner.tsx:54
 #: apps/web/src/components/(dashboard)/settings/webhooks/create-webhook-dialog.tsx:101
 #: packages/ui/primitives/document-flow/field-item-advanced-settings.tsx:241
@@ -2893,7 +2893,7 @@ msgstr ""
 #: apps/web/src/app/(dashboard)/documents/[id]/edit-document.tsx:142
 #: apps/web/src/app/(dashboard)/templates/[id]/edit/edit-template.tsx:76
 #: apps/web/src/app/(recipient)/d/[token]/direct-template.tsx:62
-#: apps/web/src/app/embed/template/[[...externalId]]/client.tsx:183
+#: apps/web/src/app/embed/template/[[...externalId]]/client.tsx:184
 #: apps/web/src/components/(teams)/settings/layout/desktop-nav.tsx:44
 #: apps/web/src/components/(teams)/settings/layout/mobile-nav.tsx:52
 msgid "General"
@@ -5284,7 +5284,7 @@ msgid "Template not found or already associated with a team."
 msgstr "Szablon nie znaleziony lub już powiązany z zespołem."
 
 #: apps/web/src/app/(dashboard)/templates/[id]/edit/edit-template.tsx:216
-#: apps/web/src/app/embed/template/[[...externalId]]/client.tsx:331
+#: apps/web/src/app/embed/template/[[...externalId]]/client.tsx:334
 msgid "Template saved"
 msgstr "Szablon zapisany"
 
@@ -7214,7 +7214,7 @@ msgstr "Twój zespół został pomyślnie zaktualizowany."
 msgid "Your template has been duplicated successfully."
 msgstr "Twój szablon został pomyślnie zduplikowany."
 
-#: apps/web/src/app/embed/template/[[...externalId]]/client.tsx:332
+#: apps/web/src/app/embed/template/[[...externalId]]/client.tsx:335
 msgid "Your template has been saved successfully."
 msgstr ""
 

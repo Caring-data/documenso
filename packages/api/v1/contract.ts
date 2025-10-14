@@ -30,6 +30,7 @@ import {
   ZResendDocumentForSigningMutationSchema,
   ZSendDocumentForSigningMutationSchema,
   ZSuccessAzureUploadContractSchema,
+  ZSuccessfulDeleteEmbebedTemplateResponseSchema,
   ZSuccessfulDeleteTemplateResponseSchema,
   ZSuccessfulDocumentResponseSchema,
   ZSuccessfulFieldCreationResponseSchema,
@@ -129,7 +130,7 @@ export const ApiContractV1 = c.router(
       path: '/api/v1/templates/embed/:id',
       body: ZNoBodyMutationSchema,
       responses: {
-        200: ZSuccessfulDeleteTemplateResponseSchema,
+        200: ZSuccessfulDeleteEmbebedTemplateResponseSchema,
       },
       summary: 'Delete an embedded template',
     },

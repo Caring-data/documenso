@@ -1521,10 +1521,28 @@ export const ApiContractV1Implementation = createNextRoute(ApiContractV1, {
               .with('DROPDOWN', () => ZDropdownFieldMeta.safeParse(fieldMeta))
               .with('NUMBER', () => ZNumberFieldMeta.safeParse(fieldMeta))
               .with('TEXT', () => ZTextFieldMeta.safeParse(fieldMeta))
-              .with('SIGNATURE', 'INITIALS', 'DATE', 'EMAIL', 'NAME', 'CALENDAR', () => ({
-                success: true,
-                data: undefined,
-              }))
+              .with(
+                'SIGNATURE',
+                'INITIALS',
+                'DATE',
+                'EMAIL',
+                'NAME',
+                'CALENDAR',
+                'RESIDENT_FIRST_NAME',
+                'RESIDENT_LAST_NAME',
+                'RESIDENT_DOB',
+                'RESIDENT_GENDER_IDENTITY',
+                'RESIDENT_LOCATION_NAME',
+                'RESIDENT_LOCATION_STATE',
+                'RESIDENT_LOCATION_ADDRESS',
+                'RESIDENT_LOCATION_CITY',
+                'RESIDENT_LOCATION_ZIP_CODE',
+                'RESIDENT_LOCATION_COUNTRY',
+                () => ({
+                  success: true,
+                  data: undefined,
+                }),
+              )
               .with('FREE_SIGNATURE', () => ({
                 success: false,
                 error: 'FREE_SIGNATURE is not supported',

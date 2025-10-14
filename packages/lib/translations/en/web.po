@@ -653,12 +653,12 @@ msgstr "Add a URL to redirect the user to once the document is signed"
 
 #: apps/web/src/app/(dashboard)/documents/[id]/edit-document.tsx:153
 #: apps/web/src/app/(dashboard)/templates/[id]/edit/edit-template.tsx:87
-#: apps/web/src/app/embed/template/[[...externalId]]/client.tsx:194
+#: apps/web/src/app/embed/template/[[...externalId]]/client.tsx:195
 msgid "Add all relevant fields for each recipient."
 msgstr "Add all relevant fields for each recipient."
 
 #: apps/web/src/app/(dashboard)/templates/[id]/edit/edit-template.tsx:82
-#: apps/web/src/app/embed/template/[[...externalId]]/client.tsx:189
+#: apps/web/src/app/embed/template/[[...externalId]]/client.tsx:190
 msgid "Add all relevant placeholders for each recipient."
 msgstr "Add all relevant placeholders for each recipient."
 
@@ -693,7 +693,7 @@ msgstr "Add email"
 
 #: apps/web/src/app/(dashboard)/documents/[id]/edit-document.tsx:152
 #: apps/web/src/app/(dashboard)/templates/[id]/edit/edit-template.tsx:86
-#: apps/web/src/app/embed/template/[[...externalId]]/client.tsx:193
+#: apps/web/src/app/embed/template/[[...externalId]]/client.tsx:194
 msgid "Add Fields"
 msgstr "Add Fields"
 
@@ -719,7 +719,7 @@ msgid "Add Placeholder Recipient"
 msgstr "Add Placeholder Recipient"
 
 #: apps/web/src/app/(dashboard)/templates/[id]/edit/edit-template.tsx:81
-#: apps/web/src/app/embed/template/[[...externalId]]/client.tsx:188
+#: apps/web/src/app/embed/template/[[...externalId]]/client.tsx:189
 msgid "Add Placeholders"
 msgstr "Add Placeholders"
 
@@ -956,7 +956,7 @@ msgstr "An error occurred while moving the document."
 msgid "An error occurred while moving the template."
 msgstr "An error occurred while moving the template."
 
-#: apps/web/src/app/embed/template/[[...externalId]]/client.tsx:238
+#: apps/web/src/app/embed/template/[[...externalId]]/client.tsx:239
 msgid "An error occurred while processing the form."
 msgstr "An error occurred while processing the form."
 
@@ -1607,7 +1607,7 @@ msgid "Configure general settings for the document."
 msgstr "Configure general settings for the document."
 
 #: apps/web/src/app/(dashboard)/templates/[id]/edit/edit-template.tsx:77
-#: apps/web/src/app/embed/template/[[...externalId]]/client.tsx:184
+#: apps/web/src/app/embed/template/[[...externalId]]/client.tsx:185
 msgid "Configure general settings for the template."
 msgstr "Configure general settings for the template."
 
@@ -2221,7 +2221,7 @@ msgid "Document created by <0>{0}</0>"
 msgstr "Document created by <0>{0}</0>"
 
 #: packages/email/templates/document-created-from-direct-template.tsx:32
-#: packages/lib/server-only/template/create-document-from-direct-template.ts:598
+#: packages/lib/server-only/template/create-document-from-direct-template.ts:608
 msgid "Document created from direct template"
 msgstr "Document created from direct template"
 
@@ -2727,7 +2727,7 @@ msgstr "Enter your text here"
 #: apps/web/src/app/(signing)/sign/[token]/signature-field.tsx:210
 #: apps/web/src/app/(signing)/sign/[token]/text-field.tsx:172
 #: apps/web/src/app/(signing)/sign/[token]/text-field.tsx:202
-#: apps/web/src/app/embed/template/[[...externalId]]/client.tsx:237
+#: apps/web/src/app/embed/template/[[...externalId]]/client.tsx:238
 #: apps/web/src/components/(dashboard)/layout/verify-email-banner.tsx:54
 #: apps/web/src/components/(dashboard)/settings/webhooks/create-webhook-dialog.tsx:101
 #: packages/ui/primitives/document-flow/field-item-advanced-settings.tsx:241
@@ -2888,7 +2888,7 @@ msgstr "Gender Identity"
 #: apps/web/src/app/(dashboard)/documents/[id]/edit-document.tsx:142
 #: apps/web/src/app/(dashboard)/templates/[id]/edit/edit-template.tsx:76
 #: apps/web/src/app/(recipient)/d/[token]/direct-template.tsx:62
-#: apps/web/src/app/embed/template/[[...externalId]]/client.tsx:183
+#: apps/web/src/app/embed/template/[[...externalId]]/client.tsx:184
 #: apps/web/src/components/(teams)/settings/layout/desktop-nav.tsx:44
 #: apps/web/src/components/(teams)/settings/layout/mobile-nav.tsx:52
 msgid "General"
@@ -5279,7 +5279,7 @@ msgid "Template not found or already associated with a team."
 msgstr "Template not found or already associated with a team."
 
 #: apps/web/src/app/(dashboard)/templates/[id]/edit/edit-template.tsx:216
-#: apps/web/src/app/embed/template/[[...externalId]]/client.tsx:331
+#: apps/web/src/app/embed/template/[[...externalId]]/client.tsx:334
 msgid "Template saved"
 msgstr "Template saved"
 
@@ -7209,7 +7209,7 @@ msgstr "Your team has been successfully updated."
 msgid "Your template has been duplicated successfully."
 msgstr "Your template has been duplicated successfully."
 
-#: apps/web/src/app/embed/template/[[...externalId]]/client.tsx:332
+#: apps/web/src/app/embed/template/[[...externalId]]/client.tsx:335
 msgid "Your template has been saved successfully."
 msgstr "Your template has been saved successfully."
 

@@ -140,7 +140,7 @@ export const run = async ({
         name: recipient.name,
         email: recipient.email ?? '',
       },
-      renderCustomEmailTemplate(documentMeta?.subject || emailSubject, customEmailTemplate),
+      renderCustomEmailTemplate(documentMeta?.subject || '', customEmailTemplate),
       html,
     );
   });

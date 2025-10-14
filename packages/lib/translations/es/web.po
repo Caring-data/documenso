@@ -658,12 +658,12 @@ msgstr "Agregue una URL para redirigir al usuario una vez que se firme el docume
 
 #: apps/web/src/app/(dashboard)/documents/[id]/edit-document.tsx:153
 #: apps/web/src/app/(dashboard)/templates/[id]/edit/edit-template.tsx:87
-#: apps/web/src/app/embed/template/[[...externalId]]/client.tsx:194
+#: apps/web/src/app/embed/template/[[...externalId]]/client.tsx:195
 msgid "Add all relevant fields for each recipient."
 msgstr "Agrega todos los campos relevantes para cada destinatario."
 
 #: apps/web/src/app/(dashboard)/templates/[id]/edit/edit-template.tsx:82
-#: apps/web/src/app/embed/template/[[...externalId]]/client.tsx:189
+#: apps/web/src/app/embed/template/[[...externalId]]/client.tsx:190
 msgid "Add all relevant placeholders for each recipient."
 msgstr "Agrega todos los marcadores de posición relevantes para cada destinatario."
 
@@ -698,7 +698,7 @@ msgstr "Agregar correo electrónico"
 
 #: apps/web/src/app/(dashboard)/documents/[id]/edit-document.tsx:152
 #: apps/web/src/app/(dashboard)/templates/[id]/edit/edit-template.tsx:86
-#: apps/web/src/app/embed/template/[[...externalId]]/client.tsx:193
+#: apps/web/src/app/embed/template/[[...externalId]]/client.tsx:194
 msgid "Add Fields"
 msgstr "Agregar Campos"
 
@@ -724,7 +724,7 @@ msgid "Add Placeholder Recipient"
 msgstr "Agregar destinatario de marcador de posición"
 
 #: apps/web/src/app/(dashboard)/templates/[id]/edit/edit-template.tsx:81
-#: apps/web/src/app/embed/template/[[...externalId]]/client.tsx:188
+#: apps/web/src/app/embed/template/[[...externalId]]/client.tsx:189
 msgid "Add Placeholders"
 msgstr "Agregar Marcadores de posición"
 
@@ -961,7 +961,7 @@ msgstr "Ocurrió un error al mover el documento."
 msgid "An error occurred while moving the template."
 msgstr "Ocurrió un error al mover la plantilla."
 
-#: apps/web/src/app/embed/template/[[...externalId]]/client.tsx:238
+#: apps/web/src/app/embed/template/[[...externalId]]/client.tsx:239
 msgid "An error occurred while processing the form."
 msgstr ""
 
@@ -1612,7 +1612,7 @@ msgid "Configure general settings for the document."
 msgstr "Configurar ajustes generales para el documento."
 
 #: apps/web/src/app/(dashboard)/templates/[id]/edit/edit-template.tsx:77
-#: apps/web/src/app/embed/template/[[...externalId]]/client.tsx:184
+#: apps/web/src/app/embed/template/[[...externalId]]/client.tsx:185
 msgid "Configure general settings for the template."
 msgstr "Configurar ajustes generales para la plantilla."
 
@@ -2226,7 +2226,7 @@ msgid "Document created by <0>{0}</0>"
 msgstr "Documento creado por <0>{0}</0>"
 
 #: packages/email/templates/document-created-from-direct-template.tsx:32
-#: packages/lib/server-only/template/create-document-from-direct-template.ts:598
+#: packages/lib/server-only/template/create-document-from-direct-template.ts:608
 msgid "Document created from direct template"
 msgstr "Documento creado a partir de plantilla directa"
 
@@ -2732,7 +2732,7 @@ msgstr "Ingresa tu texto aquí"
 #: apps/web/src/app/(signing)/sign/[token]/signature-field.tsx:210
 #: apps/web/src/app/(signing)/sign/[token]/text-field.tsx:172
 #: apps/web/src/app/(signing)/sign/[token]/text-field.tsx:202
-#: apps/web/src/app/embed/template/[[...externalId]]/client.tsx:237
+#: apps/web/src/app/embed/template/[[...externalId]]/client.tsx:238
 #: apps/web/src/components/(dashboard)/layout/verify-email-banner.tsx:54
 #: apps/web/src/components/(dashboard)/settings/webhooks/create-webhook-dialog.tsx:101
 #: packages/ui/primitives/document-flow/field-item-advanced-settings.tsx:241
@@ -2893,7 +2893,7 @@ msgstr ""
 #: apps/web/src/app/(dashboard)/documents/[id]/edit-document.tsx:142
 #: apps/web/src/app/(dashboard)/templates/[id]/edit/edit-template.tsx:76
 #: apps/web/src/app/(recipient)/d/[token]/direct-template.tsx:62
-#: apps/web/src/app/embed/template/[[...externalId]]/client.tsx:183
+#: apps/web/src/app/embed/template/[[...externalId]]/client.tsx:184
 #: apps/web/src/components/(teams)/settings/layout/desktop-nav.tsx:44
 #: apps/web/src/components/(teams)/settings/layout/mobile-nav.tsx:52
 msgid "General"
@@ -5284,7 +5284,7 @@ msgid "Template not found or already associated with a team."
 msgstr "Plantilla no encontrada o ya asociada con un equipo."
 
 #: apps/web/src/app/(dashboard)/templates/[id]/edit/edit-template.tsx:216
-#: apps/web/src/app/embed/template/[[...externalId]]/client.tsx:331
+#: apps/web/src/app/embed/template/[[...externalId]]/client.tsx:334
 msgid "Template saved"
 msgstr "Plantilla guardada"
 
@@ -7214,7 +7214,7 @@ msgstr "Tu equipo ha sido actualizado con éxito."
 msgid "Your template has been duplicated successfully."
 msgstr "Tu plantilla ha sido duplicada con éxito."
 
-#: apps/web/src/app/embed/template/[[...externalId]]/client.tsx:332
+#: apps/web/src/app/embed/template/[[...externalId]]/client.tsx:335
 msgid "Your template has been saved successfully."
 msgstr ""
 
