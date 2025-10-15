@@ -119,22 +119,6 @@ export const run = async ({
       }),
     ]);
 
-    // await mailer.sendMail({
-    //   to: {
-    //     name: recipient.name,
-    //     address: recipient.email,
-    //   },
-    //   from: {
-    //     name: FROM_NAME,
-    //     address: FROM_ADDRESS,
-    //   },
-    //   subject: renderCustomEmailTemplate(
-    //     documentMeta?.subject || emailSubject,
-    //     customEmailTemplate,
-    //   ),
-    //   html,
-    //   text,
-    // });
     await sendEmail(
       {
         name: recipient.name,
