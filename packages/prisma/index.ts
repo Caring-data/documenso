@@ -18,6 +18,7 @@ export const prisma = remember(
 export const kyselyPrisma = remember('kyselyPrisma', () =>
   prisma.$extends(
     kyselyExtension({
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       kysely: (driver) =>
         new Kysely<DB>({
           dialect: {
@@ -26,7 +27,7 @@ export const kyselyPrisma = remember('kyselyPrisma', () =>
             createIntrospector: (db) => new PostgresIntrospector(db),
             createQueryCompiler: () => new PostgresQueryCompiler(),
           },
-        }),
+        }) as any,
     }),
   ),
 );
