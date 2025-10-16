@@ -3,7 +3,7 @@ import { DateTime } from 'luxon';
 import { kyselyPrisma, sql } from '@documenso/prisma';
 
 export const getUserMonthlyGrowth = async (type: 'count' | 'cumulative' = 'count') => {
-  const qb = kyselyPrisma.$kysely
+  const qb = (kyselyPrisma.$kysely as any)
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     .selectFrom('User' as any)
     // eslint-disable-next-line @typescript-eslint/no-explicit-any

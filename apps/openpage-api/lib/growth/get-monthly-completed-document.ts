@@ -4,7 +4,7 @@ import { kyselyPrisma, sql } from '@documenso/prisma';
 import { DocumentStatus } from '@documenso/prisma/client';
 
 export const getCompletedDocumentsMonthly = async (type: 'count' | 'cumulative' = 'count') => {
-  const qb = kyselyPrisma.$kysely
+  const qb = (kyselyPrisma.$kysely as any)
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     .selectFrom('Document' as any)
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
