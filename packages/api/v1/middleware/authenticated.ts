@@ -9,6 +9,9 @@ import type { Team, User } from '@documenso/prisma/client';
 export const authenticatedMiddleware = <
   T extends {
     req: NextApiRequest;
+    query?: any;
+    params?: any;
+    body?: any;
   },
   R extends {
     status: number;
@@ -65,11 +68,11 @@ export const authenticatedMiddleware = <
       }
 
       return {
-        status: 401,
+        status: 401 as const,
         body: {
           message,
         },
-      } as const;
+      };
     }
   };
 };

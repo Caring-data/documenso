@@ -26,26 +26,26 @@ export async function getSigningVolume({
 }: GetSigningVolumeOptions) {
   const offset = Math.max(page - 1, 0) * perPage;
 
-  let findQuery = kyselyPrisma.$kysely
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  let findQuery = (kyselyPrisma.$kysely as any)
     .selectFrom('Subscription as s')
     .leftJoin('User as u', 's.userId', 'u.id')
     .leftJoin('Team as t', 's.teamId', 't.id')
-    .leftJoin('Document as ud', (join) =>
+    .leftJoin('Document as ud', (join: any) =>
       join
         .onRef('u.id', '=', 'ud.userId')
         .on('ud.status', '=', sql.lit(DocumentStatus.COMPLETED))
         .on('ud.deletedAt', 'is', null)
         .on('ud.teamId', 'is', null),
     )
-    .leftJoin('Document as td', (join) =>
+    .leftJoin('Document as td', (join: any) =>
       join
         .onRef('t.id', '=', 'td.teamId')
         .on('td.status', '=', sql.lit(DocumentStatus.COMPLETED))
         .on('td.deletedAt', 'is', null),
     )
-    // @ts-expect-error - Raw SQL enum casting not properly typed by Kysely
     .where(sql`s.status = ${SubscriptionStatus.ACTIVE}::"SubscriptionStatus"`)
-    .where((eb) =>
+    .where((eb: any) =>
       eb.or([
         eb('u.name', 'ilike', `%${search}%`),
         eb('u.email', 'ilike', `%${search}%`),
@@ -77,20 +77,20 @@ export async function getSigningVolume({
 
   findQuery = findQuery.limit(perPage).offset(offset);
 
-  const countQuery = kyselyPrisma.$kysely
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const countQuery = (kyselyPrisma.$kysely as any)
     .selectFrom('Subscription as s')
     .leftJoin('User as u', 's.userId', 'u.id')
     .leftJoin('Team as t', 's.teamId', 't.id')
-    // @ts-expect-error - Raw SQL enum casting not properly typed by Kysely
     .where(sql`s.status = ${SubscriptionStatus.ACTIVE}::"SubscriptionStatus"`)
-    .where((eb) =>
+    .where((eb: any) =>
       eb.or([
         eb('u.name', 'ilike', `%${search}%`),
         eb('u.email', 'ilike', `%${search}%`),
         eb('t.name', 'ilike', `%${search}%`),
       ]),
     )
-    .select(({ fn }) => [fn.countAll().as('count')]);
+    .select(({ fn }: any) => [fn.countAll().as('count')]);
 
   const [results, [{ count }]] = await Promise.all([findQuery.execute(), countQuery.execute()]);
 
