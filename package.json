@@ -100,7 +100,8 @@
     "prisma-extension-kysely": "3.0.0",
     "inngest": "3.22.12",
     "tw-to-css": "^0.0.12",
-    "@react-email/tailwind": "^0.1.0"
+    "@react-email/tailwind": "^0.1.0",
+    "@react-email/render": "^1.0.1"
   },
   "trigger.dev": {
     "endpointId": "documenso-app"
