@@ -29,6 +29,7 @@ declare namespace NodeJS {
     AZURE_STORAGE_CONTAINER_NAME: string;
     AZURE_STORAGE_URL: string;
     FOLDER_FILE: string;
-    NEXT_PRIVATE_CD_SERVICE_URL?: string;
+
+    NEXT_PUBLIC_CD_SERVICE_URL?: string;
   }
 }
