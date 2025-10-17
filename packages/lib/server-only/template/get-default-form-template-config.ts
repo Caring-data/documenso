@@ -10,6 +10,8 @@ export const useGetDefaultFormTemplateConfig = ({
 }: GetDefaultFormTemplateConfigOptions) => {
   const BASE_URL = process.env.NEXT_PUBLIC_CD_SERVICE_URL || 'http://localhost:3005/api';
 
+  console.log('BASE_URL', BASE_URL);
+
   return useQuery({
     queryKey: ['default-form-template-config', templateId],
     queryFn: async () => {
