@@ -6,7 +6,7 @@ export interface UseGetResidentInfoOptions {
 }
 
 export const useGetResidentInfo = ({ residentId }: UseGetResidentInfoOptions) => {
-  const BASE_URL = process.env.NEXT_PUBLIC_CD_SERVICE_URL || 'http://localhost:3005/api';
+  const BASE_URL = process.env.NEXT_PRIVATE_CD_SERVICE_URL || 'http://localhost:3005/api';
 
   return useQuery({
     queryKey: ['get-resident-info', residentId],

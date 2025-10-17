@@ -13,7 +13,7 @@ export type UpdateFormTemplateSettingsDataOptions = {
 export const useSetTemplateRecipientsTemplate = ({
   externalId,
 }: UpdateFormTemplateSettingsOptions) => {
-  const BASE_URL = process.env.NEXT_PUBLIC_CD_SERVICE_URL || 'http://localhost:3005/api';
+  const BASE_URL = process.env.NEXT_PRIVATE_CD_SERVICE_URL || 'http://localhost:3005/api';
 
   return useMutation({
     mutationFn: async ({ requestData }: UpdateFormTemplateSettingsDataOptions) => {
