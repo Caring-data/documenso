@@ -190,6 +190,10 @@ services:
       - key: FOLDER_FILE
         sync: false
 
+      # cd-service
+      - key: NEXT_PUBLIC_CD_SERVICE_URL
+        sync: false
+
 databases:
   - name: documenso-db
     plan: free
