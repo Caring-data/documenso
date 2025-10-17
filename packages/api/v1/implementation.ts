@@ -1,5 +1,4 @@
 import { createNextRoute } from '@ts-rest/next';
-import { format } from 'date-fns';
 import { match } from 'ts-pattern';
 
 import { NEXT_PUBLIC_WEBAPP_URL } from '@documenso/lib/constants/app';
@@ -311,7 +310,7 @@ export const ApiContractV1Implementation = createNextRoute(ApiContractV1, {
 
           return {
             type: label,
-            timestamp: format(log.createdAt, 'MM/dd/yyyy'),
+            timestamp: formatDateWithTimeZone(log.createdAt, timezone),
             ipAddress: log.ipAddress ?? '',
           };
         })

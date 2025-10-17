@@ -87,7 +87,8 @@
     "next-runtime-env": "^3.2.0",
     "pdfjs-dist": "^3.11.174",
     "ramda": "0.30.1",
-    "react": "^18",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "typescript": "5.6.2",
     "uuid": "^11.1.0",
     "zod": "3.23.8"
@@ -99,8 +100,11 @@
     "ramda": "0.30.1",
     "prisma-extension-kysely": "3.0.0",
     "inngest": "3.22.12",
-    "tw-to-css": "^0.0.12",
-    "@react-email/tailwind": "^0.1.0"
+    "tw-to-css": "^0.0.11",
+    "@react-email/tailwind": "0.0.12",
+    "@react-email/render": "0.0.10",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "trigger.dev": {
     "endpointId": "documenso-app"
