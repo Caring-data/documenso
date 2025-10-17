@@ -1,6 +1,8 @@
 import { useMutation } from '@tanstack/react-query';
 import axios from 'axios';
 
+import { NEXT_PUBLIC_CD_SERVICE_URL } from '../../constants/app';
+
 export type UpdateFormTemplateSettingsOptions = {
   externalId: string;
 };
@@ -13,12 +15,10 @@ export type UpdateFormTemplateSettingsDataOptions = {
 export const useUpdateFormTemplateSettings = ({
   externalId,
 }: UpdateFormTemplateSettingsOptions) => {
-  const BASE_URL = process.env.NEXT_PUBLIC_CD_SERVICE_URL || 'http://localhost:3005/api';
-
   return useMutation({
     mutationFn: async ({ requestData }: UpdateFormTemplateSettingsDataOptions) => {
       const { data } = await axios.patch(
-        `${BASE_URL}/v1/forms/templates/${externalId}/settings`,
+        `${NEXT_PUBLIC_CD_SERVICE_URL()}/v1/forms/templates/${externalId}/settings`,
         requestData,
       );
       return data.data;

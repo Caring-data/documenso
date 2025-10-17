@@ -1,6 +1,8 @@
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 
+import { NEXT_PUBLIC_CD_SERVICE_URL } from '@documenso/lib/constants/app';
+
 export type GetDefaultFormTemplateConfigOptions = {
   templateId: string;
 };
@@ -8,14 +10,12 @@ export type GetDefaultFormTemplateConfigOptions = {
 export const useGetDefaultFormTemplateConfig = ({
   templateId,
 }: GetDefaultFormTemplateConfigOptions) => {
-  const BASE_URL = process.env.NEXT_PUBLIC_CD_SERVICE_URL || 'http://localhost:3005/api';
-
-  console.log('BASE_URL', BASE_URL);
-
   return useQuery({
     queryKey: ['default-form-template-config', templateId],
     queryFn: async () => {
-      const { data } = await axios.get(`${BASE_URL}/v1/forms/default-config-form/${templateId}`);
+      const { data } = await axios.get(
+        `${NEXT_PUBLIC_CD_SERVICE_URL()}/v1/forms/default-config-form/${templateId}`,
+      );
       return data.data;
     },
     enabled: !!templateId,
