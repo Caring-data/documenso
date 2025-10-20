@@ -13,9 +13,13 @@ import { Button } from '@documenso/ui/primitives/button';
 
 export type NotFoundPartialProps = {
   children?: React.ReactNode;
+  showGoBackButton?: boolean;
 };
 
-export default function NotFoundPartial({ children }: NotFoundPartialProps) {
+export default function NotFoundPartial({
+  children,
+  showGoBackButton = true,
+}: NotFoundPartialProps) {
   const router = useRouter();
 
   return (
@@ -56,16 +60,18 @@ export default function NotFoundPartial({ children }: NotFoundPartialProps) {
           </p>
 
           <div className="mt-6 flex gap-x-2.5 gap-y-4 md:items-center">
-            <Button
-              variant="ghost"
-              className="w-32"
-              onClick={() => {
-                void router.back();
-              }}
-            >
-              <ChevronLeft className="mr-2 h-4 w-4" />
-              <Trans>Go Back</Trans>
-            </Button>
+            {showGoBackButton && (
+              <Button
+                variant="ghost"
+                className="w-32"
+                onClick={() => {
+                  void router.back();
+                }}
+              >
+                <ChevronLeft className="mr-2 h-4 w-4" />
+                <Trans>Go Back</Trans>
+              </Button>
+            )}
 
             {children}
           </div>
