@@ -33,7 +33,7 @@ COPY apps/*/package.json ./dummy-apps/
 # Copiar el resto del código fuente
 COPY . .
 # Ejecutar npm ci para instalar todas las dependencias
-RUN npm ci
+RUN npm ci --ignore-scripts || npm ci
 # Ejecutar turbo prune para reducir el tamaño de la imagen
 RUN turbo prune --scope=@documenso/web --docker
 
@@ -47,6 +47,10 @@ ARG NEXT_PRIVATE_ENCRYPTION_KEY="CAFEBABE"
 ENV NEXT_PRIVATE_ENCRYPTION_KEY="$NEXT_PRIVATE_ENCRYPTION_KEY"
 ARG NEXT_PRIVATE_ENCRYPTION_SECONDARY_KEY="DEADBEEF"
 ENV NEXT_PRIVATE_ENCRYPTION_SECONDARY_KEY="$NEXT_PRIVATE_ENCRYPTION_SECONDARY_KEY"
+
+# NUEVO: Skip ngrok download durante instalación
+ENV NGROK_SKIP_DOWNLOAD=true
+
 # Copiar los archivos generados por turbo prune
 COPY .gitignore .gitignore
 COPY --from=builder /app/out/json/ .
@@ -56,7 +60,7 @@ COPY --from=builder /app/lingui.config.ts ./lingui.config.ts
 COPY --from=builder /app/assets ./assets
 
 # Instalar dependencias con --legacy-peer-deps para evitar problemas de compatibilidad
-RUN npm ci --legacy-peer-deps
+RUN npm ci --legacy-peer-deps --ignore-scripts || npm ci --legacy-peer-deps
 # Copiar el resto del código fuente
 COPY --from=builder /app/out/full/ .
 # Copiar el archivo turbo.json
