@@ -136,6 +136,17 @@ export const AddTemplatePlaceholderRecipientsFormPartial = ({
     });
   }, [form, generateDefaultFormSigners]);
 
+  // Ensure name field has default values
+  useEffect(() => {
+    const currentSigners = watchedSigners;
+    currentSigners.forEach((signer, index) => {
+      if (!signer.name) {
+        const defaultName = `Recipient ${index + 1}`;
+        setValue(`signers.${index}.name`, defaultName);
+      }
+    });
+  }, [watchedSigners, setValue]);
+
   // Field array for managing signers
   const {
     append: appendSigner,
@@ -210,7 +221,7 @@ export const AddTemplatePlaceholderRecipientsFormPartial = ({
         });
       }
     },
-    [getValues, setValue, toast, _],
+    [getValues, setValue, _],
   );
 
   const handleSigningOrderChange = useCallback(
@@ -246,7 +257,7 @@ export const AddTemplatePlaceholderRecipientsFormPartial = ({
         });
       }
     },
-    [getValues, setValue, toast, _],
+    [getValues, setValue, _],
   );
 
   const onDragEnd = useCallback(
@@ -279,7 +290,7 @@ export const AddTemplatePlaceholderRecipientsFormPartial = ({
 
       await form.trigger('signers');
     },
-    [setValue, watchedSigners, toast, _, form],
+    [setValue, watchedSigners, _, form],
   );
 
   return (
@@ -374,7 +385,7 @@ export const AddTemplatePlaceholderRecipientsFormPartial = ({
                                 name={`signers.${index}.email`}
                                 render={({ field }) => (
                                   <FormItem
-                                    className={cn('col-span-1', 'sm:col-span-3', 'md:col-span-4')}
+                                    className={cn('col-span-1', 'sm:col-span-5', 'md:col-span-7')}
                                   >
                                     {index === 0 && (
                                       <FormLabel required className="block sm:hidden">
@@ -387,7 +398,7 @@ export const AddTemplatePlaceholderRecipientsFormPartial = ({
                                         type="email"
                                         placeholder={_(msg`Email`)}
                                         {...field}
-                                        disabled={field.disabled || isSubmitting}
+                                        disabled
                                       />
                                     </FormControl>
 
@@ -395,22 +406,15 @@ export const AddTemplatePlaceholderRecipientsFormPartial = ({
                                   </FormItem>
                                 )}
                               />
+
                               <FormField
                                 control={control}
                                 name={`signers.${index}.name`}
                                 render={({ field }) => (
-                                  <FormItem
-                                    className={cn('col-span-1', 'sm:col-span-3', 'md:col-span-4')}
-                                  >
+                                  <FormItem className="hidden">
                                     <FormControl>
-                                      <Input
-                                        placeholder={_(msg`Name`)}
-                                        {...field}
-                                        disabled={field.disabled || isSubmitting}
-                                      />
+                                      <Input {...field} className="hidden" />
                                     </FormControl>
-
-                                    <FormMessage />
                                   </FormItem>
                                 )}
                               />
@@ -418,20 +422,28 @@ export const AddTemplatePlaceholderRecipientsFormPartial = ({
                               <div
                                 className={cn(
                                   'col-span-1 flex gap-x-2',
-                                  'sm:col-span-2',
+                                  'sm:col-span-3',
+                                  'md:col-span-3',
                                   'justify-end sm:justify-start',
+                                  'items-center',
+                                  'min-w-0',
                                 )}
                               >
                                 <FormField
                                   name={`signers.${index}.role`}
                                   render={({ field }) => (
-                                    <FormItem>
+                                    <FormItem className="min-w-0 flex-1">
                                       <FormControl>
                                         <RecipientRoleSelect
                                           {...field}
-                                          onValueChange={(value) =>
-                                            handleRoleChange(index, value as RecipientRole)
-                                          }
+                                          onValueChange={(value) => {
+                                            const roleValue = Object.values(RecipientRole).find(
+                                              (role) => role === value,
+                                            );
+                                            if (roleValue) {
+                                              handleRoleChange(index, roleValue);
+                                            }
+                                          }}
                                           disabled={isSubmitting}
                                         />
                                       </FormControl>
@@ -442,11 +454,11 @@ export const AddTemplatePlaceholderRecipientsFormPartial = ({
 
                                 <button
                                   type="button"
-                                  className="inline-flex h-10 w-10 items-center justify-center text-slate-500 hover:opacity-80 disabled:cursor-not-allowed disabled:opacity-50"
+                                  className="inline-flex h-10 w-9 flex-shrink-0 items-center justify-center text-slate-500 hover:opacity-80 disabled:cursor-not-allowed disabled:opacity-50"
                                   disabled={isSubmitting || signers.length === 1}
                                   onClick={() => onRemoveSigner(index)}
                                 >
-                                  <Trash className="h-5 w-5" />
+                                  <Trash className="h-4 w-4" />
                                 </button>
                               </div>
                             </motion.fieldset>
