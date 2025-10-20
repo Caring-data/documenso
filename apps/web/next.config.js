@@ -47,7 +47,13 @@ const config = {
   output: process.env.DOCKER_OUTPUT ? 'standalone' : undefined,
   experimental: {
     outputFileTracingRoot: path.join(__dirname, '../../'),
-    serverComponentsExternalPackages: ['@node-rs/bcrypt', '@documenso/pdf-sign', 'playwright'],
+    serverComponentsExternalPackages: [
+      '@node-rs/bcrypt',
+      '@documenso/pdf-sign',
+      'playwright',
+      'tw-to-css',
+      '@react-email/tailwind',
+    ],
     serverActions: {
       bodySizeLimit: '200mb',
     },
