@@ -100,9 +100,9 @@
     "ramda": "0.30.1",
     "prisma-extension-kysely": "3.0.0",
     "inngest": "3.22.12",
-    "tw-to-css": "^0.0.10",
-    "@react-email/tailwind": "0.0.12",
-    "@react-email/render": "0.0.10",
+    "tw-to-css": "^0.0.9",
+    "@react-email/tailwind": "0.0.9",
+    "@react-email/render": "0.0.9",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
