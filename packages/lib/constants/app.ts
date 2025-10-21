@@ -27,3 +27,4 @@ export const WEBAPP_BASE_URL = NEXT_PUBLIC_WEBAPP_URL();
 export const MARKETING_BASE_URL = NEXT_PUBLIC_MARKETING_URL();
 export const NEXT_PUBLIC_CD_SERVICE_URL = () =>
   env('NEXT_PUBLIC_CD_SERVICE_URL') || 'http://localhost:3005/api';
+export const NEXT_PUBLIC_CD_SERVICE_API_KEY = () => env('NEXT_PUBLIC_CD_SERVICE_API_KEY') || '';
