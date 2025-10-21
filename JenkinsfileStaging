@@ -1,0 +1,59 @@
+pipeline {
+    agent { label 'cd_staging' }
+
+    environment {
+        PROJECT_NAME = "documenso"
+        REPO_URL = "https://github.com/Caring-data/documenso"
+        CONTAINER_NAME = "documenso_container"
+        NGINX_CONTAINER_NAME = "nginx_next"
+    }
+
+    stages {
+        stage('Prepare Workspace') {
+            steps {
+                script {
+                    sh 'whoami'
+                }
+            }
+        }
+        stage('Checkout') {
+            steps {
+                checkout([$class: 'GitSCM',
+                          branches: [[name: '*/staging']],
+                          userRemoteConfigs: [[
+                              url: "${REPO_URL}",
+                              credentialsId: 'git_credentials'
+                          ]]])
+            }
+        }
+        stage('Copy .env') {
+            steps {
+                script {
+                    sh """
+                        if [ -f "${JENKINS_HOME}/workspace/documenso_staging/.env" ]; then
+                            sudo rm -f ${JENKINS_HOME}/workspace/documenso_staging/.env
+                        fi
+                    """
+                    sh 'sudo cp /home/caringdata/staging/documenso/.env ${JENKINS_HOME}/workspace/documenso_staging/.env'
+                }
+            }
+        }
+        stage('Build and Start Docker Compose Services') {
+            steps {
+                script {
+                    sh 'cd ${JENKINS_HOME}/workspace/documenso_staging'
+
+                    // Stop and remove any existing containers (if they exist)
+                    sh """
+                        docker compose down || true
+                    """
+
+                    // Build and start both services using docker-compose
+                    sh """
+                        docker compose up -d --build
+                    """
+                }
+            }
+        }
+    }
+}
