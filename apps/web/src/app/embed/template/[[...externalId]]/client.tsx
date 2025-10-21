@@ -269,6 +269,7 @@ export const EmbedTemplateClientPage = ({
     await Promise.all([
       updateFormTemplateSettings.mutateAsync({
         requestData: {
+          title: typedData.title,
           defaultLanguage: typedData.meta.language,
           defaultTimezone: typedData.meta.timezone,
           defaultEmailSubject: typedData.meta.subject,
