@@ -146,10 +146,10 @@ export const run = async ({
 
   const newDataId = await io.runTask('decorate-and-sign-pdf', async () => {
     try {
-      const pdfDoc = await PDFDocument.load(pdfData);
+      const pdfDoc = await PDFDocument.load(pdfData, { ignoreEncryption: true });
 
       if (certificateData) {
-        const certificateDoc = await PDFDocument.load(certificateData);
+        const certificateDoc = await PDFDocument.load(certificateData, { ignoreEncryption: true });
         const certificatePages = await pdfDoc.copyPages(
           certificateDoc,
           certificateDoc.getPageIndices(),

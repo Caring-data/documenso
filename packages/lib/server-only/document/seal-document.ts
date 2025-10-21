@@ -117,7 +117,7 @@ export const sealDocument = async ({
         }).catch(() => null)
       : null;
 
-  const doc = await PDFDocument.load(pdfData);
+  const doc = await PDFDocument.load(pdfData, { ignoreEncryption: true });
 
   // Normalize and flatten layers that could cause issues with the signature
   normalizeSignatureAppearances(doc);
@@ -125,7 +125,7 @@ export const sealDocument = async ({
   flattenAnnotations(doc);
 
   if (certificateData) {
-    const certificate = await PDFDocument.load(certificateData);
+    const certificate = await PDFDocument.load(certificateData, { ignoreEncryption: true });
 
     const certificatePages = await doc.copyPages(certificate, certificate.getPageIndices());
 

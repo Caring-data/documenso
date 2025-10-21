@@ -26,14 +26,16 @@ export const generateSignedPdf = async ({
     ? document.documentData.data
     : Buffer.from(document.documentData.data, 'base64');
 
-  const pdfDoc = await PDFDocument.load(new Uint8Array(dataBuffer));
+  const pdfDoc = await PDFDocument.load(new Uint8Array(dataBuffer), { ignoreEncryption: true });
 
   normalizeSignatureAppearances(pdfDoc);
   flattenForm(pdfDoc);
   flattenAnnotations(pdfDoc);
 
   if (certificateData) {
-    const certificateDoc = await PDFDocument.load(new Uint8Array(certificateData));
+    const certificateDoc = await PDFDocument.load(new Uint8Array(certificateData), {
+      ignoreEncryption: true,
+    });
     const certificatePages = await pdfDoc.copyPages(
       certificateDoc,
       certificateDoc.getPageIndices(),

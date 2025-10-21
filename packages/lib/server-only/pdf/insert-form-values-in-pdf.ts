@@ -6,7 +6,7 @@ export type InsertFormValuesInPdfOptions = {
 };
 
 export const insertFormValuesInPdf = async ({ pdf, formValues }: InsertFormValuesInPdfOptions) => {
-  const doc = await PDFDocument.load(pdf);
+  const doc = await PDFDocument.load(pdf, { ignoreEncryption: true });
 
   const form = doc.getForm();
 
