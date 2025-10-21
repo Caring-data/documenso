@@ -126,5 +126,6 @@ declare namespace NodeJS {
     FOLDER_FILE: string;
 
     NEXT_PUBLIC_CD_SERVICE_URL?: string;
+    NEXT_PUBLIC_CD_SERVICE_API_KEY?: string;
   }
 }

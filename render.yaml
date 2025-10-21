@@ -193,6 +193,8 @@ services:
       # cd-service
       - key: NEXT_PUBLIC_CD_SERVICE_URL
         sync: false
+      - key: NEXT_PUBLIC_CD_SERVICE_API_KEY
+        sync: false
 
 databases:
   - name: documenso-db
