@@ -26,7 +26,7 @@ export const putPdfFile = async (file: File) => {
 
   const arrayBuffer = await file.arrayBuffer();
 
-  const pdf = await PDFDocument.load(arrayBuffer).catch((e) => {
+  const pdf = await PDFDocument.load(arrayBuffer, { ignoreEncryption: true }).catch((e) => {
     console.error(`PDF upload parse error: ${e.message}`);
 
     throw new AppError('INVALID_DOCUMENT_FILE');
