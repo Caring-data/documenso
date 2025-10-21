@@ -448,7 +448,7 @@ export const fieldRouter = router({
   /**
    * @private
    */
-  addTemplateFieldsForm: authenticatedProcedure
+  addTemplateFieldsForm: procedure
     .input(ZSetFieldsForTemplateFormRequestSchema)
     .output(ZSetFieldsForTemplateFormResponseSchema)
     .mutation(async ({ input }) => {

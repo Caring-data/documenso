@@ -28,7 +28,7 @@ import { updateTemplateByExternalId } from '@documenso/lib/server-only/template/
 import type { Document } from '@documenso/prisma/client';
 
 import { ZGenericSuccessResponse, ZSuccessResponseSchema } from '../document-router/schema';
-import { authenticatedProcedure, maybeAuthenticatedProcedure, router } from '../trpc';
+import { authenticatedProcedure, maybeAuthenticatedProcedure, procedure, router } from '../trpc';
 import {
   ZBulkSendTemplateMutationSchema,
   ZCreateDocumentFromDirectTemplateRequestSchema,
@@ -88,7 +88,7 @@ export const templateRouter = router({
   /**
    * @public
    */
-  getTemplateByExternalId: authenticatedProcedure
+  getTemplateByExternalId: procedure
     .meta({
       openapi: {
         method: 'GET',
@@ -212,7 +212,7 @@ export const templateRouter = router({
   /**
    * @public
    */
-  updateTemplateByExternalId: authenticatedProcedure
+  updateTemplateByExternalId: procedure
     .meta({
       openapi: {
         method: 'POST',

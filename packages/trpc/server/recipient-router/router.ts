@@ -437,7 +437,7 @@ export const recipientRouter = router({
   /**
    * @private
    */
-  setTemplateRecipientsTemplate: authenticatedProcedure
+  setTemplateRecipientsTemplate: procedure
     .input(ZSetTemplateRecipientsTemplateRequestSchema)
     .output(ZSetTemplateRecipientsTemplateResponseSchema)
     .mutation(async ({ input }) => {
