@@ -199,6 +199,13 @@ export const processDocumentCompletion = async ({
   requestMetadata?: RequestMetadata;
 }) => {
   try {
+    await createLog({
+      action: 'PROCESS_COMPLETION_START',
+      message: 'Starting document completion processing',
+      data: { documentId, recipientId },
+      metadata: requestMetadata,
+    });
+
     const document = await prisma.document.findFirstOrThrow({
       where: { id: documentId },
       include: {
@@ -224,6 +231,12 @@ export const processDocumentCompletion = async ({
 
     const rawDetails = document?.documentDetails;
     if (!rawDetails || typeof rawDetails !== 'object') {
+      await createLog({
+        action: 'INVALID_DOCUMENT_DETAILS',
+        message: 'Invalid or missing document details',
+        data: { documentId, rawDetails },
+        metadata: requestMetadata,
+      });
       throw new Error('Invalid or missing documentDetails');
     }
 
@@ -235,6 +248,13 @@ export const processDocumentCompletion = async ({
         documentId: document.id,
         recipientId: recipient.id,
       },
+    });
+
+    await createLog({
+      action: 'GENERATING_SIGNED_PDF',
+      message: 'Starting signed PDF generation',
+      data: { documentId },
+      metadata: requestMetadata,
     });
 
     const documentFields = await prisma.field.findMany({
@@ -255,16 +275,49 @@ export const processDocumentCompletion = async ({
       certificateData: null,
     });
 
+    await createLog({
+      action: 'PDF_GENERATED',
+      message: 'Signed PDF successfully generated',
+      data: {
+        documentId,
+        pdfSize: signedPdfBuffer.length,
+        fieldsCount: documentFields.length,
+      },
+      metadata: requestMetadata,
+    });
+
     const base64SignedPdf = signedPdfBuffer.toString('base64');
 
-    await storeSignedDocument(
-      document,
-      base64SignedPdf,
-      documentDetails,
-      document.id,
-      recipient,
-      false,
-    );
+    try {
+      await storeSignedDocument(
+        document,
+        base64SignedPdf,
+        documentDetails,
+        document.id,
+        recipient,
+        false,
+      );
+
+      await createLog({
+        action: 'STORING_SIGNED_DOCUMENT_SUCCESS',
+        message: 'Signed document successfully stored',
+        data: { documentId, recipientId },
+        metadata: requestMetadata,
+      });
+    } catch (storeError) {
+      await createLog({
+        action: 'STORING_SIGNED_DOCUMENT_FAILED',
+        message: 'Error storing signed document',
+        data: {
+          error: storeError instanceof Error ? storeError.message : String(storeError),
+          stack: storeError instanceof Error ? storeError.stack : undefined,
+          documentId,
+          recipientId,
+        },
+        metadata: requestMetadata,
+      });
+      throw storeError;
+    }
 
     await prisma.documentData.update({
       where: { id: document.documentData.id },
@@ -293,11 +346,33 @@ export const processDocumentCompletion = async ({
       orderBy: [{ signingOrder: { sort: 'asc', nulls: 'last' } }, { id: 'asc' }],
     });
 
+    await createLog({
+      action: 'PENDING_RECIPIENTS_CHECK',
+      message: 'Verification of pending recipients',
+      data: {
+        documentId,
+        pendingCount: pendingRecipients.length,
+        pendingRecipientIds: pendingRecipients.map((r) => r.id),
+      },
+      metadata: requestMetadata,
+    });
+
     if (pendingRecipients.length > 0) {
       await sendPendingEmail({ documentId, recipientId: recipient.id });
 
       if (document.documentMeta?.signingOrder === DocumentSigningOrder.SEQUENTIAL) {
         const [nextRecipient] = pendingRecipients;
+
+        await createLog({
+          action: 'NOTIFYING_NEXT_RECIPIENT',
+          message: 'Notifying the next recipient (sequential order)',
+          data: {
+            documentId,
+            nextRecipientId: nextRecipient.id,
+            nextRecipientEmail: nextRecipient.email,
+          },
+          metadata: requestMetadata,
+        });
 
         await prisma.$transaction(async (tx) => {
           await tx.recipient.update({
@@ -329,7 +404,24 @@ export const processDocumentCompletion = async ({
       },
     });
 
+    await createLog({
+      action: 'ALL_RECIPIENTS_SIGNED_CHECK',
+      message: 'Verification of complete signatures',
+      data: {
+        documentId,
+        allSigned: !!haveAllRecipientsSigned,
+      },
+      metadata: requestMetadata,
+    });
+
     if (haveAllRecipientsSigned) {
+      await createLog({
+        action: 'SEALING_DOCUMENT_START',
+        message: 'Starting document sealing',
+        data: { documentId },
+        metadata: requestMetadata,
+      });
+
       await jobs.triggerJob({
         name: 'internal.seal-document',
         payload: {
@@ -354,11 +446,18 @@ export const processDocumentCompletion = async ({
         userId: updatedDocument.userId,
         teamId: updatedDocument.teamId ?? undefined,
       });
+
+      await createLog({
+        action: 'DOCUMENT_FULLY_PROCESSED',
+        message: 'Document fully processed and stamped',
+        data: { documentId },
+        metadata: requestMetadata,
+      });
     }
   } catch (error) {
     await createLog({
       action: 'PROCESS_DOCUMENT_COMPLETION_ERROR',
-      message: 'Error al procesar la finalización del documento',
+      message: 'Error processing document completion',
       data: {
         error: error instanceof Error ? error.message : String(error),
         documentId,
