@@ -1,13 +1,17 @@
 import { Trans } from '@lingui/macro';
 import {
+  Building,
   Calendar,
   CalendarDays,
   CheckSquare,
   ChevronDown,
   Contact,
   Disc,
+  Flag,
   Hash,
+  Home,
   Mail,
+  MapPin,
   Type,
   User,
 } from 'lucide-react';
@@ -35,6 +39,16 @@ const fieldIcons = {
   [FieldType.CHECKBOX]: { icon: CheckSquare, label: 'Checkbox' },
   [FieldType.DROPDOWN]: { icon: ChevronDown, label: 'Select' },
   [FieldType.CALENDAR]: { icon: CalendarDays, label: 'Calendar' },
+  [FieldType.RESIDENT_FIRST_NAME]: { icon: User, label: 'R. First Name' },
+  [FieldType.RESIDENT_LAST_NAME]: { icon: User, label: 'R. Last Name' },
+  [FieldType.RESIDENT_DOB]: { icon: CalendarDays, label: 'R. Date of Birth' },
+  [FieldType.RESIDENT_GENDER_IDENTITY]: { icon: User, label: 'R. Gender Identity' },
+  [FieldType.RESIDENT_LOCATION_NAME]: { icon: Building, label: 'R. L. Name' },
+  [FieldType.RESIDENT_LOCATION_STATE]: { icon: Flag, label: 'R. L. State' },
+  [FieldType.RESIDENT_LOCATION_ADDRESS]: { icon: Home, label: 'R. L. Address' },
+  [FieldType.RESIDENT_LOCATION_CITY]: { icon: Building, label: 'R. L. City' },
+  [FieldType.RESIDENT_LOCATION_ZIP_CODE]: { icon: Hash, label: 'R. L. Zip Code' },
+  [FieldType.RESIDENT_LOCATION_COUNTRY]: { icon: MapPin, label: 'R. L. Country' },
 };
 
 export const FieldIcon = ({

@@ -16,7 +16,7 @@ export async function insertTextInPDF(
   const fontRes = await fetch(useHandwritingFont ? CAVEAT_FONT_PATH() : ARIAL_FONT_PATH());
   const fontBuffer = await fontRes.arrayBuffer();
 
-  const pdfDoc = await PDFDocument.load(pdfAsBase64);
+  const pdfDoc = await PDFDocument.load(pdfAsBase64, { ignoreEncryption: true });
   pdfDoc.registerFontkit(fontkit);
 
   const font = await pdfDoc.embedFont(fontBuffer);

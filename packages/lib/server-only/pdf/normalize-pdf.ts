@@ -4,7 +4,7 @@ import { flattenAnnotations } from './flatten-annotations';
 import { flattenForm, removeOptionalContentGroups } from './flatten-form';
 
 export const normalizePdf = async (pdf: Buffer) => {
-  const pdfDoc = await PDFDocument.load(pdf).catch(() => null);
+  const pdfDoc = await PDFDocument.load(pdf, { ignoreEncryption: true }).catch(() => null);
 
   if (!pdfDoc) {
     return pdf;

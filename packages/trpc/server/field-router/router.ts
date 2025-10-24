@@ -6,6 +6,7 @@ import { getFieldById } from '@documenso/lib/server-only/field/get-field-by-id';
 import { removeSignedFieldWithToken } from '@documenso/lib/server-only/field/remove-signed-field-with-token';
 import { setFieldsForDocument } from '@documenso/lib/server-only/field/set-fields-for-document';
 import { setFieldsForTemplate } from '@documenso/lib/server-only/field/set-fields-for-template';
+import { setFieldsForTemplateForm } from '@documenso/lib/server-only/field/set-fields-for-template-form';
 import { signFieldWithToken } from '@documenso/lib/server-only/field/sign-field-with-token';
 import { updateDocumentFields } from '@documenso/lib/server-only/field/update-document-fields';
 import { updateTemplateFields } from '@documenso/lib/server-only/field/update-template-fields';
@@ -29,6 +30,8 @@ import {
   ZRemovedSignedFieldWithTokenMutationSchema,
   ZSetDocumentFieldsRequestSchema,
   ZSetDocumentFieldsResponseSchema,
+  ZSetFieldsForTemplateFormRequestSchema,
+  ZSetFieldsForTemplateFormResponseSchema,
   ZSetFieldsForTemplateRequestSchema,
   ZSetFieldsForTemplateResponseSchema,
   ZSignFieldWithTokenMutationSchema,
@@ -427,6 +430,32 @@ export const fieldRouter = router({
         templateId,
         userId: ctx.user.id,
         teamId,
+        fields: fields.map((field) => ({
+          id: field.nativeId,
+          recipientId: field.signerId,
+          signerEmail: field.signerEmail,
+          type: field.type,
+          pageNumber: field.pageNumber,
+          pageX: field.pageX,
+          pageY: field.pageY,
+          pageWidth: field.pageWidth,
+          pageHeight: field.pageHeight,
+          fieldMeta: field.fieldMeta,
+        })),
+      });
+    }),
+
+  /**
+   * @private
+   */
+  addTemplateFieldsForm: procedure
+    .input(ZSetFieldsForTemplateFormRequestSchema)
+    .output(ZSetFieldsForTemplateFormResponseSchema)
+    .mutation(async ({ input }) => {
+      const { templateId, fields } = input;
+
+      return await setFieldsForTemplateForm({
+        templateId,
         fields: fields.map((field) => ({
           id: field.nativeId,
           recipientId: field.signerId,

@@ -16,7 +16,7 @@ export type AddSigningPlaceholderOptions = {
 };
 
 export const addSigningPlaceholder = async ({ pdf }: AddSigningPlaceholderOptions) => {
-  const doc = await PDFDocument.load(pdf);
+  const doc = await PDFDocument.load(pdf, { ignoreEncryption: true });
   const [firstPage] = doc.getPages();
 
   const byteRange = PDFArray.withContext(doc.context);
