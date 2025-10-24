@@ -8,6 +8,7 @@ export type CreateTemplateOptions = TCreateTemplateMutationSchema & {
   userId: number;
   teamId?: number;
   formKey?: string;
+  externalId?: string | null;
 };
 
 export const ZCreateTemplateResponseSchema = TemplateSchema;
@@ -20,6 +21,7 @@ export const createTemplate = async ({
   teamId,
   templateDocumentDataId,
   formKey = '',
+  externalId,
 }: CreateTemplateOptions) => {
   if (teamId) {
     await prisma.team.findFirstOrThrow({
@@ -41,6 +43,7 @@ export const createTemplate = async ({
       templateDocumentDataId,
       teamId,
       formKey,
+      externalId,
     },
   });
 };

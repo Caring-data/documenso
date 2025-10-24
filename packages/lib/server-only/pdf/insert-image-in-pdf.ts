@@ -8,7 +8,7 @@ export async function insertImageInPDF(
   page = 0,
 ): Promise<string> {
   const existingPdfBytes = pdfAsBase64;
-  const pdfDoc = await PDFDocument.load(existingPdfBytes);
+  const pdfDoc = await PDFDocument.load(existingPdfBytes, { ignoreEncryption: true });
   const pages = pdfDoc.getPages();
   const pdfPage = pages[page];
   const pngImage = await pdfDoc.embedPng(image);

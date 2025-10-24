@@ -162,6 +162,54 @@ export const ZUpdateTemplateRequestSchema = z.object({
     .optional(),
 });
 
+export const ZUpdateTemplateByExternalIdRequestSchema = z.object({
+  templateId: z.number(),
+  data: z
+    .object({
+      title: z.string().min(1).optional(),
+      externalId: z.string().nullish(),
+      visibility: z.nativeEnum(DocumentVisibility).optional(),
+      globalAccessAuth: ZDocumentAccessAuthTypesSchema.nullable().optional(),
+      globalActionAuth: ZDocumentActionAuthTypesSchema.nullable().optional(),
+      publicTitle: z
+        .string()
+        .trim()
+        .min(1)
+        .max(MAX_TEMPLATE_PUBLIC_TITLE_LENGTH)
+        .describe(
+          'The title of the template that will be displayed to the public. Only applicable for public templates.',
+        )
+        .optional(),
+      publicDescription: z
+        .string()
+        .trim()
+        .min(1)
+        .max(MAX_TEMPLATE_PUBLIC_DESCRIPTION_LENGTH)
+        .describe(
+          'The description of the template that will be displayed to the public. Only applicable for public templates.',
+        )
+        .optional(),
+      type: z.nativeEnum(TemplateType).optional(),
+    })
+    .optional(),
+  meta: z
+    .object({
+      subject: ZDocumentMetaSubjectSchema.optional(),
+      message: ZDocumentMetaMessageSchema.optional(),
+      timezone: ZDocumentMetaTimezoneSchema.optional(),
+      dateFormat: ZDocumentMetaDateFormatSchema.optional(),
+      distributionMethod: ZDocumentMetaDistributionMethodSchema.optional(),
+      emailSettings: ZDocumentEmailSettingsSchema.optional(),
+      redirectUrl: ZDocumentMetaRedirectUrlSchema.optional(),
+      language: ZDocumentMetaLanguageSchema.optional(),
+      typedSignatureEnabled: ZDocumentMetaTypedSignatureEnabledSchema.optional(),
+      signingOrder: z.nativeEnum(DocumentSigningOrder).optional(),
+    })
+    .optional(),
+});
+
+export const ZUpdateTemplateByExternalIdResponseSchema = ZTemplateLiteSchema;
+
 export const ZUpdateTemplateResponseSchema = ZTemplateLiteSchema;
 
 export const ZFindTemplatesRequestSchema = ZFindSearchParamsSchema.extend({
@@ -178,6 +226,20 @@ export type FindTemplateRow = TFindTemplatesResponse['data'][number];
 export const ZGetTemplateByIdRequestSchema = z.object({
   templateId: z.number(),
 });
+
+export const ZGetResidentRequestSchema = z.object({
+  token: z.string(),
+});
+
+export const ZGetResidentResponseSchema = z.object({
+  residentId: z.string(),
+});
+
+export const ZGetTemplateByExternalIdRequestSchema = z.object({
+  externalId: z.string(),
+});
+
+export const ZGetTemplateByExternalIdResponseSchema = ZTemplateSchema;
 
 export const ZGetTemplateByIdResponseSchema = ZTemplateSchema;
 

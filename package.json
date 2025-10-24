@@ -16,9 +16,9 @@
     "commitlint": "commitlint --edit",
     "clean": "turbo run clean && rimraf node_modules",
     "d": "npm run dx && npm run dev",
-    "dx": "npm i && npm run dx:up && npm run prisma:migrate-dev && npm run prisma:seed",
-    "dx:up": "docker compose -f docker/development/compose.yml up -d",
-    "dx:down": "docker compose -f docker/development/compose.yml down",
+    "dx": "npm i --legacy-peer-deps && npm run prisma:migrate-dev && npm run prisma:seed",
+    "dx:up": "docker compose -f docker/documenso/compose.yml up -d",
+    "dx:down": "docker compose -f docker/documenso/compose.yml down",
     "ci": "turbo run test:e2e",
     "prisma:generate": "npm run with:env -- npm run prisma:generate -w @documenso/prisma",
     "prisma:migrate-dev": "npm run with:env -- npm run prisma:migrate-dev -w @documenso/prisma",
@@ -53,6 +53,9 @@
     "eslint-config-custom": "*",
     "husky": "^9.0.11",
     "lint-staged": "^15.2.2",
+    "lodash.castarray": "^4.4.0",
+    "lodash.isplainobject": "^4.0.6",
+    "lodash.merge": "^4.6.2",
     "playwright": "1.43.0",
     "prettier": "^3.3.3",
     "rimraf": "^5.0.1",
@@ -83,14 +86,25 @@
     "next-axiom": "^1.9.1",
     "next-runtime-env": "^3.2.0",
     "pdfjs-dist": "^3.11.174",
-    "react": "^18",
+    "ramda": "0.30.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "typescript": "5.6.2",
     "uuid": "^11.1.0",
-    "zod": "3.24.1"
+    "zod": "3.23.8"
   },
   "overrides": {
     "next": "14.2.6",
-    "zod": "3.24.1"
+    "zod": "3.23.8",
+    "kysely": "^0.28.8",
+    "ramda": "0.30.1",
+    "prisma-extension-kysely": "3.0.0",
+    "inngest": "3.22.12",
+    "tw-to-css": "^0.0.11",
+    "@react-email/tailwind": "0.0.9",
+    "@react-email/render": "0.0.9",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "trigger.dev": {
     "endpointId": "documenso-app"

@@ -115,9 +115,6 @@ declare namespace NodeJS {
     POSTGRES_PRISMA_URL?: string;
     POSTGRES_URL_NON_POOLING?: string;
 
-    NEXT_PRIVATE_LARAVEL_USERNAME?: string;
-    NEXT_PRIVATE_LARAVEL_PASSWORD?: string;
-
     NEXT_PRIVATE_LARAVEL_API_URL?: string;
     NEXT_PRIVATE_LARAVEL_ENCRYPTION_KEY?: string;
 
@@ -127,5 +124,8 @@ declare namespace NodeJS {
     AZURE_STORAGE_CONTAINER_NAME: string;
     AZURE_STORAGE_URL: string;
     FOLDER_FILE: string;
+
+    NEXT_PUBLIC_CD_SERVICE_URL?: string;
+    NEXT_PUBLIC_CD_SERVICE_API_KEY?: string;
   }
 }

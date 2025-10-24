@@ -1,5 +1,4 @@
 import { createNextRoute } from '@ts-rest/next';
-import { format } from 'date-fns';
 import { match } from 'ts-pattern';
 
 import { NEXT_PUBLIC_WEBAPP_URL } from '@documenso/lib/constants/app';
@@ -32,9 +31,19 @@ import { deleteTeamMembers } from '@documenso/lib/server-only/team/delete-team-m
 import { createDocumentFromTemplate } from '@documenso/lib/server-only/template/create-document-from-template';
 import { createDocumentFromTemplateLegacy } from '@documenso/lib/server-only/template/create-document-from-template-legacy';
 import { createTemplate } from '@documenso/lib/server-only/template/create-template';
-import { deleteTemplate } from '@documenso/lib/server-only/template/delete-template';
+import {
+  deleteTemplate,
+  forceDeleteTemplate,
+} from '@documenso/lib/server-only/template/delete-template';
 import { findTemplates } from '@documenso/lib/server-only/template/find-templates';
-import { getTemplateById } from '@documenso/lib/server-only/template/get-template-by-id';
+import {
+  getDocumentDataById,
+  getTemplateById,
+} from '@documenso/lib/server-only/template/get-template-by-id';
+import {
+  updateDocumentData,
+  updateTemplate,
+} from '@documenso/lib/server-only/template/update-template';
 import { extractDerivedDocumentEmailSettings } from '@documenso/lib/types/document-email';
 import {
   ZCheckboxFieldMeta,
@@ -84,7 +93,7 @@ export const ApiContractV1Implementation = createNextRoute(ApiContractV1, {
     });
 
     return {
-      status: 200,
+      status: 200 as const,
       body: {
         documents,
         totalPages,
@@ -134,7 +143,7 @@ export const ApiContractV1Implementation = createNextRoute(ApiContractV1, {
       });
 
       return {
-        status: 200,
+        status: 200 as const,
         body: {
           ...document,
           recipients: recipients.map((recipient) => ({
@@ -147,7 +156,7 @@ export const ApiContractV1Implementation = createNextRoute(ApiContractV1, {
       };
     } catch (err) {
       return {
-        status: 404,
+        status: 404 as const,
         body: {
           message: 'Document not found',
         },
@@ -167,7 +176,7 @@ export const ApiContractV1Implementation = createNextRoute(ApiContractV1, {
 
     if (!document) {
       return {
-        status: 404,
+        status: 404 as const,
         body: {
           message: 'Document not found',
         },
@@ -301,7 +310,7 @@ export const ApiContractV1Implementation = createNextRoute(ApiContractV1, {
 
           return {
             type: label,
-            timestamp: format(log.createdAt, 'MM/dd/yyyy'),
+            timestamp: formatDateWithTimeZone(log.createdAt, timezone),
             ipAddress: log.ipAddress ?? '',
           };
         })
@@ -327,7 +336,7 @@ export const ApiContractV1Implementation = createNextRoute(ApiContractV1, {
     });
 
     return {
-      status: 200,
+      status: 200 as const,
       body: {
         events: result,
       },
@@ -340,7 +349,7 @@ export const ApiContractV1Implementation = createNextRoute(ApiContractV1, {
     try {
       if (process.env.NEXT_PUBLIC_UPLOAD_TRANSPORT !== 's3') {
         return {
-          status: 500,
+          status: 500 as const,
           body: {
             message: 'Please make sure the storage transport is set to S3.',
           },
@@ -355,7 +364,7 @@ export const ApiContractV1Implementation = createNextRoute(ApiContractV1, {
 
       if (!document || !document.documentDataId) {
         return {
-          status: 404,
+          status: 404 as const,
           body: {
             message: 'Document not found',
           },
@@ -364,7 +373,7 @@ export const ApiContractV1Implementation = createNextRoute(ApiContractV1, {
 
       if (DocumentDataType.S3_PATH !== document.documentData.type) {
         return {
-          status: 400,
+          status: 400 as const,
           body: {
             message: 'Invalid document data type',
           },
@@ -373,7 +382,7 @@ export const ApiContractV1Implementation = createNextRoute(ApiContractV1, {
 
       if (document.status !== DocumentStatus.COMPLETED) {
         return {
-          status: 400,
+          status: 400 as const,
           body: {
             message: 'Document is not completed yet.',
           },
@@ -383,12 +392,12 @@ export const ApiContractV1Implementation = createNextRoute(ApiContractV1, {
       const { url } = await getPresignGetUrl(document.documentData.data);
 
       return {
-        status: 200,
+        status: 200 as const,
         body: { downloadUrl: url },
       };
     } catch (err) {
       return {
-        status: 500,
+        status: 500 as const,
         body: {
           message: 'Error downloading the document. Please try again.',
         },
@@ -408,7 +417,7 @@ export const ApiContractV1Implementation = createNextRoute(ApiContractV1, {
 
       if (!document) {
         return {
-          status: 404,
+          status: 404 as const,
           body: {
             message: 'Document not found',
           },
@@ -423,12 +432,12 @@ export const ApiContractV1Implementation = createNextRoute(ApiContractV1, {
       });
 
       return {
-        status: 200,
+        status: 200 as const,
         body: deletedDocument,
       };
     } catch (err) {
       return {
-        status: 404,
+        status: 404 as const,
         body: {
           message: 'Document not found',
         },
@@ -442,7 +451,7 @@ export const ApiContractV1Implementation = createNextRoute(ApiContractV1, {
     try {
       if (process.env.NEXT_PUBLIC_UPLOAD_TRANSPORT !== 's3') {
         return {
-          status: 500,
+          status: 500 as const,
           body: {
             message: 'Create document is not available without S3 transport.',
           },
@@ -455,7 +464,7 @@ export const ApiContractV1Implementation = createNextRoute(ApiContractV1, {
 
       if (body.meta.dateFormat && !dateFormat) {
         return {
-          status: 400,
+          status: 400 as const,
           body: {
             message: 'Invalid date format. Please provide a valid date format',
           },
@@ -470,7 +479,7 @@ export const ApiContractV1Implementation = createNextRoute(ApiContractV1, {
 
       if (!isTimeZoneValid) {
         return {
-          status: 400,
+          status: 400 as const,
           body: {
             message: 'Invalid timezone. Please provide a valid timezone',
           },
@@ -534,7 +543,7 @@ export const ApiContractV1Implementation = createNextRoute(ApiContractV1, {
       });
 
       return {
-        status: 200,
+        status: 200 as const,
         body: {
           uploadUrl: url,
           documentId: document.id,
@@ -552,7 +561,7 @@ export const ApiContractV1Implementation = createNextRoute(ApiContractV1, {
       };
     } catch (err) {
       return {
-        status: 404,
+        status: 404 as const,
         body: {
           message: 'An error has occured while uploading the file',
         },
@@ -571,14 +580,102 @@ export const ApiContractV1Implementation = createNextRoute(ApiContractV1, {
       });
 
       return {
-        status: 200,
+        status: 200 as const,
         body: deletedTemplate,
       };
     } catch (err) {
       return {
-        status: 404,
+        status: 404 as const,
         body: {
           message: 'Template not found',
+        },
+      };
+    }
+  }),
+
+  deleteEmbebedTemplate: authenticatedMiddleware(async (args, user, team) => {
+    const { id: templateId } = args.params;
+
+    try {
+      const template = await getTemplateById({
+        id: Number(templateId),
+        userId: user.id,
+        teamId: team?.id,
+      });
+
+      if (!template) {
+        return {
+          status: 404 as const,
+          body: {
+            message: `${templateId} - Template not found`,
+          },
+        };
+      }
+
+      await forceDeleteTemplate({
+        id: Number(templateId),
+        userId: user.id,
+        teamId: team?.id,
+      });
+
+      return {
+        status: 200 as const,
+        body: {
+          message: `${templateId} - Template deleted successfully`,
+        },
+      };
+    } catch (err) {
+      console.error(err);
+      return {
+        status: 404 as const,
+        body: {
+          message: `${templateId} - Failed to delete template`,
+        },
+      };
+    }
+  }),
+
+  replaceEmbebedTemplate: authenticatedMiddleware(async (args, user, team) => {
+    const { id: templateId } = args.params;
+    const { body } = args;
+
+    try {
+      const template = await getTemplateById({
+        id: Number(templateId),
+        userId: user.id,
+        teamId: team?.id,
+      });
+
+      const documentData = await getDocumentDataById({
+        id: template.templateDocumentDataId,
+      });
+
+      await updateTemplate({
+        templateId: Number(templateId),
+        userId: user.id,
+        teamId: team?.id,
+        data: {
+          title: body.title,
+        },
+      });
+
+      await updateDocumentData({
+        id: documentData.id,
+        initialData: body.data,
+        data: body.data,
+      });
+
+      return {
+        status: 200 as const,
+        body: {
+          message: `${templateId} - Template replaced successfully`,
+        },
+      };
+    } catch (error) {
+      return {
+        status: 404 as const,
+        body: {
+          message: `${templateId} - Failed to replace template`,
         },
       };
     }
@@ -595,7 +692,7 @@ export const ApiContractV1Implementation = createNextRoute(ApiContractV1, {
       });
 
       return {
-        status: 200,
+        status: 200 as const,
         body: {
           ...template,
           Field: template.fields.map((field) => ({
@@ -626,7 +723,7 @@ export const ApiContractV1Implementation = createNextRoute(ApiContractV1, {
       });
 
       return {
-        status: 200,
+        status: 200 as const,
         body: {
           templates: templates.map((template) => ({
             ...template,
@@ -676,7 +773,7 @@ export const ApiContractV1Implementation = createNextRoute(ApiContractV1, {
         });
 
         if (!originalTemplate) {
-          return { status: 404, body: { message: 'Original template not found' } };
+          return { status: 404 as const, body: { message: 'Original template not found' } };
         }
 
         for (const recipient of originalTemplate.recipients) {
@@ -736,12 +833,46 @@ export const ApiContractV1Implementation = createNextRoute(ApiContractV1, {
       }
 
       return {
-        status: 200,
+        status: 200 as const,
         body: createdTemplate,
       };
     } catch (err) {
       return {
-        status: 404,
+        status: 404 as const,
+        body: {
+          message: 'Template not found',
+        },
+      };
+    }
+  }),
+
+  createEmbebedTemplate: authenticatedMiddleware(async (args, user, team, { metadata }) => {
+    const { body } = args;
+    const { title, type, data, key, externalId } = body;
+
+    try {
+      const fileName = title.endsWith('.pdf') ? title : `${title}.pdf`;
+      const { id: templateDocumentDataId } = await createDocumentData({
+        type,
+        data,
+      });
+
+      const createdTemplate = await createTemplate({
+        userId: user.id,
+        teamId: team?.id,
+        title: fileName,
+        formKey: key,
+        templateDocumentDataId,
+        externalId,
+      });
+
+      return {
+        status: 200 as const,
+        body: createdTemplate,
+      };
+    } catch (err) {
+      return {
+        status: 404 as const,
         body: {
           message: 'Template not found',
         },
@@ -818,7 +949,7 @@ export const ApiContractV1Implementation = createNextRoute(ApiContractV1, {
     }
 
     return {
-      status: 200,
+      status: 200 as const,
       body: {
         documentId: document.id,
         recipients: document.recipients.map((recipient) => ({
@@ -923,7 +1054,7 @@ export const ApiContractV1Implementation = createNextRoute(ApiContractV1, {
       } catch (err) {
         console.error('Error sending document:', err);
         return {
-          status: 500,
+          status: 500 as const,
           body: {
             error: 'DOCUMENT_SEND_FAILED',
             message: 'Document was created but failed to be sent.',
@@ -933,7 +1064,7 @@ export const ApiContractV1Implementation = createNextRoute(ApiContractV1, {
     }
 
     return {
-      status: 200,
+      status: 200 as const,
       body: {
         documentId: document.id,
         recipients: document.recipients.map((recipient) => ({
@@ -962,7 +1093,7 @@ export const ApiContractV1Implementation = createNextRoute(ApiContractV1, {
 
       if (!document) {
         return {
-          status: 404,
+          status: 404 as const,
           body: {
             message: 'Document not found',
           },
@@ -971,7 +1102,7 @@ export const ApiContractV1Implementation = createNextRoute(ApiContractV1, {
 
       if (document.status === DocumentStatus.COMPLETED) {
         return {
-          status: 400,
+          status: 400 as const,
           body: {
             message: 'Document is already complete',
           },
@@ -1004,7 +1135,7 @@ export const ApiContractV1Implementation = createNextRoute(ApiContractV1, {
       });
 
       return {
-        status: 200,
+        status: 200 as const,
         body: {
           message: 'Document sent for signing successfully',
           ...sentDocument,
@@ -1017,7 +1148,7 @@ export const ApiContractV1Implementation = createNextRoute(ApiContractV1, {
       };
     } catch (err) {
       return {
-        status: 500,
+        status: 500 as const,
         body: {
           message: 'An error has occured while sending the document for signing',
         },
@@ -1039,14 +1170,14 @@ export const ApiContractV1Implementation = createNextRoute(ApiContractV1, {
       });
 
       return {
-        status: 200,
+        status: 200 as const,
         body: {
           message: 'Document resend successfully initiated',
         },
       };
     } catch (err) {
       return {
-        status: 500,
+        status: 500 as const,
         body: {
           message: 'An error has occured while resending the document',
         },
@@ -1060,7 +1191,7 @@ export const ApiContractV1Implementation = createNextRoute(ApiContractV1, {
 
     if (!recipientEmail) {
       return {
-        status: 400,
+        status: 400 as const,
         body: {
           message: 'Missing recipient email',
         },
@@ -1078,14 +1209,14 @@ export const ApiContractV1Implementation = createNextRoute(ApiContractV1, {
       });
 
       return {
-        status: 200,
+        status: 200 as const,
         body: {
           message: 'Document resend successfully initiated',
         },
       };
     } catch (err) {
       return {
-        status: 500,
+        status: 500 as const,
         body: {
           message: 'An error occurred while resending the document',
         },
@@ -1105,7 +1236,7 @@ export const ApiContractV1Implementation = createNextRoute(ApiContractV1, {
 
     if (!document) {
       return {
-        status: 404,
+        status: 404 as const,
         body: {
           message: 'Document not found',
         },
@@ -1114,7 +1245,7 @@ export const ApiContractV1Implementation = createNextRoute(ApiContractV1, {
 
     if (document.status === DocumentStatus.COMPLETED) {
       return {
-        status: 400,
+        status: 400 as const,
         body: {
           message: 'Document is already completed',
         },
@@ -1131,7 +1262,7 @@ export const ApiContractV1Implementation = createNextRoute(ApiContractV1, {
 
     if (recipientAlreadyExists) {
       return {
-        status: 400,
+        status: 400 as const,
         body: {
           message: 'Recipient already exists',
         },
@@ -1167,7 +1298,7 @@ export const ApiContractV1Implementation = createNextRoute(ApiContractV1, {
       }
 
       return {
-        status: 200,
+        status: 200 as const,
         body: {
           ...newRecipient,
           email: newRecipient.email ?? '',
@@ -1177,7 +1308,7 @@ export const ApiContractV1Implementation = createNextRoute(ApiContractV1, {
       };
     } catch (err) {
       return {
-        status: 500,
+        status: 500 as const,
         body: {
           message: 'An error has occured while creating the recipient',
         },
@@ -1197,7 +1328,7 @@ export const ApiContractV1Implementation = createNextRoute(ApiContractV1, {
 
     if (!document) {
       return {
-        status: 404,
+        status: 404 as const,
         body: {
           message: 'Document not found',
         },
@@ -1206,7 +1337,7 @@ export const ApiContractV1Implementation = createNextRoute(ApiContractV1, {
 
     if (document.status === DocumentStatus.COMPLETED) {
       return {
-        status: 400,
+        status: 400 as const,
         body: {
           message: 'Document is already completed',
         },
@@ -1228,7 +1359,7 @@ export const ApiContractV1Implementation = createNextRoute(ApiContractV1, {
 
     if (!updatedRecipient) {
       return {
-        status: 404,
+        status: 404 as const,
         body: {
           message: 'Recipient not found',
         },
@@ -1236,7 +1367,7 @@ export const ApiContractV1Implementation = createNextRoute(ApiContractV1, {
     }
 
     return {
-      status: 200,
+      status: 200 as const,
       body: {
         ...updatedRecipient,
         email: updatedRecipient.email ?? '',
@@ -1257,7 +1388,7 @@ export const ApiContractV1Implementation = createNextRoute(ApiContractV1, {
 
     if (!document) {
       return {
-        status: 404,
+        status: 404 as const,
         body: {
           message: 'Document not found',
         },
@@ -1266,7 +1397,7 @@ export const ApiContractV1Implementation = createNextRoute(ApiContractV1, {
 
     if (document.status === DocumentStatus.COMPLETED) {
       return {
-        status: 400,
+        status: 400 as const,
         body: {
           message: 'Document is already completed',
         },
@@ -1283,7 +1414,7 @@ export const ApiContractV1Implementation = createNextRoute(ApiContractV1, {
 
     if (!deletedRecipient) {
       return {
-        status: 400,
+        status: 400 as const,
         body: {
           message: 'Unable to delete recipient',
         },
@@ -1291,7 +1422,7 @@ export const ApiContractV1Implementation = createNextRoute(ApiContractV1, {
     }
 
     return {
-      status: 200,
+      status: 200 as const,
       body: {
         ...deletedRecipient,
         email: deletedRecipient.email ?? '',
@@ -1325,14 +1456,14 @@ export const ApiContractV1Implementation = createNextRoute(ApiContractV1, {
 
     if (!document) {
       return {
-        status: 404,
+        status: 404 as const,
         body: { message: 'Document not found' },
       };
     }
 
     if (document.status === DocumentStatus.COMPLETED) {
       return {
-        status: 400,
+        status: 400 as const,
         body: { message: 'Document is already completed' },
       };
     }
@@ -1389,16 +1520,37 @@ export const ApiContractV1Implementation = createNextRoute(ApiContractV1, {
               .with('DROPDOWN', () => ZDropdownFieldMeta.safeParse(fieldMeta))
               .with('NUMBER', () => ZNumberFieldMeta.safeParse(fieldMeta))
               .with('TEXT', () => ZTextFieldMeta.safeParse(fieldMeta))
-              .with('SIGNATURE', 'INITIALS', 'DATE', 'EMAIL', 'NAME', 'CALENDAR', () => ({
-                success: true,
-                data: undefined,
-              }))
+              .with(
+                'SIGNATURE',
+                'INITIALS',
+                'DATE',
+                'EMAIL',
+                'NAME',
+                'CALENDAR',
+                'RESIDENT_FIRST_NAME',
+                'RESIDENT_LAST_NAME',
+                'RESIDENT_DOB',
+                'RESIDENT_GENDER_IDENTITY',
+                'RESIDENT_LOCATION_NAME',
+                'RESIDENT_LOCATION_STATE',
+                'RESIDENT_LOCATION_ADDRESS',
+                'RESIDENT_LOCATION_CITY',
+                'RESIDENT_LOCATION_ZIP_CODE',
+                'RESIDENT_LOCATION_COUNTRY',
+                () => ({
+                  success: true,
+                  data: undefined,
+                }),
+              )
               .with('FREE_SIGNATURE', () => ({
                 success: false,
                 error: 'FREE_SIGNATURE is not supported',
                 data: undefined,
               }))
-              .exhaustive();
+              .otherwise(() => ({
+                success: true,
+                data: undefined,
+              }));
 
             if (!result.success) {
               throw new Error('Field meta parsing failed');
@@ -1461,7 +1613,7 @@ export const ApiContractV1Implementation = createNextRoute(ApiContractV1, {
       });
 
       return {
-        status: 200,
+        status: 200 as const,
         body: {
           fields: createdFields,
           documentId: Number(documentId),
@@ -1485,7 +1637,7 @@ export const ApiContractV1Implementation = createNextRoute(ApiContractV1, {
 
     if (!document) {
       return {
-        status: 404,
+        status: 404 as const,
         body: {
           message: 'Document not found',
         },
@@ -1494,7 +1646,7 @@ export const ApiContractV1Implementation = createNextRoute(ApiContractV1, {
 
     if (document.status === DocumentStatus.COMPLETED) {
       return {
-        status: 400,
+        status: 400 as const,
         body: {
           message: 'Document is already completed',
         },
@@ -1508,7 +1660,7 @@ export const ApiContractV1Implementation = createNextRoute(ApiContractV1, {
 
     if (!recipient) {
       return {
-        status: 404,
+        status: 404 as const,
         body: {
           message: 'Recipient not found',
         },
@@ -1517,7 +1669,7 @@ export const ApiContractV1Implementation = createNextRoute(ApiContractV1, {
 
     if (recipient.signingStatus === SigningStatus.SIGNED) {
       return {
-        status: 400,
+        status: 400 as const,
         body: {
           message: 'Recipient has already signed the document',
         },
@@ -1555,7 +1707,7 @@ export const ApiContractV1Implementation = createNextRoute(ApiContractV1, {
     };
 
     return {
-      status: 200,
+      status: 200 as const,
       body: {
         ...remappedField,
         documentId: Number(documentId),
@@ -1573,7 +1725,7 @@ export const ApiContractV1Implementation = createNextRoute(ApiContractV1, {
 
     if (!document) {
       return {
-        status: 404,
+        status: 404 as const,
         body: {
           message: 'Document not found',
         },
@@ -1582,7 +1734,7 @@ export const ApiContractV1Implementation = createNextRoute(ApiContractV1, {
 
     if (document.status === DocumentStatus.COMPLETED) {
       return {
-        status: 400,
+        status: 400 as const,
         body: {
           message: 'Document is already completed',
         },
@@ -1598,7 +1750,7 @@ export const ApiContractV1Implementation = createNextRoute(ApiContractV1, {
 
     if (!field) {
       return {
-        status: 404,
+        status: 404 as const,
         body: {
           message: 'Field not found',
         },
@@ -1612,7 +1764,7 @@ export const ApiContractV1Implementation = createNextRoute(ApiContractV1, {
 
     if (recipient?.signingStatus === SigningStatus.SIGNED) {
       return {
-        status: 400,
+        status: 400 as const,
         body: {
           message: 'Recipient has already signed the document',
         },
@@ -1629,7 +1781,7 @@ export const ApiContractV1Implementation = createNextRoute(ApiContractV1, {
 
     if (!deletedField) {
       return {
-        status: 400,
+        status: 400 as const,
         body: {
           message: 'Unable to delete field',
         },
@@ -1651,7 +1803,7 @@ export const ApiContractV1Implementation = createNextRoute(ApiContractV1, {
     };
 
     return {
-      status: 200,
+      status: 200 as const,
       body: {
         ...remappedField,
         documentId: Number(documentId),
@@ -1664,7 +1816,7 @@ export const ApiContractV1Implementation = createNextRoute(ApiContractV1, {
 
     if (team?.id !== Number(teamId)) {
       return {
-        status: 403,
+        status: 403 as const,
         body: {
           message: 'You are not authorized to perform actions against this team.',
         },
@@ -1680,7 +1832,7 @@ export const ApiContractV1Implementation = createNextRoute(ApiContractV1, {
 
     if (self?.role !== TeamMemberRole.ADMIN) {
       return {
-        status: 403,
+        status: 403 as const,
         body: {
           message: 'You are not authorized to perform actions against this team.',
         },
@@ -1697,7 +1849,7 @@ export const ApiContractV1Implementation = createNextRoute(ApiContractV1, {
     });
 
     return {
-      status: 200,
+      status: 200 as const,
       body: {
         members: members.map((member) => ({
           id: member.id,
@@ -1715,7 +1867,7 @@ export const ApiContractV1Implementation = createNextRoute(ApiContractV1, {
 
     if (team?.id !== Number(teamId)) {
       return {
-        status: 403,
+        status: 403 as const,
         body: {
           message: 'You are not authorized to perform actions against this team.',
         },
@@ -1731,7 +1883,7 @@ export const ApiContractV1Implementation = createNextRoute(ApiContractV1, {
 
     if (self?.role !== TeamMemberRole.ADMIN) {
       return {
-        status: 403,
+        status: 403 as const,
         body: {
           message: 'You are not authorized to perform actions against this team.',
         },
@@ -1749,7 +1901,7 @@ export const ApiContractV1Implementation = createNextRoute(ApiContractV1, {
 
     if (hasAlreadyBeenInvited) {
       return {
-        status: 400,
+        status: 400 as const,
         body: {
           message: 'This user has already been invited to the team',
         },
@@ -1769,7 +1921,7 @@ export const ApiContractV1Implementation = createNextRoute(ApiContractV1, {
     });
 
     return {
-      status: 200,
+      status: 200 as const,
       body: {
         message: 'An invite has been sent to the member',
       },
@@ -1783,7 +1935,7 @@ export const ApiContractV1Implementation = createNextRoute(ApiContractV1, {
 
     if (team?.id !== Number(teamId)) {
       return {
-        status: 403,
+        status: 403 as const,
         body: {
           message: 'You are not authorized to perform actions against this team.',
         },
@@ -1799,7 +1951,7 @@ export const ApiContractV1Implementation = createNextRoute(ApiContractV1, {
 
     if (self?.role !== TeamMemberRole.ADMIN) {
       return {
-        status: 403,
+        status: 403 as const,
         body: {
           message: 'You are not authorized to perform actions against this team.',
         },
@@ -1815,7 +1967,7 @@ export const ApiContractV1Implementation = createNextRoute(ApiContractV1, {
 
     if (!member) {
       return {
-        status: 404,
+        status: 404 as const,
         body: {
           message: 'The provided member id does not exist.',
         },
@@ -1835,7 +1987,7 @@ export const ApiContractV1Implementation = createNextRoute(ApiContractV1, {
     });
 
     return {
-      status: 200,
+      status: 200 as const,
       body: {
         id: updatedMember.id,
         email: updatedMember.user.email,
@@ -1849,7 +2001,7 @@ export const ApiContractV1Implementation = createNextRoute(ApiContractV1, {
 
     if (team?.id !== Number(teamId)) {
       return {
-        status: 403,
+        status: 403 as const,
         body: {
           message: 'You are not authorized to perform actions against this team.',
         },
@@ -1865,7 +2017,7 @@ export const ApiContractV1Implementation = createNextRoute(ApiContractV1, {
 
     if (self?.role !== TeamMemberRole.ADMIN) {
       return {
-        status: 403,
+        status: 403 as const,
         body: {
           message: 'You are not authorized to perform actions against this team.',
         },
@@ -1884,7 +2036,7 @@ export const ApiContractV1Implementation = createNextRoute(ApiContractV1, {
 
     if (!member) {
       return {
-        status: 404,
+        status: 404 as const,
         body: {
           message: 'Member not found',
         },
@@ -1893,7 +2045,7 @@ export const ApiContractV1Implementation = createNextRoute(ApiContractV1, {
 
     if (team.ownerUserId === member.userId) {
       return {
-        status: 403,
+        status: 403 as const,
         body: {
           message: 'You cannot remove the owner of the team',
         },
@@ -1902,7 +2054,7 @@ export const ApiContractV1Implementation = createNextRoute(ApiContractV1, {
 
     if (member.userId === user.id) {
       return {
-        status: 403,
+        status: 403 as const,
         body: {
           message: 'You cannot remove yourself from the team',
         },
@@ -1916,7 +2068,7 @@ export const ApiContractV1Implementation = createNextRoute(ApiContractV1, {
     });
 
     return {
-      status: 200,
+      status: 200 as const,
       body: {
         id: member.id,
         email: member.user.email,
@@ -1933,7 +2085,7 @@ export const ApiContractV1Implementation = createNextRoute(ApiContractV1, {
     const folderPath = `${basePath}/documenso/residents/${residentId}`;
     const url = await azureService.uploadBase64(fileContentBase64, fileName, folderPath);
     return {
-      status: 200,
+      status: 200 as const,
       body: {
         url,
       },

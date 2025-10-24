@@ -393,6 +393,7 @@ export const AddTemplatePlaceholderRecipientsFormPartial = ({
         title={documentFlow.title}
         description={documentFlow.description}
       />
+
       <DocumentFlowFormContainerContent>
         {isDocumentPdfLoaded &&
           fields.map((field, index) => (

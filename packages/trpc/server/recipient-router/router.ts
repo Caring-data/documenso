@@ -7,6 +7,7 @@ import { deleteTemplateRecipient } from '@documenso/lib/server-only/recipient/de
 import { getRecipientById } from '@documenso/lib/server-only/recipient/get-recipient-by-id';
 import { setDocumentRecipients } from '@documenso/lib/server-only/recipient/set-document-recipients';
 import { setTemplateRecipients } from '@documenso/lib/server-only/recipient/set-template-recipients';
+import { setTemplateRecipientsTemplate } from '@documenso/lib/server-only/recipient/set-template-recipients-template';
 import { updateDocumentRecipients } from '@documenso/lib/server-only/recipient/update-document-recipients';
 import { updateTemplateRecipients } from '@documenso/lib/server-only/recipient/update-template-recipients';
 import { extractNextApiRequestMetadata } from '@documenso/lib/universal/extract-request-metadata';
@@ -32,6 +33,8 @@ import {
   ZSetDocumentRecipientsResponseSchema,
   ZSetTemplateRecipientsRequestSchema,
   ZSetTemplateRecipientsResponseSchema,
+  ZSetTemplateRecipientsTemplateRequestSchema,
+  ZSetTemplateRecipientsTemplateResponseSchema,
   ZUpdateDocumentRecipientRequestSchema,
   ZUpdateDocumentRecipientResponseSchema,
   ZUpdateDocumentRecipientsRequestSchema,
@@ -428,6 +431,21 @@ export const recipientRouter = router({
           signingOrder: recipient.signingOrder,
           actionAuth: recipient.actionAuth,
         })),
+      });
+    }),
+
+  /**
+   * @private
+   */
+  setTemplateRecipientsTemplate: procedure
+    .input(ZSetTemplateRecipientsTemplateRequestSchema)
+    .output(ZSetTemplateRecipientsTemplateResponseSchema)
+    .mutation(async ({ input }) => {
+      const { templateId, recipients } = input;
+
+      return await setTemplateRecipientsTemplate({
+        templateId,
+        recipients,
       });
     }),
 
