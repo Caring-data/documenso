@@ -39,6 +39,17 @@ export const run = async ({
 }) => {
   const { documentId, sendEmail = true, isResealing = false, requestMetadata } = payload;
 
+  await createLog({
+    action: 'SEAL_DOCUMENT_JOB_START',
+    message: 'Starting document sealing job',
+    data: {
+      documentId,
+      sendEmail,
+      isResealing,
+    },
+    metadata: requestMetadata,
+  });
+
   const document = await prisma.document.findFirstOrThrow({
     where: {
       id: documentId,
@@ -83,6 +94,13 @@ export const run = async ({
   });
 
   if (!documentData) {
+    await createLog({
+      action: 'DOCUMENT_DATA_NOT_FOUND',
+      message: 'Document data not found',
+      data: { documentId, documentDataId },
+      metadata: requestMetadata,
+      userId: document.userId,
+    });
     throw new Error(`Document ${document.id} has no document data`);
   }
 
@@ -96,6 +114,18 @@ export const run = async ({
   });
 
   if (recipients.some((recipient) => recipient.signingStatus !== SigningStatus.SIGNED)) {
+    await createLog({
+      action: 'UNSIGNED_RECIPIENTS_FOUND',
+      message: 'Document has unsigned recipients',
+      data: {
+        documentId,
+        unsignedRecipients: recipients
+          .filter((r) => r.signingStatus !== SigningStatus.SIGNED)
+          .map((r) => ({ id: r.id, email: r.email, status: r.signingStatus })),
+      },
+      metadata: requestMetadata,
+      userId: document.userId,
+    });
     throw new Error(`Document ${document.id} has unsigned recipients`);
   }
 
@@ -109,10 +139,27 @@ export const run = async ({
   });
 
   if (fieldsContainUnsignedRequiredField(fields)) {
+    await createLog({
+      action: 'UNSIGNED_REQUIRED_FIELDS_FOUND',
+      message: 'Document has unsigned required fields',
+      data: {
+        documentId,
+        totalFields: fields.length,
+      },
+      metadata: requestMetadata,
+      userId: document.userId,
+    });
     throw new Error(`Document ${document.id} has unsigned required fields`);
   }
 
   if (isResealing) {
+    await createLog({
+      action: 'RESEALING_DOCUMENT',
+      message: 'Using initial data for document resealing',
+      data: { documentId },
+      metadata: requestMetadata,
+      userId: document.userId,
+    });
     // If we're resealing we want to use the initial data for the document
     // so we aren't placing fields on top of eachother.
     documentData.data = documentData.initialData;
@@ -120,13 +167,54 @@ export const run = async ({
 
   const pdfData = await getFile(documentData);
 
+  await createLog({
+    action: 'PDF_FILE_RETRIEVED',
+    message: 'PDF file retrieved successfully',
+    data: {
+      documentId,
+      pdfSize: pdfData.length,
+    },
+    metadata: requestMetadata,
+    userId: document.userId,
+  });
+
   let certificateData = null;
 
   try {
     if (document.team?.teamGlobalSettings?.includeSigningCertificate ?? true) {
+      await createLog({
+        action: 'GENERATING_CERTIFICATE_PDF',
+        message: 'Starting certificate PDF generation',
+        data: {
+          documentId,
+          language: document.documentMeta?.language,
+        },
+        metadata: requestMetadata,
+        userId: document.userId,
+      });
+
       certificateData = await getCertificatePdf({
         documentId,
         language: document.documentMeta?.language,
+      });
+
+      await createLog({
+        action: 'CERTIFICATE_PDF_GENERATED',
+        message: 'Certificate PDF generated successfully',
+        data: {
+          documentId,
+          certificateSize: certificateData?.length,
+        },
+        metadata: requestMetadata,
+        userId: document.userId,
+      });
+    } else {
+      await createLog({
+        action: 'CERTIFICATE_PDF_SKIPPED',
+        message: 'Certificate PDF generation skipped (disabled in settings)',
+        data: { documentId },
+        metadata: requestMetadata,
+        userId: document.userId,
       });
     }
   } catch (error) {
@@ -203,6 +291,17 @@ export const run = async ({
         documentId: document.id,
       },
     });
+
+    await createLog({
+      action: 'POSTHOG_EVENT_CAPTURED',
+      message: 'PostHog event captured',
+      data: {
+        documentId,
+        event: 'App: Document Sealed',
+      },
+      metadata: requestMetadata,
+      userId: document.userId,
+    });
   }
 
   await io.runTask('update-document', async () => {
@@ -248,6 +347,17 @@ export const run = async ({
         },
         { timeout: 60000 },
       );
+
+      await createLog({
+        action: 'DOCUMENT_STATUS_UPDATED',
+        message: 'Document status updated to COMPLETED successfully',
+        data: {
+          documentId,
+          newStatus: DocumentStatus.COMPLETED,
+        },
+        metadata: requestMetadata,
+        userId: document.userId,
+      });
     } catch (error) {
       console.error('Transaction error:', error);
 
@@ -257,6 +367,7 @@ export const run = async ({
         data: {
           documentId,
           error: error instanceof Error ? error.message : String(error),
+          stack: error instanceof Error ? error.stack : undefined,
         },
         metadata: requestMetadata,
         userId: document.userId,
@@ -278,6 +389,16 @@ export const run = async ({
   const rawDetails = document?.documentDetails;
 
   if (!rawDetails || typeof rawDetails !== 'object') {
+    await createLog({
+      action: 'INVALID_DOCUMENT_DETAILS',
+      message: 'Invalid or missing document details',
+      data: {
+        documentId,
+        rawDetails,
+      },
+      metadata: requestMetadata,
+      userId: document.userId,
+    });
     throw new Error('Invalid or missing documentDetails');
   }
 
@@ -290,11 +411,30 @@ export const run = async ({
     teamId: updatedDocument.teamId ?? undefined,
   });
 
+  await createLog({
+    action: 'COMPLETION_WEBHOOK_TRIGGERED',
+    message: 'Document completion webhook triggered successfully',
+    data: { documentId },
+    metadata: requestMetadata,
+    userId: document.userId,
+  });
+
   await io.runTask('send-to-laravel', async () => {
     try {
       const base64Data = updatedDocument.documentData?.data;
 
       if (!base64Data || typeof base64Data !== 'string') {
+        await createLog({
+          action: 'LARAVEL_SUBMISSION_SKIPPED_NO_DATA',
+          message: 'Laravel submission skipped - no base64 data available',
+          data: {
+            documentId,
+            hasDocumentData: !!updatedDocument.documentData,
+            dataType: typeof base64Data,
+          },
+          metadata: requestMetadata,
+          userId: updatedDocument.userId,
+        });
         console.warn('The base64 of the signed document could not be obtained.');
         return;
       }
@@ -302,6 +442,17 @@ export const run = async ({
       const mainRecipient = updatedDocument.recipients.find((r) => r.role !== RecipientRole.CC);
 
       if (!mainRecipient) {
+        await createLog({
+          action: 'LARAVEL_SUBMISSION_SKIPPED_NO_RECIPIENT',
+          message: 'Laravel submission skipped - no main recipient found',
+          data: {
+            documentId,
+            totalRecipients: updatedDocument.recipients.length,
+            recipientRoles: updatedDocument.recipients.map((r) => r.role),
+          },
+          metadata: requestMetadata,
+          userId: updatedDocument.userId,
+        });
         console.warn('No primary recipient was found for the Laravel submission.');
         return;
       }
@@ -320,6 +471,25 @@ export const run = async ({
           where: { id: document.id },
           data: { documentUrl: fileUrl },
         });
+
+        await createLog({
+          action: 'DOCUMENT_URL_UPDATED',
+          message: 'Document URL updated successfully',
+          data: {
+            documentId,
+            fileUrl,
+          },
+          metadata: requestMetadata,
+          userId: updatedDocument.userId,
+        });
+      } else {
+        await createLog({
+          action: 'NO_FILE_URL_RETURNED',
+          message: 'No file URL returned from Laravel submission',
+          data: { documentId },
+          metadata: requestMetadata,
+          userId: updatedDocument.userId,
+        });
       }
     } catch (error) {
       console.error('Error when sending the signed document to Laravel:', error);
@@ -330,11 +500,20 @@ export const run = async ({
         data: {
           documentId,
           error: error instanceof Error ? error.message : String(error),
+          stack: error instanceof Error ? error.stack : undefined,
         },
         metadata: requestMetadata,
         userId: updatedDocument.userId,
       });
     }
+  });
+
+  await createLog({
+    action: 'LARAVEL_SUBMISSION_TASK_COMPLETED',
+    message: 'Laravel submission task completed',
+    data: { documentId },
+    metadata: requestMetadata,
+    userId: document.userId,
   });
 
   await io.runTask('send-completed-email', async () => {
@@ -344,8 +523,41 @@ export const run = async ({
       shouldSendCompletedEmail = sendEmail;
     }
 
+    await createLog({
+      action: 'SEND_COMPLETED_EMAIL_CHECK',
+      message: 'Checking if completion email should be sent',
+      data: {
+        documentId,
+        shouldSend: shouldSendCompletedEmail,
+        sendEmail,
+        isResealing,
+        documentStatus,
+      },
+      metadata: requestMetadata,
+      userId: document.userId,
+    });
+
     if (shouldSendCompletedEmail) {
       await sendCompletedEmail({ documentId, requestMetadata });
+
+      await createLog({
+        action: 'COMPLETED_EMAIL_SENT',
+        message: 'Document completion email sent successfully',
+        data: { documentId },
+        metadata: requestMetadata,
+        userId: document.userId,
+      });
+    } else {
+      await createLog({
+        action: 'COMPLETED_EMAIL_SKIPPED',
+        message: 'Document completion email skipped',
+        data: {
+          documentId,
+          reason: !sendEmail ? 'sendEmail=false' : 'isResealing=true',
+        },
+        metadata: requestMetadata,
+        userId: document.userId,
+      });
     }
   });
 };
