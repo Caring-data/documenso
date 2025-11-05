@@ -88,24 +88,56 @@ export const completeDocumentWithToken = async ({
     console.log('rawDetails', rawDetails);
 
     if (!rawDetails || typeof rawDetails !== 'object') {
+      await createLog({
+        action: 'INVALID_DOCUMENT_DETAILS',
+        message: 'Invalid or missing document details',
+        data: { documentId, rawDetails },
+        metadata: requestMetadata,
+      });
       throw new Error('Invalid or missing documentDetails');
     }
 
     if (document.status !== DocumentStatus.PENDING) {
+      await createLog({
+        action: 'INVALID_DOCUMENT_STATUS',
+        message: 'Document must be pending',
+        data: { documentId, status: document.status },
+        metadata: requestMetadata,
+      });
       throw new Error(`Document ${document.id} must be pending`);
     }
 
     if (document.recipients.length === 0) {
+      await createLog({
+        action: 'NO_RECIPIENTS_FOUND',
+        message: 'No recipient found for document',
+        data: { documentId, token },
+        metadata: requestMetadata,
+      });
       throw new Error(`Document ${document.id} has no recipient with token ${token}`);
     }
 
     const [recipient] = document.recipients;
 
     if (recipient.signingStatus === SigningStatus.SIGNED) {
+      await createLog({
+        action: 'ALREADY_SIGNED',
+        message: 'Recipient has already signed',
+        data: { documentId, recipientId: recipient.id },
+        metadata: requestMetadata,
+      });
+
       throw new Error(`Recipient ${recipient.id} has already signed`);
     }
 
     if (recipient.signingStatus === SigningStatus.REJECTED) {
+      await createLog({
+        action: 'ALREADY_REJECTED',
+        message: 'Recipient has already rejected the document',
+        data: { documentId, recipientId: recipient.id },
+        metadata: requestMetadata,
+      });
+
       throw new AppError(AppErrorCode.UNKNOWN_ERROR, {
         message: 'Recipient has already rejected the document',
         statusCode: 400,
@@ -116,6 +148,13 @@ export const completeDocumentWithToken = async ({
       const isRecipientsTurn = await getIsRecipientsTurnToSign({ token: recipient.token });
 
       if (!isRecipientsTurn) {
+        await createLog({
+          action: 'INVALID_SIGNING_ORDER',
+          message: 'Recipient attempted to complete the document before their turn',
+          data: { documentId, recipientId: recipient.id },
+          metadata: requestMetadata,
+        });
+
         throw new Error(
           `Recipient ${recipient.id} attempted to complete the document before it was their turn`,
         );
@@ -130,6 +169,13 @@ export const completeDocumentWithToken = async ({
     });
 
     if (fieldsContainUnsignedRequiredField(fields)) {
+      await createLog({
+        action: 'UNSIGNED_REQUIRED_FIELDS',
+        message: 'There are unsigned required fields',
+        data: { documentId, recipientId: recipient.id },
+        metadata: requestMetadata,
+      });
+
       throw new Error(`Recipient ${recipient.id} has unsigned fields`);
     }
 
@@ -163,6 +209,13 @@ export const completeDocumentWithToken = async ({
       });
     });
 
+    await createLog({
+      action: 'DOCUMENT_SIGNED',
+      message: 'Recipient completed signing successfully',
+      data: { documentId, recipientId: recipient.id },
+      metadata: requestMetadata,
+    });
+
     await jobs.triggerJob({
       name: 'document.complete.processing',
       payload: {
@@ -176,7 +229,7 @@ export const completeDocumentWithToken = async ({
   } catch (error) {
     await createLog({
       action: 'COMPLETE_DOCUMENT_ERROR',
-      message: 'Error al completar el documento con token',
+      message: 'Error completing the document with token',
       data: {
         error: error instanceof Error ? error.message : String(error),
         documentId,
