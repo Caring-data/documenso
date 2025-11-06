@@ -171,6 +171,7 @@ export const ApiContractV1Implementation = createNextRoute(ApiContractV1, {
       where: { id: Number(documentId) },
       include: {
         documentMeta: true,
+        recipients: true,
       },
     });
 
@@ -241,24 +242,24 @@ export const ApiContractV1Implementation = createNextRoute(ApiContractV1, {
       }).format(new Date(date));
     };
 
-    const groupedByEmail = new Map<string, (typeof auditLogs)[number][]>();
+    const groupedByRecipient = new Map<number, (typeof auditLogs)[number][]>();
 
     auditLogs.forEach((log) => {
-      const data = log.data as AuditLogData;
-      const isEmailSent = log.type === 'EMAIL_SENT';
+      const data = log.data as any;
 
-      const effectiveEmail = isEmailSent ? data?.recipientEmail : log.email;
+      const recipientId = data?.recipientId;
 
-      if (!effectiveEmail) return;
+      if (!recipientId) return;
 
-      if (!groupedByEmail.has(effectiveEmail)) {
-        groupedByEmail.set(effectiveEmail, []);
+      if (!groupedByRecipient.has(recipientId)) {
+        groupedByRecipient.set(recipientId, []);
       }
 
-      groupedByEmail.get(effectiveEmail)!.push(log);
+      groupedByRecipient.get(recipientId)!.push(log);
     });
 
-    const result = Array.from(groupedByEmail.entries()).map(([email, logs]) => {
+    const result = document.recipients.map((recipient) => {
+      const logs = groupedByRecipient.get(recipient.id) || [];
       const sortedLogs = [...logs].sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
 
       const documentSigned = logs.find((l) => l.type === 'DOCUMENT_RECIPIENT_COMPLETED');
@@ -319,8 +320,10 @@ export const ApiContractV1Implementation = createNextRoute(ApiContractV1, {
       const signatureStatus: 'signed' | 'notSigned' = documentSigned ? 'signed' : 'notSigned';
 
       return {
-        email,
-        name: latestEvent?.name ?? null,
+        recipientId: recipient.id,
+        email: recipient.email,
+        name: recipient.name,
+        signingOrder: recipient.signingOrder,
         sendDate: emailSent ? formatDateWithTimeZone(emailSent.createdAt, timezone) : null,
         resendDate: resendEmailSent
           ? formatDateWithTimeZone(resendEmailSent.createdAt, timezone)
