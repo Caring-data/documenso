@@ -627,9 +627,11 @@ export const ZGetSignedStatusPathSchema = z.object({
 export const ZGetSignedStatusResponseSchema = z.object({
   events: z.array(
     z.object({
+      recipientId: z.number().nullable(),
       email: z.string().nullable(),
       name: z.string().nullable(),
       ipAddress: z.string().nullable(),
+      signingOrder: z.number().nullable(),
       sendDate: z.string().nullable(),
       resendDate: z.string().nullable(),
       signatureDate: z.string().nullable(),
