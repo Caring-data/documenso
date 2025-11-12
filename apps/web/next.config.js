@@ -59,6 +59,9 @@ const config = {
     },
     swcPlugins: [['@lingui/swc-plugin', {}]],
   },
+  api: {
+    responseLimit: '200mb'
+  },
   reactStrictMode: true,
   transpilePackages: [
     '@documenso/assets',
