@@ -63,8 +63,8 @@ export const TemplateDocumentInvite = ({
                       <span className="font-semibold">
                         {documentDetails?.facilityAdministrator}
                       </span>{' '}
-                      from <span className="font-semibold">{documentDetails?.companyName}</span> has
-                      requested your electronic signature on the following document:
+                      from <span className="font-semibold">{documentDetails?.locationName}</span>{' '}
+                      has requested your electronic signature on the following document:
                     </Trans>
                   </Text>
                   <div className="flex items-center gap-6">
