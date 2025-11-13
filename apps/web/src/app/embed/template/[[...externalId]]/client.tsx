@@ -57,14 +57,6 @@ const AddTemplateFieldsFormPartial = dynamic(
   { loading: LoadingSpinner },
 );
 
-const AddTemplatePlaceholderRecipientsFormPartial = dynamic(
-  async () =>
-    import('./(components)/template-flow/add-template-placeholder-recipients').then(
-      (mod) => mod.AddTemplatePlaceholderRecipientsFormPartial,
-    ),
-  { loading: LoadingSpinner },
-);
-
 const AddTemplateSettingsFormPartial = dynamic(
   async () =>
     import('./(components)/template-flow/add-template-settings').then(
@@ -80,8 +72,8 @@ export type EmbedTemplateClientPageProps = {
   initialTemplate: TTemplate;
 };
 
-type EditTemplateStep = 'settings' | 'signers' | 'fields';
-const EDIT_TEMPLATE_STEPS: readonly EditTemplateStep[] = ['settings', 'signers', 'fields'] as const;
+type EditTemplateStep = 'settings' | 'fields';
+const EDIT_TEMPLATE_STEPS: readonly EditTemplateStep[] = ['settings', 'fields'] as const;
 
 export const EmbedTemplateClientPage = ({
   templateId,
@@ -185,15 +177,10 @@ export const EmbedTemplateClientPage = ({
         description: msg`Configure general settings for the template.`,
         stepIndex: 1,
       },
-      signers: {
-        title: msg`Add Placeholders`,
-        description: msg`Add all relevant placeholders for each recipient.`,
-        stepIndex: 2,
-      },
       fields: {
         title: msg`Add Fields`,
         description: msg`Add all relevant fields for each recipient.`,
-        stepIndex: 3,
+        stepIndex: 2,
       },
     }),
     [],
@@ -250,6 +237,7 @@ export const EmbedTemplateClientPage = ({
   // Form handlers
   const onAddSettingsFormSubmit = createFormHandler(async (data) => {
     const typedData = data as TAddTemplateSettingsFormSchema;
+
     const requestData = {
       data: {
         title: typedData.title,
@@ -263,6 +251,7 @@ export const EmbedTemplateClientPage = ({
         language: isValidLanguageCode(typedData.meta.language)
           ? typedData.meta.language
           : undefined,
+        signingOrder: typedData.signingOrder,
       },
     };
 
@@ -282,32 +271,25 @@ export const EmbedTemplateClientPage = ({
         meta: requestData.meta,
       }),
     ]);
-  }, 'signers');
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const onAddTemplatePlaceholderFormSubmit = createFormHandler(async (data: any) => {
-    const [, recipients] = await Promise.all([
-      updateTemplateSettings({
+    if (typedData.signers && typedData.signers.length > 0) {
+      const recipients = await setRecipients({
         templateId,
-        meta: { signingOrder: data.signingOrder },
-      }),
-      setRecipients({
-        templateId,
-        recipients: data.signers,
-      }),
-    ]);
+        recipients: typedData.signers,
+      });
 
-    const recipientsData = recipients.recipients.map((recipient) => ({
-      email: recipient.email,
-      name: recipient.name,
-      role: recipient.role,
-      signingOrder: recipient.signingOrder,
-      documensoSignerId: recipient.id,
-    }));
+      const recipientsData = recipients.recipients.map((recipient) => ({
+        email: recipient.email,
+        name: recipient.name,
+        role: recipient.role,
+        signingOrder: recipient.signingOrder,
+        documensoSignerId: recipient.id,
+      }));
 
-    await updateFormTemplateRecipients.mutateAsync({
-      requestData: recipientsData,
-    });
+      await updateFormTemplateRecipients.mutateAsync({
+        requestData: recipientsData,
+      });
+    }
   }, 'fields');
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -422,16 +404,7 @@ export const EmbedTemplateClientPage = ({
                 fields={templateData.fields}
                 onSubmit={onAddSettingsFormSubmit}
                 isDocumentPdfLoaded={hasDocumentLoaded}
-              />
-
-              <AddTemplatePlaceholderRecipientsFormPartial
-                key={`signers-${templateData.recipients.length}`}
-                documentFlow={documentFlow.signers}
-                recipients={templateData.recipients}
-                fields={templateData.fields}
                 signingOrder={template?.templateMeta?.signingOrder}
-                isDocumentPdfLoaded={hasDocumentLoaded}
-                onSubmit={onAddTemplatePlaceholderFormSubmit}
               />
 
               <AddTemplateFieldsFormPartial

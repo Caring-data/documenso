@@ -7,9 +7,10 @@ import {
   ZDocumentAccessAuthTypesSchema,
   ZDocumentActionAuthTypesSchema,
 } from '@documenso/lib/types/document-auth';
+import { ZRecipientActionAuthTypesSchema } from '@documenso/lib/types/document-auth';
 import { ZDocumentEmailSettingsSchema } from '@documenso/lib/types/document-email';
 import { isValidRedirectUrl } from '@documenso/lib/utils/is-valid-redirect-url';
-import { DocumentVisibility } from '@documenso/prisma/client';
+import { DocumentSigningOrder, DocumentVisibility, RecipientRole } from '@documenso/prisma/client';
 import {
   ZDocumentMetaDateFormatSchema,
   ZDocumentMetaTimezoneSchema,
@@ -17,6 +18,16 @@ import {
 import { ZMapNegativeOneToUndefinedSchema } from '@documenso/ui/primitives/document-flow/add-settings.types';
 
 import { DocumentDistributionMethod } from '.prisma/client';
+
+export const ZSignerSchema = z.object({
+  nativeId: z.number().optional(),
+  formId: z.string().min(1),
+  name: z.string(),
+  email: z.string().min(1).email(),
+  role: z.nativeEnum(RecipientRole),
+  actionAuth: ZMapNegativeOneToUndefinedSchema.pipe(ZRecipientActionAuthTypesSchema.optional()),
+  signingOrder: z.number().optional(),
+});
 
 export const ZAddTemplateSettingsFormSchema = z.object({
   title: z.string().trim().min(1, { message: "Title can't be empty" }),
@@ -28,6 +39,20 @@ export const ZAddTemplateSettingsFormSchema = z.object({
   globalActionAuth: ZMapNegativeOneToUndefinedSchema.pipe(
     ZDocumentActionAuthTypesSchema.optional(),
   ),
+
+  signingOrder: z.nativeEnum(DocumentSigningOrder).default(DocumentSigningOrder.SEQUENTIAL),
+  signers: z
+    .array(ZSignerSchema)
+    .min(1, { message: 'At least one recipient is required' })
+    .refine(
+      (signers) => {
+        const emails = signers.map((signer) => signer.email.toLowerCase());
+        return new Set(emails).size === emails.length;
+      },
+      // Dirty hack to handle errors when .root is populated for an array type
+      { message: 'Signers must have unique emails', path: ['signers__root'] },
+    ),
+
   meta: z.object({
     subject: z.string(),
     message: z.string(),
@@ -53,3 +78,4 @@ export const ZAddTemplateSettingsFormSchema = z.object({
 });
 
 export type TAddTemplateSettingsFormSchema = z.infer<typeof ZAddTemplateSettingsFormSchema>;
+export type TSigner = z.infer<typeof ZSignerSchema>;
