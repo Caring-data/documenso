@@ -278,6 +278,21 @@ export const SigningPageView = ({
                 .with(FieldType.RESIDENT_LOCATION_COUNTRY, () => (
                   <LocationField key={field.id} field={field} residentInfo={residentInfo} />
                 ))
+                .with(FieldType.RESIDENT_LOCATION_FAX, () => (
+                  <LocationField key={field.id} field={field} residentInfo={residentInfo} />
+                ))
+                .with(FieldType.RESIDENT_LOCATION_LICENSING, () => (
+                  <LocationField key={field.id} field={field} residentInfo={residentInfo} />
+                ))
+                .with(FieldType.RESIDENT_LOCATION_LICENSING_NAME, () => (
+                  <LocationField key={field.id} field={field} residentInfo={residentInfo} />
+                ))
+                .with(FieldType.RESIDENT_LOCATION_ADMINISTRATOR_NAME, () => (
+                  <LocationField key={field.id} field={field} residentInfo={residentInfo} />
+                ))
+                .with(FieldType.RESIDENT_LOCATION_ADMINISTRATOR_PHONE, () => (
+                  <LocationField key={field.id} field={field} residentInfo={residentInfo} />
+                ))
                 .otherwise(() => null),
             )}
         </ElementVisible>

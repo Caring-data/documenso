@@ -1540,6 +1540,11 @@ export const ApiContractV1Implementation = createNextRoute(ApiContractV1, {
                 'RESIDENT_LOCATION_CITY',
                 'RESIDENT_LOCATION_ZIP_CODE',
                 'RESIDENT_LOCATION_COUNTRY',
+                'RESIDENT_LOCATION_FAX',
+                'RESIDENT_LOCATION_LICENSING',
+                'RESIDENT_LOCATION_LICENSING_NAME',
+                'RESIDENT_LOCATION_ADMINISTRATOR_NAME',
+                'RESIDENT_LOCATION_ADMINISTRATOR_PHONE',
                 () => ({
                   success: true,
                   data: undefined,

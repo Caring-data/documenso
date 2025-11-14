@@ -187,7 +187,12 @@ export const signFieldWithToken = async ({
       field.type === FieldType.RESIDENT_LOCATION_ADDRESS ||
       field.type === FieldType.RESIDENT_LOCATION_CITY ||
       field.type === FieldType.RESIDENT_LOCATION_ZIP_CODE ||
-      field.type === FieldType.RESIDENT_LOCATION_COUNTRY) &&
+      field.type === FieldType.RESIDENT_LOCATION_COUNTRY ||
+      field.type === FieldType.RESIDENT_LOCATION_FAX ||
+      field.type === FieldType.RESIDENT_LOCATION_LICENSING ||
+      field.type === FieldType.RESIDENT_LOCATION_LICENSING_NAME ||
+      field.type === FieldType.RESIDENT_LOCATION_ADMINISTRATOR_NAME ||
+      field.type === FieldType.RESIDENT_LOCATION_ADMINISTRATOR_PHONE) &&
     field.fieldMeta
   ) {
     const textFieldParsedMeta = ZTextFieldMeta.parse(field.fieldMeta);
@@ -326,6 +331,11 @@ export const signFieldWithToken = async ({
               FieldType.RESIDENT_LOCATION_CITY,
               FieldType.RESIDENT_LOCATION_ZIP_CODE,
               FieldType.RESIDENT_LOCATION_COUNTRY,
+              FieldType.RESIDENT_LOCATION_FAX,
+              FieldType.RESIDENT_LOCATION_LICENSING,
+              FieldType.RESIDENT_LOCATION_LICENSING_NAME,
+              FieldType.RESIDENT_LOCATION_ADMINISTRATOR_NAME,
+              FieldType.RESIDENT_LOCATION_ADMINISTRATOR_PHONE,
               (type) => ({
                 type,
                 data: updatedField.customText,

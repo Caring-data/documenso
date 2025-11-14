@@ -12,6 +12,7 @@ import {
   CheckSquare,
   ChevronDown,
   ChevronsUpDown,
+  Clipboard,
   Contact,
   Disc,
   Flag,
@@ -19,8 +20,12 @@ import {
   Home,
   Mail,
   MapPin,
+  Phone,
+  Printer,
   Type,
   User,
+  UserCheck,
+  UserCircle2,
 } from 'lucide-react';
 import { useFieldArray, useForm } from 'react-hook-form';
 import { useHotkeys } from 'react-hotkeys-hook';
@@ -1101,7 +1106,7 @@ export const AddTemplateFieldsFormPartial = ({
                                       'text-muted-foreground group-data-[selected]:text-foreground flex items-center justify-center gap-x-1.5 text-sm font-normal',
                                     )}
                                   >
-                                    <User className="h-4 w-4" />
+                                    <UserCircle2 className="h-4 w-4" />
                                     <Trans>Gender Identity</Trans>
                                   </p>
                                 </CardContent>
@@ -1247,6 +1252,37 @@ export const AddTemplateFieldsFormPartial = ({
                             <button
                               type="button"
                               className="group h-full w-full"
+                              onClick={() => setSelectedField(FieldType.RESIDENT_LOCATION_COUNTRY)}
+                              onMouseDown={() =>
+                                setSelectedField(FieldType.RESIDENT_LOCATION_COUNTRY)
+                              }
+                              data-selected={
+                                selectedField === FieldType.RESIDENT_LOCATION_COUNTRY
+                                  ? true
+                                  : undefined
+                              }
+                            >
+                              <Card
+                                className={cn(
+                                  'flex h-full w-full cursor-pointer items-center justify-center group-disabled:opacity-50',
+                                )}
+                              >
+                                <CardContent className="flex flex-col items-center justify-center px-6 py-4">
+                                  <p
+                                    className={cn(
+                                      'text-muted-foreground group-data-[selected]:text-foreground flex items-center justify-center gap-x-1.5 text-sm font-normal',
+                                    )}
+                                  >
+                                    <MapPin className="h-4 w-4" />
+                                    <Trans>Country</Trans>
+                                  </p>
+                                </CardContent>
+                              </Card>
+                            </button>
+
+                            <button
+                              type="button"
+                              className="group h-full w-full"
                               onClick={() => setSelectedField(FieldType.RESIDENT_LOCATION_ZIP_CODE)}
                               onMouseDown={() =>
                                 setSelectedField(FieldType.RESIDENT_LOCATION_ZIP_CODE)
@@ -1278,12 +1314,41 @@ export const AddTemplateFieldsFormPartial = ({
                             <button
                               type="button"
                               className="group h-full w-full"
-                              onClick={() => setSelectedField(FieldType.RESIDENT_LOCATION_COUNTRY)}
+                              onClick={() => setSelectedField(FieldType.RESIDENT_LOCATION_FAX)}
+                              onMouseDown={() => setSelectedField(FieldType.RESIDENT_LOCATION_FAX)}
+                              data-selected={
+                                selectedField === FieldType.RESIDENT_LOCATION_FAX ? true : undefined
+                              }
+                            >
+                              <Card
+                                className={cn(
+                                  'flex h-full w-full cursor-pointer items-center justify-center group-disabled:opacity-50',
+                                )}
+                              >
+                                <CardContent className="flex flex-col items-center justify-center px-6 py-4">
+                                  <p
+                                    className={cn(
+                                      'text-muted-foreground group-data-[selected]:text-foreground flex items-center justify-center gap-x-1.5 text-sm font-normal',
+                                    )}
+                                  >
+                                    <Printer className="h-4 w-4 flex-shrink-0" />
+                                    <Trans>Facility Fax</Trans>
+                                  </p>
+                                </CardContent>
+                              </Card>
+                            </button>
+
+                            <button
+                              type="button"
+                              className="group h-full w-full"
+                              onClick={() =>
+                                setSelectedField(FieldType.RESIDENT_LOCATION_ADMINISTRATOR_NAME)
+                              }
                               onMouseDown={() =>
-                                setSelectedField(FieldType.RESIDENT_LOCATION_COUNTRY)
+                                setSelectedField(FieldType.RESIDENT_LOCATION_ADMINISTRATOR_NAME)
                               }
                               data-selected={
-                                selectedField === FieldType.RESIDENT_LOCATION_COUNTRY
+                                selectedField === FieldType.RESIDENT_LOCATION_ADMINISTRATOR_NAME
                                   ? true
                                   : undefined
                               }
@@ -1299,8 +1364,107 @@ export const AddTemplateFieldsFormPartial = ({
                                       'text-muted-foreground group-data-[selected]:text-foreground flex items-center justify-center gap-x-1.5 text-sm font-normal',
                                     )}
                                   >
-                                    <MapPin className="h-4 w-4" />
-                                    <Trans>Country</Trans>
+                                    <UserCheck className="h-4 w-4 flex-shrink-0" />
+                                    <Trans>Facility Administrator</Trans>
+                                  </p>
+                                </CardContent>
+                              </Card>
+                            </button>
+
+                            <button
+                              type="button"
+                              className="group h-full w-full"
+                              onClick={() =>
+                                setSelectedField(FieldType.RESIDENT_LOCATION_ADMINISTRATOR_PHONE)
+                              }
+                              onMouseDown={() =>
+                                setSelectedField(FieldType.RESIDENT_LOCATION_ADMINISTRATOR_PHONE)
+                              }
+                              data-selected={
+                                selectedField === FieldType.RESIDENT_LOCATION_ADMINISTRATOR_PHONE
+                                  ? true
+                                  : undefined
+                              }
+                            >
+                              <Card
+                                className={cn(
+                                  'flex h-full w-full cursor-pointer items-center justify-center group-disabled:opacity-50',
+                                )}
+                              >
+                                <CardContent className="flex flex-col items-center justify-center px-6 py-4">
+                                  <p
+                                    className={cn(
+                                      'text-muted-foreground group-data-[selected]:text-foreground flex items-center justify-center gap-x-1.5 text-sm font-normal',
+                                    )}
+                                  >
+                                    <Phone className="h-4 w-4 flex-shrink-0" />
+                                    <Trans>Administrator Phone</Trans>
+                                  </p>
+                                </CardContent>
+                              </Card>
+                            </button>
+
+                            <button
+                              type="button"
+                              className="group h-full w-full"
+                              onClick={() =>
+                                setSelectedField(FieldType.RESIDENT_LOCATION_LICENSING)
+                              }
+                              onMouseDown={() =>
+                                setSelectedField(FieldType.RESIDENT_LOCATION_LICENSING)
+                              }
+                              data-selected={
+                                selectedField === FieldType.RESIDENT_LOCATION_LICENSING
+                                  ? true
+                                  : undefined
+                              }
+                            >
+                              <Card
+                                className={cn(
+                                  'flex h-full w-full cursor-pointer items-center justify-center group-disabled:opacity-50',
+                                )}
+                              >
+                                <CardContent className="flex flex-col items-center justify-center px-6 py-4">
+                                  <p
+                                    className={cn(
+                                      'text-muted-foreground group-data-[selected]:text-foreground flex items-center justify-center gap-x-1.5 text-sm font-normal',
+                                    )}
+                                  >
+                                    <Clipboard className="h-4 w-4 flex-shrink-0" />
+                                    <Trans>Licensing Number</Trans>
+                                  </p>
+                                </CardContent>
+                              </Card>
+                            </button>
+
+                            <button
+                              type="button"
+                              className="group h-full w-full"
+                              onClick={() =>
+                                setSelectedField(FieldType.RESIDENT_LOCATION_LICENSING_NAME)
+                              }
+                              onMouseDown={() =>
+                                setSelectedField(FieldType.RESIDENT_LOCATION_LICENSING_NAME)
+                              }
+                              data-selected={
+                                selectedField === FieldType.RESIDENT_LOCATION_LICENSING_NAME
+                                  ? true
+                                  : undefined
+                              }
+                            >
+                              <Card
+                                className={cn(
+                                  'flex h-full w-full cursor-pointer items-center justify-center group-disabled:opacity-50',
+                                )}
+                              >
+                                <CardContent className="flex flex-col items-center justify-center px-6 py-4">
+                                  <p
+                                    className={cn(
+                                      'text-muted-foreground group-data-[selected]:text-foreground flex items-center justify-center gap-x-1.5 text-sm font-normal',
+                                    )}
+                                  >
+                                    <UserCircle2 className="h-4 w-4 flex-shrink-0" />
+                                    <Trans>Licensee's Name</Trans>
                                   </p>
                                 </CardContent>
                               </Card>

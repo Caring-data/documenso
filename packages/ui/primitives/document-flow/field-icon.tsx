@@ -49,6 +49,17 @@ const fieldIcons = {
   [FieldType.RESIDENT_LOCATION_CITY]: { icon: Building, label: 'R. L. City' },
   [FieldType.RESIDENT_LOCATION_ZIP_CODE]: { icon: Hash, label: 'R. L. Zip Code' },
   [FieldType.RESIDENT_LOCATION_COUNTRY]: { icon: MapPin, label: 'R. L. Country' },
+  [FieldType.RESIDENT_LOCATION_FAX]: { icon: MapPin, label: 'R. L. Fax' },
+  [FieldType.RESIDENT_LOCATION_LICENSING]: { icon: MapPin, label: 'R. L. Licensing' },
+  [FieldType.RESIDENT_LOCATION_LICENSING_NAME]: { icon: MapPin, label: 'R. L. Licensee Name' },
+  [FieldType.RESIDENT_LOCATION_ADMINISTRATOR_NAME]: {
+    icon: MapPin,
+    label: 'R. L. Administrator Name',
+  },
+  [FieldType.RESIDENT_LOCATION_ADMINISTRATOR_PHONE]: {
+    icon: MapPin,
+    label: 'R. L. Administrator Phone',
+  },
 };
 
 export const FieldIcon = ({
