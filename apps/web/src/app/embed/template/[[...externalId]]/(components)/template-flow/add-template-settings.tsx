@@ -370,7 +370,9 @@ export const AddTemplateSettingsFormPartial = ({
                 <Trans>Add Placeholders</Trans>
               </h3>
               <p className="text-muted-foreground mt-2 text-sm">
-                <Trans>Add all relevant placeholders for each recipient.</Trans>
+                <Trans>Add all relevant placeholders for each recipient.</Trans> <br />
+                <br />
+                <Trans>The roles and emails will be assigned when the document is sent.</Trans>
               </p>
 
               <AnimateGenericFadeInOut motionKey={'Show'}>
