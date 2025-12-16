@@ -11,8 +11,6 @@ import { ROLE_ICONS } from '@documenso/ui/primitives/recipient-role-icons';
 import { Select, SelectContent, SelectItem, SelectTrigger } from '@documenso/ui/primitives/select';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@documenso/ui/primitives/tooltip';
 
-import { cn } from '../../lib/utils';
-
 export type RecipientRoleSelectProps = SelectProps & {
   hideCCRecipients?: boolean;
   isAssistantEnabled?: boolean;
@@ -113,42 +111,6 @@ export const RecipientRoleSelect = forwardRef<HTMLButtonElement, RecipientRoleSe
             </div>
           </SelectItem>
         )}
-
-        <SelectItem
-          value={RecipientRole.ASSISTANT}
-          disabled={!isAssistantEnabled}
-          className={cn(
-            !isAssistantEnabled &&
-              'cursor-not-allowed opacity-50 data-[disabled]:pointer-events-auto',
-          )}
-        >
-          <div className="flex items-center">
-            <div className="flex w-[150px] items-center">
-              <span className="mr-2">{ROLE_ICONS[RecipientRole.ASSISTANT]}</span>
-              <Trans>Can prepare</Trans>
-            </div>
-            <Tooltip>
-              <TooltipTrigger>
-                <InfoIcon className="h-4 w-4" />
-              </TooltipTrigger>
-              <TooltipContent className="text-foreground z-9999 max-w-md p-4">
-                <p>
-                  {isAssistantEnabled ? (
-                    <Trans>
-                      The recipient can prepare the document for later signers by pre-filling
-                      suggest values.
-                    </Trans>
-                  ) : (
-                    <Trans>
-                      Assistant role is only available when the document is in sequential signing
-                      mode.
-                    </Trans>
-                  )}
-                </p>
-              </TooltipContent>
-            </Tooltip>
-          </div>
-        </SelectItem>
       </SelectContent>
     </Select>
   ),

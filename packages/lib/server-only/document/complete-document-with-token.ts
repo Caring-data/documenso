@@ -85,8 +85,6 @@ export const completeDocumentWithToken = async ({
     const document = await getDocument({ token, documentId });
     const rawDetails = document?.documentDetails;
 
-    console.log('rawDetails', rawDetails);
-
     if (!rawDetails || typeof rawDetails !== 'object') {
       await createLog({
         action: 'INVALID_DOCUMENT_DETAILS',

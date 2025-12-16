@@ -8,7 +8,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Trans, msg } from '@lingui/macro';
 import { useLingui } from '@lingui/react';
 import { motion } from 'framer-motion';
-import { GripVerticalIcon, Plus, Trash } from 'lucide-react';
+import { Plus, Trash } from 'lucide-react';
 import { useFieldArray, useForm } from 'react-hook-form';
 
 import { DEFAULT_DOCUMENT_TIME_ZONE } from '@documenso/lib/constants/time-zones';
@@ -364,15 +364,14 @@ export const AddTemplateSettingsFormPartial = ({
               />
             </div>
 
-            {/* Recipients */}
             <div className="border-t pt-6">
               <h3 className="mb-4 text-lg font-semibold">
                 <Trans>Add Placeholders</Trans>
               </h3>
               <p className="text-muted-foreground mt-2 text-sm">
-                <Trans>Add all relevant placeholders for each recipient.</Trans> <br />
-                <br />
-                <Trans>The roles and emails will be assigned when the document is sent.</Trans>
+                <Trans>
+                  Set the number of recipients you'll later assign fields and signatures to.
+                </Trans>
               </p>
 
               <AnimateGenericFadeInOut motionKey={'Show'}>
@@ -389,7 +388,7 @@ export const AddTemplateSettingsFormPartial = ({
                       <div
                         {...provided.droppableProps}
                         ref={provided.innerRef}
-                        className="flex w-full flex-col gap-y-2"
+                        className="mt-1 flex w-full flex-col gap-y-2"
                       >
                         {signers.map((signer, index) => (
                           <Draggable
@@ -419,74 +418,25 @@ export const AddTemplateSettingsFormPartial = ({
                                   )}
                                 >
                                   <FormField
-                                    control={control}
-                                    name={`signers.${index}.signingOrder`}
-                                    render={({ field }) => (
-                                      <FormItem className="flex items-center gap-x-1 space-y-0 sm:col-span-2">
-                                        <GripVerticalIcon className="hidden h-5 w-5 flex-shrink-0 opacity-40 sm:block" />
-                                        <FormControl>
-                                          <Input
-                                            type="number"
-                                            max={signers.length}
-                                            className={cn(
-                                              'w-full text-center',
-                                              '[appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none',
-                                            )}
-                                            {...field}
-                                            onChange={(e) => {
-                                              field.onChange(e);
-                                              handleSigningOrderChange(index, e.target.value);
-                                            }}
-                                            onBlur={(e) => {
-                                              field.onBlur();
-                                              handleSigningOrderChange(index, e.target.value);
-                                            }}
-                                            disabled={snapshot.isDragging || isSubmitting}
-                                          />
-                                        </FormControl>
-                                        <FormMessage />
-                                      </FormItem>
-                                    )}
-                                  />
-                                  <FormField
-                                    control={control}
-                                    name={`signers.${index}.email`}
+                                    control={form.control}
+                                    name={`signers.${index}.name`}
                                     render={({ field }) => (
                                       <FormItem
                                         className={cn(
                                           'col-span-1',
                                           'sm:col-span-5',
-                                          'md:col-span-7',
+                                          'md:col-span-9',
                                         )}
                                       >
-                                        {index === 0 && (
-                                          <FormLabel required className="block sm:hidden">
-                                            <Trans id="email_label">Email</Trans>
-                                          </FormLabel>
-                                        )}
-
                                         <FormControl>
                                           <Input
-                                            type="email"
-                                            placeholder={_(msg`Email`)}
+                                            placeholder={_(msg`Name`)}
                                             {...field}
-                                            disabled
+                                            disabled={true}
                                           />
                                         </FormControl>
 
                                         <FormMessage />
-                                      </FormItem>
-                                    )}
-                                  />
-
-                                  <FormField
-                                    control={control}
-                                    name={`signers.${index}.name`}
-                                    render={({ field }) => (
-                                      <FormItem className="hidden">
-                                        <FormControl>
-                                          <Input {...field} className="hidden" />
-                                        </FormControl>
                                       </FormItem>
                                     )}
                                   />
@@ -546,7 +496,7 @@ export const AddTemplateSettingsFormPartial = ({
                 </DragDropContext>
 
                 <FormErrorMessage
-                  className="mt-2"
+                  className="mt-1"
                   error={'signers__root' in errors && errors['signers__root']}
                 />
 
@@ -558,6 +508,7 @@ export const AddTemplateSettingsFormPartial = ({
                     onClick={onAddPlaceholderRecipient}
                   >
                     <Plus className="-ml-1 mr-2 h-5 w-5" />
+                    <Trans>Add Recipient</Trans>
                   </Button>
                 </div>
               </AnimateGenericFadeInOut>

@@ -174,12 +174,12 @@ export const EmbedTemplateClientPage = ({
     (): Record<EditTemplateStep, DocumentFlowStep> => ({
       settings: {
         title: msg`General`,
-        description: msg`Configure general settings for the template.`,
+        description: msg`Set up the basic details for your template. Add a title and define the recipients who will complete or sign this document.`,
         stepIndex: 1,
       },
       fields: {
         title: msg`Add Fields`,
-        description: msg`Add all relevant fields for each recipient.`,
+        description: msg`Add all relevant fields for each recipient. Drag the fields you need and edit, duplicate, or delete them.`,
         stepIndex: 2,
       },
     }),
