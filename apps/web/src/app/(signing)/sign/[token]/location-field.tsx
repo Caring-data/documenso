@@ -52,6 +52,16 @@ const getLocationFieldLabel = (fieldType: FieldType): string => {
       return 'ZIP Code';
     case FieldType.RESIDENT_LOCATION_COUNTRY:
       return 'Country';
+    case FieldType.RESIDENT_LOCATION_FAX:
+      return 'Facility Fax';
+    case FieldType.RESIDENT_LOCATION_LICENSING:
+      return 'Facility Administrator';
+    case FieldType.RESIDENT_LOCATION_LICENSING_NAME:
+      return 'Administrator Phone Number';
+    case FieldType.RESIDENT_LOCATION_ADMINISTRATOR_NAME:
+      return 'Licensing Number';
+    case FieldType.RESIDENT_LOCATION_ADMINISTRATOR_PHONE:
+      return 'Licensees Name';
     default:
       return 'Location Information';
   }
@@ -78,6 +88,16 @@ const getLocationValue = (fieldType: FieldType, residentInfo?: Record<string, un
       return typeof location.zip === 'string' ? location.zip : '';
     case FieldType.RESIDENT_LOCATION_COUNTRY:
       return typeof location.country === 'string' ? location.country : '';
+    case FieldType.RESIDENT_LOCATION_FAX:
+      return typeof location.country === 'string' ? location.location_fax : '';
+    case FieldType.RESIDENT_LOCATION_LICENSING:
+      return typeof location.country === 'string' ? location.licensing : '';
+    case FieldType.RESIDENT_LOCATION_LICENSING_NAME:
+      return typeof location.country === 'string' ? location.licensing_name : '';
+    case FieldType.RESIDENT_LOCATION_ADMINISTRATOR_NAME:
+      return typeof location.country === 'string' ? location.admin : '';
+    case FieldType.RESIDENT_LOCATION_ADMINISTRATOR_PHONE:
+      return typeof location.country === 'string' ? location.phone_lec : '';
     default:
       return '';
   }

@@ -527,6 +527,11 @@ export const createDocumentFromDirectTemplate = async ({
                 FieldType.RESIDENT_LOCATION_CITY,
                 FieldType.RESIDENT_LOCATION_ZIP_CODE,
                 FieldType.RESIDENT_LOCATION_COUNTRY,
+                FieldType.RESIDENT_LOCATION_FAX,
+                FieldType.RESIDENT_LOCATION_LICENSING,
+                FieldType.RESIDENT_LOCATION_LICENSING_NAME,
+                FieldType.RESIDENT_LOCATION_ADMINISTRATOR_NAME,
+                FieldType.RESIDENT_LOCATION_ADMINISTRATOR_PHONE,
                 (type) => ({
                   type,
                   data: field.customText,

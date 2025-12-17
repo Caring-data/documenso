@@ -321,6 +321,26 @@ export const ZDocumentAuditLogEventDocumentFieldInsertedSchema = z.object({
         type: z.literal(FieldType.RESIDENT_LOCATION_COUNTRY),
         data: z.string(),
       }),
+      z.object({
+        type: z.literal(FieldType.RESIDENT_LOCATION_FAX),
+        data: z.string(),
+      }),
+      z.object({
+        type: z.literal(FieldType.RESIDENT_LOCATION_LICENSING),
+        data: z.string(),
+      }),
+      z.object({
+        type: z.literal(FieldType.RESIDENT_LOCATION_LICENSING_NAME),
+        data: z.string(),
+      }),
+      z.object({
+        type: z.literal(FieldType.RESIDENT_LOCATION_ADMINISTRATOR_NAME),
+        data: z.string(),
+      }),
+      z.object({
+        type: z.literal(FieldType.RESIDENT_LOCATION_ADMINISTRATOR_PHONE),
+        data: z.string(),
+      }),
     ]),
     fieldSecurity: z.preprocess(
       (input) => {
@@ -451,6 +471,26 @@ export const ZDocumentAuditLogEventDocumentFieldPrefilledSchema = z.object({
       }),
       z.object({
         type: z.literal(FieldType.RESIDENT_LOCATION_COUNTRY),
+        data: z.string(),
+      }),
+      z.object({
+        type: z.literal(FieldType.RESIDENT_LOCATION_FAX),
+        data: z.string(),
+      }),
+      z.object({
+        type: z.literal(FieldType.RESIDENT_LOCATION_LICENSING),
+        data: z.string(),
+      }),
+      z.object({
+        type: z.literal(FieldType.RESIDENT_LOCATION_LICENSING_NAME),
+        data: z.string(),
+      }),
+      z.object({
+        type: z.literal(FieldType.RESIDENT_LOCATION_ADMINISTRATOR_NAME),
+        data: z.string(),
+      }),
+      z.object({
+        type: z.literal(FieldType.RESIDENT_LOCATION_ADMINISTRATOR_PHONE),
         data: z.string(),
       }),
     ]),
