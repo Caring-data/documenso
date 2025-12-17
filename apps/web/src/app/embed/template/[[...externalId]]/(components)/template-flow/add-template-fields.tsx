@@ -18,6 +18,7 @@ import {
   Flag,
   Hash,
   Home,
+  Info,
   Mail,
   MapPin,
   Phone,
@@ -333,6 +334,22 @@ export const AddTemplateFieldsFormPartial = ({
       pageX -= fieldPageWidth / 2;
       pageY -= fieldPageHeight / 2;
 
+      let defaultFieldMeta: FieldMeta | undefined = undefined;
+
+      if (selectedField === FieldType.CHECKBOX) {
+        defaultFieldMeta = {
+          type: 'checkbox',
+          values: [{ id: 1, checked: false, value: '' }],
+          required: false,
+        };
+      } else if (selectedField === FieldType.RADIO) {
+        defaultFieldMeta = {
+          type: 'radio',
+          values: [{ id: 1, checked: false, value: '' }],
+          required: false,
+        };
+      }
+
       append({
         formId: nanoid(12),
         type: selectedField,
@@ -344,7 +361,7 @@ export const AddTemplateFieldsFormPartial = ({
         signerEmail: selectedSigner.email ?? '',
         signerId: selectedSigner.id,
         signerToken: selectedSigner.token ?? '',
-        fieldMeta: undefined,
+        fieldMeta: defaultFieldMeta,
       });
 
       setIsFieldWithinBounds(false);
@@ -510,7 +527,7 @@ export const AddTemplateFieldsFormPartial = ({
     <>
       {showAdvancedSettings && currentField ? (
         <FieldAdvancedSettings
-          title={msg`Advanced settings`}
+          title={msg`Advanced Settings`}
           description={msg`Configure the ${parseMessageDescriptor(
             _,
             FRIENDLY_FIELD_TYPE[currentField.type],
@@ -993,6 +1010,12 @@ export const AddTemplateFieldsFormPartial = ({
 
                 <div className="mt-4 flex flex-col gap-2">
                   <Separator />
+                  <div className="flex items-start gap-2">
+                    <Info className="mt-0.5 h-4 w-4 shrink-0 items-center text-zinc-400" />
+                    <span className="inline-flex max-w-full px-1.5 py-0.5 text-sm leading-snug text-zinc-700">
+                      Resident fields will auto-fill when the document is sent
+                    </span>
+                  </div>
                   <Accordion type="single" collapsible>
                     <AccordionItem value="resident-fields">
                       <AccordionTrigger>
@@ -1120,7 +1143,6 @@ export const AddTemplateFieldsFormPartial = ({
                 </div>
 
                 <div className="mt-4 flex flex-col gap-2">
-                  <Separator />
                   <Accordion type="single" collapsible>
                     <AccordionItem value="resident-location-fields">
                       <AccordionTrigger>
