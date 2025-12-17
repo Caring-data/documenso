@@ -86,6 +86,7 @@ export type CreateDocumentFromTemplateOptions = {
     residentName?: string;
     locationName?: string;
     formType?: 'custom' | 'standard' | 'custom_default';
+    module?: 'resident' | 'staff' | 'facility';
   };
 };
 

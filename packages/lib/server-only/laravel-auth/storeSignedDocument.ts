@@ -37,6 +37,7 @@ export const storeSignedDocument = async (
       fileUrl: pdfUrl,
       recipient: allSigned ? 'AllRecipientsSigned' : recipient?.email,
       formType: String(documentDetails?.formType || ''),
+      module: String(documentDetails?.module || ''),
     };
 
     const response = await fetch(url, {
