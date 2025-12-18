@@ -54,14 +54,15 @@ const getLocationFieldLabel = (fieldType: FieldType): string => {
       return 'Country';
     case FieldType.RESIDENT_LOCATION_FAX:
       return 'Facility Fax';
+
     case FieldType.RESIDENT_LOCATION_LICENSING:
-      return 'Facility Administrator';
-    case FieldType.RESIDENT_LOCATION_LICENSING_NAME:
-      return 'Administrator Phone Number';
-    case FieldType.RESIDENT_LOCATION_ADMINISTRATOR_NAME:
       return 'Licensing Number';
+    case FieldType.RESIDENT_LOCATION_LICENSING_NAME:
+      return "Licensee's Name";
+    case FieldType.RESIDENT_LOCATION_ADMINISTRATOR_NAME:
+      return 'Facility Administrator';
     case FieldType.RESIDENT_LOCATION_ADMINISTRATOR_PHONE:
-      return 'Licensees Name';
+      return 'Administrator Phone Number';
     default:
       return 'Location Information';
   }
@@ -97,7 +98,7 @@ const getLocationValue = (fieldType: FieldType, residentInfo?: Record<string, un
     case FieldType.RESIDENT_LOCATION_ADMINISTRATOR_NAME:
       return typeof location.admin === 'string' ? location.admin : '';
     case FieldType.RESIDENT_LOCATION_ADMINISTRATOR_PHONE:
-      return typeof location.phone_lec === 'string' ? location.phone_lec : '';
+      return typeof location.phone_lic === 'string' ? location.phone_lic : '';
     default:
       return '';
   }
