@@ -48,6 +48,7 @@ export const storeSignedDocument = async (
         Accept: 'application/json',
       },
       body: JSON.stringify(formData),
+      signal: AbortSignal.timeout(60000),
     });
 
     const data = await response.json();
