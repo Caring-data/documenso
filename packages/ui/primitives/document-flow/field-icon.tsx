@@ -5,6 +5,7 @@ import {
   CalendarDays,
   CheckSquare,
   ChevronDown,
+  Clipboard,
   Contact,
   Disc,
   Flag,
@@ -12,8 +13,12 @@ import {
   Home,
   Mail,
   MapPin,
+  Phone,
+  Printer,
   Type,
   User,
+  UserCheck,
+  UserCircle2,
 } from 'lucide-react';
 
 import type { TFieldMetaSchema as FieldMetaType } from '@documenso/lib/types/field-meta';
@@ -42,13 +47,24 @@ const fieldIcons = {
   [FieldType.RESIDENT_FIRST_NAME]: { icon: User, label: 'R. First Name' },
   [FieldType.RESIDENT_LAST_NAME]: { icon: User, label: 'R. Last Name' },
   [FieldType.RESIDENT_DOB]: { icon: CalendarDays, label: 'R. Date of Birth' },
-  [FieldType.RESIDENT_GENDER_IDENTITY]: { icon: User, label: 'R. Gender Identity' },
-  [FieldType.RESIDENT_LOCATION_NAME]: { icon: Building, label: 'R. L. Name' },
-  [FieldType.RESIDENT_LOCATION_STATE]: { icon: Flag, label: 'R. L. State' },
-  [FieldType.RESIDENT_LOCATION_ADDRESS]: { icon: Home, label: 'R. L. Address' },
-  [FieldType.RESIDENT_LOCATION_CITY]: { icon: Building, label: 'R. L. City' },
-  [FieldType.RESIDENT_LOCATION_ZIP_CODE]: { icon: Hash, label: 'R. L. Zip Code' },
-  [FieldType.RESIDENT_LOCATION_COUNTRY]: { icon: MapPin, label: 'R. L. Country' },
+  [FieldType.RESIDENT_GENDER_IDENTITY]: { icon: UserCircle2, label: 'R. Gender Identity' },
+  [FieldType.RESIDENT_LOCATION_NAME]: { icon: Building, label: 'L. Name' },
+  [FieldType.RESIDENT_LOCATION_STATE]: { icon: Flag, label: 'L. State' },
+  [FieldType.RESIDENT_LOCATION_ADDRESS]: { icon: Home, label: 'L. Address' },
+  [FieldType.RESIDENT_LOCATION_CITY]: { icon: Building, label: 'L. City' },
+  [FieldType.RESIDENT_LOCATION_ZIP_CODE]: { icon: Hash, label: 'L. Zip Code' },
+  [FieldType.RESIDENT_LOCATION_COUNTRY]: { icon: MapPin, label: 'L. Country' },
+  [FieldType.RESIDENT_LOCATION_FAX]: { icon: Printer, label: 'L. Fax' },
+  [FieldType.RESIDENT_LOCATION_LICENSING]: { icon: Clipboard, label: 'Licensing Number' },
+  [FieldType.RESIDENT_LOCATION_LICENSING_NAME]: { icon: UserCircle2, label: 'Licensee Name' },
+  [FieldType.RESIDENT_LOCATION_ADMINISTRATOR_NAME]: {
+    icon: UserCheck,
+    label: 'L. Admin Name',
+  },
+  [FieldType.RESIDENT_LOCATION_ADMINISTRATOR_PHONE]: {
+    icon: Phone,
+    label: 'L. Admin Phone',
+  },
 };
 
 export const FieldIcon = ({

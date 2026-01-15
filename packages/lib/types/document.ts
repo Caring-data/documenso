@@ -18,6 +18,8 @@ export const ZDocumentDetailsSchema = z
     documentName: z.string().optional(),
     residentName: z.string().optional(),
     locationName: z.string().optional(),
+    formType: z.string().optional(),
+    module: z.string().optional(),
   })
   .nullable()
   .optional();
