@@ -36,6 +36,8 @@ export const storeSignedDocument = async (
       residentId: residentId,
       fileUrl: pdfUrl,
       recipient: allSigned ? 'AllRecipientsSigned' : recipient?.email,
+      formType: String(documentDetails?.formType || ''),
+      module: String(documentDetails?.module || ''),
     };
 
     const response = await fetch(url, {
@@ -46,6 +48,7 @@ export const storeSignedDocument = async (
         Accept: 'application/json',
       },
       body: JSON.stringify(formData),
+      signal: AbortSignal.timeout(60000),
     });
 
     const data = await response.json();

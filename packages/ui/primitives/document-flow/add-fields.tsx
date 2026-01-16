@@ -590,7 +590,7 @@ export const AddFieldsFormPartial = ({
     <>
       {showAdvancedSettings && currentField ? (
         <FieldAdvancedSettings
-          title={msg`Advanced settings`}
+          title={msg`Advanced Settings`}
           description={msg`Configure the ${parseMessageDescriptor(
             _,
             FRIENDLY_FIELD_TYPE[currentField.type],

@@ -85,6 +85,8 @@ export type CreateDocumentFromTemplateOptions = {
     documentName?: string;
     residentName?: string;
     locationName?: string;
+    formType?: 'custom' | 'standard' | 'custom_default';
+    module?: 'resident' | 'staff' | 'facility';
   };
 };
 
@@ -300,14 +302,9 @@ export const createDocumentFromTemplate = async ({
         const base64Pdf = documentData.data;
         const fieldsToCreate: Omit<Field, 'id' | 'secondaryId' | 'templateId'>[] = [];
         const variableCounters: Record<string, number> = {};
-        const skipCoordinateSearchKeys = [
-          'admission-agreement',
-          'hospice-certificate',
-          'home-health-agreement',
-        ];
 
-        const shouldSkipCoordinateSearch =
-          template.formKey && skipCoordinateSearchKeys.includes(template.formKey);
+        const formType = documentDetails?.formType;
+        const shouldSkipCoordinateSearch = formType === 'custom' || formType === 'custom_default';
 
         for (const finalRecipient of finalRecipients) {
           const recipient = document.recipients.find(

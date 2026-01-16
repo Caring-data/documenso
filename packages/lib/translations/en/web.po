@@ -14,12 +14,7 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. js-lingui-explicit-id
-#: apps/web/src/app/embed/template/[[...externalId]]/(components)/template-flow/add-template-placeholder-recipients.tsx:381
-msgid "email_label"
-msgstr "email_label"
-
-#. js-lingui-explicit-id
-#: apps/web/src/app/embed/template/[[...externalId]]/(components)/template-flow/add-template-placeholder-recipients.tsx:477
+#: apps/web/src/app/embed/template/[[...externalId]]/(components)/template-flow/add-template-placeholder-recipients.tsx:489
 msgid "add_recipient"
 msgstr "add_recipient"
 
@@ -122,8 +117,8 @@ msgstr "{0} Recipient(s)"
 msgid "{charactersRemaining, plural, one {1 character remaining} other {{charactersRemaining} characters remaining}}"
 msgstr "{charactersRemaining, plural, one {1 character remaining} other {{charactersRemaining} characters remaining}}"
 
-#: apps/web/src/app/(signing)/sign/[token]/location-field.tsx:237
-#: apps/web/src/app/(signing)/sign/[token]/location-field.tsx:272
+#: apps/web/src/app/(signing)/sign/[token]/location-field.tsx:257
+#: apps/web/src/app/(signing)/sign/[token]/location-field.tsx:292
 #: apps/web/src/app/(signing)/sign/[token]/resident-field.tsx:236
 #: apps/web/src/app/(signing)/sign/[token]/resident-field.tsx:271
 msgid "{fieldLabel}"
@@ -421,7 +416,7 @@ msgstr "12 months"
 msgid "3 months"
 msgstr "3 months"
 
-#: apps/web/src/components/partials/not-found.tsx:45
+#: apps/web/src/components/partials/not-found.tsx:49
 msgid "404 Page not found"
 msgstr "404 Page not found"
 
@@ -653,12 +648,12 @@ msgstr "Add a URL to redirect the user to once the document is signed"
 
 #: apps/web/src/app/(dashboard)/documents/[id]/edit-document.tsx:153
 #: apps/web/src/app/(dashboard)/templates/[id]/edit/edit-template.tsx:87
-#: apps/web/src/app/embed/template/[[...externalId]]/client.tsx:195
+#: apps/web/src/app/embed/template/[[...externalId]]/client.tsx:182
 msgid "Add all relevant fields for each recipient."
 msgstr "Add all relevant fields for each recipient."
 
 #: apps/web/src/app/(dashboard)/templates/[id]/edit/edit-template.tsx:82
-#: apps/web/src/app/embed/template/[[...externalId]]/client.tsx:190
+#: apps/web/src/app/embed/template/[[...externalId]]/(components)/template-flow/add-template-settings.tsx:373
 msgid "Add all relevant placeholders for each recipient."
 msgstr "Add all relevant placeholders for each recipient."
 
@@ -693,7 +688,7 @@ msgstr "Add email"
 
 #: apps/web/src/app/(dashboard)/documents/[id]/edit-document.tsx:152
 #: apps/web/src/app/(dashboard)/templates/[id]/edit/edit-template.tsx:86
-#: apps/web/src/app/embed/template/[[...externalId]]/client.tsx:194
+#: apps/web/src/app/embed/template/[[...externalId]]/client.tsx:181
 msgid "Add Fields"
 msgstr "Add Fields"
 
@@ -719,7 +714,7 @@ msgid "Add Placeholder Recipient"
 msgstr "Add Placeholder Recipient"
 
 #: apps/web/src/app/(dashboard)/templates/[id]/edit/edit-template.tsx:81
-#: apps/web/src/app/embed/template/[[...externalId]]/client.tsx:189
+#: apps/web/src/app/embed/template/[[...externalId]]/(components)/template-flow/add-template-settings.tsx:370
 msgid "Add Placeholders"
 msgstr "Add Placeholders"
 
@@ -759,7 +754,7 @@ msgstr "Adding and removing seats will adjust your invoice accordingly."
 msgid "Additional brand information to display at the bottom of emails"
 msgstr "Additional brand information to display at the bottom of emails"
 
-#: apps/web/src/app/embed/template/[[...externalId]]/(components)/template-flow/add-template-fields.tsx:1212
+#: apps/web/src/app/embed/template/[[...externalId]]/(components)/template-flow/add-template-fields.tsx:1217
 msgid "Address"
 msgstr "Address"
 
@@ -775,12 +770,16 @@ msgstr "Admin Actions"
 msgid "Admin panel"
 msgstr "Admin panel"
 
+#: apps/web/src/app/embed/template/[[...externalId]]/(components)/template-flow/add-template-fields.tsx:1401
+msgid "Administrator Phone"
+msgstr "Administrator Phone"
+
 #: packages/ui/primitives/document-flow/add-settings.tsx:284
 #: packages/ui/primitives/template-flow/add-template-settings.tsx:413
 msgid "Advanced Options"
 msgstr "Advanced Options"
 
-#: apps/web/src/app/embed/template/[[...externalId]]/(components)/template-flow/add-template-fields.tsx:508
+#: apps/web/src/app/embed/template/[[...externalId]]/(components)/template-flow/add-template-fields.tsx:513
 #: packages/ui/primitives/document-flow/add-fields.tsx:593
 #: packages/ui/primitives/template-flow/add-template-fields.tsx:506
 msgid "Advanced settings"
@@ -956,7 +955,7 @@ msgstr "An error occurred while moving the document."
 msgid "An error occurred while moving the template."
 msgstr "An error occurred while moving the template."
 
-#: apps/web/src/app/embed/template/[[...externalId]]/client.tsx:239
+#: apps/web/src/app/embed/template/[[...externalId]]/client.tsx:226
 msgid "An error occurred while processing the form."
 msgstr "An error occurred while processing the form."
 
@@ -966,7 +965,7 @@ msgstr "An error occurred while processing the form."
 #: apps/web/src/app/(signing)/sign/[token]/dropdown-field.tsx:134
 #: apps/web/src/app/(signing)/sign/[token]/email-field.tsx:117
 #: apps/web/src/app/(signing)/sign/[token]/initials-field.tsx:151
-#: apps/web/src/app/(signing)/sign/[token]/location-field.tsx:215
+#: apps/web/src/app/(signing)/sign/[token]/location-field.tsx:235
 #: apps/web/src/app/(signing)/sign/[token]/name-field.tsx:155
 #: apps/web/src/app/(signing)/sign/[token]/number-field.tsx:202
 #: apps/web/src/app/(signing)/sign/[token]/resident-field.tsx:214
@@ -996,7 +995,7 @@ msgstr "An error occurred while sending your confirmation email"
 #: apps/web/src/app/(signing)/sign/[token]/dropdown-field.tsx:102
 #: apps/web/src/app/(signing)/sign/[token]/email-field.tsx:90
 #: apps/web/src/app/(signing)/sign/[token]/initials-field.tsx:124
-#: apps/web/src/app/(signing)/sign/[token]/location-field.tsx:188
+#: apps/web/src/app/(signing)/sign/[token]/location-field.tsx:208
 #: apps/web/src/app/(signing)/sign/[token]/name-field.tsx:128
 #: apps/web/src/app/(signing)/sign/[token]/number-field.tsx:152
 #: apps/web/src/app/(signing)/sign/[token]/radio-field.tsx:103
@@ -1011,7 +1010,7 @@ msgstr "An error occurred while signing as assistant."
 #: apps/web/src/app/(signing)/sign/[token]/dropdown-field.tsx:103
 #: apps/web/src/app/(signing)/sign/[token]/email-field.tsx:91
 #: apps/web/src/app/(signing)/sign/[token]/initials-field.tsx:125
-#: apps/web/src/app/(signing)/sign/[token]/location-field.tsx:189
+#: apps/web/src/app/(signing)/sign/[token]/location-field.tsx:209
 #: apps/web/src/app/(signing)/sign/[token]/name-field.tsx:129
 #: apps/web/src/app/(signing)/sign/[token]/number-field.tsx:153
 #: apps/web/src/app/(signing)/sign/[token]/radio-field.tsx:104
@@ -1347,7 +1346,7 @@ msgid "By using the electronic signature feature, you are consenting to conduct 
 msgstr "By using the electronic signature feature, you are consenting to conduct transactions and receive disclosures electronically. You acknowledge that your electronic signature on documents is binding and that you accept the terms outlined in the documents you are signing."
 
 #: apps/web/src/app/(signing)/sign/[token]/calendar-field.tsx:214
-#: apps/web/src/app/embed/template/[[...externalId]]/(components)/template-flow/add-template-fields.tsx:850
+#: apps/web/src/app/embed/template/[[...externalId]]/(components)/template-flow/add-template-fields.tsx:855
 #: packages/ui/primitives/document-flow/add-fields.tsx:972
 #: packages/ui/primitives/document-flow/types.ts:54
 #: packages/ui/primitives/template-flow/add-template-fields.tsx:848
@@ -1377,7 +1376,7 @@ msgstr "Can prepare"
 #: apps/web/src/app/(signing)/sign/[token]/document-action-auth-passkey.tsx:189
 #: apps/web/src/app/(signing)/sign/[token]/form.tsx:214
 #: apps/web/src/app/(signing)/sign/[token]/form.tsx:372
-#: apps/web/src/app/(signing)/sign/[token]/location-field.tsx:296
+#: apps/web/src/app/(signing)/sign/[token]/location-field.tsx:316
 #: apps/web/src/app/(signing)/sign/[token]/name-field.tsx:234
 #: apps/web/src/app/(signing)/sign/[token]/number-field.tsx:347
 #: apps/web/src/app/(signing)/sign/[token]/reject-document-dialog.tsx:158
@@ -1475,7 +1474,7 @@ msgstr "Choose how the document will reach recipients"
 msgid "Choose..."
 msgstr "Choose..."
 
-#: apps/web/src/app/embed/template/[[...externalId]]/(components)/template-flow/add-template-fields.tsx:1241
+#: apps/web/src/app/embed/template/[[...externalId]]/(components)/template-flow/add-template-fields.tsx:1246
 msgid "City"
 msgstr "City"
 
@@ -1607,7 +1606,7 @@ msgid "Configure general settings for the document."
 msgstr "Configure general settings for the document."
 
 #: apps/web/src/app/(dashboard)/templates/[id]/edit/edit-template.tsx:77
-#: apps/web/src/app/embed/template/[[...externalId]]/client.tsx:185
+#: apps/web/src/app/embed/template/[[...externalId]]/client.tsx:177
 msgid "Configure general settings for the template."
 msgstr "Configure general settings for the template."
 
@@ -1615,7 +1614,7 @@ msgstr "Configure general settings for the template."
 msgid "Configure template"
 msgstr "Configure template"
 
-#: apps/web/src/app/embed/template/[[...externalId]]/(components)/template-flow/add-template-fields.tsx:509
+#: apps/web/src/app/embed/template/[[...externalId]]/(components)/template-flow/add-template-fields.tsx:514
 #: packages/ui/primitives/document-flow/add-fields.tsx:594
 #: packages/ui/primitives/template-flow/add-template-fields.tsx:507
 msgid "Configure the {0} field"
@@ -1755,7 +1754,7 @@ msgstr "Copy Signing Links"
 msgid "Copy token"
 msgstr "Copy token"
 
-#: apps/web/src/app/embed/template/[[...externalId]]/(components)/template-flow/add-template-fields.tsx:1303
+#: apps/web/src/app/embed/template/[[...externalId]]/(components)/template-flow/add-template-fields.tsx:1277
 msgid "Country"
 msgstr "Country"
 
@@ -1909,7 +1908,7 @@ msgstr "Dark Mode"
 
 #: apps/web/src/app/(dashboard)/settings/security/activity/user-security-activity-data-table.tsx:67
 #: apps/web/src/app/(signing)/sign/[token]/date-field.tsx:176
-#: apps/web/src/app/embed/template/[[...externalId]]/(components)/template-flow/add-template-fields.tsx:829
+#: apps/web/src/app/embed/template/[[...externalId]]/(components)/template-flow/add-template-fields.tsx:834
 #: packages/ui/primitives/document-flow/add-fields.tsx:951
 #: packages/ui/primitives/document-flow/types.ts:53
 #: packages/ui/primitives/template-flow/add-template-fields.tsx:827
@@ -1925,7 +1924,7 @@ msgstr "Date created"
 msgid "Date Format"
 msgstr "Date Format"
 
-#: apps/web/src/app/embed/template/[[...externalId]]/(components)/template-flow/add-template-fields.tsx:1074
+#: apps/web/src/app/embed/template/[[...externalId]]/(components)/template-flow/add-template-fields.tsx:1079
 msgid "Date of Birth"
 msgstr "Date of Birth"
 
@@ -2221,7 +2220,7 @@ msgid "Document created by <0>{0}</0>"
 msgstr "Document created by <0>{0}</0>"
 
 #: packages/email/templates/document-created-from-direct-template.tsx:32
-#: packages/lib/server-only/template/create-document-from-direct-template.ts:608
+#: packages/lib/server-only/template/create-document-from-direct-template.ts:613
 msgid "Document created from direct template"
 msgstr "Document created from direct template"
 
@@ -2460,7 +2459,7 @@ msgstr "Drafted Documents"
 msgid "Drag & drop your PDF here."
 msgstr "Drag & drop your PDF here."
 
-#: apps/web/src/app/embed/template/[[...externalId]]/(components)/template-flow/add-template-fields.tsx:981
+#: apps/web/src/app/embed/template/[[...externalId]]/(components)/template-flow/add-template-fields.tsx:986
 #: packages/ui/primitives/document-flow/add-fields.tsx:1103
 #: packages/ui/primitives/template-flow/add-template-fields.tsx:979
 msgid "Dropdown"
@@ -2512,6 +2511,12 @@ msgstr "Electronic Delivery of Documents"
 msgid "Electronic Signature Disclosure"
 msgstr "Electronic Signature Disclosure"
 
+#. js-lingui-explicit-id
+#: apps/web/src/app/embed/template/[[...externalId]]/(components)/template-flow/add-template-placeholder-recipients.tsx:392
+#: apps/web/src/app/embed/template/[[...externalId]]/(components)/template-flow/add-template-settings.tsx:464
+msgid "email_label"
+msgstr "email_label"
+
 #: apps/web/src/app/(dashboard)/admin/documents/[id]/recipient-item.tsx:166
 #: apps/web/src/app/(dashboard)/admin/users/[id]/page.tsx:116
 #: apps/web/src/app/(dashboard)/admin/users/data-table-users.tsx:71
@@ -2523,8 +2528,9 @@ msgstr "Electronic Signature Disclosure"
 #: apps/web/src/app/(signing)/sign/[token]/email-field.tsx:133
 #: apps/web/src/app/embed/direct/[[...url]]/client.tsx:415
 #: apps/web/src/app/embed/sign/[[...url]]/client.tsx:417
-#: apps/web/src/app/embed/template/[[...externalId]]/(components)/template-flow/add-template-fields.tsx:777
-#: apps/web/src/app/embed/template/[[...externalId]]/(components)/template-flow/add-template-placeholder-recipients.tsx:388
+#: apps/web/src/app/embed/template/[[...externalId]]/(components)/template-flow/add-template-fields.tsx:782
+#: apps/web/src/app/embed/template/[[...externalId]]/(components)/template-flow/add-template-placeholder-recipients.tsx:399
+#: apps/web/src/app/embed/template/[[...externalId]]/(components)/template-flow/add-template-settings.tsx:471
 #: apps/web/src/components/(teams)/dialogs/add-team-email-dialog.tsx:169
 #: apps/web/src/components/(teams)/dialogs/update-team-email-dialog.tsx:153
 #: apps/web/src/components/forms/forgot-password.tsx:81
@@ -2560,7 +2566,6 @@ msgstr "Email cannot already exist in the template"
 msgid "Email Confirmed!"
 msgstr "Email Confirmed!"
 
-#: apps/web/src/app/embed/template/[[...externalId]]/(components)/template-flow/add-template-settings.tsx:201
 #: packages/ui/primitives/template-flow/add-template-settings.tsx:353
 msgid "Email Options"
 msgstr "Email Options"
@@ -2629,7 +2634,7 @@ msgstr "Enable signing order"
 msgid "Enable Typed Signature"
 msgstr "Enable Typed Signature"
 
-#: apps/web/src/app/embed/template/[[...externalId]]/(components)/template-flow/add-template-fields.tsx:700
+#: apps/web/src/app/embed/template/[[...externalId]]/(components)/template-flow/add-template-fields.tsx:705
 #: packages/ui/primitives/document-flow/add-fields.tsx:819
 #: packages/ui/primitives/template-flow/add-template-fields.tsx:695
 msgid "Enable Typed Signatures"
@@ -2711,8 +2716,8 @@ msgstr "Enter your text here"
 #: apps/web/src/app/(signing)/sign/[token]/email-field.tsx:116
 #: apps/web/src/app/(signing)/sign/[token]/initials-field.tsx:122
 #: apps/web/src/app/(signing)/sign/[token]/initials-field.tsx:150
-#: apps/web/src/app/(signing)/sign/[token]/location-field.tsx:186
-#: apps/web/src/app/(signing)/sign/[token]/location-field.tsx:214
+#: apps/web/src/app/(signing)/sign/[token]/location-field.tsx:206
+#: apps/web/src/app/(signing)/sign/[token]/location-field.tsx:234
 #: apps/web/src/app/(signing)/sign/[token]/name-field.tsx:126
 #: apps/web/src/app/(signing)/sign/[token]/name-field.tsx:154
 #: apps/web/src/app/(signing)/sign/[token]/number-field.tsx:150
@@ -2727,7 +2732,7 @@ msgstr "Enter your text here"
 #: apps/web/src/app/(signing)/sign/[token]/signature-field.tsx:210
 #: apps/web/src/app/(signing)/sign/[token]/text-field.tsx:172
 #: apps/web/src/app/(signing)/sign/[token]/text-field.tsx:202
-#: apps/web/src/app/embed/template/[[...externalId]]/client.tsx:238
+#: apps/web/src/app/embed/template/[[...externalId]]/client.tsx:225
 #: apps/web/src/components/(dashboard)/layout/verify-email-banner.tsx:54
 #: apps/web/src/components/(dashboard)/settings/webhooks/create-webhook-dialog.tsx:101
 #: packages/ui/primitives/document-flow/field-item-advanced-settings.tsx:241
@@ -2756,6 +2761,14 @@ msgstr "Expires on {0}"
 #: packages/ui/primitives/template-flow/add-template-settings.tsx:424
 msgid "External ID"
 msgstr "External ID"
+
+#: apps/web/src/app/embed/template/[[...externalId]]/(components)/template-flow/add-template-fields.tsx:1368
+msgid "Facility Administrator"
+msgstr "Facility Administrator"
+
+#: apps/web/src/app/embed/template/[[...externalId]]/(components)/template-flow/add-template-fields.tsx:1335
+msgid "Facility Fax"
+msgstr "Facility Fax"
 
 #: apps/web/src/app/(signing)/sign/[token]/pre-signing/page.tsx:46
 msgid "Failed to fetch document details"
@@ -2836,7 +2849,7 @@ msgstr "File size exceeds the limit of {APP_DOCUMENT_UPLOAD_SIZE_LIMIT} MB"
 msgid "Final Document Available for Download"
 msgstr "Final Document Available for Download"
 
-#: apps/web/src/app/embed/template/[[...externalId]]/(components)/template-flow/add-template-fields.tsx:1020
+#: apps/web/src/app/embed/template/[[...externalId]]/(components)/template-flow/add-template-fields.tsx:1025
 msgid "First Name"
 msgstr "First Name"
 
@@ -2881,14 +2894,14 @@ msgstr "Free Signature"
 msgid "Full Name"
 msgstr "Full Name"
 
-#: apps/web/src/app/embed/template/[[...externalId]]/(components)/template-flow/add-template-fields.tsx:1105
+#: apps/web/src/app/embed/template/[[...externalId]]/(components)/template-flow/add-template-fields.tsx:1110
 msgid "Gender Identity"
 msgstr "Gender Identity"
 
 #: apps/web/src/app/(dashboard)/documents/[id]/edit-document.tsx:142
 #: apps/web/src/app/(dashboard)/templates/[id]/edit/edit-template.tsx:76
 #: apps/web/src/app/(recipient)/d/[token]/direct-template.tsx:62
-#: apps/web/src/app/embed/template/[[...externalId]]/client.tsx:184
+#: apps/web/src/app/embed/template/[[...externalId]]/client.tsx:176
 #: apps/web/src/components/(teams)/settings/layout/desktop-nav.tsx:44
 #: apps/web/src/components/(teams)/settings/layout/mobile-nav.tsx:52
 msgid "General"
@@ -2906,7 +2919,7 @@ msgstr "Global recipient action authentication"
 #: apps/web/src/app/(recipient)/d/[token]/not-found.tsx:33
 #: apps/web/src/app/(teams)/t/[teamUrl]/error.tsx:51
 #: apps/web/src/app/(teams)/t/[teamUrl]/not-found.tsx:32
-#: apps/web/src/components/partials/not-found.tsx:67
+#: apps/web/src/components/partials/not-found.tsx:72
 #: packages/ui/primitives/document-flow/document-flow-root.tsx:142
 msgid "Go Back"
 msgstr "Go Back"
@@ -2935,9 +2948,12 @@ msgstr "Go to your <0>public profile settings</0> to add documents."
 msgid "Green"
 msgstr "Green"
 
-#: apps/web/src/app/embed/template/[[...externalId]]/(components)/template-flow/add-template-placeholder-recipients.tsx:208
-#: apps/web/src/app/embed/template/[[...externalId]]/(components)/template-flow/add-template-placeholder-recipients.tsx:244
-#: apps/web/src/app/embed/template/[[...externalId]]/(components)/template-flow/add-template-placeholder-recipients.tsx:275
+#: apps/web/src/app/embed/template/[[...externalId]]/(components)/template-flow/add-template-placeholder-recipients.tsx:219
+#: apps/web/src/app/embed/template/[[...externalId]]/(components)/template-flow/add-template-placeholder-recipients.tsx:255
+#: apps/web/src/app/embed/template/[[...externalId]]/(components)/template-flow/add-template-placeholder-recipients.tsx:286
+#: apps/web/src/app/embed/template/[[...externalId]]/(components)/template-flow/add-template-settings.tsx:253
+#: apps/web/src/app/embed/template/[[...externalId]]/(components)/template-flow/add-template-settings.tsx:288
+#: apps/web/src/app/embed/template/[[...externalId]]/(components)/template-flow/add-template-settings.tsx:319
 #: packages/ui/primitives/document-flow/add-signers.tsx:260
 #: packages/ui/primitives/document-flow/add-signers.tsx:298
 #: packages/ui/primitives/document-flow/add-signers.tsx:337
@@ -3189,7 +3205,6 @@ msgstr "Join {teamName} on Documenso"
 msgid "Label"
 msgstr "Label"
 
-#: apps/web/src/app/embed/template/[[...externalId]]/(components)/template-flow/add-template-settings.tsx:163
 #: apps/web/src/components/(dashboard)/layout/menu-switcher.tsx:286
 #: packages/ui/primitives/document-flow/add-settings.tsx:187
 #: packages/ui/primitives/template-flow/add-template-settings.tsx:184
@@ -3213,7 +3228,7 @@ msgstr "Last 7 days"
 msgid "Last modified"
 msgstr "Last modified"
 
-#: apps/web/src/app/embed/template/[[...externalId]]/(components)/template-flow/add-template-fields.tsx:1047
+#: apps/web/src/app/embed/template/[[...externalId]]/(components)/template-flow/add-template-fields.tsx:1052
 msgid "Last Name"
 msgstr "Last Name"
 
@@ -3249,6 +3264,14 @@ msgstr "Leave team"
 #: apps/web/src/app/(unauthenticated)/articles/signature-disclosure/page.tsx:45
 msgid "Legality of Electronic Signatures"
 msgstr "Legality of Electronic Signatures"
+
+#: apps/web/src/app/embed/template/[[...externalId]]/(components)/template-flow/add-template-fields.tsx:1467
+msgid "Licensee's Name"
+msgstr "Licensee's Name"
+
+#: apps/web/src/app/embed/template/[[...externalId]]/(components)/template-flow/add-template-fields.tsx:1434
+msgid "Licensing Number"
+msgstr "Licensing Number"
 
 #: apps/web/src/components/(dashboard)/common/command-menu.tsx:264
 msgid "Light Mode"
@@ -3301,7 +3324,7 @@ msgstr "Loading teams..."
 msgid "Loading..."
 msgstr "Loading..."
 
-#: apps/web/src/app/embed/template/[[...externalId]]/(components)/template-flow/add-template-fields.tsx:1150
+#: apps/web/src/app/embed/template/[[...externalId]]/(components)/template-flow/add-template-fields.tsx:1155
 msgid "Location Name"
 msgstr "Location Name"
 
@@ -3426,7 +3449,6 @@ msgstr "Member Since"
 msgid "Members"
 msgstr "Members"
 
-#: apps/web/src/app/embed/template/[[...externalId]]/(components)/template-flow/add-template-settings.tsx:228
 #: packages/ui/primitives/document-flow/add-subject.tsx:160
 #: packages/ui/primitives/template-flow/add-template-settings.tsx:384
 msgid "Message <0>(Optional)</0>"
@@ -3495,8 +3517,7 @@ msgstr "My templates"
 #: apps/web/src/app/(dashboard)/templates/use-template-dialog.tsx:306
 #: apps/web/src/app/(signing)/sign/[token]/complete/claim-account.tsx:118
 #: apps/web/src/app/(signing)/sign/[token]/name-field.tsx:177
-#: apps/web/src/app/embed/template/[[...externalId]]/(components)/template-flow/add-template-fields.tsx:803
-#: apps/web/src/app/embed/template/[[...externalId]]/(components)/template-flow/add-template-placeholder-recipients.tsx:407
+#: apps/web/src/app/embed/template/[[...externalId]]/(components)/template-flow/add-template-fields.tsx:808
 #: apps/web/src/components/(teams)/dialogs/add-team-email-dialog.tsx:153
 #: apps/web/src/components/(teams)/dialogs/update-team-email-dialog.tsx:141
 #: apps/web/src/components/forms/signup.tsx:160
@@ -3574,7 +3595,7 @@ msgstr "No recent activity"
 msgid "No recent documents"
 msgstr "No recent documents"
 
-#: apps/web/src/app/embed/template/[[...externalId]]/(components)/template-flow/add-template-fields.tsx:615
+#: apps/web/src/app/embed/template/[[...externalId]]/(components)/template-flow/add-template-fields.tsx:620
 #: packages/ui/primitives/document-flow/add-fields.tsx:711
 #: packages/ui/primitives/template-flow/add-template-fields.tsx:613
 msgid "No recipient matching this description was found."
@@ -3587,7 +3608,7 @@ msgstr "No recipient matching this description was found."
 msgid "No recipients"
 msgstr "No recipients"
 
-#: apps/web/src/app/embed/template/[[...externalId]]/(components)/template-flow/add-template-fields.tsx:632
+#: apps/web/src/app/embed/template/[[...externalId]]/(components)/template-flow/add-template-fields.tsx:637
 #: packages/ui/primitives/document-flow/add-fields.tsx:726
 #: packages/ui/primitives/template-flow/add-template-fields.tsx:628
 msgid "No recipients with this role"
@@ -3649,7 +3670,7 @@ msgid "Nothing to do"
 msgstr "Nothing to do"
 
 #: apps/web/src/app/(signing)/sign/[token]/number-field.tsx:290
-#: apps/web/src/app/embed/template/[[...externalId]]/(components)/template-flow/add-template-fields.tsx:902
+#: apps/web/src/app/embed/template/[[...externalId]]/(components)/template-flow/add-template-fields.tsx:907
 #: packages/ui/primitives/document-flow/add-fields.tsx:1024
 #: packages/ui/primitives/document-flow/types.ts:57
 #: packages/ui/primitives/template-flow/add-template-fields.tsx:900
@@ -3718,7 +3739,7 @@ msgstr "Only subscribers can have a username shorter than 6 characters"
 #: apps/web/src/app/(recipient)/d/[token]/not-found.tsx:19
 #: apps/web/src/app/(teams)/t/[teamUrl]/error.tsx:37
 #: apps/web/src/app/(teams)/t/[teamUrl]/not-found.tsx:19
-#: apps/web/src/components/partials/not-found.tsx:49
+#: apps/web/src/components/partials/not-found.tsx:53
 msgid "Oops! Something went wrong."
 msgstr "Oops! Something went wrong."
 
@@ -4116,6 +4137,14 @@ msgstr "R. Gender Identity"
 msgid "R. L. Address"
 msgstr "R. L. Address"
 
+#: packages/ui/primitives/document-flow/types.ts:74
+msgid "R. L. Administrator Name"
+msgstr "R. L. Administrator Name"
+
+#: packages/ui/primitives/document-flow/types.ts:75
+msgid "R. L. Administrator Phone"
+msgstr "R. L. Administrator Phone"
+
 #: packages/ui/primitives/document-flow/types.ts:68
 msgid "R. L. City"
 msgstr "R. L. City"
@@ -4123,6 +4152,18 @@ msgstr "R. L. City"
 #: packages/ui/primitives/document-flow/types.ts:70
 msgid "R. L. Country"
 msgstr "R. L. Country"
+
+#: packages/ui/primitives/document-flow/types.ts:71
+msgid "R. L. Fax"
+msgstr "R. L. Fax"
+
+#: packages/ui/primitives/document-flow/types.ts:73
+msgid "R. L. Licensee Name"
+msgstr "R. L. Licensee Name"
+
+#: packages/ui/primitives/document-flow/types.ts:72
+msgid "R. L. Licensing"
+msgstr "R. L. Licensing"
 
 #: packages/ui/primitives/document-flow/types.ts:65
 msgid "R. L. Name"
@@ -4473,7 +4514,7 @@ msgstr "Rows per page"
 msgid "Save"
 msgstr "Save"
 
-#: apps/web/src/app/embed/template/[[...externalId]]/(components)/template-flow/add-template-fields.tsx:1324
+#: apps/web/src/app/embed/template/[[...externalId]]/(components)/template-flow/add-template-fields.tsx:1488
 #: packages/ui/primitives/template-flow/add-template-fields.tsx:1012
 msgid "Save Template"
 msgstr "Save Template"
@@ -4704,7 +4745,7 @@ msgstr "Show templates in your team public profile for your audience to sign and
 #: apps/web/src/app/(profile)/p/[url]/page.tsx:192
 #: apps/web/src/app/(signing)/sign/[token]/auto-sign.tsx:229
 #: apps/web/src/app/(signing)/sign/[token]/document-action-auth-2fa.tsx:182
-#: apps/web/src/app/(signing)/sign/[token]/location-field.tsx:305
+#: apps/web/src/app/(signing)/sign/[token]/location-field.tsx:325
 #: apps/web/src/app/(signing)/sign/[token]/name-field.tsx:243
 #: apps/web/src/app/(signing)/sign/[token]/resident-field.tsx:304
 #: apps/web/src/app/(signing)/sign/[token]/signature-field.tsx:303
@@ -4720,7 +4761,7 @@ msgstr "Sign"
 msgid "Sign as {0} <0>({1})</0>"
 msgstr "Sign as {0} <0>({1})</0>"
 
-#: apps/web/src/app/(signing)/sign/[token]/location-field.tsx:262
+#: apps/web/src/app/(signing)/sign/[token]/location-field.tsx:282
 #: apps/web/src/app/(signing)/sign/[token]/name-field.tsx:202
 #: apps/web/src/app/(signing)/sign/[token]/resident-field.tsx:261
 msgid "Sign as<0>{0} <1>({1})</1></0>"
@@ -4790,10 +4831,10 @@ msgstr "Sign Up with OIDC"
 #: apps/web/src/app/(signing)/sign/[token]/signature-field.tsx:243
 #: apps/web/src/app/embed/direct/[[...url]]/client.tsx:430
 #: apps/web/src/app/embed/sign/[[...url]]/client.tsx:431
-#: apps/web/src/app/embed/template/[[...externalId]]/(components)/template-flow/add-template-fields.tsx:727
+#: apps/web/src/app/embed/template/[[...externalId]]/(components)/template-flow/add-template-fields.tsx:732
 #: apps/web/src/components/forms/profile.tsx:123
 #: packages/ui/primitives/document-flow/add-fields.tsx:847
-#: packages/ui/primitives/document-flow/field-icon.tsx:68
+#: packages/ui/primitives/document-flow/field-icon.tsx:79
 #: packages/ui/primitives/document-flow/types.ts:49
 #: packages/ui/primitives/template-flow/add-template-fields.tsx:723
 msgid "Signature"
@@ -4998,7 +5039,7 @@ msgstr "Sorry, we were unable to download the certificate. Please try again late
 msgid "Source"
 msgstr "Source"
 
-#: apps/web/src/app/embed/template/[[...externalId]]/(components)/template-flow/add-template-fields.tsx:1181
+#: apps/web/src/app/embed/template/[[...externalId]]/(components)/template-flow/add-template-fields.tsx:1186
 msgid "State"
 msgstr "State"
 
@@ -5023,7 +5064,6 @@ msgstr "Status: We're still waiting for other signers to sign this document.<0/>
 msgid "Step <0>{step} of {maxStep}</0>"
 msgstr "Step <0>{step} of {maxStep}</0>"
 
-#: apps/web/src/app/embed/template/[[...externalId]]/(components)/template-flow/add-template-settings.tsx:209
 #: packages/ui/primitives/document-flow/add-subject.tsx:143
 #: packages/ui/primitives/template-flow/add-template-settings.tsx:364
 msgid "Subject <0>(Optional)</0>"
@@ -5279,11 +5319,11 @@ msgid "Template not found or already associated with a team."
 msgstr "Template not found or already associated with a team."
 
 #: apps/web/src/app/(dashboard)/templates/[id]/edit/edit-template.tsx:216
-#: apps/web/src/app/embed/template/[[...externalId]]/client.tsx:334
+#: apps/web/src/app/embed/template/[[...externalId]]/client.tsx:317
 msgid "Template saved"
 msgstr "Template saved"
 
-#: apps/web/src/app/embed/template/[[...externalId]]/(components)/template-flow/add-template-settings.tsx:146
+#: apps/web/src/app/embed/template/[[...externalId]]/(components)/template-flow/add-template-settings.tsx:355
 #: packages/ui/primitives/template-flow/add-template-settings.tsx:167
 msgid "Template title"
 msgstr "Template title"
@@ -5302,7 +5342,7 @@ msgstr "Templates allow you to quickly generate documents with pre-filled recipi
 
 #: apps/web/src/app/(signing)/sign/[token]/text-field.tsx:264
 #: apps/web/src/app/(signing)/sign/[token]/text-field.tsx:293
-#: apps/web/src/app/embed/template/[[...externalId]]/(components)/template-flow/add-template-fields.tsx:876
+#: apps/web/src/app/embed/template/[[...externalId]]/(components)/template-flow/add-template-fields.tsx:881
 #: packages/ui/primitives/document-flow/add-fields.tsx:998
 #: packages/ui/primitives/document-flow/types.ts:52
 #: packages/ui/primitives/template-flow/add-template-fields.tsx:874
@@ -5424,7 +5464,7 @@ msgstr "The following team has been deleted by you"
 msgid "The ownership of team <0>{0}</0> has been successfully transferred to you."
 msgstr "The ownership of team <0>{0}</0> has been successfully transferred to you."
 
-#: apps/web/src/components/partials/not-found.tsx:53
+#: apps/web/src/components/partials/not-found.tsx:57
 msgid "The page you are looking for was moved, removed, renamed or might never have existed."
 msgstr "The page you are looking for was moved, removed, renamed or might never have existed."
 
@@ -5475,6 +5515,10 @@ msgstr "The recipient is required to sign the document for it to be completed."
 #: packages/ui/components/recipient/recipient-role-select.tsx:84
 msgid "The recipient is required to view the document for it to be completed."
 msgstr "The recipient is required to view the document for it to be completed."
+
+#: apps/web/src/app/embed/template/[[...externalId]]/(components)/template-flow/add-template-settings.tsx:375
+msgid "The roles and emails will be assigned when the document is sent."
+msgstr "The roles and emails will be assigned when the document is sent."
 
 #: apps/web/src/components/(teams)/dialogs/transfer-team-dialog.tsx:232
 msgid "The selected team member will receive an email which they must accept before the team is transferred"
@@ -5767,7 +5811,6 @@ msgid "Time zone"
 msgstr "Time zone"
 
 #: apps/web/src/app/(internal)/%5F%5Fhtmltopdf/audit-log/page.tsx:132
-#: apps/web/src/app/embed/template/[[...externalId]]/(components)/template-flow/add-template-settings.tsx:250
 #: packages/ui/primitives/document-flow/add-settings.tsx:359
 #: packages/ui/primitives/template-flow/add-template-settings.tsx:484
 msgid "Time Zone"
@@ -6430,9 +6473,12 @@ msgstr "Want to send slick signing links like this one? <0>Check out Documenso.<
 msgid "Want your own public profile?"
 msgstr "Want your own public profile?"
 
-#: apps/web/src/app/embed/template/[[...externalId]]/(components)/template-flow/add-template-placeholder-recipients.tsx:206
-#: apps/web/src/app/embed/template/[[...externalId]]/(components)/template-flow/add-template-placeholder-recipients.tsx:242
-#: apps/web/src/app/embed/template/[[...externalId]]/(components)/template-flow/add-template-placeholder-recipients.tsx:273
+#: apps/web/src/app/embed/template/[[...externalId]]/(components)/template-flow/add-template-placeholder-recipients.tsx:217
+#: apps/web/src/app/embed/template/[[...externalId]]/(components)/template-flow/add-template-placeholder-recipients.tsx:253
+#: apps/web/src/app/embed/template/[[...externalId]]/(components)/template-flow/add-template-placeholder-recipients.tsx:284
+#: apps/web/src/app/embed/template/[[...externalId]]/(components)/template-flow/add-template-settings.tsx:251
+#: apps/web/src/app/embed/template/[[...externalId]]/(components)/template-flow/add-template-settings.tsx:286
+#: apps/web/src/app/embed/template/[[...externalId]]/(components)/template-flow/add-template-settings.tsx:317
 #: packages/ui/primitives/document-flow/add-signers.tsx:258
 #: packages/ui/primitives/document-flow/add-signers.tsx:296
 #: packages/ui/primitives/document-flow/add-signers.tsx:335
@@ -7209,7 +7255,7 @@ msgstr "Your team has been successfully updated."
 msgid "Your template has been duplicated successfully."
 msgstr "Your template has been duplicated successfully."
 
-#: apps/web/src/app/embed/template/[[...externalId]]/client.tsx:335
+#: apps/web/src/app/embed/template/[[...externalId]]/client.tsx:318
 msgid "Your template has been saved successfully."
 msgstr "Your template has been saved successfully."
 
@@ -7238,6 +7284,6 @@ msgstr "Your token was created successfully! Make sure to copy it because you wo
 msgid "Your tokens will be shown here once you create them."
 msgstr "Your tokens will be shown here once you create them."
 
-#: apps/web/src/app/embed/template/[[...externalId]]/(components)/template-flow/add-template-fields.tsx:1272
+#: apps/web/src/app/embed/template/[[...externalId]]/(components)/template-flow/add-template-fields.tsx:1308
 msgid "ZIP Code"
 msgstr "ZIP Code"
