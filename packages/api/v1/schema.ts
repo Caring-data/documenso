@@ -351,7 +351,7 @@ export const ZGenerateDocumentFromTemplateMutationSchema = z.object({
       residentName: z.string().optional(),
       locationName: z.string().optional(),
       formType: z.enum(['custom', 'standard', 'custom_default']).optional(),
-      module: z.enum(['resident', 'staff', 'facility']).optional(),
+      module: z.enum(['resident', 'staff', 'facility', 'reports']).optional(),
     })
     .optional(),
 });
